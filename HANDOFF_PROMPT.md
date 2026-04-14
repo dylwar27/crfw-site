@@ -38,7 +38,7 @@ Start `claude` in this folder (`cd /path/to/site && claude`), then paste:
 
 > Read CLAUDE.md and CONTENT.md.
 >
-> I want to do a bulk stub pass through the killd by discography. The source folder is `../CRFW Archive/_Documentation/KB/killd by/` — walk every subfolder, and for each one create an entry in `src/content/releases/<slug>.md` with:
+> I want to do a bulk stub pass through the killd by discography. The source folder is `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/KB/killd by/` — walk every subfolder, and for each one create an entry in `src/content/releases/<slug>.md` with:
 >
 > - `title` — cleaned-up readable version of the folder name
 > - `preservedTitle` — folder name exactly as Colin named it
@@ -50,7 +50,7 @@ Start `claude` in this folder (`cd /path/to/site && claude`), then paste:
 >
 > Put this on a branch named `bulk/killd-by-stubs`, commit one entry per commit for the first few so I can see the pattern, then bulk-commit the rest. Open a PR against main when done. Do not skip any folders, even ones that look like duplicates or variants — CLAUDE.md explains why.
 >
-> Then do the same for `../CRFW Archive/_Documentation/alphabets/`.
+> Then do the same for `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/`.
 
 ---
 
@@ -58,7 +58,7 @@ Start `claude` in this folder (`cd /path/to/site && claude`), then paste:
 
 > Read CLAUDE.md.
 >
-> Set up a local Whisper transcription script that reads from `../CRFW Archive/_Documentation/Voice Memos/`, transcribes each memo, and emits one JSON entry per memo into `src/content/voice_memos/`. Use filename (usually a timestamp) for the date. Include the transcript text in full — do not summarize. Model: `whisper.cpp` with `small` or `medium`, whichever runs at reasonable speed on Apple Silicon. Do this on a branch. Commit the script first, then the generated entries in batches of ~50 per commit.
+> Set up a local Whisper transcription script that reads from `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/`, transcribes each memo, and emits one JSON entry per memo into `src/content/voice_memos/`. Use filename (usually a timestamp) for the date. Include the transcript text in full — do not summarize. Model: `whisper.cpp` with `small` or `medium`, whichever runs at reasonable speed on Apple Silicon. Do this on a branch. Commit the script first, then the generated entries in batches of ~50 per commit.
 
 ---
 

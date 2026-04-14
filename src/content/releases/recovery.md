@@ -14,7 +14,7 @@ tags:
   - killd-by
   - recovery
   - late-era
-archivePath: "CRFW Archive/_Documentation/KB/killd by/171 RecoveryFinaL/"
+archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/171 RecoveryFinaL/"
 summary: >
   Recovery appears in four folders in the archive — 169 REcovery Drafts, 170 Recovery4Burn,
   171 RecoveryFinaL, 172 RECOVERYWAV. The numbered prefixes are Colin's own chronology.

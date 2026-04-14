@@ -20,7 +20,7 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 **Environment notes for next session:**
 - Working dir: `/Users/dward/Desktop/site` — **not** in Dropbox (good; git + Dropbox fight over `node_modules/`).
-- Archive still at `../CRFW Archive/` (presumably still in Dropbox — that's fine; it's the source, not the repo).
+- Archive lives at `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/` (the CRFW folder in Dropbox). Stale `../CRFW Archive/` refs in earlier drafts of the docs have been fixed — see path-fix commit below.
 - `gh` authenticated as `dylwar27`, token scopes `gist, read:org, repo`.
 - Node / npm installed and working.
 
@@ -30,15 +30,15 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 **What's next (rough priority, per [HANDOFF_PROMPT.md](HANDOFF_PROMPT.md) and [CLAUDE.md](CLAUDE.md)):**
 
-1. **killd by bulk stub pass** — walk `../CRFW Archive/_Documentation/KB/killd by/` (~57 folders). One release stub per folder with `title`, `preservedTitle` (folder name verbatim), `project: "killd by"`, `date` (from folder name if it has a year, else oldest file mtime), `format` (LP ≥8 tracks, EP 3–7, single 1–2, mix if continuous, b-sides if named so, else "other"), `archivePath`. **Leave `summary` empty** — per golden rule #6, no AI-generated summaries of Colin's work. Branch `bulk/killd-by-stubs`, first few as individual commits to establish pattern, then bulk commit, PR to main. Exact prompt at [HANDOFF_PROMPT.md:37](HANDOFF_PROMPT.md:37).
+1. **killd by bulk stub pass** — walk `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/KB/killd by/` (~57 folders). One release stub per folder with `title`, `preservedTitle` (folder name verbatim), `project: "killd by"`, `date` (from folder name if it has a year, else oldest file mtime), `format` (LP ≥8 tracks, EP 3–7, single 1–2, mix if continuous, b-sides if named so, else "other"), `archivePath`. **Leave `summary` empty** — per golden rule #6, no AI-generated summaries of Colin's work. Branch `bulk/killd-by-stubs`, first few as individual commits to establish pattern, then bulk commit, PR to main. Exact prompt at [HANDOFF_PROMPT.md:37](HANDOFF_PROMPT.md:37).
 
-2. **alphabets bulk stub pass** — same pattern, `../CRFW Archive/_Documentation/alphabets/` (~169 folders). Branch `bulk/alphabets-stubs`.
+2. **alphabets bulk stub pass** — same pattern, `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/` (~169 folders). Branch `bulk/alphabets-stubs`.
 
-3. **Voice memo Whisper transcription** — script over ~780 files in `../CRFW Archive/_Documentation/Voice Memos/`. One JSON per memo with full transcript (no summary), filename as date. `whisper.cpp` with `small` or `medium` on Apple Silicon. Commit script first, then batches of ~50 entries. Prompt at [HANDOFF_PROMPT.md:57](HANDOFF_PROMPT.md:57).
+3. **Voice memo Whisper transcription** — script over ~780 files in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/`. One JSON per memo with full transcript (no summary), filename as date. `whisper.cpp` with `small` or `medium` on Apple Silicon. Commit script first, then batches of ~50 entries. Prompt at [HANDOFF_PROMPT.md:57](HANDOFF_PROMPT.md:57).
 
 4. **Cover art import** — for each stubbed release, if source folder has an image, copy to `public/media/releases/<slug>/` and update `coverArt:`. Do as a pass after the stub passes, or inline during the stub pass if it doesn't slow it down.
 
-5. **Vimeo embed wiring** — `../CRFW Archive/_Documentation/_Creative Assets/Videos/_UPLOADED TO VIMEO/` has URLs already. Create `videos/` entries by year.
+5. **Vimeo embed wiring** — `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` has URLs already. Create `videos/` entries by year.
 
 6. **GitHub Pages deploy** — revisit when there's enough content to want a live URL.
 

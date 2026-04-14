@@ -41,7 +41,7 @@ tags:
   - killd-by
   - debut-lp
   - court-clothes
-archivePath: "CRFW Archive/_Documentation/KB/killd by/41 CCFinaLsWAVs/"
+archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/41 CCFinaLsWAVs/"
 summary: >
   Court Clothes is the first full-length LP to surface under the "killd by" name.
   The archive holds it in multiple stages — CCdrafts (working versions), CCFinaLsWAVs
@@ -60,6 +60,6 @@ album mix. He worked in layers — draft → final → burn — and kept every l
 
 ## Where it lives in the archive
 
-`CRFW Archive/_Documentation/KB/killd by/41 CCFinaLsWAVs/` is the canonical final
+`CRFW Archive/_Documentation/Music/KB/killd by/41 CCFinaLsWAVs/` is the canonical final
 stage. `40 CCdrafts` is the step before it; `52 CourtClothes4Burn` is the step after.
 Multiple variant folders exist alongside — those are intentional, not duplicates.

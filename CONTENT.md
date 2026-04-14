@@ -29,7 +29,7 @@ tracklist:
   - n: 2
     title: "another track"
 tags: [killd-by, b-sides]
-archivePath: "CRFW Archive/_Documentation/KB/killd by/117 killd by - 2014-2016 -Bsides/"
+archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/117 killd by - 2014-2016 -Bsides/"
 summary: >
   A short paragraph for the popup. Context, what the folder contains,
   how it relates to the main releases.
@@ -73,7 +73,7 @@ Create `src/content/videos/<slug>.json`:
   "project": "killd by",
   "kind": "music video",
   "tags": ["court-clothes"],
-  "archivePath": "CRFW Archive/_Documentation/_Creative Assets/Videos/_UPLOADED TO VIMEO/..."
+  "archivePath": "CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/..."
 }
 ```
 
@@ -148,7 +148,7 @@ They AND together: clicking `killd by` + `photo` shows only killd-by-tagged phot
 
 The fastest way to populate the site:
 
-1. **Discography first.** Walk through every folder in `_Documentation/alphabets/` and `_Documentation/KB/killd by/`, make a release entry for each. Even stubs with just title + date + archivePath are valuable — they put things on the timeline.
+1. **Discography first.** Walk through every folder in `_Documentation/Music/alphabets/` and `_Documentation/Music/KB/killd by/`, make a release entry for each. Even stubs with just title + date + archivePath are valuable — they put things on the timeline.
 2. **Cover art in batch.** For each release folder, if there's an image file, drop it in `public/media/releases/<slug>/cover.jpg` and reference it.
 3. **Voice memos via Whisper.** One script runs through all the voice memo files, outputs JSON entries with transcripts. That one pass turns hundreds of opaque filenames into hundreds of searchable popups.
 4. **Photos after.** Bulk-import photos from `_Creative Assets/Images and Video Assets/` and the IG archive. Dates come from EXIF or filenames.

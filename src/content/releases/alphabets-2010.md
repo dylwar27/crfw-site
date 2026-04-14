@@ -9,7 +9,7 @@ coverArt: /media/releases/court-clothes/cover.svg
 tags:
   - alphabets
   - early-era
-archivePath: "CRFW Archive/_Documentation/alphabets/2010[_]/"
+archivePath: "CRFW Archive/_Documentation/Music/alphabets/2010[_]/"
 summary: >
   One of the earliest folders in the alphabets era. The archive contains 169
   alphabets-era folders spanning 2007–2013 — the original INDEX listed only six.

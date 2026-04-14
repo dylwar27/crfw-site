@@ -10,7 +10,7 @@ Read this file at the start of every session. Read `CONTENT.md` when you are add
 
 A static timeline site, dense and maximalist by default, with filter tabs that collapse the flood into simpler views. The vision, in Dyl's words: *"a timeline for his life and career with pop up examples; myriad, many many photos and examples, overwhelming just like him. Also tabs to filter to simpler views to find content."*
 
-The archive it draws from lives in `../CRFW Archive/` — ~45,000 files across ~125 GB of Colin's original work, reference library, and documentation. This site is the presentation layer. The archive is the truth.
+The archive lives at `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/` (the CRFW folder in Dropbox) — ~45,000 files across ~125 GB of Colin's original work, reference library, and documentation. This site is the presentation layer. The archive is the truth. In `archivePath` fields, use archive-relative paths that start `CRFW Archive/...` — the absolute location is machine-specific, but the archive-relative path is stable.
 
 ---
 
@@ -92,10 +92,10 @@ site/
 
 ## Outstanding work (rough priority)
 
-1. **Discography bulk pass** — walk every folder in `../CRFW Archive/_Documentation/alphabets/` (~169 folders) and `../CRFW Archive/_Documentation/KB/killd by/` (~57 folders). For each, create a release stub with `title`, `preservedTitle` (folder name), `project`, `date` (from folder name or file mtime), `format` (best guess), `archivePath`. Leave `summary` empty. This is volume work — volume is the point.
+1. **Discography bulk pass** — walk every folder in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/` (~169 folders) and `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/KB/killd by/` (~57 folders). For each, create a release stub with `title`, `preservedTitle` (folder name), `project`, `date` (from folder name or file mtime), `format` (best guess), `archivePath`. Leave `summary` empty. This is volume work — volume is the point.
 2. **Cover art import** — for every release folder that contains an image file, copy it into `public/media/releases/<slug>/` and reference it in frontmatter.
-3. **Voice memo transcription** — run Whisper on `../CRFW Archive/_Documentation/Voice Memos/` (~780 files). Emit one JSON entry per memo into `src/content/voice_memos/`. Script it; do not hand-author.
-4. **Vimeo embed wiring** — the archive's `../CRFW Archive/_Documentation/_Creative Assets/Videos/_UPLOADED TO VIMEO/` has already been uploaded. Pull the embed URLs and create video entries.
+3. **Voice memo transcription** — run Whisper on `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/` (~780 files). Emit one JSON entry per memo into `src/content/voice_memos/`. Script it; do not hand-author.
+4. **Vimeo embed wiring** — the archive's `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` has already been uploaded. Pull the embed URLs and create video entries.
 5. **IG archive import** — if/when Dyl pulls the IG archive JSON, batch-create photo entries with captions and dates.
 6. **Filter axes — year slider, tag chips, Pagefind search** — once there's enough content to warrant them.
 7. **Deploy** — GitHub Pages via Actions is the default plan. See HANDOFF_PROMPT.md.
