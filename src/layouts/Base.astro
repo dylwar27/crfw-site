@@ -1,0 +1,17 @@
+---
+import '../styles/global.css';
+interface Props { title?: string; }
+const { title = 'Colin Ward / CRFW' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="An archive and timeline of the work of Colin Ward (CRFW / killd by / alphabets)." />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

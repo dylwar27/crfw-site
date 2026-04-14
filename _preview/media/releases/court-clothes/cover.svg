@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Court Clothes — placeholder cover">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="45%" stop-color="#ef476f"/>
+      <stop offset="100%" stop-color="#1b1b2f"/>
+    </radialGradient>
+    <filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.25 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <rect width="600" height="600" fill="url(#g)"/>
+  <rect width="600" height="600" fill="black" filter="url(#n)" opacity="0.6"/>
+  <g font-family="Georgia, serif" fill="#fff" text-anchor="middle">
+    <text x="300" y="260" font-size="64" font-weight="700" letter-spacing="2">Court</text>
+    <text x="300" y="340" font-size="64" font-weight="700" letter-spacing="2">Clothes</text>
+    <text x="300" y="410" font-size="18" letter-spacing="6" opacity="0.85">KILLD BY</text>
+    <text x="300" y="480" font-size="13" letter-spacing="3" opacity="0.6">— placeholder cover —</text>
+  </g>
+</svg>
