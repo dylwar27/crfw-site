@@ -9,6 +9,18 @@ const photos = await getCollection('photos');
 const videos = await getCollection('videos');
 const voice_memos = await getCollection('voice_memos');
 
+// Prefix root-relative asset paths with Astro's configured base (e.g.
+// "/crfw-site") so cover art / photo / video posters resolve correctly
+// when the site is hosted at a sub-path. When a custom domain lands and
+// `base` is set back to '/', this becomes a no-op automatically.
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+function withBase(p: unknown): string | undefined {
+  if (typeof p !== 'string' || !p) return undefined;
+  if (p.startsWith('//') || /^[a-z]+:\/\//i.test(p)) return p; // external
+  if (!p.startsWith('/')) return p; // relative
+  return BASE + p;
+}
+
 // Normalize everything into one shape for the timeline
 type TLEntry = {
   id: string;
@@ -36,11 +48,11 @@ for (const r of releases) {
     date: r.data.date,
     year,
     project: r.data.project,
-    cover: r.data.coverArt,
+    cover: withBase(r.data.coverArt),
     // LPs are big cards; everything else smaller
     size: r.data.format === 'LP' ? 'xl' : r.data.format === 'EP' ? 'lg' : 'md',
     tags: r.data.tags ?? [],
-    data: { ...r.data, body: r.body },
+    data: { ...r.data, coverArt: withBase(r.data.coverArt), body: r.body },
   });
 }
 
@@ -69,10 +81,10 @@ for (const p of photos) {
     date: p.data.date!,
     year,
     project: p.data.project,
-    cover: p.data.src,
+    cover: withBase(p.data.src),
     size: 'sm',
     tags: p.data.tags ?? [],
-    data: p.data,
+    data: { ...p.data, src: withBase(p.data.src) },
   });
 }
 
@@ -86,10 +98,10 @@ for (const v of videos) {
     date: v.data.date!,
     year,
     project: v.data.project,
-    cover: v.data.poster,
+    cover: withBase(v.data.poster),
     size: 'md',
     tags: v.data.tags ?? [],
-    data: v.data,
+    data: { ...v.data, poster: withBase(v.data.poster), localSrc: withBase(v.data.localSrc) },
   });
 }
 
@@ -104,7 +116,7 @@ for (const m of voice_memos) {
     project: m.data.project,
     size: 'sm',
     tags: m.data.tags ?? [],
-    data: m.data,
+    data: { ...m.data, src: withBase(m.data.src) },
   });
 }
 

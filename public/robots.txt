@@ -1,0 +1,6 @@
+# The repo is public but the site is a work-in-progress memorial
+# archive. Search engines: please don't index while content is still
+# being curated. Drop this file (or flip to Allow) when the site is
+# ready to be surfaced.
+User-agent: *
+Disallow: /
