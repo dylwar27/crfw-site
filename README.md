@@ -2,10 +2,12 @@
 
 A timeline site for the work of Colin Ward (CRFW / killd by / alphabets).
 
-> **If you're a coding agent (Claude Code, Cursor, etc.):** start with [`CLAUDE.md`](./CLAUDE.md) before touching anything. It contains the ground rules for this archive and the preservation conventions that must not be violated. Then read [`CONTENT.md`](./CONTENT.md) before adding content. For first-time git/GitHub setup, see [`HANDOFF_PROMPT.md`](./HANDOFF_PROMPT.md).
+**Live:** [https://dylwar27.github.io/crfw-site/](https://dylwar27.github.io/crfw-site/) — work in progress. The site is public but `robots.txt` asks search engines not to index it yet; share the URL directly while the archive is being curated. When it's ready to be surfaced, flip [`public/robots.txt`](./public/robots.txt).
+
+> **If you're a coding agent (Claude Code, Cursor, etc.):** start with [`CLAUDE.md`](./CLAUDE.md) before touching anything. It contains the ground rules for this archive and the preservation conventions that must not be violated. Then read [`CONTENT.md`](./CONTENT.md) before adding content. For first-time git/GitHub setup, see [`HANDOFF_PROMPT.md`](./HANDOFF_PROMPT.md). [`SESSIONS.md`](./SESSIONS.md) has the running session log.
 
 
-This is a proof-of-concept scaffold. The idea:
+The idea:
 - **Default view** — dense, layered, maximalist. Everything visible at once, organized by year. Different sized cards. Colin's typography preserved.
 - **Filter tabs** — act as mercy. Pick a project (alphabets / killd by / life), pick a medium (release / photo / video / voice memo). The grid collapses to what you filtered for.
 - **Popups** — every card opens a detail view with tracklist, cover, notes, archive path, related media.
@@ -16,28 +18,27 @@ This is a proof-of-concept scaffold. The idea:
 - Plain CSS (no framework)
 - Vanilla JS for popups + filter tabs (no React/Vue)
 - [Pagefind](https://pagefind.app/) (planned) — client-side search
+- Deployed via GitHub Pages (see [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)); pushes to `main` ship.
 
-No database. No backend. The output is a folder of static HTML/CSS/JS you can host anywhere — Netlify, Cloudflare Pages, Vercel, a thumb drive.
+No database. No backend. The output is a folder of static HTML/CSS/JS — Pages is just the current host; it can go anywhere.
 
 ## Quick preview (no install required)
 
-Open `_preview/index.html` — but you need a local web server because the HTML uses absolute paths for assets.
-
-In a terminal:
+Open `_preview/index.html` — but you need a local web server because the HTML uses absolute paths for assets. From this folder:
 
 ```bash
-cd "/Users/dward/Library/CloudStorage/Dropbox/CRFW/site/_preview"
+cd _preview
 python3 -m http.server 8000
 ```
 
-Then visit [http://localhost:8000](http://localhost:8000) in your browser.
+Then visit [http://localhost:8000](http://localhost:8000) in your browser. (Or just visit the [live URL](https://dylwar27.github.io/crfw-site/).)
 
 ## Developing
 
-Install Node 18+ and then:
+Install Node 18+ (the repo pins `24` via [`.nvmrc`](./.nvmrc)) and then, from this folder:
 
 ```bash
-cd "/Users/dward/Library/CloudStorage/Dropbox/CRFW/site"
+nvm use            # picks up .nvmrc → 24
 npm install
 npm run dev
 ```
@@ -79,9 +80,12 @@ site/
 
 ## What's seeded right now
 
-- **Court Clothes** (killd by, 2014) — fully populated: preserved title formatting, 10-track tracklist with each track's exact original typography, summary, archive path.
-- **Recovery** (killd by, 2017) — stub; tracklist needs reconstruction from 4 variant folders.
-- **2010 [_]** (alphabets, 2010) — placeholder representing the start of the alphabets era.
-- **Archive stewardship begins** (event, 2026-04) — meta-entry.
+- **58 release entries** —
+  - **Court Clothes** (killd by, 2014) — fully populated: preserved title formatting, 10-track tracklist with each track's exact original typography, summary, archive path.
+  - **Recovery** (killd by, 2017) — stub; tracklist needs reconstruction from 4 variant folders.
+  - **2010 [_]** (alphabets, 2010) — placeholder representing the start of the alphabets era.
+  - **55 killd by stubs** (bulk pass, Session 04) — `title`, `preservedTitle`, `project`, `date`, `format`, `archivePath` populated; `summary` left empty for Dyl to fill in. Dates on folders without a year in the name were back-filled from file mtimes — curator-verify-me.
+- 1 **event** entry — archive stewardship begins (2026-04).
+- **Photos / videos / voice_memos / lyrics / people** — schemas validate, no entries yet.
 
-Cover art is an SVG placeholder. Real cover art from the archive (`CCcoverXX.jpg`) should replace `public/media/releases/court-clothes/cover.svg` with a `.jpg` of the same name (and update the release frontmatter).
+Cover art is an SVG placeholder for Court Clothes. Real cover art from the archive (`CCcoverXX.jpg`) should replace `public/media/releases/court-clothes/cover.svg` with a `.jpg` of the same name (and update the release frontmatter). The 55 bulk stubs have no cover art yet — a separate pass.

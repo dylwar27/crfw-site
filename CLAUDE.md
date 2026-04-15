@@ -81,24 +81,29 @@ site/
 
 ---
 
-## Current state (as of initial scaffold)
+## Current state (as of Session 04, 2026-04-15)
 
-- 3 release entries (Court Clothes fully populated, Recovery + alphabets-2010 stubs) + 1 event entry
-- Cover art is a generated SVG placeholder. The real `CCcoverXX.jpg` from the archive needs to be dropped into `public/media/releases/court-clothes/cover.jpg` and the `coverArt:` field updated.
+- **58 release entries** — Court Clothes fully populated; Recovery + alphabets-2010 as original stubs; 55 killd by stubs from the bulk pass (PR #1). All `summary` fields on the bulk stubs are empty per golden rule #6 — Dyl's voice to add.
+- 1 event entry (archive-stewardship-begins).
+- Cover art is still a generated SVG placeholder for Court Clothes. The real `CCcoverXX.jpg` from the archive needs to be dropped into `public/media/releases/court-clothes/cover.jpg` and the `coverArt:` field updated. Bulk stubs have no cover art yet.
 - Photos, videos, voice_memos, lyrics, people collections exist and validate but have no entries yet.
 - Filter tabs work on two axes (project × medium). Year slider, tag chips, free-text search not yet implemented.
+- **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, static build on push to main. `robots.txt` currently Disallows all crawlers (WIP posture). `astro.config.mjs` has `base: '/crfw-site'`; `withBase()` helper in `src/pages/index.astro` prefixes root-relative asset paths so the custom-domain swap is config-only.
 
 ---
 
 ## Outstanding work (rough priority)
 
-1. **Discography bulk pass** — walk every folder in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/` (~169 folders) and `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/KB/killd by/` (~57 folders). For each, create a release stub with `title`, `preservedTitle` (folder name), `project`, `date` (from folder name or file mtime), `format` (best guess), `archivePath`. Leave `summary` empty. This is volume work — volume is the point.
-2. **Cover art import** — for every release folder that contains an image file, copy it into `public/media/releases/<slug>/` and reference it in frontmatter.
-3. **Voice memo transcription** — run Whisper on `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/` (~780 files). Emit one JSON entry per memo into `src/content/voice_memos/`. Script it; do not hand-author.
-4. **Vimeo embed wiring** — the archive's `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` has already been uploaded. Pull the embed URLs and create video entries.
-5. **IG archive import** — if/when Dyl pulls the IG archive JSON, batch-create photo entries with captions and dates.
-6. **Filter axes — year slider, tag chips, Pagefind search** — once there's enough content to warrant them.
-7. **Deploy** — GitHub Pages via Actions is the default plan. See HANDOFF_PROMPT.md.
+1. **killd-by-adjacent folders** — `KB/Killd By +`, `KB/M_Killd By`, `Other Projects/killdfilez`, `Other Projects/unnamed_killdby_folder`. Same generator (`scripts/bulk-stub-releases.mjs`), different `--source` / `--archive-relative` flags. Short branch, one PR.
+2. **alphabets bulk pass** — ~169 folders in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/`. Same script with `--project alphabets`. This is volume work — volume is the point.
+3. **Cover art import** — for every release folder that contains an image file, copy it into `public/media/releases/<slug>/` and reference it in frontmatter. Do as a pass after stubs, or inline during each bulk pass.
+4. **Voice memo transcription** — run Whisper on `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/` (~780 files). Emit one JSON entry per memo into `src/content/voice_memos/`. Script it; do not hand-author. See HANDOFF_PROMPT.md §3.
+5. **Vimeo embed wiring** — the archive's `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` has already been uploaded. Pull the embed URLs and create video entries.
+6. **IG archive import** — if/when Dyl pulls the IG archive JSON, batch-create photo entries with captions and dates.
+7. **Filter axes — year slider, tag chips, Pagefind search** — once there's enough content to warrant them.
+8. **Custom domain** — when Dyl is ready: add `public/CNAME`, swap `site` / `base` in `astro.config.mjs` (two lines), drop or flip `public/robots.txt`. The `withBase()` pattern means no content edits are needed.
+
+**Done (as of Session 04):** ~~killd by discography bulk pass~~ (55 stubs shipped, PR #1). ~~GitHub Pages deploy~~ (PR #2, live URL active).
 
 ---
 

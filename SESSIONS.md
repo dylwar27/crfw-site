@@ -4,6 +4,59 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 04 — 2026-04-15 — bulk pass landed, site is live
+
+**Goal:** unblock the build (per Session 03's prescription), finish the killd by bulk pass, and get the site deployed.
+
+**Done — killd by bulk pass shipped (PR #1, merged as `374da9c`):**
+- Disk freed to ~90% full; `astro --help` dropped from ~60 s to 0.244 s. Session 03's diagnosis held: the "hang" was machine I/O load, not code.
+- Added three more individual stubs on `bulk/killd-by-stubs` to cover the remaining representative patterns:
+  - `3f3e889` — *Stub: 170 Recovery4Burn* — variant-marker case; `format: demo`, `tags: [killd-by, burn-stage]`.
+  - `695d7b2` — *Stub: DjpOoLsiDe.1* — mashed-typography / no numeric prefix; `format: LP` (20 audio files).
+  - `f90c5b1` — *Stub: OUTCASTS (b-sides 2014-2016)* — paren-style year range, exercises the non-word-boundary year regex; `format: b-sides`, `date: "2014"`.
+- Ran the generator for the rest: `0f6d5d6` — *Bulk stubs: 51 remaining killd by folders* — all 51 emitted, 0 schema errors, `npm run build` clean in 611 ms.
+- PR #1 *killd by: 55 release stubs (bulk pass)* opened, reviewed, merged. Flagged the 2015-mtime flatness in the PR body for curator follow-up (many folders without a year in the name defaulted to a Dropbox-sync-touched mtime).
+- **`src/content/releases/` now has 58 entries** (3 seeded + 55 new stubs).
+
+**Done — repo flipped public, site deployed to GitHub Pages (PR #2, merged as `0aa421d`):**
+- Decision flow: Dyl confirmed (a) custom domain will eventually land, (b) initial preview audience is friends/family, (c) public repo on GitHub is fine. Given (b)+(c), went straight to GitHub Pages rather than Cloudflare / Netlify / Vercel. Used a `robots.txt` Disallow as the "unlisted WIP" posture — URL is shareable but search engines are asked not to index while content is still being curated.
+- `gh repo edit --visibility public` — repo flipped, description + homepage URL set.
+- `15b9bff` — *Wire GitHub Pages deploy + base-path handling:*
+  - [.github/workflows/deploy.yml](.github/workflows/deploy.yml) — standard `withastro/action@v3` + `actions/deploy-pages@v4` pipeline; triggers on push to main and `workflow_dispatch`.
+  - [astro.config.mjs](astro.config.mjs) — `site: 'https://dylwar27.github.io'`, `base: '/crfw-site'`, `build: { assets: 'assets' }`. Comment in-file notes the two-line swap for when a custom domain lands.
+  - [src/pages/index.astro](src/pages/index.astro) — added `withBase()` helper that prefixes root-relative asset paths with `import.meta.env.BASE_URL`. Applied to cover art (releases), src (photos, voice_memos), poster + localSrc (videos). Idempotent: when base is `/`, becomes a no-op. Means the custom-domain migration is config-only, zero content edits.
+  - [public/robots.txt](public/robots.txt) — `User-agent: *` / `Disallow: /` with an in-file note explaining the WIP rationale and how to flip it.
+  - [.nvmrc](.nvmrc) — pinned to `24` (Node v24.14.1 on this machine; Session 02's suspected Node-25 incompat turned out to be unrelated — load-induced — but pinning avoids future confusion).
+- Along the way: `gh auth refresh -h github.com -s workflow` was needed (the token didn't have `workflow` scope, so the first push of `deploy.yml` bounced). Preflight check to `gh api repos/dylwar27/crfw-site/pages` showed Pages config was already `build_type: "workflow"` — no Settings-UI step needed.
+- PR #2 *Deploy site to GitHub Pages (base path + robots disallow)* merged. Deploy run `24481551331` succeeded. **Live URL: https://dylwar27.github.io/crfw-site/** returns 200; `/crfw-site/robots.txt` serves the Disallow; cover art resolves under the `/crfw-site/` base.
+
+**State at end of session:**
+- Repo: `dylwar27/crfw-site` — **public**, description + homepage set, Pages on, robots Disallow active.
+- `main` has: scaffold + path fix + session logs 01–03 + PR #1 merge + PR #2 merge. 58 release entries. No open PRs.
+- Node pinned to 24 via `.nvmrc`.
+
+**Next work (deferred, unchanged priorities):**
+1. **killd-by-adjacent folders** outside `KB/killd by/` (`KB/Killd By +`, `KB/M_Killd By`, `Other Projects/killdfilez`, `Other Projects/unnamed_killdby_folder`). Same generator, short branch.
+2. **alphabets bulk pass** — 169 folders in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/`. Same script, `--project alphabets`, `--source …/alphabets`, `--archive-relative "CRFW Archive/_Documentation/Music/alphabets"`.
+3. **Voice memo Whisper transcription** — ~780 files; script-first, then batches of ~50 per commit. HANDOFF_PROMPT.md §3 has the prompt.
+4. **Cover art import** — for every stubbed release whose source folder has an image, copy to `public/media/releases/<slug>/` and update `coverArt:`. Can be done as its own pass or rolled into each bulk pass.
+5. **Vimeo embed wiring** — `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` already has URLs.
+6. **Filter axes** — year slider, tag chips, Pagefind search — once there's more content.
+7. **Custom domain** — when Dyl is ready: add `public/CNAME`, swap `site` / `base` in astro.config.mjs (two lines), drop robots.txt (or flip to Allow).
+
+**Open curator questions (inherited, not actioned):**
+- 2015-mtime flatness across many killd by stubs — dates where the folder name has no year were back-filled from file mtimes, which Dropbox sync touched. Curator-verify-me.
+- `summary` is empty on all 55 new stubs (per golden rule #6). Dyl's voice to add.
+
+**Files touched this session:**
+- [src/content/releases/170-recovery4burn.md](src/content/releases/170-recovery4burn.md), [djpoolside-1.md](src/content/releases/djpoolside-1.md), [outcasts-b-sides-2014-2016.md](src/content/releases/outcasts-b-sides-2014-2016.md) — individual stubs.
+- 51 more stubs in [src/content/releases/](src/content/releases/) from the bulk commit.
+- [astro.config.mjs](astro.config.mjs), [src/pages/index.astro](src/pages/index.astro) — base-path handling.
+- [.github/workflows/deploy.yml](.github/workflows/deploy.yml), [public/robots.txt](public/robots.txt), [.nvmrc](.nvmrc) — new.
+- [SESSIONS.md](SESSIONS.md), [CLAUDE.md](CLAUDE.md), [README.md](README.md), [HANDOFF_PROMPT.md](HANDOFF_PROMPT.md) — this log + doc sweep.
+
+---
+
 ## Session 03 — 2026-04-14 — root-caused the "build hang" (machine, not code)
 
 **Goal:** pick up from Session 02's blocker — Astro CLI hanging on `--help` and `build` — and get to a place where the `bulk/killd-by-stubs` branch can be verified.

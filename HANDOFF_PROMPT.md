@@ -2,6 +2,14 @@
 
 This file is for **Dyl** (human) and **Claude Code** (agent). Dyl opens a terminal in this folder, starts `claude`, and pastes the "First message" below.
 
+> **Status as of Session 04 (2026-04-15):**
+> - **Session 1 — scaffold into GitHub:** done. Repo lives at [dylwar27/crfw-site](https://github.com/dylwar27/crfw-site) (public).
+> - **Session 2 — killd by bulk stub pass:** done for the main `KB/killd by/` folder (55 stubs, PR #1). The alphabets pass (~169 folders) and the killd-by-adjacent folders (`KB/Killd By +`, `KB/M_Killd By`, `Other Projects/killdfilez`, `Other Projects/unnamed_killdby_folder`) are still pending — the prompt below still applies, just point it at the next `--source`.
+> - **GitHub Pages deploy:** done. Live at [dylwar27.github.io/crfw-site](https://dylwar27.github.io/crfw-site/).
+> - **Session 3 — voice memo transcription:** not started.
+>
+> Running log: [`SESSIONS.md`](./SESSIONS.md). New agents should read that first for the current state.
+
 ---
 
 ## Before you start
