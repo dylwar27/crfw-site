@@ -4,6 +4,45 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 03 — 2026-04-14 — root-caused the "build hang" (machine, not code)
+
+**Goal:** pick up from Session 02's blocker — Astro CLI hanging on `--help` and `build` — and get to a place where the `bulk/killd-by-stubs` branch can be verified.
+
+**Done (no repo changes — investigation + docs only):**
+- Reproduced the Session-02 hang: `./node_modules/.bin/astro --help` took ~60s on first try; `astro sync` took **18m41s wall / 2.6s CPU (0% CPU)**; the process sits in `kqueue` waiting on module-load I/O, not looping or spinning.
+- Narrowed where time is spent: probing `core/messages.js` → `install-package.js` → its deps, the slowness moves around (prompts took 10.5s on one run, sub-10ms on the next). It is not deterministic — it is I/O queue depth.
+- Confirmed **root cause is machine state, not Astro / Node / the repo**:
+  - Disk: **98% full** (`/System/Volumes/Data`: 13 Gi free of 460 Gi). APFS copy-on-write gets expensive near full.
+  - CPU: Ableton Live 12 Suite pegged at **~52% CPU** (PID 80592) throughout.
+  - Memory: ~150 MB free pages, high inactive/wired — system was pushing to swap.
+  - Load avg: 2.79 / 3.06 / 2.87.
+  - Node version was **not** the issue. Session 02 suspected Node 25; switching `nvm use 24` (v24.14.1) produced the same slow-but-eventually-correct behavior. `astro --version` → `v4.16.19` and `astro --help` → full help output, both succeeded, just slowly.
+- `astro sync` **did complete successfully** when left alone: `Generated [types] 10.84s`. No schema errors across existing content (court-clothes, recovery, alphabets-2010). So the `Music/` path-fix commit did not regress anything.
+- Inspected [117-killd-by-2014-2016-bsides.md](src/content/releases/117-killd-by-2014-2016-bsides.md) on `bulk/killd-by-stubs` against [config.ts](src/content/config.ts) schema by hand. All required fields present and valid (`title`, `project: "killd by"`, `date: "2014"`, `format: b-sides`). Optional fields (`preservedTitle`, `archivePath`, `tags`, `summary`) are all well-formed. Stub is schema-valid.
+- Did not run `astro build` to completion — not worth the ~20 min cost at current machine load when `astro sync` already confirms content collections parse.
+
+**Diagnosis in plain language:** Astro is fine. Node is fine. The repo is fine. The machine is loaded (Ableton + near-full disk + memory pressure), so Node module loading — which is I/O-bound — crawls. Any long-feeling "hang" during a session where Ableton is running or disk is tight will be this.
+
+**Next session — do one of these *before* touching code:**
+1. **Free disk.** Get `/System/Volumes/Data` under 90% full. Empty trash, clear `~/Library/Caches`, remove any stale Xcode simulators, etc.
+2. **Close Ableton / other heavy native apps** while building.
+3. Then `export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && nvm use 24 && npm run build`. Expect it to complete in 30–60 s on an unloaded machine. If it still takes >3 min: check `ps aux | sort -rnk 3 | head` and `df -h` before assuming the code broke.
+
+**Continuing the bulk pass (unchanged from Session 02's plan, just unblocked):**
+- Branch `bulk/killd-by-stubs` is pushed and has the generator script + first stub.
+- Once a full `npm run build` succeeds on that branch, add 2–3 more individual commits to cover representative patterns:
+  - A folder *without* a numeric prefix (e.g. `Court Clothes` → `court-clothes-2.md`)
+  - A folder with variant markers (e.g. `170 Recovery4Burn` → `170-recovery4burn.md` format `demo`)
+  - A folder with mashed letters+digits (e.g. `DjpOoLsiDe.1` → exercise the year/format regex edge cases)
+- Then run `node scripts/bulk-stub-releases.mjs --project "killd by" --source "/Users/dward/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/KB/killd by" --archive-relative "CRFW Archive/_Documentation/Music/KB/killd by" --skip "41 CCFinaLsWAVs" --skip "171 RecoveryFinaL" --skip "117 killd by - 2014-2016 -Bsides" [--skip the other individually-committed folders] --write` for the rest.
+- `npm run build` after bulk generation.
+- Open PR to main. Flag the 2015-mtime flatness in the PR body (Dropbox sync touched file mtimes, so folders without a year in the name defaulted to a fake date — curator-verify-me).
+
+**Files touched this session:**
+- [SESSIONS.md](SESSIONS.md) — this entry; revised the Session-02 diagnosis (`Blocker` section preserved intact below for historical truth, but the real cause is what's written here).
+
+---
+
 ## Session 02 — 2026-04-14 — path fix + killd by bulk pass (partial, blocked)
 
 **Goals:**
