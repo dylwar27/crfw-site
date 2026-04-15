@@ -4,6 +4,59 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 02 — 2026-04-14 — path fix + killd by bulk pass (partial, blocked)
+
+**Goals:**
+- (A) Fix stale archive paths in docs + existing content (groundwork).
+- (B) Begin killd by discography bulk stub pass. Decisions agreed on up front: **preserve everything** (no skip-list beyond entries that already exist as canonical); slug scheme = slugified folder name with Colin's numeric chronology prefix retained; one commit per stub (max modulatability); branch `bulk/killd-by-stubs`, PR to main when complete.
+
+**Done — on `main`:**
+- Audited all `../CRFW Archive/...` references in docs + content. Found real structure is `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/{alphabets,KB/killd by}/` — the `Music/` segment was missing everywhere, and the `../` relative prefix is stale since the repo moved to `~/Desktop/site/` (outside the Dropbox tree).
+- Verified counts match [CLAUDE.md](CLAUDE.md) estimates: killd by = 57 folders, alphabets = 169. Identified two other stale paths: Vimeo source is actually at `_Quarantine/_UPLOADED TO VIMEO/` not `_Creative Assets/Videos/_UPLOADED TO VIMEO/`; voice memos and `Images and Video Assets` paths confirmed correct.
+- Commit **`2e56644`** — *Fix stale archive paths in docs and existing content.* Updated 7 files; `archivePath` convention documented in CLAUDE.md (archive-relative `CRFW Archive/...`; narrative in docs uses absolute `~/Library/CloudStorage/...` location).
+
+**Done — on branch `bulk/killd-by-stubs` (not yet merged):**
+- Commit **`54fe61d`** — *Add bulk-stub-releases.mjs — generator for release stubs.* Node script at [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs). Walks a project folder, emits one Astro release stub per subfolder. Word-boundary regexes deliberately avoided in format/year detection because Colin's naming mashes letters and digits together (`B-SIDES2017`, `Recovery4Burn`, `RcvryDrafts`) — `\b` fails there. Default dry-run; `--write` to emit.
+- Dry-run output verified: 57 subfolders, 2 skipped (`41 CCFinaLsWAVs` → existing `court-clothes.md`; `171 RecoveryFinaL` → existing `recovery.md`), 55 new stubs planned, 0 errors. Format heuristics confirmed sane (stage/variant markers → `demo`, b-sides collections → `b-sides`, fullmix folders → `mix`, audio count → LP/EP/single). Slug collisions auto-suffixed (`2014-2016-bsides-2.md`, `court-clothes-2.md`).
+- Commit **`8ffecb7`** (or similar — see branch) — first stub: [src/content/releases/117-killd-by-2014-2016-bsides.md](src/content/releases/117-killd-by-2014-2016-bsides.md). Schema-valid by inspection.
+
+**⚠️ Blocker — build verification not possible end-of-session:**
+
+Astro CLI (`node_modules/.bin/astro`) started hanging with zero output mid-session, even on `astro --help`. Not just `build` — the CLI itself hangs. Confirmed:
+- `astro` bin shim invokes node semver check then `import('./dist/cli/index.js')`. Loading the CLI module directly via `import(...)` completes in ~14ms. Running the shim hangs indefinitely. Suggests the hang is *after* CLI import, possibly in config loading, project detection, or a dep (vite, rollup).
+- `.astro/` cache cleared, `dist/` cleared — no help.
+- Node v25.9.0. Astro 4.16.19 declares `engines.node: ^18.17.1 || ^20.3.0 || >=21.0.0` (so v25 is "supported" on paper), but Node 25 is new and dep chain may have silent incompat.
+- Earlier in this same session, `npm run build` succeeded (see Session 01 + the path-fix commit verification). So something changed between those runs and now. Nothing obvious in the diff — just doc text edits, `archivePath` string changes, and the script + first stub (both removed in isolation, hang persisted).
+- Possible culprits (untested, in likelihood order): Node 25 incompat surfacing intermittently; a stray file watcher from an earlier background task holding a lock; Dropbox CloudStorage filesystem weirdness; corrupted `node_modules` from the session.
+
+**Suggested debug order for next session (before continuing the bulk pass):**
+1. `nvm install 22 && nvm use 22` (or 20), then `npm run build` — most likely fix. If that works, pin `.nvmrc` to the working version.
+2. If Node 22 doesn't fix it: `rm -rf node_modules package-lock.json && npm install && npm run build`.
+3. If still broken: run `node --trace-warnings node_modules/.bin/astro --help` with a pipeline to `tee` so you can see partial output. Also check `lsof -p <pid>` on the hung process to see what it's waiting on.
+4. Once the build works again, run `npm run build` on the current `bulk/killd-by-stubs` branch — if the first stub (`117-killd-by-2014-2016-bsides.md`) validates, proceed with the rest.
+
+**Continuing the bulk pass after build is unblocked:**
+- The generator is already on the branch. Agreed plan was: first 3–5 stubs as individual commits (to establish pattern), then one bulk commit for the remaining ~50.
+- After the first stub is verified, suggested next two individual commits: one folder *without* a numeric prefix (e.g. `Court Clothes` → `court-clothes-2.md`) and one with variant markers (e.g. `170 Recovery4Burn` → `170-recovery4burn.md` format `demo`). That covers the three representative cases.
+- Then: `node scripts/bulk-stub-releases.mjs --project "killd by" --source "…" --archive-relative "CRFW Archive/_Documentation/Music/KB/killd by" --skip "41 CCFinaLsWAVs" --skip "171 RecoveryFinaL" --write` for the rest. **Before running**, skip the 4 folders already stubbed individually (add more `--skip` flags), or just let the generator silently overwrite them (currently it does — a safety improvement for next session could be refusing to overwrite without `--force`).
+- Open PR against main when complete. Flag the 2015-mtime flatness in the PR body — many folders got `2015` as their date because Dropbox sync touched mtimes; dates for anything without a year in the folder name should be considered curator-verify-me.
+
+**Deferred from this session (unchanged from Session 01):**
+- killd-by-adjacent folders outside `KB/killd by/` (`KB/Killd By +`, `KB/M_Killd By`, `Other Projects/killdfilez`, `Other Projects/unnamed_killdby_folder`). Treat as a separate pass after the main 57 land.
+- alphabets bulk pass (169 folders). Same script, just different `--project`, `--source`, `--archive-relative` flags.
+- Voice memo Whisper transcription.
+- GitHub Pages deploy.
+- Open questions from Session 01: custom domain, `_preview/` commit policy.
+
+**Files touched this session:**
+- [CLAUDE.md](CLAUDE.md), [CONTENT.md](CONTENT.md), [HANDOFF_PROMPT.md](HANDOFF_PROMPT.md) — path fixes.
+- [SESSIONS.md](SESSIONS.md) — Session 01 paths + this entry.
+- [src/content/releases/court-clothes.md](src/content/releases/court-clothes.md), [recovery.md](src/content/releases/recovery.md), [alphabets-2010.md](src/content/releases/alphabets-2010.md) — `archivePath` added `Music/` segment.
+- (branch) [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — new.
+- (branch) [src/content/releases/117-killd-by-2014-2016-bsides.md](src/content/releases/117-killd-by-2014-2016-bsides.md) — new.
+
+---
+
 ## Session 01 — 2026-04-14 — scaffold into GitHub
 
 **Goal (from [HANDOFF_PROMPT.md](HANDOFF_PROMPT.md)):** get the initial scaffold into a private GitHub repo cleanly. No content work.
