@@ -9,6 +9,12 @@ import { defineCollection, z, reference } from 'astro:content';
 const project = z.string().min(1)
   .describe('Which creative era or identity this belongs to.');
 
+// All collections share a `published` flag. Defaults to true so existing
+// entries are visible without edits. Set to false to log an entry in the
+// archive without showing it on the public timeline. The /admin page
+// shows everything regardless of this flag.
+const published = z.boolean().default(true);
+
 // Flexible date: a full YYYY-MM-DD, or YYYY-MM, or YYYY. Events in Colin's
 // archive are often only known to a year or month.
 const fuzzyDate = z.string().regex(
@@ -48,6 +54,7 @@ const releases = defineCollection({
     archivePath: z.string().optional()
       .describe('Where this lives in the Dropbox archive for curator reference'),
     summary: z.string().optional(),
+    published,
   }),
 });
 
@@ -63,6 +70,7 @@ const photos = defineCollection({
     tags: z.array(z.string()).default([]),
     source: z.enum(['archive', 'instagram', 'press', 'friend', 'unknown']).default('archive'),
     archivePath: z.string().optional(),
+    published,
   }),
 });
 
@@ -82,6 +90,7 @@ const videos = defineCollection({
     tags: z.array(z.string()).default([]),
     kind: z.enum(['music video', 'live', 'rehearsal', 'interview', 'home', 'other']).default('other'),
     archivePath: z.string().optional(),
+    published,
   }),
 });
 
@@ -97,6 +106,7 @@ const voice_memos = defineCollection({
     project: project.optional(),
     tags: z.array(z.string()).default([]),
     archivePath: z.string().optional(),
+    published,
   }),
 });
 
@@ -110,6 +120,7 @@ const lyrics = defineCollection({
     relatedTrack: z.string().optional(),
     archivePath: z.string().optional(),
     tags: z.array(z.string()).default([]),
+    published,
   }),
 });
 
@@ -140,6 +151,7 @@ const events = defineCollection({
     relatedPhotos: z.array(reference('photos')).default([]),
     tags: z.array(z.string()).default([]),
     summary: z.string().optional(),
+    published,
   }),
 });
 

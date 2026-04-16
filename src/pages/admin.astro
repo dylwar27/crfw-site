@@ -1,0 +1,543 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+// Load ALL collections — no published filter here
+const releases = await getCollection('releases');
+const events = await getCollection('events');
+const photos = await getCollection('photos');
+const videos = await getCollection('videos');
+const voice_memos = await getCollection('voice_memos');
+
+// Flatten into a universal row shape for the table
+type AdminRow = {
+  id: string;
+  kind: string;
+  title: string;
+  preservedTitle?: string;
+  project?: string;
+  date: string;
+  format?: string;
+  tags: string[];
+  archivePath?: string;
+  summary?: string;
+  published: boolean;
+  hasTranscript?: boolean;
+  file: string; // content file path for reference
+};
+
+const rows: AdminRow[] = [];
+
+for (const r of releases) {
+  rows.push({
+    id: `release--${r.id.replace(/\.(md|mdx)$/, '')}`,
+    kind: 'release',
+    title: r.data.title,
+    preservedTitle: r.data.preservedTitle,
+    project: r.data.project,
+    date: r.data.date,
+    format: r.data.format,
+    tags: r.data.tags ?? [],
+    archivePath: r.data.archivePath,
+    summary: r.data.summary || '',
+    published: r.data.published !== false,
+    file: `src/content/releases/${r.id}`,
+  });
+}
+
+for (const e of events) {
+  rows.push({
+    id: `event--${e.id.replace(/\.(md|mdx)$/, '')}`,
+    kind: 'event',
+    title: e.data.title,
+    project: e.data.project ?? 'life',
+    date: e.data.date,
+    tags: e.data.tags ?? [],
+    summary: e.data.summary || '',
+    published: e.data.published !== false,
+    file: `src/content/events/${e.id}`,
+  });
+}
+
+for (const v of videos) {
+  rows.push({
+    id: `video--${v.id}`,
+    kind: 'video',
+    title: v.data.title,
+    project: v.data.project,
+    date: v.data.date ?? '',
+    tags: v.data.tags ?? [],
+    archivePath: v.data.archivePath,
+    summary: v.data.summary || '',
+    published: v.data.published !== false,
+    file: `src/content/videos/${v.id}.json`,
+  });
+}
+
+for (const m of voice_memos) {
+  rows.push({
+    id: `voice--${m.id}`,
+    kind: 'voice_memo',
+    title: m.data.title ?? 'Voice memo',
+    project: m.data.project,
+    date: m.data.date,
+    tags: m.data.tags ?? [],
+    archivePath: m.data.archivePath,
+    published: m.data.published !== false,
+    hasTranscript: !!m.data.transcript,
+    file: `src/content/voice_memos/${m.id}.json`,
+  });
+}
+
+for (const p of photos) {
+  rows.push({
+    id: `photo--${p.id}`,
+    kind: 'photo',
+    title: p.data.title ?? 'Untitled',
+    project: p.data.project,
+    date: p.data.date ?? '',
+    tags: p.data.tags ?? [],
+    archivePath: p.data.archivePath,
+    published: p.data.published !== false,
+    file: `src/content/photos/${p.id}.json`,
+  });
+}
+
+// Sort by date descending
+rows.sort((a, b) => b.date.localeCompare(a.date));
+
+// Stats
+const stats = {
+  total: rows.length,
+  published: rows.filter(r => r.published).length,
+  unpublished: rows.filter(r => !r.published).length,
+  byKind: Object.fromEntries(
+    [...new Set(rows.map(r => r.kind))].map(k => [k, rows.filter(r => r.kind === k).length])
+  ),
+  byProject: Object.fromEntries(
+    [...new Set(rows.map(r => r.project).filter(Boolean))].map(p => [p!, rows.filter(r => r.project === p).length])
+  ),
+};
+---
+
+<Base title="CRFW Admin — Archive Data">
+  <div id="gate" class="gate">
+    <div class="gate-box">
+      <h1>CRFW Admin</h1>
+      <p>Enter the password to access the archive data.</p>
+      <input type="password" id="gate-pw" placeholder="Password" autofocus />
+      <button id="gate-btn">Enter</button>
+    </div>
+  </div>
+
+  <div id="admin" class="admin" style="display:none;">
+    <header class="admin-header">
+      <h1>CRFW Archive Data</h1>
+      <div class="admin-stats">
+        {stats.total} entries ·
+        {stats.published} published ·
+        {stats.unpublished} unpublished ·
+        {Object.entries(stats.byKind).map(([k, n]) => `${n} ${k}s`).join(' · ')}
+      </div>
+    </header>
+
+    <div class="admin-toolbar">
+      <input type="text" id="search" placeholder="Search titles, projects, tags, paths…" class="admin-search" />
+      <select id="filter-kind" class="admin-select">
+        <option value="all">All types</option>
+        <option value="release">Releases</option>
+        <option value="video">Videos</option>
+        <option value="voice_memo">Voice memos</option>
+        <option value="event">Events</option>
+        <option value="photo">Photos</option>
+      </select>
+      <select id="filter-project" class="admin-select">
+        <option value="all">All projects</option>
+        {Object.keys(stats.byProject).sort().map(p => (
+          <option value={p}>{p} ({stats.byProject[p]})</option>
+        ))}
+      </select>
+      <select id="filter-published" class="admin-select">
+        <option value="all">All status</option>
+        <option value="true">Published</option>
+        <option value="false">Unpublished</option>
+      </select>
+      <button id="export-csv" class="admin-btn">Export CSV</button>
+      <span id="row-count" class="admin-count"></span>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="data-table">
+        <thead>
+          <tr>
+            <th data-col="published" class="sortable col-pub">Pub</th>
+            <th data-col="kind" class="sortable col-kind">Type</th>
+            <th data-col="title" class="sortable col-title">Title</th>
+            <th data-col="project" class="sortable col-project">Project</th>
+            <th data-col="date" class="sortable col-date">Date</th>
+            <th data-col="format" class="sortable col-format">Format</th>
+            <th data-col="tags" class="col-tags">Tags</th>
+            <th data-col="summary" class="col-summary">Summary</th>
+            <th data-col="archivePath" class="col-path">Archive Path</th>
+            <th data-col="file" class="col-file">File</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- All data as JSON for the client-side table -->
+  <script id="admin-data" type="application/json"
+    set:html={JSON.stringify(rows)}
+  ></script>
+
+  <style>
+    /* Gate */
+    .gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .gate-box {
+      text-align: center;
+      max-width: 360px;
+    }
+    .gate-box h1 {
+      font-family: var(--serif);
+      font-size: 36px;
+      margin: 0 0 8px;
+    }
+    .gate-box p {
+      color: var(--ink-dim);
+      font-size: 14px;
+      margin: 0 0 24px;
+    }
+    .gate-box input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-size: 16px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-family: var(--mono);
+    }
+    .gate-box input:focus { outline: 2px solid var(--accent-2); border-color: transparent; }
+    .gate-box button {
+      width: 100%;
+      padding: 12px;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      font-family: var(--mono);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .gate-box button:hover { background: var(--accent-2); color: var(--bg); }
+
+    /* Admin layout */
+    .admin { padding: 24px 32px 96px; max-width: 100%; }
+    .admin-header { margin-bottom: 24px; border-bottom: 1px solid var(--rule); padding-bottom: 16px; }
+    .admin-header h1 {
+      font-family: var(--serif);
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+    .admin-stats {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Toolbar */
+    .admin-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      padding: 8px 0;
+    }
+    .admin-search {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      border-radius: 6px;
+    }
+    .admin-search:focus { outline: 2px solid var(--accent-2); border-color: transparent; }
+    .admin-select {
+      padding: 8px 12px;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .admin-btn {
+      padding: 8px 16px;
+      background: var(--accent-3);
+      color: var(--bg);
+      border: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .admin-btn:hover { opacity: 0.85; }
+    .admin-count {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Table */
+    .admin-table-wrap { overflow-x: auto; }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-family: var(--mono);
+      line-height: 1.4;
+    }
+    .admin-table th {
+      position: sticky;
+      top: 44px;
+      background: var(--bg-soft);
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--rule);
+      color: var(--ink-dim);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    .admin-table th.sortable:hover { color: var(--ink); }
+    .admin-table th.sort-asc::after { content: ' ↑'; }
+    .admin-table th.sort-desc::after { content: ' ↓'; }
+    .admin-table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .admin-table tr:hover td { background: color-mix(in oklab, var(--bg-soft) 50%, var(--bg)); }
+    .admin-table tr.unpublished td { opacity: 0.5; }
+
+    /* Column widths */
+    .col-pub { width: 40px; text-align: center; }
+    .col-kind { width: 80px; }
+    .col-title { min-width: 200px; }
+    .col-project { width: 100px; }
+    .col-date { width: 90px; }
+    .col-format { width: 70px; }
+    .col-tags { width: 120px; }
+    .col-summary { min-width: 150px; max-width: 250px; }
+    .col-path { min-width: 200px; max-width: 350px; }
+    .col-file { width: 180px; }
+
+    td.has-summary { color: var(--accent-3); }
+    td.no-summary { color: var(--ink-dim); }
+    .pub-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+    .pub-dot.yes { background: var(--accent-3); }
+    .pub-dot.no { background: var(--accent); }
+  </style>
+
+  <script is:inline>
+  (function() {
+    // Password gate — simple hash check, not real security.
+    // The password is "crfw" — hashed so it's not plaintext in source.
+    // This is a "don't stumble in" gate, not an auth system.
+    const HASH = '0fb03c'; // first 6 chars of sha256("crfw")
+    const gate = document.getElementById('gate');
+    const admin = document.getElementById('admin');
+    const pwInput = document.getElementById('gate-pw');
+    const pwBtn = document.getElementById('gate-btn');
+
+    async function hashPw(pw) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0, 6);
+    }
+
+    async function tryLogin() {
+      const h = await hashPw(pwInput.value.trim().toLowerCase());
+      if (h === HASH) {
+        gate.style.display = 'none';
+        admin.style.display = 'block';
+        sessionStorage.setItem('crfw-admin', '1');
+        renderTable();
+      } else {
+        pwInput.style.borderColor = 'var(--accent)';
+        pwInput.value = '';
+        pwInput.placeholder = 'Wrong password';
+      }
+    }
+
+    pwBtn.addEventListener('click', tryLogin);
+    pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+    // Auto-login if already authenticated this session
+    if (sessionStorage.getItem('crfw-admin') === '1') {
+      gate.style.display = 'none';
+      admin.style.display = 'block';
+      setTimeout(renderTable, 0);
+    }
+
+    // --- Data ---
+    const DATA = JSON.parse(document.getElementById('admin-data').textContent);
+    let sortCol = 'date';
+    let sortDir = 'desc';
+
+    // --- Filtering ---
+    const searchInput = document.getElementById('search');
+    const kindSelect = document.getElementById('filter-kind');
+    const projectSelect = document.getElementById('filter-project');
+    const publishedSelect = document.getElementById('filter-published');
+    const rowCountEl = document.getElementById('row-count');
+
+    function getFiltered() {
+      const q = searchInput.value.toLowerCase().trim();
+      const kind = kindSelect.value;
+      const proj = projectSelect.value;
+      const pub = publishedSelect.value;
+
+      return DATA.filter(r => {
+        if (kind !== 'all' && r.kind !== kind) return false;
+        if (proj !== 'all' && r.project !== proj) return false;
+        if (pub === 'true' && !r.published) return false;
+        if (pub === 'false' && r.published) return false;
+        if (q) {
+          const haystack = [r.title, r.preservedTitle, r.project, r.date, r.format,
+            r.tags?.join(' '), r.archivePath, r.summary, r.file, r.kind].filter(Boolean).join(' ').toLowerCase();
+          if (!haystack.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function sortRows(rows) {
+      return rows.sort((a, b) => {
+        let va = a[sortCol] ?? '';
+        let vb = b[sortCol] ?? '';
+        if (typeof va === 'boolean') { va = va ? 1 : 0; vb = vb ? 1 : 0; }
+        if (typeof va === 'string') va = va.toLowerCase();
+        if (typeof vb === 'string') vb = vb.toLowerCase();
+        const cmp = va < vb ? -1 : va > vb ? 1 : 0;
+        return sortDir === 'asc' ? cmp : -cmp;
+      });
+    }
+
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function renderTable() {
+      const filtered = sortRows(getFiltered());
+      const tbody = document.getElementById('table-body');
+
+      rowCountEl.textContent = `${filtered.length} of ${DATA.length}`;
+
+      // Update sort indicators
+      document.querySelectorAll('.admin-table th').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.dataset.col === sortCol) th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+      });
+
+      // Render rows (virtualized: show max 500 for perf)
+      const show = filtered.slice(0, 500);
+      tbody.innerHTML = show.map(r => `
+        <tr class="${r.published ? '' : 'unpublished'}">
+          <td class="col-pub"><span class="pub-dot ${r.published ? 'yes' : 'no'}"></span></td>
+          <td>${esc(r.kind)}</td>
+          <td title="${esc(r.preservedTitle || r.title)}">${esc(r.title)}</td>
+          <td>${esc(r.project || '')}</td>
+          <td>${esc(r.date)}</td>
+          <td>${esc(r.format || '')}</td>
+          <td title="${esc(r.tags?.join(', '))}">${esc(r.tags?.slice(0,3).join(', ') || '')}</td>
+          <td class="${r.summary ? 'has-summary' : 'no-summary'}" title="${esc(r.summary)}">${esc(r.summary ? r.summary.slice(0, 60) + '…' : '—')}</td>
+          <td title="${esc(r.archivePath)}">${esc(r.archivePath || '')}</td>
+          <td>${esc(r.file)}</td>
+        </tr>
+      `).join('');
+
+      if (filtered.length > 500) {
+        tbody.innerHTML += `<tr><td colspan="10" style="text-align:center;color:var(--ink-dim);padding:16px;">Showing 500 of ${filtered.length} — narrow your filters to see more</td></tr>`;
+      }
+    }
+
+    // --- Event wiring ---
+    searchInput.addEventListener('input', renderTable);
+    kindSelect.addEventListener('change', renderTable);
+    projectSelect.addEventListener('change', renderTable);
+    publishedSelect.addEventListener('change', renderTable);
+
+    // Sort by clicking column headers
+    document.querySelectorAll('.admin-table th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.col;
+        if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
+        else { sortCol = col; sortDir = col === 'date' ? 'desc' : 'asc'; }
+        renderTable();
+      });
+    });
+
+    // --- CSV Export ---
+    document.getElementById('export-csv').addEventListener('click', () => {
+      const filtered = sortRows(getFiltered());
+      const cols = ['id','kind','title','preservedTitle','project','date','format','tags','summary','archivePath','published','file'];
+      const header = cols.join(',');
+      const csvRows = filtered.map(r =>
+        cols.map(c => {
+          let v = r[c];
+          if (Array.isArray(v)) v = v.join('; ');
+          if (typeof v === 'boolean') v = v ? 'true' : 'false';
+          v = String(v ?? '');
+          // Escape for CSV
+          if (v.includes(',') || v.includes('"') || v.includes('\n')) {
+            v = '"' + v.replace(/"/g, '""') + '"';
+          }
+          return v;
+        }).join(',')
+      );
+      const csv = [header, ...csvRows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `crfw-archive-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  })();
+  </script>
+</Base>

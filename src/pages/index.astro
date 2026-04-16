@@ -133,31 +133,34 @@ for (const m of voice_memos) {
   });
 }
 
-// Sort newest first
-entries.sort((a, b) => (b.date.localeCompare(a.date)));
+// Filter out unpublished entries (they still appear on /admin)
+const publishedEntries = entries.filter(e => e.data.published !== false);
 
-// Group by year
+// Sort newest first
+publishedEntries.sort((a, b) => (b.date.localeCompare(a.date)));
+
+// Group by year (published entries only for the public timeline)
 const byYear = new Map<number, TLEntry[]>();
-for (const e of entries) {
+for (const e of publishedEntries) {
   if (!byYear.has(e.year)) byYear.set(e.year, []);
   byYear.get(e.year)!.push(e);
 }
 const years = [...byYear.keys()].sort((a, b) => b - a);
 
 // Project + medium + format lists for filter tabs
-const projects = [...new Set(entries.map(e => e.project).filter(Boolean))] as string[];
-const kinds = [...new Set(entries.map(e => e.kind))];
-const formats = [...new Set(entries.map(e => e.format).filter(Boolean))] as string[];
+const projects = [...new Set(publishedEntries.map(e => e.project).filter(Boolean))] as string[];
+const kinds = [...new Set(publishedEntries.map(e => e.kind))];
+const formats = [...new Set(publishedEntries.map(e => e.format).filter(Boolean))] as string[];
 // Preferred display order for formats
 const formatOrder = ['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other'];
 formats.sort((a, b) => (formatOrder.indexOf(a) === -1 ? 99 : formatOrder.indexOf(a)) - (formatOrder.indexOf(b) === -1 ? 99 : formatOrder.indexOf(b)));
 
 // Totals for the sub-line
 const totals = {
-  releases: entries.filter(e => e.kind === 'release').length,
-  events: entries.filter(e => e.kind === 'event').length,
+  releases: publishedEntries.filter(e => e.kind === 'release').length,
+  events: publishedEntries.filter(e => e.kind === 'event').length,
   years: years.length,
-  total: entries.length,
+  total: publishedEntries.length,
 };
 ---
 
@@ -249,7 +252,7 @@ const totals = {
   <script
     id="entry-data"
     type="application/json"
-    set:html={JSON.stringify(Object.fromEntries(entries.map(e => [e.id, e])))}
+    set:html={JSON.stringify(Object.fromEntries(publishedEntries.map(e => [e.id, e])))}
   ></script>
 
   <script is:inline>
