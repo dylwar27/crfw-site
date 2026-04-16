@@ -1,0 +1,14 @@
+---
+title: "unreleased fall 08"
+preservedTitle: "unreleased fall 08"
+project: "alphabets"
+date: "2013"
+format: single
+archivePath: "CRFW Archive/_Documentation/Music/alphabets/unreleased fall 08/"
+tags:
+  - alphabets
+summary: ""
+---
+
+Stub entry — folder preserved from the archive. Summary intentionally empty
+(per CLAUDE.md golden rule #6: no AI-generated summaries of Colin's work).
