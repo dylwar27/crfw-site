@@ -1,31 +1,13 @@
 import { defineCollection, z, reference } from 'astro:content';
 
 // Shared vocabulary
-const project = z.enum([
-  'alphabets',
-  'killd by',
-  'Colin Ward',
-  'collaboration',
-  'other',
-  'life',
-]).describe('Which creative era or identity this belongs to.');
-
-const medium = z.enum([
-  'release',
-  'track',
-  'mix',
-  'video',
-  'photo',
-  'voice_memo',
-  'lyrics',
-  'note',
-  'artwork',
-  'screenshot',
-  'event',
-  'press',
-  'live',
-  'interview',
-]);
+//
+// Project is a free-form string rather than an enum so new project
+// identities (DIMCP, "Dog is my copilot", etc.) can be added without
+// schema changes. Known values used so far: 'alphabets', 'killd by',
+// 'Colin Ward', 'collaboration', 'other', 'life'.
+const project = z.string().min(1)
+  .describe('Which creative era or identity this belongs to.');
 
 // Flexible date: a full YYYY-MM-DD, or YYYY-MM, or YYYY. Events in Colin's
 // archive are often only known to a year or month.
@@ -33,16 +15,6 @@ const fuzzyDate = z.string().regex(
   /^\d{4}(-\d{2}(-\d{2})?)?$/,
   'Date must be YYYY, YYYY-MM, or YYYY-MM-DD',
 );
-
-// A link to a media asset — either a path under /public, or an external URL
-// (Vimeo, Bandcamp, SoundCloud, Instagram, etc.)
-const mediaRef = z.object({
-  kind: z.enum(['audio', 'video', 'image', 'embed', 'link']),
-  src: z.string(),            // /media/... or https://...
-  title: z.string().optional(),
-  note: z.string().optional(),
-  duration: z.string().optional(), // "3:42"
-});
 
 // ----- Collections -----
 
