@@ -5,7 +5,6 @@ project: "killd by"
 date: "2017"
 era: "killd by — Recovery era"
 format: LP
-coverArt: /media/releases/court-clothes/cover.svg
 tracklist:
   - n: 1
     title: "LiKe a PeLiCaN"

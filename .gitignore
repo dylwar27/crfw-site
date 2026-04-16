@@ -5,3 +5,6 @@ dist/
 .env
 .env.*
 .claude/
+
+# Cover-art import audit log — regenerated on every script run.
+cover-art-import-report.txt

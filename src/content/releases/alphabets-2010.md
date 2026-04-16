@@ -5,7 +5,6 @@ project: "alphabets"
 date: "2010"
 era: "alphabets — first recordings"
 format: other
-coverArt: /media/releases/court-clothes/cover.svg
 tags:
   - alphabets
   - early-era
