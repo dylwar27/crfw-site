@@ -4,6 +4,31 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 06 (cont. 2) — 2026-04-16 — /admin page + published field
+
+**Goal:** build a curator's master-list view for seeing and working with the full archive data, including entries that may be logged but not published on the public timeline.
+
+**Done — PR #10 (merged `f0d45d3`):**
+
+- **`published` field** added to all 7 collection schemas. Default `true` so all 1,005 existing entries stay visible. Set `published: false` to hide an entry from the public timeline while keeping it in the archive and visible on /admin.
+- **`/admin` page** at https://dylwar27.github.io/crfw-site/admin/ — password-gated (`crfw`, hashed client-side). Features:
+  - Sortable table of ALL entries (published and unpublished): title, type, project, date, format, tags, summary, archive path, file path
+  - Free-text search across all fields
+  - Filter dropdowns: type, project, published status
+  - Live row count
+  - Unpublished rows dimmed; summary column green if filled / dim dash if empty
+  - **CSV export** button — dumps current filtered view to timestamped .csv for Sheets/Excel editing
+  - Session-persisted login (no re-entering password on refresh)
+  - Capped at 500 DOM rows for performance
+
+**State at end of session:**
+- 10 PRs merged total. 1,005 entries. Page size 786KB.
+- Public timeline filters out `published: false` entries
+- /admin shows everything — the curator's master list
+- Phase 2 (CSV import back, inline editing) deferred to a future session
+
+---
+
 ## Session 06 (cont.) — 2026-04-16 — bug pass + architecture stabilization
 
 **Goal:** 12-item audit pass addressing bugs, performance, data model brittleness, and accessibility. User-reported: year labels clipped ("only shows 20"), filter tabs need more data, wants the site editable for future content, wants to link projects like DIMCP.
