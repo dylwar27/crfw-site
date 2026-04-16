@@ -4,6 +4,83 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 05 — 2026-04-16 — three-PR sprint: adjacent + alphabets + covers
+
+**Goal:** solo 3–4 hour sprint. Agreed scope up front (before starting): (1) killd-by-adjacent bulk pass, (2) alphabets bulk pass, (3) cover-art import with a skip-and-log policy — three independent PRs. Explicitly excluded from this sprint: Whisper, Vimeo, filter UX, AI summaries.
+
+**Done — shipped three PRs, all merged to main:**
+
+**PR #3 — `killd by adjacent: 7 stubs from sibling folders` (merged `2c8691d`-ish)**
+- 5 generator-driven stubs from `KB/Killd By +/` (1) and `KB/M_Killd By/` (4)
+- 2 hand-written stubs for file-only folders (`Other Projects/killdfilez/`, `Other Projects/unnamed_killdby_folder/`) — the bulk generator walks subfolders, so these need manual treatment
+- All 7 filed under `project: "killd by"` (same umbrella, source-folder distinction visible in `archivePath`)
+- Curator-flag-me items surfaced: `M_killdby15:16:17` (colon-encoded years fall outside the regex, dated from mtime); empty-shell `M_killdby` directory; `unnamed_killdby_folder` (placeholder name)
+
+**PR #4 — `alphabets: 169 release stubs (bulk pass)` (merged)**
+- 2 individual stubs (`2010[_]`, `underwaters VI`) + 1 generator hardening + 167 bulk stubs
+- Generator change caught during dry-run: `2046AD` (a Wong Kar-wai title Colin used) was being read as a release year. Fix: cap year extraction at `CURRENT_YEAR`; anything later falls through to mtime. Confirmed no regressions on prior entries.
+- Format breakdown across all 169: 56 LP, 48 single, 38 EP, 18 other, 7 mix, 1 compilation, 1 demo
+- Carried-forward curator-flag items: ~30 folders with 2-digit year encodings (`JANFEB09`, `M_A_Y_09`, etc.) dated from mtime since the regex needs 4-digit `19xx`/`20xx`; ~15 empty-shell folders with 0 audio; multi-volume series (`underwaters` I–VI, `DDR*`, `SUNPOWER` 1/2/3) preserved as separate entries; one folder named `____` collapses to `untitled.md`; `alphabets/RECOVERY/` distinct from killd by's `Recovery`
+
+**PR #5 — `Cover-art import: script + first pass + seeded-data fix` (merged)**
+- [scripts/import-cover-art.mjs](scripts/import-cover-art.mjs) — walks `src/content/releases/`, inspects each entry's `archivePath`, copies cover-shaped images to `public/media/releases/<slug>/`, updates frontmatter. Default dry-run; `--write` commits. Idempotent. Never overwrites existing `coverArt:` fields.
+- Fixed a seeded-data bug surfaced by the dry-run: `recovery.md` and `alphabets-2010.md` both pointed at `court-clothes/cover.svg` (copy-paste artifact). Removed the bogus fields.
+- First import pass (against main's 58 release entries) landed 1 cover: `OUTCASTS (2014-2016 b-sides) ← cover.jpg (2.5MB)`.
+
+**Done — post-merge sweep on main (this commit):**
+- Re-ran the importer against all 234 merged releases. Initial run imported 3 covers; **2 were curator-wrong** and caught before commit:
+  - ✗ `18-alphabets/` is a dumping-ground folder containing art for *multiple* releases; substring-matching `"...front.png"` grabbed the wrong one.
+  - ✗ `trappedinthebackofajeep-2013-alphabets/` had a single screenshot (DAW session, not cover art) that the sole-image fallback grabbed.
+  - ✓ Kept: `19-alphabets-thru-tha-rip/cover.jpg` (score 10, unambiguous).
+- **Tightened the script** in response:
+  - Substring matches (score 3 "contains front", score 5 "contains cover") REMOVED. Requires cover-named filename only (`/^(cover|front|albumart|album[_-]?art|artwork)\b/i` at word-start).
+  - Sole-image-at-top-level fallback REMOVED. Now only falls back to "sole image inside an art-shaped subfolder" (`art/`, `artwork/`, `scans/`, `covers/`, `images/`), where the subfolder name itself is the signal.
+  - Philosophy: prefer empty covers over wrong ones.
+
+**State at end of session (as of this commit):**
+- `main`: 234 release entries (58 + 7 adjacent + 169 alphabets). 2 covers imported total (`court-clothes/cover.svg`, `117-killd-by-2014-2016-bsides/cover.jpg`, `19-alphabets-thru-tha-rip/cover.jpg` — actually 3, plus the Court Clothes placeholder).
+- All three sprint PRs merged. No open PRs.
+- Live at https://dylwar27.github.io/crfw-site/ still up; this sprint's merges all auto-deployed via the Pages workflow.
+- `scripts/bulk-stub-releases.mjs` has the year-cap fix; `scripts/import-cover-art.mjs` has the tightened heuristic.
+
+**Next work — clean handoff list, roughly in priority order:**
+
+Content / data work Dyl (curator) can do against the existing stubs:
+1. **Fill in `summary:` fields** on any of the 224 stubs with empty summaries — agent won't per golden rule #6.
+2. **Fix 2-digit-year dates** — ~30 alphabets stubs (`JANFEB09`, `M_A_Y_09`, `octobrr09`, etc.) are dated from mtime, not the year encoded in the name. Scriptable if you want a second pass with a 2-digit interpretation table (I'd need explicit date conventions from you: does `09` mean `2009`? Always?).
+3. **Resolve curator-flag entries:** `M_killdby15:16:17`, `M_killdby` (empty), `unnamed_killdby_folder`, `untitled.md` (the `____` folder), `court-clothes.md` `coverArt` pointing at .svg while a .jpg exists next to it.
+4. **Manual cover art** for any release whose source folder has the art but not named `cover.*` — see the curator-flag list below.
+
+Agent-doable work queued for next sessions:
+5. **Voice memo Whisper transcription** — ~780 files in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/`. Dedicated session (needs whisper.cpp setup + ~2h compute). HANDOFF_PROMPT.md §3 prompt still applies.
+6. **Vimeo embed wiring** — `~/.../CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` has URLs. Need Dyl's input: are URLs in filenames, sidecar files, or only in Dyl's Vimeo account?
+7. **IG photo import** — if/when Dyl pulls the IG archive JSON, batch-create photo entries.
+8. **Filter UX** — year slider, tag chips, Pagefind search. Now worth doing (234 entries makes filtering useful). Brief-level decision, ask before starting.
+9. **Cover-art sweeps** — as more source folders get tidied by Dyl (image renamed to `cover.*`, or dropped into an `art/` subdir), re-run `node scripts/import-cover-art.mjs --write`. It's idempotent.
+10. **Custom domain** — when Dyl is ready: `public/CNAME`, two-line swap in `astro.config.mjs`, drop/flip `public/robots.txt`. `withBase()` means no content edits.
+
+**Curator-flag items to look at (consolidated from all three PRs):**
+- 2-digit-year alphabets stubs (~30 files) — dates wrong by 1–4 years
+- Empty-shell alphabets folders (~15 files) — format `other`, date from folder mtime
+- `M_killdby15:16:17` — dated 2012 from mtime; should probably be `"2015"`
+- `M_killdby` (no version) — empty directory, delete/merge?
+- `unnamed_killdby_folder` — needs a real name
+- `untitled.md` — from alphabets/`____`/, folder name is 4 underscores
+- `court-clothes.md` — `coverArt` still points at `cover.svg` despite `cover.jpg` sitting in the same folder
+- `loose-working-files-2010-2013` — 12 screenshots, no single obvious cover
+- `m-killdby15-16-17` — 4 images at top level, top one (`kbyBsides.jpg`) could be a cover but isn't named like one
+- Multi-volume series — may want to group via tags later (`underwaters` I–VI, `DDR*`, `SUNPOWER*`)
+
+**Files touched this session:**
+- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — year-cap fix (PR #4)
+- [scripts/import-cover-art.mjs](scripts/import-cover-art.mjs) — new (PR #5) + tightened this commit (post-merge)
+- [src/content/releases/](src/content/releases/) — +176 new stubs (7 adjacent + 169 alphabets); seeded-data fix on `recovery.md` / `alphabets-2010.md`
+- [public/media/releases/](public/media/releases/) — +2 cover images (OUTCASTS b-sides, THRU THA RIP)
+- [.gitignore](.gitignore) — ignore `cover-art-import-report.txt`
+- [SESSIONS.md](SESSIONS.md) — this entry
+
+---
+
 ## Session 04 — 2026-04-15 — bulk pass landed, site is live
 
 **Goal:** unblock the build (per Session 03's prescription), finish the killd by bulk pass, and get the site deployed.

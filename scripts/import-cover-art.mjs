@@ -6,16 +6,22 @@
 // Skip everything else and log it so Dyl can triage manually. Never
 // overwrite an existing coverArt: field — preserve curator decisions.
 //
-// Heuristic, in order:
+// Heuristic, in order — tightened in Session 05 after two bad imports:
 //   1. Filename matches /^(cover|front|albumart|album[_-]?art|artwork)\b/i
-//      with an image extension (top level OR one nested directory deep
-//      — covers sometimes live in art/, artwork/, scans/) → import.
-//   2. Filename contains "cover" or "front" as a substring → import.
-//   3. Single image at the top level AND >= 50 KB → import (conservative
-//      "the only image in the folder is probably it" fallback; the size
-//      cutoff filters out thumbnails / placeholder PNGs).
-//   4. Otherwise → SKIP and log (could be a photo of the artist, a
-//      lyric scan, multiple sketches, etc. — curator triage).
+//      with an image extension (top level OR inside an art-shaped
+//      subfolder: art/, artwork/, scans/, covers/, images/) → import.
+//   2. Single image inside an art-shaped subfolder AND >= 50 KB → import
+//      (the subfolder name itself is the signal).
+//   3. Otherwise → SKIP and log.
+//
+// Policy notes:
+//   - Substring matches like "...front.png" are NO LONGER sufficient.
+//     Colin's "18 alphabets" folder was a dumping ground that contained
+//     front art for a *different* release; matching "contains front"
+//     grabbed the wrong thing.
+//   - The single-image-at-top-level fallback was removed. Many of Colin's
+//     release folders contain a single screenshot that is NOT cover art
+//     (e.g. a DAW session screengrab). Prefer empty covers over wrong ones.
 //
 // Ties broken by score, then by file size (larger = likely the real
 // cover, not a thumbnail).
@@ -90,12 +96,10 @@ function archivePathToAbsolute(archivePath) {
 function scoreFile(name) {
   const lower = name.toLowerCase();
   const stem = lower.replace(extname(lower), '');
-  // Strict prefix match wins biggest
+  // Strict prefix/word-start match only. Substring matches were too loose
+  // (see Session 05 notes above: "...front.png" grabbed the wrong release's
+  // art out of a dumping-ground folder).
   if (/^(cover|front|albumart|album[_-]?art|artwork)\b/.test(stem)) return 10;
-  // Substring fallback
-  if (stem.includes('cover')) return 5;
-  if (stem.includes('front')) return 3;
-  if (stem.includes('art') && !stem.includes('part')) return 2;
   return 0;
 }
 
@@ -191,16 +195,20 @@ for (const file of releaseFiles.sort()) {
   const top = result.candidates[0];
 
   // Decide whether to import:
-  //   - score > 0           → cover-named filename, definitely
-  //   - single image >=50KB → conservative single-image fallback
+  //   - score > 0                          → cover-named filename
+  //   - sole image in an art-shaped subdir → the subfolder name itself
+  //                                          is a strong signal
   let shouldImport = false;
   let reason = '';
   if (top.score > 0) {
     shouldImport = true;
     reason = `score ${top.score}`;
-  } else if (result.topImages.length === 1 && top.size >= 50 * 1024) {
+  } else if (top.relPath.includes('/') && top.size >= 50 * 1024) {
+    // Only reached if top.score === 0, so "found an image inside an
+    // art-shaped subdir but it's not cover-named". Safe because findCover
+    // only recurses into art/artwork/scans/covers/images.
     shouldImport = true;
-    reason = 'sole image in folder';
+    reason = `sole image in ${top.relPath.split('/')[0]}/`;
   }
 
   if (!shouldImport) {

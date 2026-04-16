@@ -81,29 +81,43 @@ site/
 
 ---
 
-## Current state (as of Session 04, 2026-04-15)
+## Current state (as of Session 05, 2026-04-16)
 
-- **58 release entries** — Court Clothes fully populated; Recovery + alphabets-2010 as original stubs; 55 killd by stubs from the bulk pass (PR #1). All `summary` fields on the bulk stubs are empty per golden rule #6 — Dyl's voice to add.
-- 1 event entry (archive-stewardship-begins).
-- Cover art is still a generated SVG placeholder for Court Clothes. The real `CCcoverXX.jpg` from the archive needs to be dropped into `public/media/releases/court-clothes/cover.jpg` and the `coverArt:` field updated. Bulk stubs have no cover art yet.
+- **234 release entries** —
+  - 3 original seeded: Court Clothes (fully populated), Recovery (stub), alphabets-2010 (placeholder)
+  - 55 killd by stubs (Session 04, PR #1)
+  - 7 killd-by-adjacent stubs (Session 05, PR #3) — `KB/Killd By +/`, `KB/M_Killd By/`, `Other Projects/killdfilez/`, `Other Projects/unnamed_killdby_folder/`
+  - 169 alphabets stubs (Session 05, PR #4)
+  - All bulk-stub `summary` fields empty per golden rule #6 — Dyl's voice to add.
+- 1 event entry.
+- **3 covers imported**: `court-clothes/cover.svg` (placeholder), `117-killd-by-2014-2016-bsides/cover.jpg`, `19-alphabets-thru-tha-rip/cover.jpg`. Plus `court-clothes/cover.jpg` sitting next to the SVG but not referenced by frontmatter (known curator-flag item).
 - Photos, videos, voice_memos, lyrics, people collections exist and validate but have no entries yet.
-- Filter tabs work on two axes (project × medium). Year slider, tag chips, free-text search not yet implemented.
-- **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, static build on push to main. `robots.txt` currently Disallows all crawlers (WIP posture). `astro.config.mjs` has `base: '/crfw-site'`; `withBase()` helper in `src/pages/index.astro` prefixes root-relative asset paths so the custom-domain swap is config-only.
+- Filter tabs work on two axes (project × medium). Year slider, tag chips, free-text search not yet implemented (now worth doing — 234 entries).
+- **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, `robots.txt` Disallow (WIP posture). `base: '/crfw-site'` + `withBase()` helper means custom-domain swap is config-only.
+
+**Scripts:**
+- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — the release-stub generator. Caps year extraction at current year (Session 05 hardening).
+- [scripts/import-cover-art.mjs](scripts/import-cover-art.mjs) — the cover-art importer. Strict policy after Session 05: cover-named files only, or sole image inside an art-shaped subfolder. No substring matches, no top-level sole-image fallback.
 
 ---
 
 ## Outstanding work (rough priority)
 
-1. **killd-by-adjacent folders** — `KB/Killd By +`, `KB/M_Killd By`, `Other Projects/killdfilez`, `Other Projects/unnamed_killdby_folder`. Same generator (`scripts/bulk-stub-releases.mjs`), different `--source` / `--archive-relative` flags. Short branch, one PR.
-2. **alphabets bulk pass** — ~169 folders in `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Music/alphabets/`. Same script with `--project alphabets`. This is volume work — volume is the point.
-3. **Cover art import** — for every release folder that contains an image file, copy it into `public/media/releases/<slug>/` and reference it in frontmatter. Do as a pass after stubs, or inline during each bulk pass.
-4. **Voice memo transcription** — run Whisper on `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Documentation/Voice Memos/` (~780 files). Emit one JSON entry per memo into `src/content/voice_memos/`. Script it; do not hand-author. See HANDOFF_PROMPT.md §3.
-5. **Vimeo embed wiring** — the archive's `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Quarantine/_UPLOADED TO VIMEO/` has already been uploaded. Pull the embed URLs and create video entries.
-6. **IG archive import** — if/when Dyl pulls the IG archive JSON, batch-create photo entries with captions and dates.
-7. **Filter axes — year slider, tag chips, Pagefind search** — once there's enough content to warrant them.
-8. **Custom domain** — when Dyl is ready: add `public/CNAME`, swap `site` / `base` in `astro.config.mjs` (two lines), drop or flip `public/robots.txt`. The `withBase()` pattern means no content edits are needed.
+Curator work (Dyl):
+1. **`summary:` fields** on the 224 empty stubs — agent won't per golden rule #6.
+2. **2-digit year date fixes** — ~30 alphabets stubs (`JANFEB09`, `M_A_Y_09`, `octobrr09`, etc.) are dated from mtime rather than the year encoded in the folder name. Scriptable with an explicit 2-digit interpretation table from Dyl.
+3. **Curator-flag entries** — `M_killdby15:16:17` (should be 2015?), empty-shell `M_killdby`, `unnamed_killdby_folder` (placeholder name), `untitled.md` (from `____/`), `court-clothes.md` coverArt pointing at SVG while JPG exists next to it.
+4. **Manual cover art** for release folders where the image exists but isn't named `cover.*`.
 
-**Done (as of Session 04):** ~~killd by discography bulk pass~~ (55 stubs shipped, PR #1). ~~GitHub Pages deploy~~ (PR #2, live URL active).
+Agent-doable next:
+5. **Voice memo Whisper transcription** — ~780 files, dedicated session. HANDOFF_PROMPT.md §3 prompt still applies.
+6. **Vimeo embed wiring** — needs Dyl's input on where the URLs live.
+7. **IG photo import** — if/when Dyl pulls the IG archive JSON.
+8. **Filter UX** — year slider, tag chips, Pagefind search. Brief-level decision, ask before starting.
+9. **Cover-art sweeps** — re-run `node scripts/import-cover-art.mjs --write` as Dyl tidies source folders (rename to `cover.*` or drop into an `art/` subdir). Idempotent.
+10. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`.
+
+**Done (cumulative through Session 05):** ~~killd by discography bulk pass~~ (PR #1, 55 stubs). ~~GitHub Pages deploy~~ (PR #2). ~~killd-by-adjacent pass~~ (PR #3, 7 stubs). ~~alphabets bulk pass~~ (PR #4, 169 stubs). ~~Cover-art importer + first pass~~ (PR #5, 1 cover + seeded-data fix).
 
 ---
 

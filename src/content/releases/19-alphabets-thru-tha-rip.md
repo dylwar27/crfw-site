@@ -5,6 +5,7 @@ project: "alphabets"
 date: "2013"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/19 alphabets - THRU THA RIP/"
+coverArt: /media/releases/19-alphabets-thru-tha-rip/cover.jpg
 tags:
   - alphabets
 summary: ""

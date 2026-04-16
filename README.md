@@ -80,12 +80,16 @@ site/
 
 ## What's seeded right now
 
-- **58 release entries** —
-  - **Court Clothes** (killd by, 2014) — fully populated: preserved title formatting, 10-track tracklist with each track's exact original typography, summary, archive path.
-  - **Recovery** (killd by, 2017) — stub; tracklist needs reconstruction from 4 variant folders.
-  - **2010 [_]** (alphabets, 2010) — placeholder representing the start of the alphabets era.
-  - **55 killd by stubs** (bulk pass, Session 04) — `title`, `preservedTitle`, `project`, `date`, `format`, `archivePath` populated; `summary` left empty for Dyl to fill in. Dates on folders without a year in the name were back-filled from file mtimes — curator-verify-me.
+- **234 release entries** across Colin's working discography:
+  - **Court Clothes** (killd by, 2014) — fully populated with tracklist, summary, archive path.
+  - **Recovery** (killd by, 2017) — stub; tracklist reconstruction pending from 4 variant folders.
+  - **2010 [_]** (alphabets, 2010) — placeholder for the start of the alphabets era.
+  - **55 killd by stubs** (Session 04 bulk pass).
+  - **7 killd-by-adjacent stubs** (Session 05) — `Killd By +`, `M_Killd By`, `killdfilez`, `unnamed_killdby_folder`.
+  - **169 alphabets stubs** (Session 05 bulk pass).
+  - All bulk stubs have empty `summary` fields — curator (Dyl) fills those in.
 - 1 **event** entry — archive stewardship begins (2026-04).
+- 3 **cover images** landed so far (OUTCASTS b-sides, THRU THA RIP, Court Clothes placeholder).
 - **Photos / videos / voice_memos / lyrics / people** — schemas validate, no entries yet.
 
-Cover art is an SVG placeholder for Court Clothes. Real cover art from the archive (`CCcoverXX.jpg`) should replace `public/media/releases/court-clothes/cover.svg` with a `.jpg` of the same name (and update the release frontmatter). The 55 bulk stubs have no cover art yet — a separate pass.
+Re-running [`scripts/import-cover-art.mjs`](./scripts/import-cover-art.mjs) will pick up additional covers as source folders are tidied (image renamed to `cover.*`, or dropped into an `art/` subdirectory). The script is idempotent and will never overwrite existing `coverArt:` fields.
