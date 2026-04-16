@@ -95,6 +95,31 @@ a:hover { color: var(--accent-2); }
   background: var(--rule);
   margin: 0 6px;
 }
+.filter-reset {
+  font-family: var(--mono);
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.filter-reset:hover { background: var(--accent); color: var(--bg); }
+.filter-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  white-space: nowrap;
+}
 
 /* TIMELINE */
 .timeline {
