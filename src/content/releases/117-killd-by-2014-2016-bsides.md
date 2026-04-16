@@ -5,6 +5,7 @@ project: "killd by"
 date: "2014"
 format: b-sides
 archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/117 killd by - 2014-2016 -Bsides/"
+coverArt: /media/releases/117-killd-by-2014-2016-bsides/cover.jpg
 tags:
   - killd-by
   - b-sides
