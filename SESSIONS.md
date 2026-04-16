@@ -4,6 +4,58 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 06 — 2026-04-16 — filter UX + voice memos + videos (1,005 entries)
+
+**Goal:** filter UX overhaul, voice memo import, video stub import. Continuation of the same day as Session 05.
+
+**Done — three PRs, all merged:**
+
+**PR #6 — Filter UX overhaul (merged)**
+- Replaced the useless Medium axis (234 releases vs 1 event) with a **Format** axis (LP/EP/single/mix/compilation/b-sides/demo/other)
+- Medium axis now auto-hidden until 2+ distinct kinds exist (appears now that voice memos + videos landed)
+- Added "×" reset button to clear all filter axes at once
+- Added "showing X of Y" live count when filters are active
+- Year row entry counts now update dynamically during filtering (were static before)
+- Extended JS filter state to three axes: `{ project, kind, format }` with AND semantics
+
+**PR #7 — Voice memos: 305 transcripts (merged)**
+- Import script `scripts/import-voice-memos.mjs` — parses `YYYYMMDD HHMMSS.m4a` filenames into dates, reads `.txt` transcripts from the archive
+- 305 JSON entries in `src/content/voice_memos/` (Sep 2015 – Dec 2016)
+- 12 m4a files without transcripts were skipped (logged for future Whisper pass)
+- No audio files copied to public/ (too large for git)
+
+**PR #8 — Videos: 465 stubs (merged)**
+- Import script `scripts/import-video-stubs.mjs` — walks `_Documentation/Videos/` year folders, matches filenames against release titles for project assignment
+- 465 JSON entries in `src/content/videos/` (2008–2020)
+- Project auto-matched where possible (e.g. `SIBERIAN CHILL.mov` → `alphabets`)
+- No video files copied to public/ (too large)
+
+**State at end of session:**
+- **1,005 total entries**: 234 releases + 305 voice memos + 465 videos + 1 event
+- Only "photos" collection warning remains (no photo entries yet)
+- Filter UX has three axes: Project (alphabets / killd by / life), Format (LP/EP/single/...), Medium (release / event / voice memo / video) — all with reset + live count
+- Live at https://dylwar27.github.io/crfw-site/
+
+**Next work:**
+1. **Photo import** (IG archive or other source) — only remaining empty collection
+2. **Whisper pass** on the 12 voice memos without transcripts
+3. **YouTube/Vimeo URL matching** — video entries exist but have no embed URLs; Dyl needs to source these (YouTube was more popular than Vimeo for Colin's work)
+4. **Curator work** — summaries, 2-digit year fixes, flagged entries (see Session 05 log)
+5. **Pagefind search** — with 1,005 entries, full-text search is now genuinely useful
+6. **Custom domain** — when ready
+
+**Files touched this session:**
+- [src/pages/index.astro](src/pages/index.astro) — format field, data-format attr, filter overhaul
+- [src/styles/global.css](src/styles/global.css) — reset button + filter count styles
+- [scripts/import-voice-memos.mjs](scripts/import-voice-memos.mjs) — new
+- [scripts/import-video-stubs.mjs](scripts/import-video-stubs.mjs) — new
+- [src/content/voice_memos/](src/content/voice_memos/) — 305 new entries
+- [src/content/videos/](src/content/videos/) — 465 new entries
+- [SESSIONS.md](SESSIONS.md) — this entry
+- [CLAUDE.md](CLAUDE.md) — state update
+
+---
+
 ## Session 05 — 2026-04-16 — three-PR sprint: adjacent + alphabets + covers
 
 **Goal:** solo 3–4 hour sprint. Agreed scope up front (before starting): (1) killd-by-adjacent bulk pass, (2) alphabets bulk pass, (3) cover-art import with a skip-and-log policy — three independent PRs. Explicitly excluded from this sprint: Whisper, Vimeo, filter UX, AI summaries.

@@ -81,7 +81,13 @@ site/
 
 ---
 
-## Current state (as of Session 05, 2026-04-16)
+## Current state (as of Session 06, 2026-04-16)
+
+- **1,005 total entries** (234 releases + 305 voice memos + 465 videos + 1 event)
+- Filter UX has three axes: Project, Format, Medium — with reset button + live count
+- Only "photos" collection warning remains (no photo entries yet)
+
+### Breakdown:
 
 - **234 release entries** —
   - 3 original seeded: Court Clothes (fully populated), Recovery (stub), alphabets-2010 (placeholder)
@@ -91,8 +97,11 @@ site/
   - All bulk-stub `summary` fields empty per golden rule #6 — Dyl's voice to add.
 - 1 event entry.
 - **3 covers imported**: `court-clothes/cover.svg` (placeholder), `117-killd-by-2014-2016-bsides/cover.jpg`, `19-alphabets-thru-tha-rip/cover.jpg`. Plus `court-clothes/cover.jpg` sitting next to the SVG but not referenced by frontmatter (known curator-flag item).
-- Photos, videos, voice_memos, lyrics, people collections exist and validate but have no entries yet.
-- Filter tabs work on two axes (project × medium). Year slider, tag chips, free-text search not yet implemented (now worth doing — 234 entries).
+- **305 voice memo entries** (Sep 2015 – Dec 2016) — Whisper transcripts from the archive. 12 m4a files without transcripts were skipped.
+- **465 video entries** (2008–2020) — stubs from `_Documentation/Videos/` year folders. No embed URLs yet (YouTube/Vimeo sourcing is Dyl's next call).
+- 1 event entry.
+- Photos, lyrics, people collections exist and validate but have no entries yet.
+- Filter UX: three axes (Project × Format × Medium) with "×" reset button and live "showing X of Y" count. Format axis is the workhorse (LP/EP/single/mix/demo/b-sides/other/compilation). Medium axis auto-appeared when voice memos + videos landed.
 - **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, `robots.txt` Disallow (WIP posture). `base: '/crfw-site'` + `withBase()` helper means custom-domain swap is config-only.
 
 **Scripts:**
@@ -110,14 +119,14 @@ Curator work (Dyl):
 4. **Manual cover art** for release folders where the image exists but isn't named `cover.*`.
 
 Agent-doable next:
-5. **Voice memo Whisper transcription** — ~780 files, dedicated session. HANDOFF_PROMPT.md §3 prompt still applies.
-6. **Vimeo embed wiring** — needs Dyl's input on where the URLs live.
-7. **IG photo import** — if/when Dyl pulls the IG archive JSON.
-8. **Filter UX** — year slider, tag chips, Pagefind search. Brief-level decision, ask before starting.
-9. **Cover-art sweeps** — re-run `node scripts/import-cover-art.mjs --write` as Dyl tidies source folders (rename to `cover.*` or drop into an `art/` subdir). Idempotent.
+5. **Photo import** — only remaining empty collection. Needs IG archive JSON or other source from Dyl.
+6. **Whisper pass** on 12 voice memos without transcripts.
+7. **YouTube/Vimeo URL matching** — video entries exist as stubs but have no embed URLs. YouTube was more popular than Vimeo for Colin's work. Dyl needs to source the URLs.
+8. **Pagefind search** — with 1,005 entries, full-text search is now genuinely useful.
+9. **Cover-art sweeps** — re-run `node scripts/import-cover-art.mjs --write` as Dyl tidies source folders.
 10. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`.
 
-**Done (cumulative through Session 05):** ~~killd by discography bulk pass~~ (PR #1, 55 stubs). ~~GitHub Pages deploy~~ (PR #2). ~~killd-by-adjacent pass~~ (PR #3, 7 stubs). ~~alphabets bulk pass~~ (PR #4, 169 stubs). ~~Cover-art importer + first pass~~ (PR #5, 1 cover + seeded-data fix).
+**Done (cumulative through Session 06):** ~~killd by discography bulk pass~~ (PR #1). ~~GitHub Pages deploy~~ (PR #2). ~~killd-by-adjacent pass~~ (PR #3). ~~alphabets bulk pass~~ (PR #4). ~~Cover-art importer + first pass~~ (PR #5). ~~Filter UX overhaul~~ (PR #6). ~~Voice memo import~~ (PR #7, 305 entries). ~~Video stub import~~ (PR #8, 465 entries).
 
 ---
 
