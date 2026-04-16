@@ -4,6 +4,50 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 06 (cont.) — 2026-04-16 — bug pass + architecture stabilization
+
+**Goal:** 12-item audit pass addressing bugs, performance, data model brittleness, and accessibility. User-reported: year labels clipped ("only shows 20"), filter tabs need more data, wants the site editable for future content, wants to link projects like DIMCP.
+
+**Done — PR #9 (merged `e24e1e1`):**
+
+Critical fixes:
+- **Year-label clipping**: grid column `120px` → `auto`. Four digits at 56–120px font need ~260px; the fixed column was hiding the last two digits.
+- **Page size: 2.4MB → 786KB** (68% reduction). Voice memo transcripts truncated to 80-char previews in the inline JSON payload. Full transcripts were 1.3MB of the 1.9MB payload — only needed on popup open, not page load.
+- **Format sort bug**: `?? 99` → proper `-1` check (`indexOf` returns `-1`, not `null`; `??` never fires for `-1`).
+- **"1 entries" grammar** → "1 entry" singular.
+
+Data model:
+- **`project` enum → free string**: `z.enum([6 values])` → `z.string().min(1)`. DIMCP ("Dog is my copilot") and any future project names can now be added to content files without touching the schema. Known values documented in a comment for reference.
+- **Removed dead schema code**: unused `medium` enum and `mediaRef` object (defined in Session 01 but never referenced by any collection).
+
+Popup + UX:
+- Voice memos now show transcript preview in popup (was blank).
+- Events show location if present. Photos show caption. Videos show archive path.
+- Voice memo cards show first ~80 chars of transcript as subtitle (was 305× identical "Voice memo").
+
+Accessibility + polish:
+- `:focus-visible` styles on all interactive elements (filter buttons, entry cards, popup close, reset button) — WCAG 2.1 AA.
+- `theme-color` meta tag (#0e0e12) + Open Graph tags in Base.astro.
+- CSS project-tag colors for `Colin Ward` and `collaboration`; fallback dim color for unknown/new projects.
+
+Also cleaned 409 Dropbox sync artifact files (`" 2.json"` duplicates) from the local working directory — these were never committed to git but inflated local builds from 1,005 to 1,414 entries.
+
+**State at end of session:**
+- 1,005 entries (234 releases + 305 voice memos + 465 videos + 1 event)
+- Page size 786KB (down from 2.4MB)
+- `project` is now a free string — no schema change needed for DIMCP or future projects
+- 9 PRs merged total across Sessions 01–06
+- Live at https://dylwar27.github.io/crfw-site/
+
+**Next work:**
+1. **DIMCP project tagging** — 192 video files under `_Documentation/Videos/2018/Dog is my Copilot/` are currently tagged `alphabets`. Now that project is a free string, re-tag them `DIMCP` (or whatever Dyl prefers as the canonical name).
+2. **Photo import** — only remaining empty collection.
+3. **Pagefind search** — with 1,005 entries, full-text search is genuinely useful.
+4. **YouTube/Vimeo URL sourcing** — video stubs exist but have no embed URLs.
+5. **Custom domain** — when ready.
+
+---
+
 ## Session 06 — 2026-04-16 — filter UX + voice memos + videos (1,005 entries)
 
 **Goal:** filter UX overhaul, voice memo import, video stub import. Continuation of the same day as Session 05.
