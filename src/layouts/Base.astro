@@ -10,6 +10,10 @@ const { title = 'Colin Ward / CRFW' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content="An archive and timeline of the work of Colin Ward (CRFW / killd by / alphabets)." />
+    <meta name="theme-color" content="#0e0e12" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="An archive and timeline of the work of Colin Ward (CRFW / killd by / alphabets)." />
+    <meta property="og:type" content="website" />
   </head>
   <body>
     <slot />

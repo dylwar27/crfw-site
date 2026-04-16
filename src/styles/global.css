@@ -129,7 +129,7 @@ a:hover { color: var(--accent-2); }
 }
 .year-row {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: auto 1fr;
   gap: 32px;
   padding: 48px 0;
   border-top: 1px solid var(--rule);
@@ -235,11 +235,29 @@ a:hover { color: var(--accent-2); }
   color: var(--ink-dim);
   align-self: flex-start;
 }
+/* Known projects get accent colors; unknown projects get the default dim color */
 .entry[data-project="killd by"] .project-tag { color: var(--accent); border-color: var(--accent); }
 .entry[data-project="alphabets"] .project-tag { color: var(--accent-3); border-color: var(--accent-3); }
 .entry[data-project="life"] .project-tag { color: var(--accent-2); border-color: var(--accent-2); }
+.entry[data-project="Colin Ward"] .project-tag { color: var(--ink); border-color: var(--ink); }
+.entry[data-project="collaboration"] .project-tag { color: #b39ddb; border-color: #b39ddb; }
 
 .entry[hidden] { display: none !important; }
+
+/* Focus-visible for accessibility (WCAG 2.1 AA) */
+.filter-btn:focus-visible,
+.filter-reset:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+.entry:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: -2px;
+}
+.popup-close:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
 
 /* POPUP / DIALOG */
 .popup-scrim {

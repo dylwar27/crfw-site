@@ -109,16 +109,27 @@ for (const v of videos) {
 
 for (const m of voice_memos) {
   const year = parseInt(m.data.date.slice(0, 4), 10);
+  // Use first ~80 chars of transcript as subtitle, or date as fallback
+  const transcriptPreview = m.data.transcript
+    ? m.data.transcript.slice(0, 80).replace(/\s+/g, ' ').trim() + (m.data.transcript.length > 80 ? '…' : '')
+    : undefined;
   entries.push({
     id: `voice--${m.id}`,
     kind: 'voice_memo',
     title: m.data.title ?? 'Voice memo',
+    preservedTitle: transcriptPreview,
     date: m.data.date,
     year,
     project: m.data.project,
     size: 'sm',
     tags: m.data.tags ?? [],
-    data: { ...m.data, src: withBase(m.data.src) },
+    // Strip full transcript from inline data — only include preview.
+    // Full transcript is heavy (~1.3MB total); popups show the preview.
+    data: {
+      ...m.data,
+      src: withBase(m.data.src),
+      transcript: transcriptPreview,
+    },
   });
 }
 
@@ -139,7 +150,7 @@ const kinds = [...new Set(entries.map(e => e.kind))];
 const formats = [...new Set(entries.map(e => e.format).filter(Boolean))] as string[];
 // Preferred display order for formats
 const formatOrder = ['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other'];
-formats.sort((a, b) => (formatOrder.indexOf(a) ?? 99) - (formatOrder.indexOf(b) ?? 99));
+formats.sort((a, b) => (formatOrder.indexOf(a) === -1 ? 99 : formatOrder.indexOf(a)) - (formatOrder.indexOf(b) === -1 ? 99 : formatOrder.indexOf(b)));
 
 // Totals for the sub-line
 const totals = {
@@ -198,7 +209,7 @@ const totals = {
       <section class="year-row" data-year={year}>
         <div class="year-label">
           {year}
-          <span class="after">{byYear.get(year)!.length} entries</span>
+          <span class="after">{byYear.get(year)!.length === 1 ? '1 entry' : `${byYear.get(year)!.length} entries`}</span>
         </div>
         <div class="entries">
           {byYear.get(year)!.map(e => (
@@ -251,6 +262,8 @@ const totals = {
       function renderPopup(e) {
         const d = e.data || {};
         const cover = e.cover || d.coverArt;
+
+        // --- Release-specific: tracklist ---
         const trackHtml = (d.tracklist || []).map(t => `
           <li>
             <span class="n">${t.n ?? ''}</span>
@@ -261,6 +274,22 @@ const totals = {
                 : ''}
             </span>
           </li>`).join('');
+
+        // --- Voice memo: transcript ---
+        const transcriptHtml = d.transcript
+          ? `<h3>Transcript</h3><div class="summary"><p>${escapeHtml(d.transcript)}</p></div>`
+          : '';
+
+        // --- Event: location ---
+        const locationHtml = d.location
+          ? `<div class="popup-meta"><span>📍 ${escapeHtml(d.location)}</span></div>`
+          : '';
+
+        // --- Photo: caption ---
+        const captionHtml = d.caption
+          ? `<div class="summary"><p>${escapeHtml(d.caption)}</p></div>`
+          : '';
+
         const summary = d.summary ? `<div class="summary"><p>${escapeHtml(d.summary)}</p></div>` : '';
         const bodyHtml = d.body ? `<div class="summary">${simpleMarkdown(d.body)}</div>` : '';
         const archive = d.archivePath
@@ -282,10 +311,13 @@ const totals = {
               ${e.preservedTitle && e.preservedTitle !== e.title
                 ? `<div class="popup-preserved">${escapeHtml(e.preservedTitle)}</div>` : ''}
               <div class="popup-meta">${meta}</div>
+              ${locationHtml}
               ${summary}
+              ${captionHtml}
             </div>
           </div>
           ${trackHtml ? `<h3>Tracklist</h3><ol class="popup-tracklist">${trackHtml}</ol>` : ''}
+          ${transcriptHtml}
           ${bodyHtml ? `<h3>Notes</h3>${bodyHtml}` : ''}
           ${archive ? `<h3>In the archive</h3>${archive}` : ''}
         `;
