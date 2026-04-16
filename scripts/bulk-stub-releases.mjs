@@ -85,10 +85,16 @@ function stripLeadingNumber(s) {
   return s.replace(/^\d+\s+/, '');
 }
 
+const CURRENT_YEAR = new Date().getUTCFullYear();
+
 function earliestYear(folderName) {
   // Non-digit context rather than \b, since Colin's folder names mash letters
   // and digits together ("B-SIDES2017", "Recovery4Burn") — \b fails there.
-  const years = [...folderName.matchAll(/(?<!\d)(?:19|20)\d{2}(?!\d)/g)].map(m => parseInt(m[0], 10));
+  // Cap at the current year — Colin sometimes used future-sounding numbers
+  // as titles ("2046AD" is a Wong Kar-wai reference, not a release year).
+  const years = [...folderName.matchAll(/(?<!\d)(?:19|20)\d{2}(?!\d)/g)]
+    .map(m => parseInt(m[0], 10))
+    .filter(y => y <= CURRENT_YEAR);
   if (years.length === 0) return null;
   return Math.min(...years);
 }
