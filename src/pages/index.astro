@@ -30,6 +30,7 @@ type TLEntry = {
   date: string;
   year: number;
   project?: string;
+  format?: string;
   cover?: string;
   size: 'sm' | 'md' | 'lg' | 'xl';
   tags: string[];
@@ -48,6 +49,7 @@ for (const r of releases) {
     date: r.data.date,
     year,
     project: r.data.project,
+    format: r.data.format,
     cover: withBase(r.data.coverArt),
     // LPs are big cards; everything else smaller
     size: r.data.format === 'LP' ? 'xl' : r.data.format === 'EP' ? 'lg' : 'md',
@@ -131,9 +133,13 @@ for (const e of entries) {
 }
 const years = [...byYear.keys()].sort((a, b) => b - a);
 
-// Project + medium lists for filter tabs
+// Project + medium + format lists for filter tabs
 const projects = [...new Set(entries.map(e => e.project).filter(Boolean))] as string[];
 const kinds = [...new Set(entries.map(e => e.kind))];
+const formats = [...new Set(entries.map(e => e.format).filter(Boolean))] as string[];
+// Preferred display order for formats
+const formatOrder = ['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other'];
+formats.sort((a, b) => (formatOrder.indexOf(a) ?? 99) - (formatOrder.indexOf(b) ?? 99));
 
 // Totals for the sub-line
 const totals = {
@@ -158,12 +164,33 @@ const totals = {
     {projects.map(p => (
       <button class="filter-btn" data-axis="project" data-value={p}>{p}</button>
     ))}
+
+    {formats.length > 0 && (
+      <>
+        <span class="group-sep"></span>
+        <span class="filters-label">Format</span>
+        <button class="filter-btn active" data-axis="format" data-value="all">All</button>
+        {formats.map(f => (
+          <button class="filter-btn" data-axis="format" data-value={f}>{f}</button>
+        ))}
+      </>
+    )}
+
+    {/* Medium axis only shows when there are 2+ distinct kinds (e.g. once videos/voice_memos land) */}
+    {kinds.length >= 2 && (
+      <>
+        <span class="group-sep"></span>
+        <span class="filters-label">Medium</span>
+        <button class="filter-btn active" data-axis="kind" data-value="all">All</button>
+        {kinds.map(k => (
+          <button class="filter-btn" data-axis="kind" data-value={k}>{k.replace('_', ' ')}</button>
+        ))}
+      </>
+    )}
+
     <span class="group-sep"></span>
-    <span class="filters-label">Medium</span>
-    <button class="filter-btn active" data-axis="kind" data-value="all">All</button>
-    {kinds.map(k => (
-      <button class="filter-btn" data-axis="kind" data-value={k}>{k.replace('_', ' ')}</button>
-    ))}
+    <button class="filter-reset" id="filter-reset" title="Clear all filters">×</button>
+    <span class="filter-count" id="filter-count"></span>
   </nav>
 
   <main class="timeline">
@@ -179,6 +206,7 @@ const totals = {
               class={`entry size-${e.size}`}
               data-project={e.project}
               data-kind={e.kind}
+              data-format={e.format || ''}
               data-entry-id={e.id}
             >
               {e.project && <span class="project-tag">{e.project}</span>}
@@ -298,20 +326,41 @@ const totals = {
         el.addEventListener('click', () => open(el.dataset.entryId));
       });
 
-      // Filter tabs — two independent axes (project + kind). AND semantics.
-      const state = { project: 'all', kind: 'all' };
+      // Filter tabs — three independent axes (project + kind + format). AND semantics.
+      const state = { project: 'all', kind: 'all', format: 'all' };
+      const totalEntries = document.querySelectorAll('.entry').length;
+      const filterCount = document.getElementById('filter-count');
+      const resetBtn = document.getElementById('filter-reset');
+
       function applyFilters() {
+        let visible = 0;
         document.querySelectorAll('.entry').forEach(el => {
           const okProj = state.project === 'all' || el.dataset.project === state.project;
           const okKind = state.kind === 'all' || el.dataset.kind === state.kind;
-          el.hidden = !(okProj && okKind);
+          const okFmt = state.format === 'all' || el.dataset.format === state.format;
+          const show = okProj && okKind && okFmt;
+          el.hidden = !show;
+          if (show) visible++;
         });
-        // Hide empty year rows
+        // Update year row visibility and entry counts
         document.querySelectorAll('.year-row').forEach(row => {
-          const visible = row.querySelectorAll('.entry:not([hidden])').length;
-          row.style.display = visible ? '' : 'none';
+          const count = row.querySelectorAll('.entry:not([hidden])').length;
+          row.style.display = count ? '' : 'none';
+          const after = row.querySelector('.year-label .after');
+          if (after) after.textContent = count + (count === 1 ? ' entry' : ' entries');
         });
+        // Show filter count when filtering is active
+        const isFiltered = state.project !== 'all' || state.kind !== 'all' || state.format !== 'all';
+        if (filterCount) {
+          filterCount.textContent = isFiltered
+            ? `showing ${visible} of ${totalEntries}`
+            : '';
+        }
+        if (resetBtn) {
+          resetBtn.style.display = isFiltered ? '' : 'none';
+        }
       }
+
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const axis = btn.dataset.axis;
@@ -322,6 +371,20 @@ const totals = {
           applyFilters();
         });
       });
+
+      // Reset all filters
+      if (resetBtn) {
+        resetBtn.style.display = 'none'; // hidden on load
+        resetBtn.addEventListener('click', () => {
+          state.project = 'all';
+          state.kind = 'all';
+          state.format = 'all';
+          document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.value === 'all');
+          });
+          applyFilters();
+        });
+      }
     })();
   </script>
 </Base>
