@@ -1,0 +1,137 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const videos = await getCollection('videos');
+  // Only generate pages for videos that have a transcript — otherwise
+  // the page is empty and adds nothing over the timeline popup.
+  return videos
+    .filter(v => v.data.transcript && v.data.transcript.length > 30)
+    .map(v => ({
+      params: { slug: v.id.replace(/\.json$/, '') },
+      props: { video: v },
+    }));
+}
+
+const { video } = Astro.props;
+const d = video.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const timelineHref = `${BASE}/`;
+---
+
+<Base title={`Video — ${d.title} — CRFW`}>
+  <article class="video-page">
+    <nav class="video-nav">
+      <a href={timelineHref}>← Back to timeline</a>
+    </nav>
+
+    <header class="video-header">
+      <div class="video-meta">
+        <span class="video-kind">Video</span>
+        <span class="video-date">{d.date}</span>
+        {d.project && <span class="video-project">{d.project}</span>}
+      </div>
+      <h1 class="video-title">{d.title}</h1>
+    </header>
+
+    {d.transcript && (
+      <section class="video-transcript">
+        <h2>Transcript</h2>
+        <div class="video-text">
+          {d.transcript.split(/\n\n+/).map(para => <p>{para}</p>)}
+        </div>
+      </section>
+    )}
+
+    {d.archivePath && (
+      <aside class="video-archive">
+        <h3>In the archive</h3>
+        <code>{d.archivePath}</code>
+      </aside>
+    )}
+  </article>
+</Base>
+
+<style>
+  .video-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .video-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .video-nav a { color: var(--ink-dim); text-decoration: none; }
+  .video-nav a:hover { color: var(--accent-2); }
+
+  .video-header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 24px;
+  }
+  .video-meta {
+    display: flex;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+  .video-meta .video-kind { color: var(--accent-2); }
+  .video-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .video-transcript h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+  }
+  .video-text {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .video-text p { margin: 0 0 1.2em; }
+
+  .video-archive {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .video-archive h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 8px;
+  }
+  .video-archive code {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    background: var(--bg-soft);
+    padding: 8px 12px;
+    display: inline-block;
+    border: 1px dashed var(--rule);
+  }
+</style>
