@@ -300,7 +300,14 @@ const totals = {
   </main>
 
   <footer class="foot">
-    CRFW timeline · proof of concept · {totals.total} entries indexed
+    <div class="foot-nav">
+      <a href={`${BASE}/about`}>About</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/projects`}>Associated projects</a>
+    </div>
+    <div class="foot-line">
+      CRFW timeline · proof of concept · {totals.total} entries indexed
+    </div>
   </footer>
 
   <!-- popup shell -->

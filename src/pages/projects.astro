@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import articlesData from '../../data/articles-snapshot.json';
+
+const projects = articlesData.sheets['Associated Projects'] as Array<{
+  Project: string;
+  Role?: string;
+  Collaborators?: string;
+  Notes?: string;
+}>;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+// Which projects have content entries in the timeline? Link them.
+const linkableProjects: Record<string, string> = {
+  'alphabets': `${BASE}/?project=alphabets`,
+  'killd by': `${BASE}/?project=killd+by`,
+  'DIMCP': `${BASE}/?project=DIMCP`,
+};
+---
+<Base title="Associated Projects — CRFW">
+  <article class="projects-page">
+    <nav class="projects-nav">
+      <a href={`${BASE}/`}>← Back to timeline</a>
+    </nav>
+
+    <header class="projects-header">
+      <h1>Associated Projects</h1>
+      <p class="projects-sub">
+        Colin moved through a lot of collaborative and solo projects.
+        This is the list as the curator knows it — some have content in
+        the archive, others are only known by name.
+      </p>
+    </header>
+
+    <div class="projects-list">
+      {projects.map(p => {
+        const link = linkableProjects[p.Project];
+        return (
+          <section class="project-card">
+            <header class="project-card-header">
+              {link
+                ? <a class="project-name project-name-linked" href={link}>{p.Project}</a>
+                : <span class="project-name">{p.Project}</span>}
+              {p.Role && <span class="project-role">{p.Role}</span>}
+            </header>
+            {p.Collaborators && p.Collaborators !== '—' && (
+              <p class="project-collab"><strong>With:</strong> {p.Collaborators}</p>
+            )}
+            {p.Notes && <p class="project-notes">{p.Notes}</p>}
+          </section>
+        );
+      })}
+    </div>
+
+    <footer class="projects-foot">
+      Source: <a href={`${BASE}/about`}>biographical summary</a>, CRFW Archive INDEX.
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .projects-page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .projects-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .projects-nav a { color: var(--ink-dim); text-decoration: none; }
+  .projects-nav a:hover { color: var(--accent-2); }
+
+  .projects-header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+  }
+  .projects-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 68px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .projects-sub {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  .projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 24px;
+  }
+  .project-card-header {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .project-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    display: block;
+    color: var(--ink);
+  }
+  .project-name-linked { color: var(--accent-2); text-decoration: none; }
+  .project-name-linked:hover { text-decoration: underline; }
+  .project-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 6px;
+  }
+  .project-collab, .project-notes {
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 8px 0;
+    color: var(--ink);
+  }
+  .project-collab strong {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    font-weight: normal;
+  }
+  .project-notes { color: var(--ink-dim); }
+
+  .projects-foot {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+  }
+  .projects-foot a { color: var(--accent-2); }
+</style>
