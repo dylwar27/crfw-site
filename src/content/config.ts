@@ -89,6 +89,7 @@ const videos = defineCollection({
     summary: z.string().optional(),
     tags: z.array(z.string()).default([]),
     kind: z.enum(['music video', 'live', 'rehearsal', 'interview', 'home', 'other']).default('other'),
+    transcript: z.string().optional(),
     archivePath: z.string().optional(),
     published,
   }),

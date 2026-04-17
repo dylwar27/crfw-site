@@ -93,6 +93,14 @@ for (const p of photos) {
 for (const v of videos) {
   const year = parseInt((v.data.date ?? '0000').slice(0, 4), 10);
   if (!year) continue;
+  const videoSlug = v.id.replace(/\.json$/, '');
+  // Preview first ~200 chars of transcript for the popup. Full text
+  // on the /video/<slug> reader page (only generated if transcript
+  // >30 chars).
+  const hasFullTranscript = !!(v.data.transcript && v.data.transcript.length > 30);
+  const transcriptPreview = v.data.transcript
+    ? v.data.transcript.slice(0, 200).replace(/\s+/g, ' ').trim() + (v.data.transcript.length > 200 ? '…' : '')
+    : undefined;
   entries.push({
     id: `video--${v.id}`,
     kind: 'video',
@@ -103,7 +111,16 @@ for (const v of videos) {
     cover: withBase(v.data.poster),
     size: 'md',
     tags: v.data.tags ?? [],
-    data: { ...v.data, poster: withBase(v.data.poster), localSrc: withBase(v.data.localSrc) },
+    data: {
+      ...v.data,
+      poster: withBase(v.data.poster),
+      localSrc: withBase(v.data.localSrc),
+      // Strip full transcript from the inline DATA — keep only the
+      // preview (same pattern as voice memos).
+      transcript: transcriptPreview,
+      transcriptFull: hasFullTranscript,
+      permalink: hasFullTranscript ? `${BASE}/video/${videoSlug}` : undefined,
+    },
   });
 }
 
