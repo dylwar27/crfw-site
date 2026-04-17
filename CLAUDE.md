@@ -81,10 +81,16 @@ site/
 
 ---
 
-## Current state (as of Session 06, 2026-04-16)
+## Current state (as of Session 07, 2026-04-17)
 
 - **1,005 total entries** (234 releases + 305 voice memos + 465 videos + 1 event)
-- Filter UX has three axes: Project, Format, Medium — with reset button + live count
+- **16 PRs merged** across 7 sessions
+- Live at https://dylwar27.github.io/crfw-site/ + /admin (password `crfw`)
+- **307 static pages**: timeline + admin + 305 voice memo reader pages (`/voice-memo/[slug]`)
+- **Filter UX: four axes** — Project, Format, Medium, Tag — with reset button + live count
+- **Full-text search** via Pagefind (306 pages, 8,320 words indexed)
+- **CSV roundtrip** for bulk editing: /admin → Sheets/Excel → `scripts/import-csv-edits.mjs`
+- Main page 889 KB (transcripts stripped, videos/memos lazy-loaded via permalinks)
 - Only "photos" collection warning remains (no photo entries yet)
 
 ### Breakdown:
@@ -105,28 +111,39 @@ site/
 - **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, `robots.txt` Disallow (WIP posture). `base: '/crfw-site'` + `withBase()` helper means custom-domain swap is config-only.
 
 **Scripts:**
-- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — the release-stub generator. Caps year extraction at current year (Session 05 hardening).
-- [scripts/import-cover-art.mjs](scripts/import-cover-art.mjs) — the cover-art importer. Strict policy after Session 05: cover-named files only, or sole image inside an art-shaped subfolder. No substring matches, no top-level sole-image fallback.
+- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — release stub generator
+- [scripts/import-cover-art.mjs](scripts/import-cover-art.mjs) — cover-art importer (strict policy)
+- [scripts/import-voice-memos.mjs](scripts/import-voice-memos.mjs) — voice memo transcript importer
+- [scripts/import-video-stubs.mjs](scripts/import-video-stubs.mjs) — video stub importer
+- [scripts/retag-dimcp.mjs](scripts/retag-dimcp.mjs) — one-off DIMCP project reassignment (Session 07)
+- [scripts/import-csv-edits.mjs](scripts/import-csv-edits.mjs) — **CSV import-back** — diffs a CSV against content files, applies changes. Editable cols: title, preservedTitle, project, date, format, summary, tags, published. Dry-run by default; `--write` to apply.
 
 ---
 
 ## Outstanding work (rough priority)
 
 Curator work (Dyl):
-1. **`summary:` fields** on the 224 empty stubs — agent won't per golden rule #6.
-2. **2-digit year date fixes** — ~30 alphabets stubs (`JANFEB09`, `M_A_Y_09`, `octobrr09`, etc.) are dated from mtime rather than the year encoded in the folder name. Scriptable with an explicit 2-digit interpretation table from Dyl.
-3. **Curator-flag entries** — `M_killdby15:16:17` (should be 2015?), empty-shell `M_killdby`, `unnamed_killdby_folder` (placeholder name), `untitled.md` (from `____/`), `court-clothes.md` coverArt pointing at SVG while JPG exists next to it.
+1. **`summary:` fields** on the 224 empty stubs — agent won't per golden rule #6. Easiest workflow now: export CSV from /admin, fill in summaries in Sheets, run `node scripts/import-csv-edits.mjs <file> --write`.
+2. **2-digit year date fixes** — ~30 alphabets stubs dated from mtime. Scriptable once you confirm the convention ("all 2-digit years → 2000s"?).
+3. **Curator-flag entries** — `M_killdby15:16:17`, empty `M_killdby`, `unnamed_killdby_folder`, `untitled.md`, court-clothes SVG/JPG mix-up.
 4. **Manual cover art** for release folders where the image exists but isn't named `cover.*`.
+5. **Voice memo titles** (if desired — currently show 80-char transcript preview as subtitle; option to hand-title memorable ones via CSV).
 
 Agent-doable next:
-5. **Photo import** — only remaining empty collection. Needs IG archive JSON or other source from Dyl.
-6. **Whisper pass** on 12 voice memos without transcripts.
-7. **YouTube/Vimeo URL matching** — video entries exist as stubs but have no embed URLs. YouTube was more popular than Vimeo for Colin's work. Dyl needs to source the URLs.
-8. **Pagefind search** — with 1,005 entries, full-text search is now genuinely useful.
-9. **Cover-art sweeps** — re-run `node scripts/import-cover-art.mjs --write` as Dyl tidies source folders.
-10. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`.
+6. **Photo import** — only remaining empty collection. Needs IG archive JSON or other source from Dyl.
+7. **Video transcripts** — 275 Whisper .txt files exist next to video files but weren't imported in Session 06. Extend `scripts/import-video-stubs.mjs` to pick them up + generate `/video/[slug]` reader pages mirroring voice memos.
+8. **Whisper pass** on 12 voice memos without transcripts.
+9. **YouTube/Vimeo URL matching** — video entries exist as stubs but have no embed URLs. YouTube more common than Vimeo for Colin's work. Dyl needs to source.
+10. **Cover-art sweeps** — re-run `node scripts/import-cover-art.mjs --write` as Dyl tidies source folders.
+11. **Project pages** (`/project/killd-by`, etc.) — curated landing pages per era.
+12. **External embeds** — render Bandcamp / SoundCloud / YouTube / Vimeo iframes in popups when URLs land.
+13. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`. Consider basic HTTP auth for /admin at public launch.
 
-**Done (cumulative through Session 06):** ~~killd by discography bulk pass~~ (PR #1). ~~GitHub Pages deploy~~ (PR #2). ~~killd-by-adjacent pass~~ (PR #3). ~~alphabets bulk pass~~ (PR #4). ~~Cover-art importer + first pass~~ (PR #5). ~~Filter UX overhaul~~ (PR #6). ~~Voice memo import~~ (PR #7, 305 entries). ~~Video stub import~~ (PR #8, 465 entries).
+**Done (cumulative through Session 07):**
+- **Session 04:** ~~killd by bulk pass~~ (PR #1). ~~GitHub Pages deploy~~ (PR #2).
+- **Session 05:** ~~killd-by-adjacent pass~~ (PR #3). ~~alphabets bulk pass~~ (PR #4). ~~Cover-art importer~~ (PR #5).
+- **Session 06:** ~~Filter UX overhaul~~ (PR #6). ~~Voice memos~~ (PR #7, 305). ~~Video stubs~~ (PR #8, 465). ~~Bug pass~~ (PR #9). ~~/admin + published field~~ (PR #10).
+- **Session 07:** ~~DIMCP retag~~ (PR #11, 130). ~~Tag filter axis~~ (PR #12). ~~Related entries in popups~~ (PR #13). ~~Voice memo reader pages~~ (PR #14). ~~CSV import-back~~ (PR #15). ~~Pagefind search~~ (PR #16).
 
 ---
 
