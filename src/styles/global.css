@@ -241,6 +241,7 @@ a:hover { color: var(--accent-2); }
 .entry[data-project="life"] .project-tag { color: var(--accent-2); border-color: var(--accent-2); }
 .entry[data-project="Colin Ward"] .project-tag { color: var(--ink); border-color: var(--ink); }
 .entry[data-project="collaboration"] .project-tag { color: #b39ddb; border-color: #b39ddb; }
+.entry[data-project="DIMCP"] .project-tag { color: #64b5f6; border-color: #64b5f6; }
 
 .entry[hidden] { display: none !important; }
 
