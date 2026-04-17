@@ -61,6 +61,24 @@ Create `src/content/photos/<slug>.json`:
 
 The image file goes in `public/media/photos/`.
 
+### Bulk Instagram import
+
+For public IG accounts with no login access, two scripts handle the whole pipeline:
+
+```bash
+# 1. Fetch posts into tmp/instagram/<handle>/ (gitignored).
+#    Prereq: pipx install instaloader
+./scripts/fetch-instagram.sh <handle>
+
+# 2. Dry-run the import; inspect the planned entries.
+node scripts/import-instagram.mjs --user <handle>
+
+# 3. Commit the import.
+node scripts/import-instagram.mjs --user <handle> --tag instagram-personal --write
+```
+
+The importer writes to `photos` (image posts) or `videos` (video posts). Carousels become one entry; secondary media lands in `carouselExtras`. Every new entry is `published: false` — flip visibility via `/admin` or the CSV round-trip once you've curated `title`, `project`, and `summary`.
+
 ## Adding a video
 
 Create `src/content/videos/<slug>.json`:

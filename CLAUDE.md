@@ -134,7 +134,7 @@ Curator work (Dyl):
 5. **Voice memo titles** (if desired — currently show 80-char transcript preview as subtitle; option to hand-title memorable ones via CSV).
 
 Agent-doable next:
-6. **Photo import** — only remaining empty collection. Needs IG archive JSON or other source from Dyl.
+6. **Photo import** — only remaining empty collection. IG scraper pipeline landed (`scripts/fetch-instagram.sh` + `scripts/import-instagram.mjs`); Dyl runs per handle. Non-IG photo sources (EXIF-dated archive images) still TBD.
 7. **Video transcripts** — 275 Whisper .txt files exist next to video files but weren't imported in Session 06. Extend `scripts/import-video-stubs.mjs` to pick them up + generate `/video/[slug]` reader pages mirroring voice memos.
 8. **Whisper pass** on 12 voice memos without transcripts.
 9. **YouTube/Vimeo URL matching** — video entries exist as stubs but have no embed URLs. YouTube more common than Vimeo for Colin's work. Dyl needs to source.

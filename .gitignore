@@ -9,6 +9,11 @@ dist/
 # Cover-art import audit log — regenerated on every script run.
 cover-art-import-report.txt
 
+# Raw Instagram scrapes produced by scripts/fetch-instagram.sh. Large
+# binary dumps; live outside the repo. The importer lifts a curated
+# subset into public/media/ and src/content/.
+tmp/
+
 # Dropbox sync-conflict duplicates ("filename 2.ext"). The repo
 # lives outside Dropbox but this machine's Dropbox copies files
 # with a literal-space-2 suffix on sync collisions and they
