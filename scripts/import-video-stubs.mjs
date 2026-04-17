@@ -146,6 +146,7 @@ for (const yearDir of yearFolders) {
       kind: 'other',
       archivePath,
       tags: ['video'],
+      published: false, // draft by default; curator opts in to publish
     };
 
     console.log(`  [${yearDir}] ${slug}.json  ← ${vid.relPath}${hasTranscript ? ' +txt' : ''}${project ? ` (${project})` : ''}`);

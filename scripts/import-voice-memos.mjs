@@ -84,6 +84,7 @@ for (const m4a of m4aFiles) {
     transcript,
     archivePath: `CRFW Archive/_Documentation/Voice Memos/${m4a}`,
     tags: ['voice-memo'],
+    published: false, // draft by default; curator opts in to publish
   };
 
   console.log(`  IMPORT  ${slug}  (${date}, ${transcript.length} chars)`);

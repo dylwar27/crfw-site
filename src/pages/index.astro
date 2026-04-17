@@ -336,13 +336,21 @@ const totals = {
         }
 
         // 2. Title substring matches across collections (e.g. release
-        //    "SIBERIAN CHILL" matches video "SIBERIAN CHILL.mov")
+        //    "SIBERIAN CHILL" matches video "SIBERIAN CHILL.mov").
+        // Tightened in Session 08: require 6+ char normalized titles and
+        // skip very common placeholder names that match too many things.
+        const GENERIC_TITLES = new Set(['untitled', 'recovery', 'alphabets', 'remix', 'demo', 'mix', 'video']);
         const titleNorm = (entry.title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-        if (titleNorm.length >= 4) {
+        if (titleNorm.length >= 6 && !GENERIC_TITLES.has(titleNorm)) {
           for (const other of Object.values(DATA)) {
             if (other.id === entry.id) continue;
             if (other.kind === entry.kind) continue; // prefer cross-medium matches
             const otherNorm = (other.title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            if (otherNorm.length < 6 || GENERIC_TITLES.has(otherNorm)) continue;
+            // Bidirectional substring — but require the shorter one to be
+            // at least 6 chars. (Prevents "REMIX08" matching every remix.)
+            const shorter = otherNorm.length < titleNorm.length ? otherNorm : titleNorm;
+            if (shorter.length < 6) continue;
             if (otherNorm.includes(titleNorm) || titleNorm.includes(otherNorm)) {
               push(other, 'title match');
             }
