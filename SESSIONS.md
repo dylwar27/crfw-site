@@ -4,7 +4,76 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
-## Session 07 — 2026-04-17 — autonomous sprint: DIMCP + UX depth + search + editing loop
+## Session 08 — 2026-04-17 — answers + data cleanup + video transcripts
+
+**Goal:** work through the open questions from Session 07 and the follow-ups they enabled. Dyl's answers gave us concrete work: 2-digit years → 2000s, drafts-by-default for new imports, video transcripts + reader pages, tighten related-matching.
+
+**Done — 4 PRs merged:**
+
+**PR #17 — Fix 17 2-digit year dates (all → 2000s)**
+- `scripts/fix-2digit-years.mjs` walks release files, extracts year tokens from preservedTitle, updates date when they disagree with the current mtime-derived value.
+- Convention: 00-99 → 2000-2099. Future-year expansions skipped.
+- Strips Colin's chronology prefix ("18 alphabets" is release #18, NOT 2018); skips wildcard patterns ("SUMMERHITZ20XX").
+- Notable fixes: `M_killdby15:16:17` (2012 → 2015, long-standing curator-flag item), `REMIX08/09`, `pulse stuff fall 08` (2013 → 2008), 14 others.
+- Ranges use earliest year.
+
+**PR #18 — Dropbox dupe cleanup + gitignore guard**
+- PR #17 accidentally committed two `" 2.*"` Dropbox sync artifacts (`scripts/import-csv-edits 2.mjs`, `src/pages/voice-memo/[slug] 2.astro`). Same class of artifact as the 409 we cleaned locally in Session 06.
+- Removed + added gitignore patterns (`* 2.*`, `* 2`, `** 2.*`, `** 2`) to prevent recurrence.
+
+**PR #19 — Draft-by-default + tighten related matching**
+- Import scripts now emit `published: false` on new entries — matches Session 08 decision. Existing 1,005 entries are unaffected (they use the schema default `true` via absence of the field).
+- Updated: `bulk-stub-releases.mjs`, `import-voice-memos.mjs`, `import-video-stubs.mjs`.
+- Related-entries title-match threshold raised 4→6 chars; shorter title also required ≥6; exclusion list for generic placeholders (`untitled`, `recovery`, `alphabets`, `remix`, `demo`, `mix`, `video`). Prevents "REMIX08" from matching every remix in the archive.
+
+**PR #20 — Video transcripts: 266 imports + reader pages**
+- Closes the Session 07 open item. Schema: added `transcript: z.string().optional()` to the videos collection.
+- `scripts/import-video-transcripts.mjs` backfills transcripts from sibling .txt files in the archive. 266 of 465 videos now have transcripts (~741 KB of text). 199 still need Whisper processing.
+- New dynamic route `/video/[slug]` — reader page for each video with a non-trivial transcript. Mirrors the voice-memo reader page.
+- Popup now renders 200-char transcript preview + "Read full transcript →" pill link for videos that have one.
+- **Pagefind index: 8,321 → 19,007 words** (2.3× more searchable content).
+
+**State at end of session:**
+- **20 PRs merged total across 8 sessions.**
+- Live at https://dylwar27.github.io/crfw-site/
+- **555 static pages** (timeline + admin + 305 voice memo readers + 249 video readers).
+- Main page: 966 KB (tight but under 1 MB target).
+- Pagefind index: 555 pages, 19,007 words.
+- 1,005 published entries on the public timeline.
+
+**Remaining items (most from Session 07, updated):**
+
+Curator work:
+1. **Summary fields** on 224 empty stubs — export CSV from /admin → Sheets → `import-csv-edits.mjs`.
+2. **Curator-flag entries** — `M_killdby` (empty shell), `unnamed_killdby_folder`, `untitled.md`, `court-clothes.md` SVG/JPG mix-up. (M_killdby15:16:17 date is now fixed!)
+3. **Manual cover art** for release folders where image exists but isn't named `cover.*`.
+4. **Voice memo titles** (if desired, per Session 08 decision to keep as-is — this is optional).
+
+Agent-doable next:
+5. **Photo import** — only remaining empty collection. Still needs a source from Dyl.
+6. **Whisper pass on the 199 videos** without transcripts, plus the 12 voice memos.
+7. **YouTube/Vimeo URL matching** — Dyl's sourcing task.
+8. **Cover-art sweep** as Dyl tidies source folders.
+9. **Project pages** (`/project/killd-by`, etc.) — curated per-era landing pages.
+10. **External embeds** — Bandcamp / SoundCloud / YouTube / Vimeo iframes in popups.
+11. **Bundle-size watch** — 966 KB main page. Photos or more transcripts could push past 1 MB. If that happens, fetch transcripts on demand instead of inlining the previews.
+12. **Custom domain** — two-line astro.config.mjs swap + CNAME + drop robots.
+
+**Files touched this session:**
+- [scripts/fix-2digit-years.mjs](scripts/fix-2digit-years.mjs) — new (PR #17)
+- [scripts/import-video-transcripts.mjs](scripts/import-video-transcripts.mjs) — new (PR #20)
+- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs), [import-voice-memos.mjs](scripts/import-voice-memos.mjs), [import-video-stubs.mjs](scripts/import-video-stubs.mjs) — draft-by-default (PR #19)
+- [src/content/config.ts](src/content/config.ts) — added `transcript` to videos schema
+- [src/pages/index.astro](src/pages/index.astro) — video popup wiring, related matching tightened
+- [src/pages/video/[slug].astro](src/pages/video/[slug].astro) — new (PR #20)
+- [.gitignore](.gitignore) — Dropbox dupe guard
+- 17 release entries re-dated
+- 266 video entries got transcripts
+- [SESSIONS.md](SESSIONS.md) — this entry
+
+---
+
+## Session 07 — 2026-04-16 — autonomous sprint: DIMCP + UX depth + search + editing loop
 
 **Goal:** autonomous push after a planning pass. User said "move forward with everything you can; push as you go; save open questions." Worked through six PRs in priority order from the revised roadmap.
 

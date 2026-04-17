@@ -81,16 +81,17 @@ site/
 
 ---
 
-## Current state (as of Session 07, 2026-04-17)
+## Current state (as of Session 08, 2026-04-17)
 
 - **1,005 total entries** (234 releases + 305 voice memos + 465 videos + 1 event)
-- **16 PRs merged** across 7 sessions
+- **20 PRs merged** across 8 sessions
 - Live at https://dylwar27.github.io/crfw-site/ + /admin (password `crfw`)
-- **307 static pages**: timeline + admin + 305 voice memo reader pages (`/voice-memo/[slug]`)
+- **555 static pages**: timeline + admin + 305 voice memo readers + 249 video readers
 - **Filter UX: four axes** — Project, Format, Medium, Tag — with reset button + live count
-- **Full-text search** via Pagefind (306 pages, 8,320 words indexed)
+- **Full-text search** via Pagefind (555 pages, 19,007 words indexed — voice memos + video transcripts)
 - **CSV roundtrip** for bulk editing: /admin → Sheets/Excel → `scripts/import-csv-edits.mjs`
-- Main page 889 KB (transcripts stripped, videos/memos lazy-loaded via permalinks)
+- **Draft system**: `published: false` hides entries from public timeline; import scripts now default to draft
+- Main page 966 KB (transcripts preview-only inline; full text on permalinked reader pages)
 - Only "photos" collection warning remains (no photo entries yet)
 
 ### Breakdown:
@@ -104,18 +105,20 @@ site/
 - 1 event entry.
 - **3 covers imported**: `court-clothes/cover.svg` (placeholder), `117-killd-by-2014-2016-bsides/cover.jpg`, `19-alphabets-thru-tha-rip/cover.jpg`. Plus `court-clothes/cover.jpg` sitting next to the SVG but not referenced by frontmatter (known curator-flag item).
 - **305 voice memo entries** (Sep 2015 – Dec 2016) — Whisper transcripts from the archive. 12 m4a files without transcripts were skipped.
-- **465 video entries** (2008–2020) — stubs from `_Documentation/Videos/` year folders. No embed URLs yet (YouTube/Vimeo sourcing is Dyl's next call).
+- **465 video entries** (2008–2020) — stubs from `_Documentation/Videos/` year folders. 266 have Whisper transcripts + permalinked `/video/<slug>` reader pages. 199 still need Whisper processing. No embed URLs yet (YouTube/Vimeo sourcing is Dyl's next call).
 - 1 event entry.
 - Photos, lyrics, people collections exist and validate but have no entries yet.
 - Filter UX: three axes (Project × Format × Medium) with "×" reset button and live "showing X of Y" count. Format axis is the workhorse (LP/EP/single/mix/demo/b-sides/other/compilation). Medium axis auto-appeared when voice memos + videos landed.
 - **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, `robots.txt` Disallow (WIP posture). `base: '/crfw-site'` + `withBase()` helper means custom-domain swap is config-only.
 
 **Scripts:**
-- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — release stub generator
+- [scripts/bulk-stub-releases.mjs](scripts/bulk-stub-releases.mjs) — release stub generator (draft-default since Session 08)
 - [scripts/import-cover-art.mjs](scripts/import-cover-art.mjs) — cover-art importer (strict policy)
-- [scripts/import-voice-memos.mjs](scripts/import-voice-memos.mjs) — voice memo transcript importer
-- [scripts/import-video-stubs.mjs](scripts/import-video-stubs.mjs) — video stub importer
+- [scripts/import-voice-memos.mjs](scripts/import-voice-memos.mjs) — voice memo transcript importer (draft-default)
+- [scripts/import-video-stubs.mjs](scripts/import-video-stubs.mjs) — video stub importer (draft-default)
+- [scripts/import-video-transcripts.mjs](scripts/import-video-transcripts.mjs) — backfills Whisper .txt files into video entries (Session 08)
 - [scripts/retag-dimcp.mjs](scripts/retag-dimcp.mjs) — one-off DIMCP project reassignment (Session 07)
+- [scripts/fix-2digit-years.mjs](scripts/fix-2digit-years.mjs) — one-off 2-digit-year fix pass (Session 08)
 - [scripts/import-csv-edits.mjs](scripts/import-csv-edits.mjs) — **CSV import-back** — diffs a CSV against content files, applies changes. Editable cols: title, preservedTitle, project, date, format, summary, tags, published. Dry-run by default; `--write` to apply.
 
 ---
@@ -139,11 +142,12 @@ Agent-doable next:
 12. **External embeds** — render Bandcamp / SoundCloud / YouTube / Vimeo iframes in popups when URLs land.
 13. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`. Consider basic HTTP auth for /admin at public launch.
 
-**Done (cumulative through Session 07):**
+**Done (cumulative through Session 08):**
 - **Session 04:** ~~killd by bulk pass~~ (PR #1). ~~GitHub Pages deploy~~ (PR #2).
 - **Session 05:** ~~killd-by-adjacent pass~~ (PR #3). ~~alphabets bulk pass~~ (PR #4). ~~Cover-art importer~~ (PR #5).
 - **Session 06:** ~~Filter UX overhaul~~ (PR #6). ~~Voice memos~~ (PR #7, 305). ~~Video stubs~~ (PR #8, 465). ~~Bug pass~~ (PR #9). ~~/admin + published field~~ (PR #10).
 - **Session 07:** ~~DIMCP retag~~ (PR #11, 130). ~~Tag filter axis~~ (PR #12). ~~Related entries in popups~~ (PR #13). ~~Voice memo reader pages~~ (PR #14). ~~CSV import-back~~ (PR #15). ~~Pagefind search~~ (PR #16).
+- **Session 08:** ~~2-digit year fix~~ (PR #17, 17 corrections). ~~Dropbox dupe guard~~ (PR #18). ~~Draft-by-default + tighter related~~ (PR #19). ~~Video transcripts + reader pages~~ (PR #20, 266 transcripts, 249 new pages).
 
 ---
 
