@@ -2,7 +2,7 @@
 title: "WETDOLLAR$ 11"
 preservedTitle: "WETDOLLAR$ 11"
 project: "alphabets"
-date: "2012"
+date: "2011"
 format: other
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/WETDOLLAR$ 11/"
 tags:

@@ -2,7 +2,7 @@
 title: "BESTUV09"
 preservedTitle: "BESTUV09"
 project: "alphabets"
-date: "2010"
+date: "2009"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/BESTUV09/"
 tags:

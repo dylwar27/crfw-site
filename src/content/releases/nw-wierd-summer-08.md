@@ -2,7 +2,7 @@
 title: "NW wierd summer 08"
 preservedTitle: "NW wierd summer 08"
 project: "alphabets"
-date: "2009"
+date: "2008"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/NW wierd summer 08/"
 tags:

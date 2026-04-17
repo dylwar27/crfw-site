@@ -2,7 +2,7 @@
 title: "freak medicine winter 07"
 preservedTitle: "freak medicine winter 07"
 project: "alphabets"
-date: "2009"
+date: "2007"
 format: EP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/freak medicine winter 07/"
 tags:

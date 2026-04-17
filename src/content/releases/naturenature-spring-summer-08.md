@@ -2,7 +2,7 @@
 title: "_naturenature spring_summer 08"
 preservedTitle: "_naturenature spring_summer 08"
 project: "alphabets"
-date: "2009"
+date: "2008"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/_naturenature spring_summer 08/"
 tags:

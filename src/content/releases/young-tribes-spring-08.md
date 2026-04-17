@@ -2,7 +2,7 @@
 title: "young tribes spring 08"
 preservedTitle: "young tribes spring 08"
 project: "alphabets"
-date: "2009"
+date: "2008"
 format: EP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/young tribes spring 08/"
 tags:

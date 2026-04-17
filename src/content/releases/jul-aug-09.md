@@ -2,7 +2,7 @@
 title: "jul_aug_09"
 preservedTitle: "jul_aug_09"
 project: "alphabets"
-date: "2010"
+date: "2009"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/jul_aug_09/"
 tags:
