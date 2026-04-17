@@ -155,6 +155,25 @@ const formats = [...new Set(publishedEntries.map(e => e.format).filter(Boolean))
 const formatOrder = ['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other'];
 formats.sort((a, b) => (formatOrder.indexOf(a) === -1 ? 99 : formatOrder.indexOf(a)) - (formatOrder.indexOf(b) === -1 ? 99 : formatOrder.indexOf(b)));
 
+// Tag list — exclude tags that are redundant with project/kind/format filters
+// (e.g. "alphabets", "killd-by", "dimcp", "voice-memo", "video" just echo other axes)
+const projectNormalized = new Set(projects.map(p => p.toLowerCase().replace(/\s+/g, '-')));
+const kindNormalized = new Set(kinds.map(k => k.replace(/_/g, '-')));
+const formatNormalized = new Set(formats.map(f => f.toLowerCase()));
+const tagCounts = new Map<string, number>();
+for (const e of publishedEntries) {
+  for (const t of e.tags) {
+    const tl = t.toLowerCase();
+    if (projectNormalized.has(tl) || kindNormalized.has(tl) || formatNormalized.has(tl)) continue;
+    tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+  }
+}
+// Sort tags by frequency (most common first), cap at top 20 for UI sanity
+const tags = [...tagCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 20)
+  .map(([t]) => t);
+
 // Totals for the sub-line
 const totals = {
   releases: publishedEntries.filter(e => e.kind === 'release').length,
@@ -202,6 +221,17 @@ const totals = {
       </>
     )}
 
+    {tags.length > 0 && (
+      <>
+        <span class="group-sep"></span>
+        <span class="filters-label">Tag</span>
+        <button class="filter-btn active" data-axis="tag" data-value="all">All</button>
+        {tags.map(t => (
+          <button class="filter-btn" data-axis="tag" data-value={t}>{t}</button>
+        ))}
+      </>
+    )}
+
     <span class="group-sep"></span>
     <button class="filter-reset" id="filter-reset" title="Clear all filters">×</button>
     <span class="filter-count" id="filter-count"></span>
@@ -221,6 +251,7 @@ const totals = {
               data-project={e.project}
               data-kind={e.kind}
               data-format={e.format || ''}
+              data-tags={e.tags.join('|')}
               data-entry-id={e.id}
             >
               {e.project && <span class="project-tag">{e.project}</span>}
@@ -361,8 +392,8 @@ const totals = {
         el.addEventListener('click', () => open(el.dataset.entryId));
       });
 
-      // Filter tabs — three independent axes (project + kind + format). AND semantics.
-      const state = { project: 'all', kind: 'all', format: 'all' };
+      // Filter tabs — four independent axes (project + kind + format + tag). AND semantics.
+      const state = { project: 'all', kind: 'all', format: 'all', tag: 'all' };
       const totalEntries = document.querySelectorAll('.entry').length;
       const filterCount = document.getElementById('filter-count');
       const resetBtn = document.getElementById('filter-reset');
@@ -373,7 +404,9 @@ const totals = {
           const okProj = state.project === 'all' || el.dataset.project === state.project;
           const okKind = state.kind === 'all' || el.dataset.kind === state.kind;
           const okFmt = state.format === 'all' || el.dataset.format === state.format;
-          const show = okProj && okKind && okFmt;
+          const tagList = (el.dataset.tags || '').split('|').filter(Boolean);
+          const okTag = state.tag === 'all' || tagList.includes(state.tag);
+          const show = okProj && okKind && okFmt && okTag;
           el.hidden = !show;
           if (show) visible++;
         });
@@ -385,7 +418,7 @@ const totals = {
           if (after) after.textContent = count + (count === 1 ? ' entry' : ' entries');
         });
         // Show filter count when filtering is active
-        const isFiltered = state.project !== 'all' || state.kind !== 'all' || state.format !== 'all';
+        const isFiltered = state.project !== 'all' || state.kind !== 'all' || state.format !== 'all' || state.tag !== 'all';
         if (filterCount) {
           filterCount.textContent = isFiltered
             ? `showing ${visible} of ${totalEntries}`
@@ -414,6 +447,7 @@ const totals = {
           state.project = 'all';
           state.kind = 'all';
           state.format = 'all';
+          state.tag = 'all';
           document.querySelectorAll('.filter-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.value === 'all');
           });
