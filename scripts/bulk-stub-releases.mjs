@@ -168,6 +168,7 @@ archivePath: ${yamlScalar(archivePath)}
 tags:
 ${tagBlock}
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty
