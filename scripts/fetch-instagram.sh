@@ -10,21 +10,41 @@
 #
 # Usage:
 #   ./scripts/fetch-instagram.sh <handle>
+#   ./scripts/fetch-instagram.sh <handle> --login <burner-account>
 #
 # Notes:
-#   - Feed posts only. Stories/highlights are login-gated and skipped.
-#   - Public accounts only; IG rate-limits hard — if it stalls, wait an
-#     hour rather than re-running immediately.
+#   - Anonymous (no --login) access to IG's GraphQL API is broken for most
+#     accounts as of 2025 — Instagram returns 403 to unauthenticated
+#     graphql/query hits. A burner IG account is the reliable workaround.
+#     Instaloader prompts for the burner password on first run and caches
+#     the session in ~/Library/Application Support/Instaloader/.
+#   - Feed posts only. Stories/highlights need login AND an account that
+#     follows the target; not in scope here.
 #   - Re-running is additive: instaloader skips posts it has already saved.
 
 set -euo pipefail
 
 if [ $# -lt 1 ]; then
-  echo "usage: $0 <instagram-handle>" >&2
+  echo "usage: $0 <instagram-handle> [--login <burner>]" >&2
   exit 2
 fi
 
 HANDLE="$1"
+shift
+LOGIN=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --login)
+      LOGIN="$2"
+      shift 2
+      ;;
+    *)
+      echo "error: unknown flag '$1'" >&2
+      exit 2
+      ;;
+  esac
+done
+
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT_DIR="$REPO_ROOT/tmp/instagram"
 mkdir -p "$OUT_DIR"
@@ -44,12 +64,20 @@ cd "$OUT_DIR"
 #   --dirname-pattern         flat directory per handle
 #   --filename-pattern        readable names: YYYY-MM-DD_HH-MM-SS_UTC_<shortcode>
 #   --post-metadata-txt=""    suppress the .txt caption dump; we read the .json
+#   --login                   burner account to authenticate as
+LOGIN_ARGS=()
+if [ -n "$LOGIN" ]; then
+  LOGIN_ARGS=(--login "$LOGIN")
+  echo "Logging in as: $LOGIN (session cached after first run)"
+fi
+
 instaloader \
   --no-profile-pic \
   --no-compress-json \
   --dirname-pattern "{target}" \
   --filename-pattern "{date_utc}_{shortcode}" \
   --post-metadata-txt="" \
+  "${LOGIN_ARGS[@]}" \
   "$HANDLE"
 
 echo

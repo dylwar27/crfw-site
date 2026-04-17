@@ -91,8 +91,28 @@ if [ -d "tmp/instagram/$HANDLE" ]; then
   warn "tmp/instagram/$HANDLE already exists ($existing_count post JSONs). instaloader will add any new posts and skip existing ones."
 fi
 
-if ! ./scripts/fetch-instagram.sh "$HANDLE"; then
-  die "fetch failed. Common causes: IG rate-limit (wait ~1h), private account, typo in handle."
+# IG blocks anonymous scrapes for most accounts as of 2025 (graphql/query
+# returns 403). Prompt for a burner IG account to log in with. Blank
+# answer → attempt anonymous fetch anyway.
+echo
+echo "   IG usually returns 403 to anonymous scrapes. A burner IG account"
+echo "   (free, ~5 min to create) is the reliable workaround. Session is"
+echo "   cached after first login, so you only type the password once."
+BURNER="$(ask 'Burner IG account for login (blank = try anonymous)' '')"
+
+FETCH_ARGS=("$HANDLE")
+if [ -n "$BURNER" ]; then
+  FETCH_ARGS+=(--login "$BURNER")
+fi
+
+if ! ./scripts/fetch-instagram.sh "${FETCH_ARGS[@]}"; then
+  echo
+  warn "fetch failed. Common causes:"
+  echo "   - 403 graphql/query: anonymous scrapes are blocked. Re-run with a burner login."
+  echo "   - 429 Too Many Requests: you've been rate-limited. Wait ~1h before retry."
+  echo "   - 'Profile does not exist' (misleading): usually the 403 above, not a real 404."
+  echo "   - typo in handle."
+  exit 1
 fi
 
 fetched_count=$(find "tmp/instagram/$HANDLE" -maxdepth 1 -name '*.json' ! -name '*_profile.json' | wc -l | tr -d ' ')
