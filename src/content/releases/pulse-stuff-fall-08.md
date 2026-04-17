@@ -2,7 +2,7 @@
 title: "pulse stuff fall 08"
 preservedTitle: "pulse stuff fall 08"
 project: "alphabets"
-date: "2013"
+date: "2008"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/pulse stuff fall 08/"
 tags:

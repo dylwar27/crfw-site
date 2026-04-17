@@ -2,7 +2,7 @@
 title: "timesmileniceface spring_summer 08"
 preservedTitle: "timesmileniceface spring_summer 08"
 project: "alphabets"
-date: "2009"
+date: "2008"
 format: EP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/timesmileniceface spring_summer 08/"
 tags:

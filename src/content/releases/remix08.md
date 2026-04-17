@@ -2,7 +2,7 @@
 title: "REMIX08"
 preservedTitle: "REMIX08"
 project: "alphabets"
-date: "2010"
+date: "2008"
 format: single
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/REMIX08/"
 tags:

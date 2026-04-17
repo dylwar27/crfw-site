@@ -2,7 +2,7 @@
 title: "mid08 dumb gull EP"
 preservedTitle: "mid08 dumb gull EP"
 project: "alphabets"
-date: "2009"
+date: "2008"
 format: EP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/mid08 dumb gull EP/"
 tags:
