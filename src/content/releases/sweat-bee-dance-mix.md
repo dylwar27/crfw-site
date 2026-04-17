@@ -9,6 +9,9 @@ tags:
   - alphabets
   - mix
 summary: ""
+bandcampUrl: "https://alphabets.bandcamp.com/album/sweat-bee-dance-mix"
+bandcampItemId: "524887154"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

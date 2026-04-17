@@ -41,6 +41,11 @@ for (const r of releases) {
     archivePath: r.data.archivePath,
     summary: r.data.summary || '',
     published: r.data.published !== false,
+    embeds: [
+      r.data.bandcampItemId || r.data.bandcampUrl ? 'BC' : '',
+      r.data.youtubeId ? 'YT' : '',
+      r.data.soundcloudUrl ? 'SC' : '',
+    ].filter(Boolean).join('+'),
     file: `src/content/releases/${r.id}`,
   });
 }
@@ -66,6 +71,7 @@ for (const v of videos) {
     title: v.data.title,
     project: v.data.project,
     date: v.data.date ?? '',
+    embeds: v.data.youtubeId ? 'YT' : '',
     tags: v.data.tags ?? [],
     archivePath: v.data.archivePath,
     summary: v.data.summary || '',
@@ -176,6 +182,7 @@ const stats = {
             <th data-col="project" class="sortable col-project">Project</th>
             <th data-col="date" class="sortable col-date">Date</th>
             <th data-col="format" class="sortable col-format">Format</th>
+            <th data-col="embeds" class="sortable col-embeds">Embeds</th>
             <th data-col="tags" class="col-tags">Tags</th>
             <th data-col="summary" class="col-summary">Summary</th>
             <th data-col="archivePath" class="col-path">Archive Path</th>
@@ -361,6 +368,8 @@ const stats = {
     .col-project { width: 100px; }
     .col-date { width: 90px; }
     .col-format { width: 70px; }
+    .col-embeds { width: 90px; }
+    .col-embeds-cell { color: var(--accent-2); font-weight: 700; }
     .col-tags { width: 120px; }
     .col-summary { min-width: 150px; max-width: 250px; }
     .col-path { min-width: 200px; max-width: 350px; }
@@ -483,6 +492,7 @@ const stats = {
           <td>${esc(r.project || '')}</td>
           <td>${esc(r.date)}</td>
           <td>${esc(r.format || '')}</td>
+          <td class="col-embeds-cell">${esc(r.embeds || '')}</td>
           <td title="${esc(r.tags?.join(', '))}">${esc(r.tags?.slice(0,3).join(', ') || '')}</td>
           <td class="${r.summary ? 'has-summary' : 'no-summary'}" title="${esc(r.summary)}">${esc(r.summary ? r.summary.slice(0, 60) + '…' : '—')}</td>
           <td title="${esc(r.archivePath)}">${esc(r.archivePath || '')}</td>
@@ -491,7 +501,7 @@ const stats = {
       `).join('');
 
       if (filtered.length > 500) {
-        tbody.innerHTML += `<tr><td colspan="10" style="text-align:center;color:var(--ink-dim);padding:16px;">Showing 500 of ${filtered.length} — narrow your filters to see more</td></tr>`;
+        tbody.innerHTML += `<tr><td colspan="11" style="text-align:center;color:var(--ink-dim);padding:16px;">Showing 500 of ${filtered.length} — narrow your filters to see more</td></tr>`;
       }
     }
 
@@ -514,7 +524,7 @@ const stats = {
     // --- CSV Export ---
     document.getElementById('export-csv').addEventListener('click', () => {
       const filtered = sortRows(getFiltered());
-      const cols = ['id','kind','title','preservedTitle','project','date','format','tags','summary','archivePath','published','file'];
+      const cols = ['id','kind','title','preservedTitle','project','date','format','embeds','tags','summary','archivePath','published','file'];
       const header = cols.join(',');
       const csvRows = filtered.map(r =>
         cols.map(c => {

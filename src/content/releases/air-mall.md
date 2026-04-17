@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/air mall/"
 tags:
   - alphabets
 summary: ""
+bandcampUrl: "https://alphabets.bandcamp.com/track/air-mall-3"
+bandcampItemId: "2354364773"
+bandcampItemType: "track"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

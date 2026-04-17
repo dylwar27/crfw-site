@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/DJpoolside Vol.1/"
 tags:
   - killd-by
 summary: ""
+bandcampUrl: "https://killdby.bandcamp.com/album/djpoolside-vol-1"
+bandcampItemId: "4283738485"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

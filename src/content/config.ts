@@ -35,6 +35,16 @@ const releases = defineCollection({
     era: z.string().optional(),
     format: z.enum(['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other']),
     coverArt: z.string().optional(),
+    // --- Embed fields (Session 09 — integrated from CRFW_Media_Embeds.xlsx) ---
+    // Iframes are generated at render time from IDs, so these structured
+    // fields are portable and survive Bandcamp/YouTube UI changes.
+    bandcampUrl: z.string().url().optional(),
+    bandcampItemId: z.string().optional(), // numeric Bandcamp item id
+    bandcampItemType: z.enum(['album', 'track']).optional(),
+    youtubeId: z.string().optional(), // 11-char YouTube video id
+    soundcloudUrl: z.string().url().optional(),
+    // Legacy free-text embed URLs (pre-Session 09). Keep for backwards
+    // compatibility; new content uses the structured fields above.
     bandcampEmbed: z.string().url().optional(),
     soundcloudEmbed: z.string().url().optional(),
     vimeoEmbed: z.string().url().optional(),
@@ -89,6 +99,7 @@ const videos = defineCollection({
     summary: z.string().optional(),
     tags: z.array(z.string()).default([]),
     kind: z.enum(['music video', 'live', 'rehearsal', 'interview', 'home', 'other']).default('other'),
+    youtubeId: z.string().optional(),
     transcript: z.string().optional(),
     archivePath: z.string().optional(),
     published,
@@ -148,6 +159,8 @@ const events = defineCollection({
     project: project.optional(),
     kind: z.enum(['life', 'show', 'release', 'milestone', 'residence', 'collaboration', 'press']).default('life'),
     location: z.string().optional(),
+    url: z.string().url().optional(), // external link (press articles, tributes)
+    source: z.string().optional(),    // e.g. "westword.com"
     people: z.array(reference('people')).default([]),
     relatedPhotos: z.array(reference('photos')).default([]),
     tags: z.array(z.string()).default([]),

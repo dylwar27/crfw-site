@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/angry birds chains/"
 tags:
   - alphabets
 summary: ""
+bandcampUrl: "https://alphabets.bandcamp.com/album/angry-birds-chains"
+bandcampItemId: "109723474"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

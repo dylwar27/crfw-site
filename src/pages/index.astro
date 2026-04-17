@@ -435,6 +435,37 @@ const totals = {
           ? `<div class="summary"><p>${escapeHtml(d.caption)}</p></div>`
           : '';
 
+        // --- Event: external URL (press articles) ---
+        const urlHtml = d.url
+          ? `<a class="popup-permalink" href="${escapeHtml(d.url)}" target="_blank" rel="noopener">Read the article →</a>`
+          : '';
+
+        // --- Media embeds (release primary), priority BC > YT > SC ---
+        // Only the highest-priority available embed is rendered as an
+        // iframe; additional platforms show as link chips below.
+        const embedLinks = [];
+        let primaryEmbedHtml = '';
+        if (d.bandcampItemId) {
+          const itemType = d.bandcampItemType === 'track' ? 't' : 'a';
+          const src = `https://bandcamp.com/EmbeddedPlayer/${itemType}=${escapeHtml(d.bandcampItemId)}/size=large/bgcol=0e0e12/linkcol=ffd166/transparent=true/`;
+          primaryEmbedHtml = `<h3>Listen on Bandcamp</h3>
+            <div class="embed-wrap"><iframe class="embed-bandcamp" src="${src}" seamless loading="lazy"></iframe></div>`;
+        } else if (d.youtubeId) {
+          primaryEmbedHtml = `<h3>Watch on YouTube</h3>
+            <div class="embed-wrap"><iframe class="embed-youtube" src="https://www.youtube.com/embed/${escapeHtml(d.youtubeId)}" allowfullscreen loading="lazy"></iframe></div>`;
+        } else if (d.soundcloudUrl) {
+          const src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(d.soundcloudUrl)}&color=%23ffd166&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+          primaryEmbedHtml = `<h3>Listen on SoundCloud</h3>
+            <div class="embed-wrap"><iframe class="embed-soundcloud" src="${src}" loading="lazy"></iframe></div>`;
+        }
+        // Link chips for other platforms when multiple exist
+        if (d.bandcampUrl) embedLinks.push(`<a href="${escapeHtml(d.bandcampUrl)}" target="_blank" rel="noopener" class="embed-link">Bandcamp ↗</a>`);
+        if (d.youtubeId) embedLinks.push(`<a href="https://www.youtube.com/watch?v=${escapeHtml(d.youtubeId)}" target="_blank" rel="noopener" class="embed-link">YouTube ↗</a>`);
+        if (d.soundcloudUrl) embedLinks.push(`<a href="${escapeHtml(d.soundcloudUrl)}" target="_blank" rel="noopener" class="embed-link">SoundCloud ↗</a>`);
+        const embedLinksHtml = embedLinks.length > 1
+          ? `<div class="embed-links">${embedLinks.join('')}</div>`
+          : '';
+
         const summary = d.summary ? `<div class="summary"><p>${escapeHtml(d.summary)}</p></div>` : '';
         const bodyHtml = d.body ? `<div class="summary">${simpleMarkdown(d.body)}</div>` : '';
         const archive = d.archivePath
@@ -459,8 +490,11 @@ const totals = {
               ${locationHtml}
               ${summary}
               ${captionHtml}
+              ${urlHtml}
             </div>
           </div>
+          ${primaryEmbedHtml}
+          ${embedLinksHtml}
           ${trackHtml ? `<h3>Tracklist</h3><ol class="popup-tracklist">${trackHtml}</ol>` : ''}
           ${transcriptHtml}
           ${bodyHtml ? `<h3>Notes</h3>${bodyHtml}` : ''}
