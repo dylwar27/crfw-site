@@ -50,6 +50,9 @@ summary: >
   Pre-Master pass. The track titles carry Colin's signature orthography: capitalization
   as emphasis, underscores as spacing, a visual rhythm that doesn't survive typing them
   cleanly. We preserve the originals under each title.
+bandcampUrl: "https://killdby.bandcamp.com/album/court-clothes"
+bandcampItemId: "3159341709"
+bandcampItemType: "album"
 ---
 
 ## How Colin kept this album

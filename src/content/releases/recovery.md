@@ -20,6 +20,9 @@ summary: >
   This entry is a stub: only the opening track "LiKe a PeLiCaN" has been surfaced so far.
   The rest of the tracklist needs to be reconstructed from the four variant folders and
   cross-referenced with RcvryDrafts.
+bandcampUrl: "https://killdby.bandcamp.com/album/recovery"
+bandcampItemId: "1808675884"
+bandcampItemType: "album"
 ---
 
 Stub entry. Needs tracklist reconstruction.

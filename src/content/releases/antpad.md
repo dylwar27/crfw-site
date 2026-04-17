@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/antPAD/"
 tags:
   - alphabets
 summary: ""
+bandcampUrl: "https://alphabets.bandcamp.com/album/antpad"
+bandcampItemId: "1486312695"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

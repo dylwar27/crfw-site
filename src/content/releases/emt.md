@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/EMT/"
 tags:
   - killd-by
 summary: ""
+bandcampUrl: "https://killdby.bandcamp.com/album/emt"
+bandcampItemId: "1496420930"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

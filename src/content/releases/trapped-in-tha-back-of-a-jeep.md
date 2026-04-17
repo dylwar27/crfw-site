@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/trapped in tha back of
 tags:
   - alphabets
 summary: ""
+bandcampUrl: "https://alphabets.bandcamp.com/album/trapped-in-tha-back-of-a-jeep"
+bandcampItemId: "1166856439"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

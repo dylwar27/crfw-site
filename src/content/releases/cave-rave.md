@@ -8,6 +8,9 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/CAVE RAVE/"
 tags:
   - alphabets
 summary: ""
+bandcampUrl: "https://alphabets.bandcamp.com/album/cave-rave"
+bandcampItemId: "3567709956"
+bandcampItemType: "album"
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty
