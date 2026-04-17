@@ -162,7 +162,7 @@ const stats = {
         <option value="true">Published</option>
         <option value="false">Unpublished</option>
       </select>
-      <button id="export-csv" class="admin-btn">Export CSV</button>
+      <button id="export-csv" class="admin-btn" title="Download current filtered rows as CSV. Edit in Sheets/Excel, then run `node scripts/import-csv-edits.mjs <file> --write` to apply changes.">Export CSV</button>
       <span id="row-count" class="admin-count"></span>
     </div>
 
