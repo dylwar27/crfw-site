@@ -293,6 +293,75 @@ const totals = {
       const scrim = document.getElementById('popup-scrim');
       const popup = document.getElementById('popup');
 
+      // --- Relation derivation ---
+      // Auto-derive related entries by matching project + year proximity
+      // and title substring overlap. Explicit schema references
+      // (relatedPhotos/Videos/VoiceMemos) win when present.
+      function findRelated(entry) {
+        const results = [];
+        const seen = new Set([entry.id]);
+
+        function push(other, reason) {
+          if (seen.has(other.id)) return;
+          seen.add(other.id);
+          results.push({ entry: other, reason });
+        }
+
+        // 1. Explicit refs from schema
+        const d = entry.data || {};
+        for (const refList of [d.relatedPhotos, d.relatedVideos, d.relatedVoiceMemos, d.relatedLyrics]) {
+          if (!Array.isArray(refList)) continue;
+          for (const ref of refList) {
+            // refs are {collection, id} objects from Astro
+            const id = ref?.id || ref;
+            if (typeof id !== 'string') continue;
+            // Search by id suffix across DATA
+            for (const [key, val] of Object.entries(DATA)) {
+              if (key.endsWith(id)) push(val, 'linked');
+            }
+          }
+        }
+
+        // 2. Title substring matches across collections (e.g. release
+        //    "SIBERIAN CHILL" matches video "SIBERIAN CHILL.mov")
+        const titleNorm = (entry.title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        if (titleNorm.length >= 4) {
+          for (const other of Object.values(DATA)) {
+            if (other.id === entry.id) continue;
+            if (other.kind === entry.kind) continue; // prefer cross-medium matches
+            const otherNorm = (other.title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            if (otherNorm.includes(titleNorm) || titleNorm.includes(otherNorm)) {
+              push(other, 'title match');
+            }
+          }
+        }
+
+        // 3. Same project + same year (adjacent entries in era)
+        if (entry.project && entry.year) {
+          for (const other of Object.values(DATA)) {
+            if (other.id === entry.id) continue;
+            if (other.project !== entry.project) continue;
+            if (other.year !== entry.year) continue;
+            push(other, 'same project + year');
+          }
+        }
+
+        return results.slice(0, 8);
+      }
+
+      function renderRelated(entry) {
+        const related = findRelated(entry);
+        if (!related.length) return '';
+        const items = related.map(({ entry: r, reason }) => `
+          <button class="related-chip" data-entry-id="${escapeHtml(r.id)}" title="${escapeHtml(reason)}">
+            <span class="related-kind">${escapeHtml(r.kind.replace('_', ' '))}</span>
+            <span class="related-title">${escapeHtml(r.title)}</span>
+            <span class="related-date">${escapeHtml(r.date || '')}</span>
+          </button>
+        `).join('');
+        return `<h3>Related in the archive</h3><div class="related-list">${items}</div>`;
+      }
+
       function renderPopup(e) {
         const d = e.data || {};
         const cover = e.cover || d.coverArt;
@@ -353,9 +422,20 @@ const totals = {
           ${trackHtml ? `<h3>Tracklist</h3><ol class="popup-tracklist">${trackHtml}</ol>` : ''}
           ${transcriptHtml}
           ${bodyHtml ? `<h3>Notes</h3>${bodyHtml}` : ''}
+          ${renderRelated(e)}
           ${archive ? `<h3>In the archive</h3>${archive}` : ''}
         `;
         document.getElementById('popup-close').addEventListener('click', close);
+        // Wire related-chip clicks → open that entry's popup
+        popup.querySelectorAll('.related-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const id = chip.dataset.entryId;
+            if (id && DATA[id]) {
+              renderPopup(DATA[id]);
+              popup.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          });
+        });
       }
 
       function escapeHtml(s) {

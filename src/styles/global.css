@@ -368,6 +368,55 @@ a:hover { color: var(--accent-2); }
   margin-top: 16px;
 }
 
+/* Related entries in popup */
+.related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.related-chip {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+  font-family: var(--sans);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.related-chip:hover {
+  border-color: var(--ink-dim);
+  background: var(--bg-soft);
+}
+.related-chip:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+.related-chip .related-kind {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+.related-chip .related-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.related-chip .related-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+
 /* footer */
 .foot {
   padding: 48px 32px;
