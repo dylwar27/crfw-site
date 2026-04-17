@@ -52,8 +52,8 @@ say "CRFW Instagram ingest wizard"
 
 if ! command -v instaloader >/dev/null 2>&1; then
   warn "instaloader not found on PATH."
-  echo "   install with: pipx install instaloader"
-  echo "   (or: brew install instaloader)"
+  echo "   macOS:  brew install instaloader"
+  echo "   any:    pipx install instaloader"
   die  "re-run the wizard after installing."
 fi
 ok "instaloader present: $(instaloader --version 2>&1 | head -1)"

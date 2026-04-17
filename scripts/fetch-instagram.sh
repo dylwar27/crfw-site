@@ -5,7 +5,8 @@
 # scripts/import-instagram.mjs, which reads the output of this script and
 # writes photo/video entries into src/content/.
 #
-# Prereq (one-time): pipx install instaloader
+# Prereq (one-time): brew install instaloader      (macOS — recommended)
+#                    pipx install instaloader      (or any OS)
 #
 # Usage:
 #   ./scripts/fetch-instagram.sh <handle>
@@ -29,7 +30,9 @@ OUT_DIR="$REPO_ROOT/tmp/instagram"
 mkdir -p "$OUT_DIR"
 
 if ! command -v instaloader >/dev/null 2>&1; then
-  echo "error: instaloader not found on PATH. Install with: pipx install instaloader" >&2
+  echo "error: instaloader not found on PATH." >&2
+  echo "  macOS:  brew install instaloader" >&2
+  echo "  any:    pipx install instaloader" >&2
   exit 1
 fi
 

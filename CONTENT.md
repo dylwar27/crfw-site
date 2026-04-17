@@ -63,7 +63,7 @@ The image file goes in `public/media/photos/`.
 
 ### Bulk Instagram import
 
-For public IG accounts with no login access. Prereq: `pipx install instaloader` (one-time).
+For public IG accounts with no login access. Prereq (one-time): `brew install instaloader` on macOS, or `pipx install instaloader` elsewhere.
 
 **Easy path — interactive wizard:**
 
