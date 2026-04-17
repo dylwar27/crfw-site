@@ -63,18 +63,23 @@ The image file goes in `public/media/photos/`.
 
 ### Bulk Instagram import
 
-For public IG accounts with no login access, two scripts handle the whole pipeline:
+For public IG accounts with no login access. Prereq: `pipx install instaloader` (one-time).
+
+**Easy path — interactive wizard:**
 
 ```bash
-# 1. Fetch posts into tmp/instagram/<handle>/ (gitignored).
-#    Prereq: pipx install instaloader
-./scripts/fetch-instagram.sh <handle>
+./scripts/ingest-instagram.sh            # prompts for handle + tag
+./scripts/ingest-instagram.sh <handle>   # handle preset, prompts for tag
+```
 
-# 2. Dry-run the import; inspect the planned entries.
-node scripts/import-instagram.mjs --user <handle>
+The wizard runs fetch → dry-run → confirm → write → `npm run build` verify, and tells you how many photos/videos landed. Safe to re-run — instaloader skips posts it already has, the importer skips shortcodes already in `src/content/`.
 
-# 3. Commit the import.
-node scripts/import-instagram.mjs --user <handle> --tag instagram-personal --write
+**Under the hood (if you want to run the stages manually):**
+
+```bash
+./scripts/fetch-instagram.sh <handle>                                      # fetch
+node scripts/import-instagram.mjs --user <handle>                          # dry-run
+node scripts/import-instagram.mjs --user <handle> --tag instagram-art --write  # commit
 ```
 
 The importer writes to `photos` (image posts) or `videos` (video posts). Carousels become one entry; secondary media lands in `carouselExtras`. Every new entry is `published: false` — flip visibility via `/admin` or the CSV round-trip once you've curated `title`, `project`, and `summary`.

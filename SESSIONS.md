@@ -52,10 +52,14 @@ No new collection, no enum changes, no existing entry broken.
 **Files touched:**
 - [scripts/fetch-instagram.sh](scripts/fetch-instagram.sh) — new
 - [scripts/import-instagram.mjs](scripts/import-instagram.mjs) — new
+- [scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) — new (interactive wizard; second commit in session)
 - [src/content/config.ts](src/content/config.ts) — `sourceUrl` + `carouselExtras` on photos and videos
-- [CONTENT.md](CONTENT.md) — "Bulk Instagram import" subsection under photos
+- [CONTENT.md](CONTENT.md) — "Bulk Instagram import" subsection under photos, leads with the wizard
 - [CLAUDE.md:137](CLAUDE.md) — outstanding-work #6 updated (IG path available; non-IG photo sources still TBD)
 - [.gitignore](.gitignore) — `tmp/` added for the raw scrape dumps
+
+**Addendum — interactive wizard:**
+[scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) chains the two stages with prompts and a confirmation gate: preflight-checks `instaloader`, asks for handle + tag (defaulting to `instagram-personal`), runs fetch, runs dry-run import, prompts before writing, runs `npm run build` to verify schemas, then prints counts and next-step hints. Does NOT auto-git-commit the ingested content — curator reviews `/admin` first. Usage: `./scripts/ingest-instagram.sh` (fully interactive) or `./scripts/ingest-instagram.sh <handle> [<tag>]` (preset args, still prompts for confirm).
 
 ---
 
