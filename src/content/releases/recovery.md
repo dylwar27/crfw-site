@@ -23,6 +23,15 @@ summary: >
 bandcampUrl: "https://killdby.bandcamp.com/album/recovery"
 bandcampItemId: "1808675884"
 bandcampItemType: "album"
+relatedVideos:
+  - 2015-like-a-pelican-notext
+  - 2015-zentai
+  - 2015-killd-by-on-fly-2
+  - 2015-no-energy-vamp
+  - 2015-afterlife
+  - 2015-tekno-cheeta-2
+  - 2015-cameras
+  - 2015-issues
 ---
 
 Stub entry. Needs tracklist reconstruction.

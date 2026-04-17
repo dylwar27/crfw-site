@@ -245,6 +245,222 @@ if (!sourceFilter || sourceFilter === 'bandcamp') {
 }
 
 // ---------------------------------------------------------------
+// YouTube matching — match xlsx YouTube rows to existing video
+// entries by title; create new video entries for unmatched rows.
+// ---------------------------------------------------------------
+function loadVideos() {
+  const out = [];
+  for (const f of readdirSync(videosDir)) {
+    if (!f.endsWith('.json') || f.includes(' 2.json')) continue;
+    const path = join(videosDir, f);
+    try {
+      const data = JSON.parse(readFileSync(path, 'utf8'));
+      out.push({
+        path,
+        slug: f.replace(/\.json$/, ''),
+        data,
+        titleNorm: normalize(data.title || ''),
+        year: parseYear(data.date),
+      });
+    } catch {}
+  }
+  return out;
+}
+
+function scoreVideoCandidate(needle, year, candidate) {
+  // Normalize both sides, removing common file-extension fragments
+  // ANYWHERE in the string (YouTube titles often embed ".mov")
+  const stripExt = s => s.replace(/\b(mov|mp4|m4v|avi|3gp|wmv)\b/gi, ' ');
+  const n = normalize(stripExt(needle));
+  if (!n || n.length < 3) return 0;
+
+  // Check title AND slug (slug often encodes the filename — matches
+  // even when the JSON title diverges from the YouTube title)
+  const candTitle = normalize(stripExt(candidate.data.title || ''));
+  const candSlug = normalize(stripExt(candidate.slug));
+  const c = candTitle || candSlug;
+  if (!c) return 0;
+
+  const titleMatch = n === candTitle || n === candSlug;
+  // Substring match in either direction
+  const longEnough = n.length >= 4;
+  const substringMatch = !titleMatch && longEnough && (
+    candTitle.includes(n) || candSlug.includes(n) ||
+    (candTitle.length >= 4 && n.includes(candTitle)) ||
+    (candSlug.length >= 4 && n.includes(candSlug))
+  );
+  const sameYear = year && candidate.year && year === candidate.year;
+  const nearYear = year && candidate.year && Math.abs(year - candidate.year) <= 2;
+
+  // Year is a soft signal for YouTube — upload year != recording year.
+  // Title match dominates.
+  if (titleMatch && sameYear) return 10;
+  if (titleMatch && nearYear) return 9;
+  if (titleMatch) return 8;
+  if (substringMatch && sameYear) return 6;
+  if (substringMatch && nearYear) return 5;
+  if (substringMatch) return 4;
+  return 0;
+}
+
+function parseYouTubeYear(row) {
+  // Published can be "13 years ago", "14 years ago", or "2019-10-03" absolute.
+  const p = String(row.Published || '').trim();
+  const abs = p.match(/^(\d{4})-/);
+  if (abs) return parseInt(abs[1], 10);
+  const rel = p.match(/^(\d+)\s+years?\s+ago/i);
+  if (rel) {
+    const yearsAgo = parseInt(rel[1], 10);
+    return new Date().getUTCFullYear() - yearsAgo;
+  }
+  return null;
+}
+
+function renderNewVideoEntry(row, year) {
+  return {
+    title: row.Title,
+    date: String(year ?? ''),
+    youtubeId: row['Video ID'],
+    kind: 'other',
+    tags: ['video', 'youtube', 'needs-review'],
+    archivePath: undefined,
+    published: false,
+  };
+}
+
+function applyYoutubeToVideo(video, row) {
+  if (video.data.youtubeId) return null; // don't overwrite
+  const updated = { ...video.data, youtubeId: row['Video ID'] };
+  return JSON.stringify(updated, null, 2) + '\n';
+}
+
+if (!sourceFilter || sourceFilter === 'youtube') {
+  console.log(`\n--- YouTube matching (${youtubeRows.length} rows) ---\n`);
+  const videos = loadVideos();
+
+  for (const row of youtubeRows) {
+    const title = row.Title;
+    const videoId = row['Video ID'];
+    const year = parseYouTubeYear(row);
+
+    // Already in our content? Check youtubeId across videos
+    const already = videos.find(v => v.data.youtubeId === videoId);
+    if (already) {
+      results.skippedExisting.push({ platform: 'YouTube', title, slug: already.slug });
+      continue;
+    }
+
+    // Find best video match
+    let best = null, bestScore = 0;
+    for (const v of videos) {
+      const s = scoreVideoCandidate(title, year, v);
+      if (s > bestScore) { best = v; bestScore = s; }
+    }
+
+    // Lower threshold for YouTube since the "year" signal is upload
+    // date, not recording date — substring match (score 4) is enough
+    // signal for our archive filenames that encode the subject clearly.
+    if (best && bestScore >= 4) {
+      const updated = applyYoutubeToVideo(best, row);
+      if (updated) {
+        const marker = bestScore >= 8 ? '✓' : '~';
+        console.log(`  ${marker} [score ${bestScore}]  ${title} (${year ?? '?'}) → ${best.slug}.json`);
+        results.applied.push({ platform: 'YouTube', slug: best.slug, score: bestScore });
+        if (write) writeFileSync(best.path, updated, 'utf8');
+      }
+      continue;
+    }
+
+    // Unmatched — maybe create new video entry
+    if (createUnmatched) {
+      const newEntry = renderNewVideoEntry(row, year);
+      const slug = slugify(`${year ?? 'unknown'}-yt-${title}`);
+      const outPath = join(videosDir, `${slug}.json`);
+      if (existsSync(outPath)) {
+        console.log(`  ! slug collision ${slug}.json — skipping`);
+        continue;
+      }
+      console.log(`  + NEW  ${slug}.json  ← ${title} (${year ?? '?'})`);
+      if (write) writeFileSync(outPath, JSON.stringify(newEntry, null, 2) + '\n', 'utf8');
+      results.applied.push({ platform: 'YouTube', slug, score: 0, created: true });
+    } else {
+      console.log(`  UNMATCHED  ${title} (${year ?? '?'})`);
+      results.unmatched.push({ platform: 'YouTube', title, year, row });
+    }
+  }
+}
+
+// ---------------------------------------------------------------
+// Tracklist cross-reference: for each Bandcamp album with a
+// tracklist, link matching videos via `relatedVideos` on the release.
+// ---------------------------------------------------------------
+function parseTracks(tracklist) {
+  if (!tracklist || typeof tracklist !== 'string') return [];
+  const tracks = [];
+  for (const line of tracklist.split('\n')) {
+    const m = line.match(/^(\d+)\.\s+(.+)$/);
+    if (m) tracks.push(m[2].trim());
+  }
+  return tracks;
+}
+
+function addRelatedVideoToRelease(release, videoSlug) {
+  const fm = release.frontmatter;
+  // Check if relatedVideos already exists and includes this video
+  const existing = fm.match(/^relatedVideos:\s*\n((?:\s{2}-\s.*\n?)*)/m);
+  if (existing) {
+    const current = existing[1].split('\n').map(l => l.replace(/^\s*-\s*/, '').trim()).filter(Boolean);
+    if (current.includes(videoSlug)) return null; // already linked
+    const newBlock = [`relatedVideos:`, ...current.map(s => `  - ${s}`), `  - ${videoSlug}`].join('\n');
+    return release.frontmatter.replace(existing[0], newBlock + '\n');
+  }
+  // Insert new relatedVideos block before closing of frontmatter
+  return release.frontmatter.replace(/\n?$/, `\nrelatedVideos:\n  - ${videoSlug}\n`);
+}
+
+if (!sourceFilter || sourceFilter === 'tracklist-xref') {
+  console.log(`\n--- Tracklist → video cross-reference ---\n`);
+  const videos = loadVideos();
+  let xrefs = 0;
+  for (const row of bandcampRows) {
+    const tracks = parseTracks(row.Tracklist);
+    if (!tracks.length) continue;
+
+    // Find the release for this Bandcamp row
+    const year = parseYear(row['Release Date']);
+    const { match, score } = findBestMatch(row.Title, year);
+    if (!match || score < 5) continue;
+
+    for (const trackTitle of tracks) {
+      // Score each video against this track title (same year preferred,
+      // cross-medium match)
+      let best = null, bestScore = 0;
+      for (const v of videos) {
+        const s = scoreVideoCandidate(trackTitle, year, v);
+        if (s > bestScore) { best = v; bestScore = s; }
+      }
+      if (best && bestScore >= 6) {
+        // Read the current frontmatter (might have been updated by Bandcamp phase)
+        const text = readFileSync(match.path, 'utf8');
+        const { frontmatter, body } = splitFrontmatter(text);
+        const release = { ...match, frontmatter, body };
+        const updatedFm = addRelatedVideoToRelease(release, best.slug);
+        if (updatedFm) {
+          console.log(`  ✓ ${match.slug}.md + relatedVideo ${best.slug}  (track: "${trackTitle}")`);
+          xrefs++;
+          if (write) {
+            const updated = `---\n${updatedFm.replace(/\n?$/, '\n')}---\n${body}`;
+            writeFileSync(match.path, updated, 'utf8');
+            match.frontmatter = updatedFm; // keep in sync for any later iteration
+          }
+        }
+      }
+    }
+  }
+  console.log(`  ${xrefs} cross-references ${write ? 'written' : 'proposed'}`);
+}
+
+// ---------------------------------------------------------------
 // Create new release entries for unmatched Bandcamp rows
 // ---------------------------------------------------------------
 function slugify(s) {
