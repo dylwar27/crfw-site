@@ -198,6 +198,11 @@ const totals = {
     </div>
   </header>
 
+  <div class="search-bar">
+    <input type="search" id="search-input" placeholder="Search the archive…" autocomplete="off" />
+    <div id="search-results" class="search-results" hidden></div>
+  </div>
+
   <nav class="filters" id="filters">
     <span class="filters-label">Project</span>
     <button class="filter-btn active" data-axis="project" data-value="all">All</button>
@@ -290,6 +295,7 @@ const totals = {
   <script
     id="entry-data"
     type="application/json"
+    data-pagefind-ignore
     set:html={JSON.stringify(Object.fromEntries(publishedEntries.map(e => [e.id, e])))}
   ></script>
 
@@ -530,6 +536,68 @@ const totals = {
           applyFilters();
         });
       });
+
+      // --- Pagefind search ---
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      let pagefind = null;
+      let searchDebounce;
+
+      async function ensurePagefind() {
+        if (pagefind) return pagefind;
+        try {
+          // Pagefind generates /pagefind/pagefind.js at build time
+          const base = (window.location.pathname.match(/^\/[^/]+\//) || ['/'])[0];
+          pagefind = await import(/* @vite-ignore */ `${base}pagefind/pagefind.js`);
+          await pagefind.options({ baseUrl: base });
+          return pagefind;
+        } catch (err) {
+          console.warn('Pagefind not available yet (run npm run build first):', err);
+          return null;
+        }
+      }
+
+      async function runSearch(query) {
+        if (!query || query.length < 2) {
+          searchResults.hidden = true;
+          searchResults.innerHTML = '';
+          return;
+        }
+        const pf = await ensurePagefind();
+        if (!pf) {
+          searchResults.hidden = false;
+          searchResults.innerHTML = '<div class="search-empty">Search unavailable (dev mode — rebuild to enable)</div>';
+          return;
+        }
+        const search = await pf.search(query);
+        const firstTen = await Promise.all(search.results.slice(0, 10).map(r => r.data()));
+        searchResults.hidden = false;
+        if (!firstTen.length) {
+          searchResults.innerHTML = `<div class="search-empty">No results for “${escapeHtml(query)}”</div>`;
+          return;
+        }
+        searchResults.innerHTML = firstTen.map(r => `
+          <a class="search-hit" href="${r.url}">
+            <div class="search-hit-title">${r.meta?.title || r.url}</div>
+            <div class="search-hit-excerpt">${r.excerpt}</div>
+          </a>
+        `).join('');
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          clearTimeout(searchDebounce);
+          const q = searchInput.value.trim();
+          searchDebounce = setTimeout(() => runSearch(q), 200);
+        });
+        searchInput.addEventListener('blur', () => {
+          // Hide results after a moment to allow clicks through
+          setTimeout(() => { searchResults.hidden = true; }, 200);
+        });
+        searchInput.addEventListener('focus', () => {
+          if (searchInput.value.trim().length >= 2) searchResults.hidden = false;
+        });
+      }
 
       // Reset all filters
       if (resetBtn) {

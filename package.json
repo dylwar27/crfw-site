@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist --exclude-selectors \"[data-pagefind-ignore]\"",
     "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^4.16.18"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
   }
 }
