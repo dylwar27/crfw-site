@@ -11,6 +11,8 @@ summary: ""
 bandcampUrl: "https://alphabets.bandcamp.com/album/siberian-chill"
 bandcampItemId: "1350343704"
 bandcampItemType: "album"
+relatedVideos:
+  - 2014-siberian-chill
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty
