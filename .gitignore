@@ -8,3 +8,12 @@ dist/
 
 # Cover-art import audit log — regenerated on every script run.
 cover-art-import-report.txt
+
+# Dropbox sync-conflict duplicates ("filename 2.ext"). The repo
+# lives outside Dropbox but this machine's Dropbox copies files
+# with a literal-space-2 suffix on sync collisions and they
+# sometimes leak into the working tree.
+* 2.*
+* 2
+** 2.*
+** 2
