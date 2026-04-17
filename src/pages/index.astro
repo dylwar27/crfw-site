@@ -109,26 +109,33 @@ for (const v of videos) {
 
 for (const m of voice_memos) {
   const year = parseInt(m.data.date.slice(0, 4), 10);
-  // Use first ~80 chars of transcript as subtitle, or date as fallback
+  const memoSlug = m.id.replace(/\.json$/, '');
+  // Use first ~200 chars of transcript as in-popup preview.
+  // Full transcript lives at /voice-memo/<slug> (a permalinked page).
   const transcriptPreview = m.data.transcript
+    ? m.data.transcript.slice(0, 200).replace(/\s+/g, ' ').trim() + (m.data.transcript.length > 200 ? '…' : '')
+    : undefined;
+  const cardSubtitle = m.data.transcript
     ? m.data.transcript.slice(0, 80).replace(/\s+/g, ' ').trim() + (m.data.transcript.length > 80 ? '…' : '')
     : undefined;
   entries.push({
     id: `voice--${m.id}`,
     kind: 'voice_memo',
     title: m.data.title ?? 'Voice memo',
-    preservedTitle: transcriptPreview,
+    preservedTitle: cardSubtitle,
     date: m.data.date,
     year,
     project: m.data.project,
     size: 'sm',
     tags: m.data.tags ?? [],
     // Strip full transcript from inline data — only include preview.
-    // Full transcript is heavy (~1.3MB total); popups show the preview.
+    // Full transcript lives at /voice-memo/<slug>.
     data: {
       ...m.data,
       src: withBase(m.data.src),
       transcript: transcriptPreview,
+      transcriptFull: m.data.transcript ? true : false,
+      permalink: `${BASE}/voice-memo/${memoSlug}`,
     },
   });
 }
@@ -378,9 +385,13 @@ const totals = {
             </span>
           </li>`).join('');
 
-        // --- Voice memo: transcript ---
+        // --- Voice memo: transcript preview + link to full reader page ---
         const transcriptHtml = d.transcript
-          ? `<h3>Transcript</h3><div class="summary"><p>${escapeHtml(d.transcript)}</p></div>`
+          ? `<h3>Transcript</h3>
+             <div class="summary"><p>${escapeHtml(d.transcript)}</p></div>
+             ${d.permalink && d.transcriptFull
+               ? `<a class="popup-permalink" href="${d.permalink}">Read full transcript →</a>`
+               : ''}`
           : '';
 
         // --- Event: location ---
