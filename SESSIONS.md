@@ -4,6 +4,68 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 09 — 2026-04-17 — xlsx embed + articles + bio integration (3 PRs)
+
+**Goal:** integrate two curated Dyl spreadsheets into the CMS — `CRFW_Media_Embeds.xlsx` (60 Bandcamp/YouTube/SoundCloud rows) and `CRFW_Documentation_Articles.xlsx` (articles, biographical summary, associated projects). Prioritize BC > YT > SC embeds. Match to existing entries by title + year; create new entries where needed. Keep future-merge-friendly.
+
+**Done — 3 PRs, all merged:**
+
+**PR #21 — PR-A: Bandcamp embeds + schema + popup rendering**
+- xlsx → snapshot pipeline: `scripts/snapshot-xlsx.py` (Python/openpyxl) writes `data/embeds-snapshot.json` and `data/articles-snapshot.json`. Commits those JSONs so git diffs show meaningful content changes.
+- Schema extended (`src/content/config.ts`): `bandcampUrl`, `bandcampItemId`, `bandcampItemType`, `youtubeId`, `soundcloudUrl` on releases; `youtubeId` on videos; `url` / `source` on events.
+- `scripts/import-embeds.mjs` — reads snapshot, matches Bandcamp rows to releases with canonical-slug preference (court-clothes.md wins over court-clothes-2.md; recovery.md over recovery-2.md; thru-tha-rip.md over 19-alphabets-thru-tha-rip.md; emt.md over emt-2.md). Idempotent; only fills missing fields.
+- **22 Bandcamp rows matched** to existing releases; **4 unmatched** (draw-blood, p22, carolina-reaper, ddr3-loaner-phone — all killd by 2016) created as NEW release stubs with `published: false` + `needs-review` tag; tracklists from xlsx included.
+- Popup rendering: highest-priority embed (BC > YT > SC) renders as iframe; extra platforms as link chips. Iframes generated from IDs at render time — survives platform UI changes.
+- Admin table: new "Embeds" column with BC/YT/SC badges. Included in CSV export.
+
+**PR #22 — PR-B: YouTube matching + new video entries + tracklist cross-reference**
+- Extended `import-embeds.mjs` with YouTube phase. Loosened year matching (YouTube "Published" = upload year, not recording year — "piano marsh" from 2012 rightly matches `2008-3-cats-and-gazelle-in-piano-marsh-mov`).
+- **6 existing videos matched** with their YouTube IDs (2 high-confidence, 4 substring).
+- **26 unmatched YouTube rows → new video entries** as drafts (CAKE, CAKE2, bushwicks finest barber shop, pictureplane/alphabets budget rental truck, + 22 others). Tagged `video`, `youtube`, `needs-review`.
+- **Tracklist → video cross-reference phase**: for each Bandcamp album with a tracklist, match track titles against existing video entries. When confident (score ≥ 6), add the video to the release's `relatedVideos` field.
+  - 10 cross-references added: `recovery.md` gained 8 relatedVideos (Like a PeLiCaN, Zentai, on FLy, No Energy Vamp, afterlife, Tekno Cheetah, cameras, issues); `siberian-chill.md` + `thru-tha-rip.md` each gained 1.
+- Feeds the popup's "Related in the archive" section for these releases.
+
+**PR #23 — PR-C: Articles + Bio + Projects pages**
+- `scripts/import-articles.mjs` — reads articles snapshot, emits event entries with `kind: "press"`. URL-keyed for idempotency.
+- **10 new press events**: 9 articles from Westword, Bandcamp Daily, cyphersessions.co, EverybodyWiki (2012–2025) + 1 SoundCloud tribute (Thug Entrancer "Dedication — For Colin Ward").
+- New `/about` page renders Biographical Summary (19 fields) as a formatted profile, grouped into Identity / Life / Scene / Work / Presence / In memoriam sections. Reads from the JSON snapshot directly — no schema layer.
+- New `/projects` page lists all 10 Associated Projects (alphabets, killd by, Pocket Dove, Tudaloos, Phonebooks, Snake Feathers, Bangplay, Sex Therapy, Chamber Joy, Bodymeat). Linkable projects (alphabets, killd by, DIMCP) have `?project=` query links back to the timeline.
+- Main timeline footer gains discreet `About · Associated projects` nav row.
+
+**State at end of session:**
+- **23 PRs merged total across 9 sessions.**
+- **557 static pages** (timeline + admin + /about + /projects + 305 voice memo readers + 249 video readers).
+- **19,100 words indexed** by Pagefind (up slightly from 19,007 — bio/projects pages added).
+- **Events collection: 11 entries** (1 original + 10 press). Collection warning gone.
+- Four releases (recovery, siberian-chill, thru-tha-rip, others) now have populated `relatedVideos` linking cross-media pieces of the same work.
+- Main page ~970KB; public-facing surfaces now include About + Projects + Admin discovery.
+- xlsx → snapshot → import pipeline in place. Dyl edits xlsx in Dropbox → runs `python3 scripts/snapshot-xlsx.py` + `node scripts/import-embeds.mjs --write` (or `import-articles.mjs`) to flow changes in.
+
+**Open items surfaced this session:**
+- Match accuracy: 2 tentative YouTube matches (score 4) may be wrong — `DTTD.mov (2012) → 2020-dttd1.json` is probably a mismatch. Worth a spot-check during curator review.
+- 4 new Bandcamp release stubs (draw-blood, p22, carolina-reaper, ddr3-loaner-phone) marked `published: false, needs-review` — curator needs to confirm + flip published.
+- 26 new YouTube video entries marked the same — curator review.
+- 2 ambiguous Bandcamp album matches flagged in log (THRU THA RIP, Court Clothes's runner-ups) — decision made per canonical-slug preference but worth validating.
+
+**Files touched this session:**
+- [scripts/snapshot-xlsx.py](scripts/snapshot-xlsx.py) — new (PR-A)
+- [scripts/import-embeds.mjs](scripts/import-embeds.mjs) — new (PR-A), extended (PR-B)
+- [scripts/import-articles.mjs](scripts/import-articles.mjs) — new (PR-C)
+- [data/embeds-snapshot.json](data/embeds-snapshot.json), [data/articles-snapshot.json](data/articles-snapshot.json) — new snapshots
+- [src/content/config.ts](src/content/config.ts) — embed fields on releases/videos/events
+- [src/pages/index.astro](src/pages/index.astro) — embed popup rendering + footer nav
+- [src/pages/admin.astro](src/pages/admin.astro) — embeds column
+- [src/pages/about.astro](src/pages/about.astro) — new
+- [src/pages/projects.astro](src/pages/projects.astro) — new
+- [src/styles/global.css](src/styles/global.css) — embed CSS + footer nav
+- 22 release entries got Bandcamp embed fields
+- 4 new release stubs (draw-blood, p22, carolina-reaper, ddr3-loaner-phone)
+- 6 video entries got youtubeIds; 26 new video entries created
+- 10 new press event entries
+
+---
+
 ## Session 08 — 2026-04-17 — answers + data cleanup + video transcripts
 
 **Goal:** work through the open questions from Session 07 and the follow-ups they enabled. Dyl's answers gave us concrete work: 2-digit years → 2000s, drafts-by-default for new imports, video transcripts + reader pages, tighten related-matching.

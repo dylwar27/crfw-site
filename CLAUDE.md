@@ -81,17 +81,18 @@ site/
 
 ---
 
-## Current state (as of Session 08, 2026-04-17)
+## Current state (as of Session 09, 2026-04-17)
 
-- **1,005 total entries** (234 releases + 305 voice memos + 465 videos + 1 event)
-- **20 PRs merged** across 8 sessions
-- Live at https://dylwar27.github.io/crfw-site/ + /admin (password `crfw`)
-- **555 static pages**: timeline + admin + 305 voice memo readers + 249 video readers
+- **~1,045 total entries** (238 releases + 305 voice memos + 491 videos + 11 events; +4 new Bandcamp releases, +26 new YouTube videos, +10 new press events from Session 09)
+- **23 PRs merged** across 9 sessions
+- Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /admin (password `crfw`)
+- **557 static pages**: timeline + admin + about + projects + 305 voice memo readers + 249 video readers
 - **Filter UX: four axes** — Project, Format, Medium, Tag — with reset button + live count
-- **Full-text search** via Pagefind (555 pages, 19,007 words indexed — voice memos + video transcripts)
+- **Full-text search** via Pagefind (557 pages, 19,100 words indexed)
 - **CSV roundtrip** for bulk editing: /admin → Sheets/Excel → `scripts/import-csv-edits.mjs`
+- **Embed integration** (Session 09): Bandcamp/YouTube/SoundCloud iframes render in popups (priority BC > YT > SC); 22 releases have Bandcamp embeds; 32 videos have YouTube IDs; relatedVideos links albums to their video content
 - **Draft system**: `published: false` hides entries from public timeline; import scripts now default to draft
-- Main page 966 KB (transcripts preview-only inline; full text on permalinked reader pages)
+- Main page ~970 KB (transcripts preview-only inline; full text on permalinked reader pages)
 - Only "photos" collection warning remains (no photo entries yet)
 
 ### Breakdown:
@@ -142,12 +143,13 @@ Agent-doable next:
 12. **External embeds** — render Bandcamp / SoundCloud / YouTube / Vimeo iframes in popups when URLs land.
 13. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`. Consider basic HTTP auth for /admin at public launch.
 
-**Done (cumulative through Session 08):**
+**Done (cumulative through Session 09):**
 - **Session 04:** ~~killd by bulk pass~~ (PR #1). ~~GitHub Pages deploy~~ (PR #2).
 - **Session 05:** ~~killd-by-adjacent pass~~ (PR #3). ~~alphabets bulk pass~~ (PR #4). ~~Cover-art importer~~ (PR #5).
 - **Session 06:** ~~Filter UX overhaul~~ (PR #6). ~~Voice memos~~ (PR #7, 305). ~~Video stubs~~ (PR #8, 465). ~~Bug pass~~ (PR #9). ~~/admin + published field~~ (PR #10).
 - **Session 07:** ~~DIMCP retag~~ (PR #11, 130). ~~Tag filter axis~~ (PR #12). ~~Related entries in popups~~ (PR #13). ~~Voice memo reader pages~~ (PR #14). ~~CSV import-back~~ (PR #15). ~~Pagefind search~~ (PR #16).
 - **Session 08:** ~~2-digit year fix~~ (PR #17, 17 corrections). ~~Dropbox dupe guard~~ (PR #18). ~~Draft-by-default + tighter related~~ (PR #19). ~~Video transcripts + reader pages~~ (PR #20, 266 transcripts, 249 new pages).
+- **Session 09:** ~~Bandcamp embeds + schema + popup rendering~~ (PR #21, 22 matched + 4 new). ~~YouTube + tracklist xref~~ (PR #22, 6 matched + 26 new + 10 xrefs). ~~Articles + Bio + Projects~~ (PR #23, 10 press events + /about + /projects).
 
 ---
 
