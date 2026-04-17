@@ -565,3 +565,17 @@ a:hover { color: var(--accent-2); }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+.foot-nav {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.foot-nav a {
+  color: var(--accent-2);
+  text-decoration: none;
+}
+.foot-nav a:hover { text-decoration: underline; }
+.foot-sep { color: var(--rule); }
+.foot-line { color: var(--ink-dim); }
