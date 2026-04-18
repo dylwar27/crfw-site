@@ -6,13 +6,15 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && pagefind --site dist --exclude-selectors \"[data-pagefind-ignore]\"",
+    "db:sync": "node scripts/db-sync.mjs",
+    "build": "astro build && pagefind --site dist --exclude-selectors \"[data-pagefind-ignore]\" && node scripts/db-sync.mjs --dist --quiet",
     "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^4.16.18"
   },
   "devDependencies": {
+    "better-sqlite3": "^12.9.0",
     "pagefind": "^1.5.2"
   }
 }
