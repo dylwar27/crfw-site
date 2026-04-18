@@ -61,7 +61,37 @@ No new collection, no enum changes, no existing entry broken.
 **Addendum — interactive wizard:**
 [scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) chains the two stages with prompts and a confirmation gate: preflight-checks `instaloader`, asks for handle + tag (defaulting to `instagram-personal`), runs fetch, runs dry-run import, prompts before writing, runs `npm run build` to verify schemas, then prints counts and next-step hints. Does NOT auto-git-commit the ingested content — curator reviews `/admin` first. Usage: `./scripts/ingest-instagram.sh` (fully interactive) or `./scripts/ingest-instagram.sh <handle> [<tag>]` (preset args, still prompts for confirm).
 
----
+**Addendum — pivot to gallery-dl + first real ingest (913 posts):**
+
+First live-account run surfaced that **instaloader is effectively broken for scripted use**. Its session-health-check endpoint (`graphql/query?query_hash=d6f4427fb…&variables=%7B%7D`) returns 401 on current IG backends — and instaloader interprets that as "session expired" and falls through to an interactive password prompt, which EOFs immediately in a non-TTY shell. Tried anonymous (403 across the board), fresh `instaloader --login sleepnod` (loaded fine but hit the same 401 health-check), and waiting ~20 min for the "please wait" throttle to clear (same failure). The issue is deterministic, not rate-limit-driven.
+
+**Rewrote the pipeline to use [gallery-dl](https://github.com/mikf/gallery-dl) instead.** gallery-dl authenticates by reading the browser's existing IG session cookies (`--cookies-from-browser chrome`) and hits the web endpoints that IG actually keeps alive. First authenticated query succeeded; 913 posts fetched end-to-end in one run with zero throttles. Installation: `brew install gallery-dl` — no Python session dance, no burner account needed (gallery-dl piggybacks on the user's already-logged-in browser tab).
+
+- [scripts/fetch-instagram.sh](scripts/fetch-instagram.sh) rewritten: wraps gallery-dl instead of instaloader. New flag `--browser chrome|safari|firefox` (default chrome). Filename pattern `{post_shortcode}_{num}.{extension}` gives predictable groupings for carousels.
+- [scripts/import-instagram.mjs](scripts/import-instagram.mjs) rewritten for gallery-dl's flat metadata shape. Groups `.json` sidecars by `post_shortcode` (gallery-dl emits one sidecar per media file, not per post), sorts by `num`, uses `video_url` on the primary item to route to `photos` vs `videos` collection.
+- [scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) wizard: prompts for browser name instead of burner login.
+- [.gitignore](.gitignore): `tmp/` already gitignored; no change.
+
+**archivePath decision reversed.** Original plan had `archivePath` omitted for IG entries ("live outside the Dropbox archive"). Curator direction this session: raw scrape gets copied into `CRFW Archive/Instagram/@<handle>/` so the archive stays the truth. `archivePath` now set on every IG entry: `CRFW Archive/Instagram/@<handle>/<shortcode>_<num>.<ext>`.
+
+**First live ingest — @chi_swoo_ (Colin's personal account):**
+- 913 posts fetched — 866 images, 47 videos, 22 carousel extras
+- Date range: **2013-07-10 → 2018-01-31** (~4.5 years of Colin's posts on this account)
+- Scrape copied to Dropbox: `CRFW Archive/Instagram/@chi_swoo_/` (471 MB, 1870 files = media + sidecars)
+- Repo: 913 new entries (866 in `src/content/photos/`, 47 in `src/content/videos/`); 510 MB of media under `public/media/photos/ig-chi-swoo-*/` + `public/media/videos/ig-chi-swoo-*/`; largest video 15 MB, under GitHub's 100 MB file limit.
+- Every entry `published: false` + tagged `instagram-personal`; curator fills title/project/summary/published via `/admin` CSV roundtrip when ready.
+
+**State at end of session:**
+- **~1,958 total entries** (jump of +913 from Session 09's ~1,045). Empty `photos` collection warning: gone.
+- Repo is now ~520 MB with the committed media. Under GitHub's 1 GB soft limit; Git LFS migration deferrable but worth considering before the art account lands.
+- Pipeline proven end-to-end against a real account with real volume.
+
+**Open items for next session:**
+- Second account (the art / project handle) — same command: `./scripts/ingest-instagram.sh <handle>` with `instagram-art` tag.
+- Curator review: 913 new drafts at `/admin` — title/project/summary curation, then flip `published: true`.
+- Git LFS migration decision before the next big-media ingest (second IG account, or archive video files).
+- Carousel gallery UI in popups (data captured, rendering pending).
+- Project inference from tags (`instagram-personal` → no project, `instagram-art` → `alphabets` or similar).
 
 ## Session 09 — 2026-04-17 — xlsx embed + articles + bio integration (3 PRs)
 

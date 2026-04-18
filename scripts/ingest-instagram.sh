@@ -50,13 +50,12 @@ confirm() {
 # --- Step 0: preflight ---
 say "CRFW Instagram ingest wizard"
 
-if ! command -v instaloader >/dev/null 2>&1; then
-  warn "instaloader not found on PATH."
-  echo "   macOS:  brew install instaloader"
-  echo "   any:    pipx install instaloader"
+if ! command -v gallery-dl >/dev/null 2>&1; then
+  warn "gallery-dl not found on PATH."
+  echo "   install with: brew install gallery-dl"
   die  "re-run the wizard after installing."
 fi
-ok "instaloader present: $(instaloader --version 2>&1 | head -1)"
+ok "gallery-dl present: $(gallery-dl --version 2>&1 | head -1)"
 
 if ! command -v node >/dev/null 2>&1; then
   die "node not found on PATH."
@@ -91,27 +90,18 @@ if [ -d "tmp/instagram/$HANDLE" ]; then
   warn "tmp/instagram/$HANDLE already exists ($existing_count post JSONs). instaloader will add any new posts and skip existing ones."
 fi
 
-# IG blocks anonymous scrapes for most accounts as of 2025 (graphql/query
-# returns 403). Prompt for a burner IG account to log in with. Blank
-# answer → attempt anonymous fetch anyway.
+# gallery-dl auths via browser cookies; pick which browser to read from.
 echo
-echo "   IG usually returns 403 to anonymous scrapes. A burner IG account"
-echo "   (free, ~5 min to create) is the reliable workaround. Session is"
-echo "   cached after first login, so you only type the password once."
-BURNER="$(ask 'Burner IG account for login (blank = try anonymous)' '')"
+echo "   gallery-dl reads IG session cookies from your browser."
+echo "   You need to be logged in to instagram.com in that browser first."
+BROWSER="$(ask 'Browser for IG cookies (chrome/safari/firefox)' 'chrome')"
 
-FETCH_ARGS=("$HANDLE")
-if [ -n "$BURNER" ]; then
-  FETCH_ARGS+=(--login "$BURNER")
-fi
-
-if ! ./scripts/fetch-instagram.sh "${FETCH_ARGS[@]}"; then
+if ! ./scripts/fetch-instagram.sh "$HANDLE" --browser "$BROWSER"; then
   echo
   warn "fetch failed. Common causes:"
-  echo "   - 403 graphql/query: anonymous scrapes are blocked. Re-run with a burner login."
-  echo "   - 429 Too Many Requests: you've been rate-limited. Wait ~1h before retry."
-  echo "   - 'Profile does not exist' (misleading): usually the 403 above, not a real 404."
-  echo "   - typo in handle."
+  echo "   - '401 Unauthorized' on /web/search/topsearch/: you're not logged into IG in $BROWSER. Log in via the browser and retry."
+  echo "   - Keychain prompt denied: macOS blocked gallery-dl from reading Chrome cookies. Re-run and approve."
+  echo "   - typo in handle / account doesn't exist."
   exit 1
 fi
 
