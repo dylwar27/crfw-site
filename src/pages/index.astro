@@ -86,7 +86,11 @@ for (const p of photos) {
     cover: withBase(p.data.src),
     size: 'sm',
     tags: p.data.tags ?? [],
-    data: { ...p.data, src: withBase(p.data.src) },
+    data: {
+      ...p.data,
+      src: withBase(p.data.src),
+      carouselExtras: (p.data.carouselExtras ?? []).map(withBase),
+    },
   });
 }
 
@@ -115,6 +119,7 @@ for (const v of videos) {
       ...v.data,
       poster: withBase(v.data.poster),
       localSrc: withBase(v.data.localSrc),
+      carouselExtras: (v.data.carouselExtras ?? []).map(withBase),
       // Strip full transcript from the inline DATA — keep only the
       // preview (same pattern as voice memos).
       transcript: transcriptPreview,
@@ -411,6 +416,30 @@ const totals = {
         const d = e.data || {};
         const cover = e.cover || d.coverArt;
 
+        // --- Left-column media (carousel / video / static cover) ---
+        const photoSrcs = e.kind === 'photo' && d.src
+          ? [d.src, ...(d.carouselExtras || [])]
+          : [];
+        const isPhotoCarousel = photoSrcs.length > 1;
+
+        let leftColHtml;
+        if (photoSrcs.length > 0) {
+          leftColHtml = `<div class="popup-carousel-wrap">
+            <img class="popup-cover" id="carousel-img" src="${escapeHtml(photoSrcs[0])}" alt="" />
+            ${isPhotoCarousel ? `<div class="carousel-nav">
+              <button class="carousel-btn" id="carousel-prev" aria-label="Previous" disabled>‹</button>
+              <span class="carousel-counter" id="carousel-counter">1 / ${photoSrcs.length}</span>
+              <button class="carousel-btn" id="carousel-next" aria-label="Next">›</button>
+            </div>` : ''}
+          </div>`;
+        } else if (e.kind === 'video' && d.localSrc) {
+          leftColHtml = `<video class="popup-cover popup-video" controls preload="none"${d.poster ? ` poster="${escapeHtml(d.poster)}"` : ''}>
+            <source src="${escapeHtml(d.localSrc)}" type="video/mp4" />
+          </video>`;
+        } else {
+          leftColHtml = cover ? `<img class="popup-cover" src="${escapeHtml(cover)}" alt="" />` : `<div class="popup-cover"></div>`;
+        }
+
         // --- Release-specific: tracklist ---
         const trackHtml = (d.tracklist || []).map(t => `
           <li>
@@ -488,7 +517,7 @@ const totals = {
         popup.innerHTML = `
           <button class="popup-close" aria-label="Close" id="popup-close">×</button>
           <div class="popup-header">
-            ${cover ? `<img class="popup-cover" src="${cover}" alt="" />` : '<div class="popup-cover"></div>'}
+            ${leftColHtml}
             <div>
               <h2 class="popup-title" id="popup-title">${escapeHtml(e.title)}</h2>
               ${e.preservedTitle && e.preservedTitle !== e.title
@@ -508,7 +537,26 @@ const totals = {
           ${renderRelated(e)}
           ${archive ? `<h3>In the archive</h3>${archive}` : ''}
         `;
-        document.getElementById('popup-close').addEventListener('click', close);
+        popup.querySelector('#popup-close').addEventListener('click', close);
+
+        // Wire carousel prev/next for photo carousels
+        if (isPhotoCarousel) {
+          let idx = 0;
+          const imgEl = popup.querySelector('#carousel-img');
+          const counter = popup.querySelector('#carousel-counter');
+          const prevBtn = popup.querySelector('#carousel-prev');
+          const nextBtn = popup.querySelector('#carousel-next');
+          function goTo(n) {
+            idx = n;
+            imgEl.src = photoSrcs[idx];
+            counter.textContent = `${idx + 1} / ${photoSrcs.length}`;
+            prevBtn.disabled = idx === 0;
+            nextBtn.disabled = idx === photoSrcs.length - 1;
+          }
+          prevBtn.addEventListener('click', () => { if (idx > 0) goTo(idx - 1); });
+          nextBtn.addEventListener('click', () => { if (idx < photoSrcs.length - 1) goTo(idx + 1); });
+        }
+
         // Wire related-chip clicks → open that entry's popup
         popup.querySelectorAll('.related-chip').forEach(chip => {
           chip.addEventListener('click', () => {
