@@ -4,6 +4,70 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 11 — 2026-04-17 — DB + dropdowns/mobile + tag scaling + Curator's Kit (4 PRs)
+
+**Goal:** the big architectural sprint — bring in a proper database, fix the clunky filter bar, make the site mobile-ready, scale tags to handle 866+ IG photos, and stand up a custom browser-editable CMS. Planning pass committed to §10 of DATA_MODEL.md and to the DATABASE_BRIEF_FOR_CLAUDE_CODE.md vision, with the caveat that content files stay source of truth for Phase 1. Product-owner reframe on the CMS pivoted from Decap (off-the-shelf) to a purpose-built archival tool ("Curator's Kit") that can be reused on Dyl's other future archival project.
+
+**Done — 4 PRs, all merged:**
+
+**PR #25 — Database v1 (SQLite + full schema)**
+- `data/schema.sql` — 529-line SQLite schema covering all 7 current collections PLUS the richer future-entity tables from DATABASE_BRIEF (projects, venues, organizations, press, press_mentions, funds, grants, relationships, sources, assets, captures). Slugs as PKs, FKs by slug string (matches Astro's `reference()` pattern). Sensitivity enum (`public`/`restricted`/`private`/`redacted`) on every table per the brief's §7. Unified `entries` view UNIONs all 7 collections. FTS5 virtual table indexes title + preserved_title + body + transcript. Pre-baked stats views (coverage, drafts, dead_refs, tag_frequency, missing_archive_paths).
+- `scripts/db-sync.mjs` — Node + better-sqlite3, reads every frontmatter/JSON file and projects it into the DB. Idempotent; wipes and rebuilds on every run. First sync: 1,958 entries, **0 dead cross-refs**, 30 missing archivePaths (all expected — press events + carousel-parent photos). SQLite file: 7.5 MB.
+- Build chain: `npm run build` now does `astro build → pagefind → db-sync --dist`. SQLite ships at `dist/data/crfw.sqlite` for future client-side admin queries.
+- **Postgres deferred.** The brief recommended Postgres; for Phase 1, SQLite + sql.js gives us full SQL in the browser without any server. Schema is Postgres-portable — when Neon is provisioned, same schema.sql applies with trivial adjustments.
+
+**PR #26 — Filter dropdowns + mobile responsive pass**
+- Replaced the chunky 4-row chip filter bar with 4 compact `<select>` dropdowns (Project, Format, Medium, Tag). Wins ~600-1000 px horizontal space and adds live value counts ("alphabets (171)").
+- Projects sorted by frequency, not alphabetical. Format uses curator-preferred order.
+- Mobile CSS: targeted 320 / 375 / 414 / 600 / 900 / 1024 px. Masthead scales. Filter dropdowns flex-wrap then grow full-width on phones with 44×44 tap targets. Popup goes full-screen (100dvh) on phones. Admin table first column sticky on narrow viewports. Related chips stack. Safe-area insets for notch devices. Accessibility-minded focus outlines maintained.
+- `viewport-fit=cover` meta added.
+
+**PR #27 — Tag scaling + /tags index page**
+- Tag dropdown now **recomputes on every filter change**, scoped to entries matching the other axes. Prevents it from listing tags irrelevant to the current view. Cap raised 20 → 30 because scoping keeps relevance high.
+- New `/tags` page: every unique tag grouped by source (curator-assigned, script-assigned, hashtag-derived), color-coded per group, with usage counts. Click a tag → timeline pre-filtered.
+- **URL param pre-selection** on timeline: `/?project=X&tag=Y&format=Z&kind=W` pre-selects the dropdowns. Enables deep links from /tags, future project pages, and external references.
+- Footer nav gains `/tags` link.
+
+**PR #28 — Curator's Kit v1 (custom archival CMS)**
+- The product-owner-lens decision: built custom instead of layering Decap/Tina/Sanity. Archival work needs opposite defaults to publishing CMSes — no delete button, `preservedTitle` as first-class, fuzzy dates, sensitivity slider, "curator voice only" hint on summary fields. Off-the-shelf CMSes would require clunky custom widgets for every one of those.
+- Node HTTP server (built-ins only, no deps) at `scripts/curators-kit/server.mjs`. Vanilla-JS SPA frontend at `scripts/curators-kit/public/` (no build step).
+- `npm run cms` boots localhost:4322. `npm run cms:lan` binds 0.0.0.0 and prints LAN URL for phone access over same wifi.
+- Every save writes the file AND `git commit -m "CMS: edit <coll>/<slug> (<fields>)"`. Curator `git push` when ready to deploy.
+- v1 supports: collection list, searchable entry list, scalar fields, textarea fields (summary/transcript/caption), enum dropdowns (format/kind/source), tag input with add/remove pills, published toggle. Field-level hints call out golden rules (preservedTitle typography, date fuzziness, no AI summaries, archivePath provenance).
+- v2 deferred: cross-ref picker, carousel editor, image upload, diff viewer, revision history, deployed mode (GH OAuth + CF Worker).
+- **Reusable.** Schema-agnostic within Astro content-collections pattern. README documents how to port to Dyl's next archival project.
+
+**State at end of session:**
+- **28 PRs merged across 11 sessions.**
+- **Live at https://dylwar27.github.io/crfw-site/** + /about + /projects + /tags + /admin.
+- **558 static pages**, 19,140 words indexed.
+- **1,958 entries** in the DB (238 releases + 866 photos + 538 videos + 305 voice_memos + 11 events + 0 people + 0 lyrics).
+- Full query layer now exists. DB ships at `dist/data/crfw.sqlite` (7.5 MB) ready for sql.js client-side queries.
+- `/admin` still unchanged (still uses inline JSON). Next step: wire it to query the SQLite — small PR.
+- Curator's Kit runs locally; supersedes the CSV roundtrip for most edits (CSV still works for bulk changes).
+
+**Open (carry-forward):**
+1. Wire `/admin` dashboard to query `dist/data/crfw.sqlite` via sql.js (replaces the inline JSON). Unlocks live stats dashboards.
+2. Curator's Kit v2: cross-ref picker, carousel editor, image upload.
+3. Postgres / Neon provisioning — only when multi-user editing arrives.
+4. Mobile QA from actual phone (Dyl test).
+5. Custom domain + robots lift when ready for public launch.
+6. Second IG account scrape (art/project handle) still TBD from Dyl.
+
+**Files touched this session:**
+- `data/schema.sql` — new (PR A)
+- `scripts/db-sync.mjs` — new (PR A)
+- `scripts/curators-kit/**` — new 6 files (PR D)
+- `src/pages/index.astro` — filter dropdowns, URL params, scoped tag recompute, footer /tags link
+- `src/pages/tags.astro` — new (PR C)
+- `src/styles/global.css` — dropdown styles, full mobile media queries
+- `src/layouts/Base.astro` — viewport-fit=cover
+- `package.json` — `db:sync`, `cms`, `cms:lan` scripts; better-sqlite3 devDep
+- `.gitignore` — data/crfw.db*
+- `SESSIONS.md`, `CLAUDE.md` — this log + current-state refresh
+
+---
+
 ## Session 10 — 2026-04-17 — Instagram scraper pipeline v.1 (1 PR)
 
 **Goal:** stand up an outside-access Instagram ingest pipeline so the empty `photos` collection can start filling in from Colin's two public IG accounts (personal + art). No login/ownership access — has to work against public accounts only. Keep it archival-grade: full captions, post dates, carousels, video posts, permalinks back to source.

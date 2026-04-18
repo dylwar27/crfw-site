@@ -82,19 +82,21 @@ site/
 
 ---
 
-## Current state (as of Session 09, 2026-04-17)
+## Current state (as of Session 11, 2026-04-17)
 
-- **~1,958 total entries** (238 releases + 305 voice memos + 538 videos + 866 photos + 11 events; +866 photos and +47 videos from chi_swoo_ IG ingest in Session 10)
-- **24 PRs merged** across 10 sessions
-- Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /admin (password `crfw`)
-- **557 static pages**: timeline + admin + about + projects + 305 voice memo readers + 249 video readers
-- **Filter UX: four axes** — Project, Format, Medium, Tag — with reset button + live count
-- **Full-text search** via Pagefind (557 pages, 19,100 words indexed)
-- **CSV roundtrip** for bulk editing: /admin → Sheets/Excel → `scripts/import-csv-edits.mjs`
-- **Embed integration** (Session 09): Bandcamp/YouTube/SoundCloud iframes render in popups (priority BC > YT > SC); 22 releases have Bandcamp embeds; 32 videos have YouTube IDs; relatedVideos links albums to their video content
-- **Draft system**: `published: false` hides entries from public timeline; import scripts now default to draft
-- Main page ~970 KB (transcripts preview-only inline; full text on permalinked reader pages)
-- All collections now have entries (photos landed in Session 10 via the IG scraper)
+- **~1,958 total entries** (238 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
+- **28 PRs merged** across 11 sessions
+- Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /tags + /admin
+- **558 static pages**: timeline + admin + about + projects + tags + 305 voice memo readers + 249 video readers
+- **Filter UX (Session 11): four dropdowns** (Project, Format, Medium, Tag) with live counts, reset button, URL-param pre-selection (`?project=X&tag=Y`)
+- **Tag scaling (Session 11)**: tag dropdown recomputes scoped to other-axis selections; /tags page groups all tags by source (curator / script / hashtag)
+- **Database v1 (Session 11)**: SQLite schema at `data/schema.sql` mirrors content + has future-entity tables for rich model (projects, venues, press_mentions, sources, relationships, grants, assets, captures). `scripts/db-sync.mjs` projects 1,958 entries into `data/crfw.db` at build time and ships `dist/data/crfw.sqlite` for client-side queries. FTS5 indexed. 0 dead cross-refs.
+- **Curator's Kit (Session 11)**: custom browser-editable CMS at `npm run cms` (localhost:4322) or `npm run cms:lan` (phone access). Archival-first defaults — no delete button, preservedTitle as distinct field, fuzzy dates, sensitivity model, curator-voice-only hint on summary fields. Reusable for other archival projects.
+- **Mobile-ready (Session 11)**: responsive CSS targeting 320/375/414/600/900/1024 px. 44×44 tap targets. Full-screen popups on phones. Safe-area insets for notch devices.
+- **Full-text search** via Pagefind (558 pages, 19,140 words indexed)
+- **CSV roundtrip** via `scripts/import-csv-edits.mjs` still works for bulk operations
+- **Embed integration**: Bandcamp/YouTube/SoundCloud iframes render in popups (priority BC > YT > SC); 22 releases have Bandcamp embeds; 32 videos have YouTube IDs
+- **Draft system**: `published: false` hides entries from public timeline; import scripts default to draft
 
 ### Breakdown:
 
@@ -148,13 +150,10 @@ Agent-doable next:
 12. **External embeds** — render Bandcamp / SoundCloud / YouTube / Vimeo iframes in popups when URLs land.
 13. **Custom domain** — two-line astro.config.mjs swap + `public/CNAME` + drop/flip `robots.txt`. Consider basic HTTP auth for /admin at public launch.
 
-**Done (cumulative through Session 09):**
-- **Session 04:** ~~killd by bulk pass~~ (PR #1). ~~GitHub Pages deploy~~ (PR #2).
-- **Session 05:** ~~killd-by-adjacent pass~~ (PR #3). ~~alphabets bulk pass~~ (PR #4). ~~Cover-art importer~~ (PR #5).
-- **Session 06:** ~~Filter UX overhaul~~ (PR #6). ~~Voice memos~~ (PR #7, 305). ~~Video stubs~~ (PR #8, 465). ~~Bug pass~~ (PR #9). ~~/admin + published field~~ (PR #10).
-- **Session 07:** ~~DIMCP retag~~ (PR #11, 130). ~~Tag filter axis~~ (PR #12). ~~Related entries in popups~~ (PR #13). ~~Voice memo reader pages~~ (PR #14). ~~CSV import-back~~ (PR #15). ~~Pagefind search~~ (PR #16).
-- **Session 08:** ~~2-digit year fix~~ (PR #17, 17 corrections). ~~Dropbox dupe guard~~ (PR #18). ~~Draft-by-default + tighter related~~ (PR #19). ~~Video transcripts + reader pages~~ (PR #20, 266 transcripts, 249 new pages).
-- **Session 09:** ~~Bandcamp embeds + schema + popup rendering~~ (PR #21, 22 matched + 4 new). ~~YouTube + tracklist xref~~ (PR #22, 6 matched + 26 new + 10 xrefs). ~~Articles + Bio + Projects~~ (PR #23, 10 press events + /about + /projects).
+**Done (cumulative through Session 11):**
+- **Session 04–09:** killd by + killd-by-adjacent + alphabets bulk passes; GH Pages deploy; cover art; filter UX; voice memos + videos + video transcripts; bug pass; /admin + CSV roundtrip; DIMCP retag; tag filter axis; related entries; voice-memo reader; Pagefind; 2-digit year fix; draft-by-default; Bandcamp/YouTube/SoundCloud embeds + tracklist xref; 10 press events; /about + /projects.
+- **Session 10:** Instagram scraper pipeline + 866 IG photos + 47 IG videos (PR #24).
+- **Session 11:** ~~Database v1~~ (PR #25, SQLite + full schema + ships to dist). ~~Filter dropdowns + mobile pass~~ (PR #26). ~~Tag scaling + /tags page~~ (PR #27). ~~Curator's Kit~~ (PR #28, custom archival CMS at `npm run cms`).
 
 ---
 
