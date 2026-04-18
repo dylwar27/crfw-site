@@ -327,6 +327,8 @@ const totals = {
       <a href={`${BASE}/about`}>About</a>
       <span class="foot-sep">·</span>
       <a href={`${BASE}/projects`}>Associated projects</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/tags`}>Tags</a>
     </div>
     <div class="foot-line">
       CRFW timeline · proof of concept · {totals.total} entries indexed
@@ -627,7 +629,52 @@ const totals = {
       const filterCount = document.getElementById('filter-count');
       const resetBtn = document.getElementById('filter-reset');
 
-      function applyFilters() {
+      // Tag dropdown recomputation (Session 11 PR C)
+      // Tag options re-scope to entries matching the OTHER axes each
+      // time a non-tag filter changes. Prevents the Tag dropdown from
+      // listing tags that can't match anything in the current view.
+      const tagSelect = document.querySelector('.filter-select select[data-axis="tag"]');
+      function recomputeTagOptions() {
+        if (!tagSelect) return;
+        const previousValue = tagSelect.value;
+        const tagCounts = new Map();
+        document.querySelectorAll('.entry').forEach(el => {
+          const okProj = state.project === 'all' || el.dataset.project === state.project;
+          const okKind = state.kind === 'all' || el.dataset.kind === state.kind;
+          const okFmt = state.format === 'all' || el.dataset.format === state.format;
+          if (!(okProj && okKind && okFmt)) return;
+          const tagList = (el.dataset.tags || '').split('|').filter(Boolean);
+          for (const t of tagList) tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+        });
+        // Drop tags redundant with other axes (matching normalization)
+        const projVal = state.project === 'all' ? '' : state.project.toLowerCase().replace(/\s+/g, '-');
+        const kindVal = state.kind === 'all' ? '' : state.kind.replace(/_/g, '-');
+        const formatVal = state.format === 'all' ? '' : state.format.toLowerCase();
+        // Sort by frequency, cap at top 30 (5 more than before, because
+        // the scoping keeps results relevant)
+        const sorted = [...tagCounts.entries()]
+          .filter(([t]) => t.toLowerCase() !== projVal && t.toLowerCase() !== kindVal && t.toLowerCase() !== formatVal)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 30);
+        // Rebuild options
+        const lines = ['<option value="all">All</option>'];
+        for (const [tag, count] of sorted) {
+          const escTag = tag.replace(/"/g, '&quot;');
+          lines.push(`<option value="${escTag}">${escTag} (${count})</option>`);
+        }
+        tagSelect.innerHTML = lines.join('');
+        // Restore previous value if still valid, else reset
+        if ([...tagSelect.options].some(o => o.value === previousValue)) {
+          tagSelect.value = previousValue;
+        } else {
+          tagSelect.value = 'all';
+          state.tag = 'all';
+          tagSelect.closest('.filter-select').classList.remove('active');
+        }
+      }
+
+      function applyFilters(opts) {
+        opts = opts || {};
         let visible = 0;
         document.querySelectorAll('.entry').forEach(el => {
           const okProj = state.project === 'all' || el.dataset.project === state.project;
@@ -656,6 +703,8 @@ const totals = {
         if (resetBtn) {
           resetBtn.style.display = isFiltered ? '' : 'none';
         }
+        // Recompute tag scope after other filters change
+        if (!opts.skipTagRecompute) recomputeTagOptions();
       }
 
       // Dropdowns (Session 11) — replaced chip buttons with <select>s
@@ -665,9 +714,35 @@ const totals = {
           state[axis] = sel.value;
           // Highlight dropdown when non-"all"
           sel.closest('.filter-select').classList.toggle('active', sel.value !== 'all');
-          applyFilters();
+          // Skip tag recompute when the tag dropdown itself changed
+          applyFilters({ skipTagRecompute: axis === 'tag' });
         });
       });
+
+      // URL param pre-selection: /?project=X&tag=Y etc.
+      const qs = new URLSearchParams(window.location.search);
+      for (const axis of ['project', 'kind', 'format', 'tag']) {
+        const v = qs.get(axis);
+        if (!v) continue;
+        const sel = document.querySelector(`.filter-select select[data-axis="${axis}"]`);
+        if (!sel) continue;
+        // Tag axis may need its option to exist — rebuild first then set
+        if (axis === 'tag') {
+          recomputeTagOptions();
+          if (![...sel.options].some(o => o.value === v)) {
+            // Tag not in top 30 after other filters applied — add it
+            const opt = document.createElement('option');
+            opt.value = v; opt.textContent = v;
+            sel.appendChild(opt);
+          }
+        }
+        if ([...sel.options].some(o => o.value === v)) {
+          sel.value = v;
+          state[axis] = v;
+          sel.closest('.filter-select').classList.add('active');
+        }
+      }
+      applyFilters();
 
       // --- Pagefind search ---
       const searchInput = document.getElementById('search-input');

@@ -1,0 +1,230 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const releases = await getCollection('releases');
+const events = await getCollection('events');
+const photos = await getCollection('photos');
+const videos = await getCollection('videos');
+const voice_memos = await getCollection('voice_memos');
+const lyrics = await getCollection('lyrics');
+
+// Gather tags from every entry, grouped by source-heuristic.
+// Source heuristic: if a tag matches an Instagram convention we treat
+// it as hashtag-derived; if it's one of our script-assigned tags
+// (video, voice-memo, youtube, needs-review, dimcp…), group as
+// "script-assigned"; else curator-assigned.
+const HASHTAG_PATTERNS = [/^instagram-/i];
+const SCRIPT_TAGS = new Set([
+  'video', 'voice-memo', 'youtube', 'bandcamp',
+  'needs-review', 'dimcp', 'loose-files', 'curator-flag',
+]);
+
+type TagEntry = { tag: string; count: number; source: 'curator' | 'script' | 'hashtag'; collections: Set<string> };
+const tagMap = new Map<string, TagEntry>();
+
+function addTags(collection: string, tags: string[]) {
+  for (const raw of tags) {
+    const t = String(raw).trim();
+    if (!t) continue;
+    let entry = tagMap.get(t);
+    if (!entry) {
+      let source: TagEntry['source'] = 'curator';
+      if (SCRIPT_TAGS.has(t.toLowerCase())) source = 'script';
+      else if (HASHTAG_PATTERNS.some(re => re.test(t))) source = 'hashtag';
+      entry = { tag: t, count: 0, source, collections: new Set() };
+      tagMap.set(t, entry);
+    }
+    entry.count++;
+    entry.collections.add(collection);
+  }
+}
+
+for (const r of releases)    addTags('releases',    r.data.tags ?? []);
+for (const e of events)      addTags('events',      e.data.tags ?? []);
+for (const p of photos)      addTags('photos',      p.data.tags ?? []);
+for (const v of videos)      addTags('videos',      v.data.tags ?? []);
+for (const m of voice_memos) addTags('voice_memos', m.data.tags ?? []);
+for (const l of lyrics)      addTags('lyrics',      l.data.tags ?? []);
+
+const allTags = [...tagMap.values()].sort((a, b) => b.count - a.count);
+const curatorTags = allTags.filter(t => t.source === 'curator');
+const scriptTags  = allTags.filter(t => t.source === 'script');
+const hashtagTags = allTags.filter(t => t.source === 'hashtag');
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const total = allTags.length;
+const totalUses = allTags.reduce((s, t) => s + t.count, 0);
+---
+<Base title="Tags — CRFW Archive">
+  <article class="tags-page">
+    <nav class="tags-nav">
+      <a href={`${BASE}/`}>← Back to timeline</a>
+    </nav>
+
+    <header class="tags-header">
+      <h1>Tags</h1>
+      <p class="tags-sub">
+        Every tag across the archive, grouped by where it came from.
+        Click a tag to open the timeline pre-filtered.
+      </p>
+      <p class="tags-stats">{total} unique tags · {totalUses.toLocaleString()} total uses</p>
+    </header>
+
+    {curatorTags.length > 0 && (
+      <section class="tags-section">
+        <h2>Curator-assigned ({curatorTags.length})</h2>
+        <p class="tags-section-desc">Tags the curator chose directly — the ones most likely to organize the archive meaningfully.</p>
+        <div class="tag-cloud">
+          {curatorTags.map(t => (
+            <a href={`${BASE}/?tag=${encodeURIComponent(t.tag)}`} class="tag-chip tag-curator">
+              <span class="tag-name">{t.tag}</span>
+              <span class="tag-count">{t.count}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {scriptTags.length > 0 && (
+      <section class="tags-section">
+        <h2>Script-assigned ({scriptTags.length})</h2>
+        <p class="tags-section-desc">Auto-added by import scripts (e.g. <code>video</code>, <code>needs-review</code>, <code>bandcamp</code>, <code>dimcp</code>). Useful for operational filtering.</p>
+        <div class="tag-cloud">
+          {scriptTags.map(t => (
+            <a href={`${BASE}/?tag=${encodeURIComponent(t.tag)}`} class="tag-chip tag-script">
+              <span class="tag-name">{t.tag}</span>
+              <span class="tag-count">{t.count}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {hashtagTags.length > 0 && (
+      <section class="tags-section">
+        <h2>Hashtag-derived ({hashtagTags.length})</h2>
+        <p class="tags-section-desc">Tags derived from Instagram captions and similar social sources. Often noisier; surface from posts as-is.</p>
+        <div class="tag-cloud">
+          {hashtagTags.map(t => (
+            <a href={`${BASE}/?tag=${encodeURIComponent(t.tag)}`} class="tag-chip tag-hashtag">
+              <span class="tag-name">{t.tag}</span>
+              <span class="tag-count">{t.count}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</Base>
+
+<style>
+  .tags-page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .tags-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tags-nav a { color: var(--ink-dim); text-decoration: none; }
+  .tags-nav a:hover { color: var(--accent-2); }
+
+  .tags-header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+  }
+  .tags-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 68px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .tags-sub {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    margin: 0 0 12px;
+  }
+  .tags-stats {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-2);
+    margin: 0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tags-section { margin-bottom: 48px; }
+  .tags-section h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 6px;
+  }
+  .tags-section-desc {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+  .tags-section-desc code {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--bg-soft);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: all 0.15s ease;
+  }
+  .tag-chip:hover {
+    border-color: var(--ink-dim);
+    background: var(--bg-soft);
+  }
+  .tag-chip .tag-count {
+    font-size: 10px;
+    color: var(--ink-dim);
+    padding-left: 6px;
+    border-left: 1px solid var(--rule);
+  }
+  .tag-chip:hover .tag-count { color: var(--accent-2); }
+
+  .tag-curator { border-color: var(--accent-3); color: var(--accent-3); }
+  .tag-curator:hover { background: color-mix(in oklab, var(--accent-3) 10%, var(--bg)); }
+  .tag-curator .tag-count { color: var(--accent-3); }
+
+  .tag-script { border-color: var(--accent-2); color: var(--accent-2); }
+  .tag-script:hover { background: color-mix(in oklab, var(--accent-2) 10%, var(--bg)); }
+
+  .tag-hashtag { color: var(--ink-dim); }
+</style>
