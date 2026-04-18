@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Curator's Kit — CRFW Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="logo">CURATOR'S KIT</div>
+      <div class="subtitle">CRFW Archive</div>
+    </div>
+    <nav class="collections" id="collections"></nav>
+    <footer class="sidebar-foot">
+      <div class="help">Edits commit to git locally. Remember to <code>git push</code>.</div>
+    </footer>
+  </aside>
+
+  <main class="main">
+    <div class="list-pane" id="list-pane">
+      <div class="list-head">
+        <h1 id="list-title">Choose a collection</h1>
+        <input type="search" id="search" placeholder="Search…" />
+      </div>
+      <div class="entry-list" id="entry-list"></div>
+    </div>
+
+    <div class="editor-pane" id="editor-pane">
+      <div class="editor-empty">
+        <h2>Select an entry to edit</h2>
+        <p>Or pick a collection from the sidebar.</p>
+      </div>
+      <div class="editor-body" id="editor-body" hidden></div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
