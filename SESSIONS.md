@@ -38,7 +38,7 @@ No new collection, no enum changes, no existing entry broken.
 **Smoke test (committed with PR):** fixture covers single-image, single-video, and 3-item carousel (2 images + 1 video). All three classify and write correctly; re-run reports 0 new / 3 skip-existing; `npm run build` green (no Zod errors against the updated schemas). Fixture cleaned up before commit.
 
 **State at end of session:**
-- **24 PRs merged total across 10 sessions** (pending this PR landing).
+- **24 PRs merged total across 10 sessions** — this session landed as [PR #24](https://github.com/dylwar27/crfw-site/pull/24), merged 2026-04-17.
 - Empty `photos` collection warning unresolved at build — intentional; clears as soon as Dyl runs the pipeline against a real account.
 - Pipeline is fixture-verified but has NOT been run against a live IG account yet. Dyl has one handle ready; second handle TBD.
 

@@ -84,7 +84,7 @@ site/
 ## Current state (as of Session 09, 2026-04-17)
 
 - **~1,958 total entries** (238 releases + 305 voice memos + 538 videos + 866 photos + 11 events; +866 photos and +47 videos from chi_swoo_ IG ingest in Session 10)
-- **23 PRs merged** across 9 sessions
+- **24 PRs merged** across 10 sessions
 - Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /admin (password `crfw`)
 - **557 static pages**: timeline + admin + about + projects + 305 voice memo readers + 249 video readers
 - **Filter UX: four axes** — Project, Format, Medium, Tag — with reset button + live count
@@ -93,7 +93,7 @@ site/
 - **Embed integration** (Session 09): Bandcamp/YouTube/SoundCloud iframes render in popups (priority BC > YT > SC); 22 releases have Bandcamp embeds; 32 videos have YouTube IDs; relatedVideos links albums to their video content
 - **Draft system**: `published: false` hides entries from public timeline; import scripts now default to draft
 - Main page ~970 KB (transcripts preview-only inline; full text on permalinked reader pages)
-- Only "photos" collection warning remains (no photo entries yet)
+- All collections now have entries (photos landed in Session 10 via the IG scraper)
 
 ### Breakdown:
 
@@ -106,9 +106,10 @@ site/
 - 1 event entry.
 - **3 covers imported**: `court-clothes/cover.svg` (placeholder), `117-killd-by-2014-2016-bsides/cover.jpg`, `19-alphabets-thru-tha-rip/cover.jpg`. Plus `court-clothes/cover.jpg` sitting next to the SVG but not referenced by frontmatter (known curator-flag item).
 - **305 voice memo entries** (Sep 2015 – Dec 2016) — Whisper transcripts from the archive. 12 m4a files without transcripts were skipped.
-- **465 video entries** (2008–2020) — stubs from `_Documentation/Videos/` year folders. 266 have Whisper transcripts + permalinked `/video/<slug>` reader pages. 199 still need Whisper processing. No embed URLs yet (YouTube/Vimeo sourcing is Dyl's next call).
-- 1 event entry.
-- Photos, lyrics, people collections exist and validate but have no entries yet.
+- **538 video entries** (2008–2020 + 47 IG videos from 2013–2018) — 465 stubs from `_Documentation/Videos/` year folders (266 with Whisper transcripts + permalinked `/video/<slug>` reader pages; 199 still need Whisper), 26 new YouTube drafts from Session 09, 47 IG videos from @chi_swoo_ (Session 10).
+- **866 photo entries** — all from @chi_swoo_ (Colin's personal IG), 2013-07-10 through 2018-01-31, ingested in Session 10. All `published: false` awaiting curation. Second IG account (art/project handle) still TBD.
+- 11 event entries (1 life + 10 press from Session 09).
+- Lyrics, people collections exist and validate but have no entries yet.
 - Filter UX: three axes (Project × Format × Medium) with "×" reset button and live "showing X of Y" count. Format axis is the workhorse (LP/EP/single/mix/demo/b-sides/other/compilation). Medium axis auto-appeared when voice memos + videos landed.
 - **Live at https://dylwar27.github.io/crfw-site/** — GitHub Pages, `robots.txt` Disallow (WIP posture). `base: '/crfw-site'` + `withBase()` helper means custom-domain swap is config-only.
 
@@ -118,6 +119,9 @@ site/
 - [scripts/import-voice-memos.mjs](scripts/import-voice-memos.mjs) — voice memo transcript importer (draft-default)
 - [scripts/import-video-stubs.mjs](scripts/import-video-stubs.mjs) — video stub importer (draft-default)
 - [scripts/import-video-transcripts.mjs](scripts/import-video-transcripts.mjs) — backfills Whisper .txt files into video entries (Session 08)
+- [scripts/fetch-instagram.sh](scripts/fetch-instagram.sh) — gallery-dl wrapper, pulls public IG posts using browser session cookies (Session 10)
+- [scripts/import-instagram.mjs](scripts/import-instagram.mjs) — groups gallery-dl sidecars by shortcode, writes photo/video entries with `archivePath` pointing to `CRFW Archive/Instagram/@<handle>/` (Session 10)
+- [scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) — interactive wizard wrapping the above (Session 10)
 - [scripts/retag-dimcp.mjs](scripts/retag-dimcp.mjs) — one-off DIMCP project reassignment (Session 07)
 - [scripts/fix-2digit-years.mjs](scripts/fix-2digit-years.mjs) — one-off 2-digit-year fix pass (Session 08)
 - [scripts/import-csv-edits.mjs](scripts/import-csv-edits.mjs) — **CSV import-back** — diffs a CSV against content files, applies changes. Editable cols: title, preservedTitle, project, date, format, summary, tags, published. Dry-run by default; `--write` to apply.
