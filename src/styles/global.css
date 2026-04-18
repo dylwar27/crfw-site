@@ -371,6 +371,22 @@ a:hover { color: var(--accent-2); }
 .popup-header { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: start; }
 @media (max-width: 700px) { .popup-header { grid-template-columns: 1fr; } }
 .popup-cover { width: 100%; aspect-ratio: 1; object-fit: cover; background: #000; }
+.popup-video { aspect-ratio: auto; max-height: 60vh; object-fit: contain; }
+.popup-carousel-wrap { display: flex; flex-direction: column; gap: 8px; }
+.carousel-nav { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.carousel-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1.6;
+  padding: 0 10px;
+  font-family: var(--mono);
+}
+.carousel-btn:hover:not(:disabled) { background: var(--bg); }
+.carousel-btn:disabled { color: var(--ink-dim); cursor: default; }
+.carousel-counter { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); min-width: 44px; text-align: center; }
 .popup-title {
   font-family: var(--serif);
   font-size: clamp(36px, 5vw, 72px);
