@@ -93,6 +93,18 @@ First live-account run surfaced that **instaloader is effectively broken for scr
 - Carousel gallery UI in popups (data captured, rendering pending).
 - Project inference from tags (`instagram-personal` → no project, `instagram-art` → `alphabets` or similar).
 
+**Addendum — generalized `ig-archive` tool + data-model briefing (post-merge commits on main):**
+
+1. **`tools/ig-archive/` — generalized, public-use extraction of the IG pipeline.** Anyone running personal-archival IG work can clone just this directory. Three files:
+   - [tools/ig-archive/fetch.sh](tools/ig-archive/fetch.sh) — gallery-dl wrapper, configurable output dir, `--browser` flag.
+   - [tools/ig-archive/import.mjs](tools/ig-archive/import.mjs) — reads gallery-dl sidecars, emits a normalized, schema-versioned `manifest.json` describing every post (shortcode, URL, date, caption, hashtags, location, kind, primary + extras). Kind enum: `photo`, `video`, `carousel-photo`, `carousel-video`. Paths relative to the manifest directory for portability. Dry-run supported.
+   - [tools/ig-archive/ig-archive.sh](tools/ig-archive/ig-archive.sh) — interactive wizard chaining fetch + import with a confirmation gate.
+   - [tools/ig-archive/README.md](tools/ig-archive/README.md) — self-contained usage docs, manifest-field reference, legal/ethical notes, troubleshooting.
+   Debug pass: ran `import.mjs` against the chi_swoo_ fixture (913 posts) — 935 media references, 0 missing paths; 859 photos / 47 videos / 7 carousel-photos / 0 carousel-videos classified correctly; hashtag peeling verified on a post with a trailing `#nice`. No coupling to CRFW content schema — anyone can build on top of the manifest (static gallery, database, research dataset, etc.). Lives alongside the CRFW-specific `scripts/import-instagram.mjs`, which stays because it speaks Astro content collections directly.
+2. **[DATA_MODEL.md](DATA_MODEL.md) — briefing for the next agent that builds a database of the archive.** 12 sections covering the three-layer data flow (Dropbox → content files → DB), all seven collections with their Zod schemas and quirks, the cross-reference web, photos-vs-videos-vs-carousels distinctions, golden rules as schema constraints, import-script catalogue, recommended integration approach (read-only projection, slugs as primary keys, carousel sub-table), landmines and curator-flag items from Sessions 04–10, and a §10 list of questions to ask Dyl before committing to an engine. CLAUDE.md updated to reference it from the repo layout + opening instructions.
+
+These two additions landed on main as separate commits after PR #24 merged. No PR; direct-to-main since they're docs + a sibling tools dir, not changes to the Astro site itself.
+
 ## Session 09 — 2026-04-17 — xlsx embed + articles + bio integration (3 PRs)
 
 **Goal:** integrate two curated Dyl spreadsheets into the CMS — `CRFW_Media_Embeds.xlsx` (60 Bandcamp/YouTube/SoundCloud rows) and `CRFW_Documentation_Articles.xlsx` (articles, biographical summary, associated projects). Prioritize BC > YT > SC embeds. Match to existing entries by title + year; create new entries where needed. Keep future-merge-friendly.
