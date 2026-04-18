@@ -83,7 +83,7 @@ site/
 
 ## Current state (as of Session 09, 2026-04-17)
 
-- **~1,045 total entries** (238 releases + 305 voice memos + 491 videos + 11 events; +4 new Bandcamp releases, +26 new YouTube videos, +10 new press events from Session 09)
+- **~1,958 total entries** (238 releases + 305 voice memos + 538 videos + 866 photos + 11 events; +866 photos and +47 videos from chi_swoo_ IG ingest in Session 10)
 - **23 PRs merged** across 9 sessions
 - Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /admin (password `crfw`)
 - **557 static pages**: timeline + admin + about + projects + 305 voice memo readers + 249 video readers
@@ -134,7 +134,7 @@ Curator work (Dyl):
 5. **Voice memo titles** (if desired — currently show 80-char transcript preview as subtitle; option to hand-title memorable ones via CSV).
 
 Agent-doable next:
-6. **Photo import** — only remaining empty collection. Needs IG archive JSON or other source from Dyl.
+6. **Photo import** — IG scraper shipped (`scripts/ingest-instagram.sh` wizard using gallery-dl). First account ingested: @chi_swoo_ (Colin's personal) → 866 photos + 47 videos, 2013–2018, all `published: false` awaiting curation. Second account (art/project handle) still TBD. Non-IG photo sources (EXIF-dated archive images) still TBD.
 7. **Video transcripts** — 275 Whisper .txt files exist next to video files but weren't imported in Session 06. Extend `scripts/import-video-stubs.mjs` to pick them up + generate `/video/[slug]` reader pages mirroring voice memos.
 8. **Whisper pass** on 12 voice memos without transcripts.
 9. **YouTube/Vimeo URL matching** — video entries exist as stubs but have no embed URLs. YouTube more common than Vimeo for Colin's work. Dyl needs to source.

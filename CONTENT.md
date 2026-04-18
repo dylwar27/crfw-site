@@ -61,6 +61,33 @@ Create `src/content/photos/<slug>.json`:
 
 The image file goes in `public/media/photos/`.
 
+### Bulk Instagram import
+
+For IG accounts where you're logged in via a browser. Prereq (one-time): `brew install gallery-dl` and be logged into instagram.com in Chrome (or Safari/Firefox).
+
+**Easy path — interactive wizard:**
+
+```bash
+./scripts/ingest-instagram.sh            # prompts for handle + tag + browser
+./scripts/ingest-instagram.sh <handle>   # handle preset, prompts for tag + browser
+```
+
+The wizard runs fetch → dry-run → confirm → write → `npm run build` verify, and tells you how many photos/videos landed. Safe to re-run — gallery-dl skips posts it already has, the importer skips shortcodes already in `src/content/`.
+
+**Why gallery-dl, not instaloader?** instaloader's session-health-check endpoint returns 401 on current Instagram backends, and instaloader mis-handles that by trying to re-prompt for the password — which breaks in a scripted shell. gallery-dl uses the real web endpoints with your browser's existing cookies and works through the same auth IG gives a logged-in tab. No burner account, no password caching, no interactive fallback.
+
+**Under the hood (if you want to run the stages manually):**
+
+```bash
+./scripts/fetch-instagram.sh <handle> [--browser chrome|safari|firefox]    # fetch
+node scripts/import-instagram.mjs --user <handle>                          # dry-run
+node scripts/import-instagram.mjs --user <handle> --tag instagram-art --write  # commit
+```
+
+The importer writes to `photos` (image posts) or `videos` (video posts). Carousels become one entry; secondary media lands in `carouselExtras`. Every new entry is `published: false` — flip visibility via `/admin` or the CSV round-trip once you've curated `title`, `project`, and `summary`.
+
+**Archival convention:** the raw scrape (media + gallery-dl `.json` sidecars) should be copied into `CRFW Archive/Instagram/@<handle>/` in Dropbox before committing the repo-side. Each entry's `archivePath` points there. The repo is the presentation layer; Dropbox stays the truth.
+
 ## Adding a video
 
 Create `src/content/videos/<slug>.json`:

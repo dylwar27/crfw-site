@@ -4,6 +4,95 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 10 — 2026-04-17 — Instagram scraper pipeline v.1 (1 PR)
+
+**Goal:** stand up an outside-access Instagram ingest pipeline so the empty `photos` collection can start filling in from Colin's two public IG accounts (personal + art). No login/ownership access — has to work against public accounts only. Keep it archival-grade: full captions, post dates, carousels, video posts, permalinks back to source.
+
+**Design — two-stage, mirrors voice memos / video-stubs / embeds pipelines:**
+
+1. **Stage 1 fetch:** [scripts/fetch-instagram.sh](scripts/fetch-instagram.sh) wraps [instaloader](https://instaloader.github.io/) (Python, one-time `pipx install`). Writes to `tmp/instagram/<handle>/` (gitignored). One `.json` sidecar per post with the full GraphQL node, plus the `.jpg`/`.mp4` files, plus thumbnails for videos.
+2. **Stage 2 import:** [scripts/import-instagram.mjs](scripts/import-instagram.mjs) walks the scrape, classifies each post (GraphImage / GraphVideo / GraphSidecar), copies media into `public/media/{photos,videos}/<slug>/`, writes JSON entries to `src/content/`.
+
+**Decisions locked in during plan mode:**
+- IG video posts go to the `videos` collection via `localSrc` (not photos with mp4 `src`). Cleaner fit; filter-by-Medium keeps working.
+- Carousels: one entry per post, first item primary (`src`/`localSrc`), remaining media listed in new `carouselExtras: string[]`. Keeps the timeline clean; future popup upgrade can render a swipable gallery.
+- Feed posts only; stories are login-gated on public scrapes and will 404 — fetch script doesn't attempt them.
+- One account at a time via `--user`; each handle is its own run.
+- `archivePath` intentionally omitted for IG entries — they don't live in the Dropbox archive proper, and golden rule #3 says omit over invent. Provenance lives in `sourceUrl` (permalink to the IG post) instead.
+- Per golden rule #6: importer leaves `title`, `project`, `summary` empty. Curator fills via `/admin` CSV roundtrip, the same workflow used for the 224 existing stubs.
+
+**Schema additions** ([src/content/config.ts](src/content/config.ts)) — two optional fields added to both `photos` and `videos`:
+- `sourceUrl: z.string().url().optional()` — IG post permalink.
+- `carouselExtras: z.array(z.string()).default([])` — secondary media paths for multi-item posts.
+
+No new collection, no enum changes, no existing entry broken.
+
+**Importer behavior:**
+- Slug: `ig-<handle>-<shortcode>` (IG shortcodes are globally unique).
+- Every new entry `published: false` — matches Sessions 08–09 draft-default convention.
+- Caption parsing: trailing-hashtag block peeled into `tags`; mid-caption hashtags preserved in body.
+- Location name appended to caption (`"\n\n— Denver, CO"`).
+- Idempotent: scans both `photos/` and `videos/` for existing `ig-<handle>-*` slugs before writing; re-runs report `NEW: 0, SKIP-EXISTING: N`.
+- CLI: `--user <handle>` (required) · `--source <path>` · `--tag <slug>` · `--limit N` · `--write` (dry-run default).
+
+**Smoke test (committed with PR):** fixture covers single-image, single-video, and 3-item carousel (2 images + 1 video). All three classify and write correctly; re-run reports 0 new / 3 skip-existing; `npm run build` green (no Zod errors against the updated schemas). Fixture cleaned up before commit.
+
+**State at end of session:**
+- **24 PRs merged total across 10 sessions** (pending this PR landing).
+- Empty `photos` collection warning unresolved at build — intentional; clears as soon as Dyl runs the pipeline against a real account.
+- Pipeline is fixture-verified but has NOT been run against a live IG account yet. Dyl has one handle ready; second handle TBD.
+
+**Open items for next session:**
+- Dyl runs `pipx install instaloader` + `./scripts/fetch-instagram.sh <handle>` against the personal handle, then `node scripts/import-instagram.mjs --user <handle>` (dry-run first). Real-world validation will surface any instaloader JSON-shape surprises the fixture didn't cover.
+- Second handle (art account) when that handle is confirmed.
+- Carousel gallery UI in popups — data is captured (`carouselExtras`), rendering is still timeline-card-only. Separate visual decision.
+- Login-gated fetches (stories, highlights) — out of scope for v.1. If a burner login appears later, `--login` is a small extension.
+- Auto-assign `project` from the `--tag` value (e.g. `instagram-art` → `alphabets`) — held as a curator decision.
+
+**Files touched:**
+- [scripts/fetch-instagram.sh](scripts/fetch-instagram.sh) — new
+- [scripts/import-instagram.mjs](scripts/import-instagram.mjs) — new
+- [scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) — new (interactive wizard; second commit in session)
+- [src/content/config.ts](src/content/config.ts) — `sourceUrl` + `carouselExtras` on photos and videos
+- [CONTENT.md](CONTENT.md) — "Bulk Instagram import" subsection under photos, leads with the wizard
+- [CLAUDE.md:137](CLAUDE.md) — outstanding-work #6 updated (IG path available; non-IG photo sources still TBD)
+- [.gitignore](.gitignore) — `tmp/` added for the raw scrape dumps
+
+**Addendum — interactive wizard:**
+[scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) chains the two stages with prompts and a confirmation gate: preflight-checks `instaloader`, asks for handle + tag (defaulting to `instagram-personal`), runs fetch, runs dry-run import, prompts before writing, runs `npm run build` to verify schemas, then prints counts and next-step hints. Does NOT auto-git-commit the ingested content — curator reviews `/admin` first. Usage: `./scripts/ingest-instagram.sh` (fully interactive) or `./scripts/ingest-instagram.sh <handle> [<tag>]` (preset args, still prompts for confirm).
+
+**Addendum — pivot to gallery-dl + first real ingest (913 posts):**
+
+First live-account run surfaced that **instaloader is effectively broken for scripted use**. Its session-health-check endpoint (`graphql/query?query_hash=d6f4427fb…&variables=%7B%7D`) returns 401 on current IG backends — and instaloader interprets that as "session expired" and falls through to an interactive password prompt, which EOFs immediately in a non-TTY shell. Tried anonymous (403 across the board), fresh `instaloader --login sleepnod` (loaded fine but hit the same 401 health-check), and waiting ~20 min for the "please wait" throttle to clear (same failure). The issue is deterministic, not rate-limit-driven.
+
+**Rewrote the pipeline to use [gallery-dl](https://github.com/mikf/gallery-dl) instead.** gallery-dl authenticates by reading the browser's existing IG session cookies (`--cookies-from-browser chrome`) and hits the web endpoints that IG actually keeps alive. First authenticated query succeeded; 913 posts fetched end-to-end in one run with zero throttles. Installation: `brew install gallery-dl` — no Python session dance, no burner account needed (gallery-dl piggybacks on the user's already-logged-in browser tab).
+
+- [scripts/fetch-instagram.sh](scripts/fetch-instagram.sh) rewritten: wraps gallery-dl instead of instaloader. New flag `--browser chrome|safari|firefox` (default chrome). Filename pattern `{post_shortcode}_{num}.{extension}` gives predictable groupings for carousels.
+- [scripts/import-instagram.mjs](scripts/import-instagram.mjs) rewritten for gallery-dl's flat metadata shape. Groups `.json` sidecars by `post_shortcode` (gallery-dl emits one sidecar per media file, not per post), sorts by `num`, uses `video_url` on the primary item to route to `photos` vs `videos` collection.
+- [scripts/ingest-instagram.sh](scripts/ingest-instagram.sh) wizard: prompts for browser name instead of burner login.
+- [.gitignore](.gitignore): `tmp/` already gitignored; no change.
+
+**archivePath decision reversed.** Original plan had `archivePath` omitted for IG entries ("live outside the Dropbox archive"). Curator direction this session: raw scrape gets copied into `CRFW Archive/Instagram/@<handle>/` so the archive stays the truth. `archivePath` now set on every IG entry: `CRFW Archive/Instagram/@<handle>/<shortcode>_<num>.<ext>`.
+
+**First live ingest — @chi_swoo_ (Colin's personal account):**
+- 913 posts fetched — 866 images, 47 videos, 22 carousel extras
+- Date range: **2013-07-10 → 2018-01-31** (~4.5 years of Colin's posts on this account)
+- Scrape copied to Dropbox: `CRFW Archive/Instagram/@chi_swoo_/` (471 MB, 1870 files = media + sidecars)
+- Repo: 913 new entries (866 in `src/content/photos/`, 47 in `src/content/videos/`); 510 MB of media under `public/media/photos/ig-chi-swoo-*/` + `public/media/videos/ig-chi-swoo-*/`; largest video 15 MB, under GitHub's 100 MB file limit.
+- Every entry `published: false` + tagged `instagram-personal`; curator fills title/project/summary/published via `/admin` CSV roundtrip when ready.
+
+**State at end of session:**
+- **~1,958 total entries** (jump of +913 from Session 09's ~1,045). Empty `photos` collection warning: gone.
+- Repo is now ~520 MB with the committed media. Under GitHub's 1 GB soft limit; Git LFS migration deferrable but worth considering before the art account lands.
+- Pipeline proven end-to-end against a real account with real volume.
+
+**Open items for next session:**
+- Second account (the art / project handle) — same command: `./scripts/ingest-instagram.sh <handle>` with `instagram-art` tag.
+- Curator review: 913 new drafts at `/admin` — title/project/summary curation, then flip `published: true`.
+- Git LFS migration decision before the next big-media ingest (second IG account, or archive video files).
+- Carousel gallery UI in popups (data captured, rendering pending).
+- Project inference from tags (`instagram-personal` → no project, `instagram-art` → `alphabets` or similar).
+
 ## Session 09 — 2026-04-17 — xlsx embed + articles + bio integration (3 PRs)
 
 **Goal:** integrate two curated Dyl spreadsheets into the CMS — `CRFW_Media_Embeds.xlsx` (60 Bandcamp/YouTube/SoundCloud rows) and `CRFW_Documentation_Articles.xlsx` (articles, biographical summary, associated projects). Prioritize BC > YT > SC embeds. Match to existing entries by title + year; create new entries where needed. Keep future-merge-friendly.
