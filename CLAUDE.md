@@ -2,7 +2,7 @@
 
 You are a coding agent working on a memorial timeline website for **Colin Ward** (CRFW / killd by / alphabets), a musician whose work is being preserved and presented by his brother **Dyl** after Colin's death. This is not a typical product or hobby project. Treat it as archival work with a public-facing presentation layer.
 
-Read this file at the start of every session. Read `CONTENT.md` when you are adding content. Read `README.md` when you need the human-facing overview.
+Read this file at the start of every session. Read `CONTENT.md` when you are adding content. Read `README.md` when you need the human-facing overview. Read `DATA_MODEL.md` if you're building or querying a database for the archive.
 
 ---
 
@@ -56,6 +56,7 @@ When you change the schema (`src/content/config.ts`), a fresh dev/build is neede
 site/
 ├── CLAUDE.md               ← you are here
 ├── CONTENT.md              ← how to add content (read before adding)
+├── DATA_MODEL.md           ← DB briefing: schema, cross-refs, carousel rules
 ├── HANDOFF_PROMPT.md       ← first-session setup (git, GitHub, deploy)
 ├── README.md               ← human-facing overview
 ├── astro.config.mjs
