@@ -176,13 +176,26 @@ for (const e of publishedEntries) {
 }
 const years = [...byYear.keys()].sort((a, b) => b - a);
 
-// Project + medium + format lists for filter tabs
-const projects = [...new Set(publishedEntries.map(e => e.project).filter(Boolean))] as string[];
-const kinds = [...new Set(publishedEntries.map(e => e.kind))];
-const formats = [...new Set(publishedEntries.map(e => e.format).filter(Boolean))] as string[];
-// Preferred display order for formats
+// Project + medium + format lists for filter dropdowns with counts
+function countBy<K extends string>(entries: TLEntry[], key: (e: TLEntry) => K | undefined): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const e of entries) {
+    const v = key(e);
+    if (v == null) continue;
+    out[v] = (out[v] ?? 0) + 1;
+  }
+  return out;
+}
+const projectCounts = countBy(publishedEntries, e => e.project);
+const kindCounts    = countBy(publishedEntries, e => e.kind);
+const formatCounts  = countBy(publishedEntries, e => e.format);
+
+const projects = Object.keys(projectCounts).sort((a, b) => projectCounts[b] - projectCounts[a]);
+const kinds    = Object.keys(kindCounts);
 const formatOrder = ['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other'];
-formats.sort((a, b) => (formatOrder.indexOf(a) === -1 ? 99 : formatOrder.indexOf(a)) - (formatOrder.indexOf(b) === -1 ? 99 : formatOrder.indexOf(b)));
+const formats = Object.keys(formatCounts).sort(
+  (a, b) => (formatOrder.indexOf(a) === -1 ? 99 : formatOrder.indexOf(a)) - (formatOrder.indexOf(b) === -1 ? 99 : formatOrder.indexOf(b))
+);
 
 // Tag list — exclude tags that are redundant with project/kind/format filters
 // (e.g. "alphabets", "killd-by", "dimcp", "voice-memo", "video" just echo other axes)
@@ -226,48 +239,53 @@ const totals = {
   </div>
 
   <nav class="filters" id="filters">
-    <span class="filters-label">Project</span>
-    <button class="filter-btn active" data-axis="project" data-value="all">All</button>
-    {projects.map(p => (
-      <button class="filter-btn" data-axis="project" data-value={p}>{p}</button>
-    ))}
+    <label class="filter-select">
+      <span class="filter-label-text">Project</span>
+      <select data-axis="project">
+        <option value="all">All ({publishedEntries.length})</option>
+        {projects.map(p => (
+          <option value={p}>{p} ({projectCounts[p]})</option>
+        ))}
+      </select>
+    </label>
 
     {formats.length > 0 && (
-      <>
-        <span class="group-sep"></span>
-        <span class="filters-label">Format</span>
-        <button class="filter-btn active" data-axis="format" data-value="all">All</button>
-        {formats.map(f => (
-          <button class="filter-btn" data-axis="format" data-value={f}>{f}</button>
-        ))}
-      </>
+      <label class="filter-select">
+        <span class="filter-label-text">Format</span>
+        <select data-axis="format">
+          <option value="all">All</option>
+          {formats.map(f => (
+            <option value={f}>{f} ({formatCounts[f]})</option>
+          ))}
+        </select>
+      </label>
     )}
 
-    {/* Medium axis only shows when there are 2+ distinct kinds (e.g. once videos/voice_memos land) */}
     {kinds.length >= 2 && (
-      <>
-        <span class="group-sep"></span>
-        <span class="filters-label">Medium</span>
-        <button class="filter-btn active" data-axis="kind" data-value="all">All</button>
-        {kinds.map(k => (
-          <button class="filter-btn" data-axis="kind" data-value={k}>{k.replace('_', ' ')}</button>
-        ))}
-      </>
+      <label class="filter-select">
+        <span class="filter-label-text">Medium</span>
+        <select data-axis="kind">
+          <option value="all">All</option>
+          {kinds.map(k => (
+            <option value={k}>{k.replace('_', ' ')} ({kindCounts[k]})</option>
+          ))}
+        </select>
+      </label>
     )}
 
     {tags.length > 0 && (
-      <>
-        <span class="group-sep"></span>
-        <span class="filters-label">Tag</span>
-        <button class="filter-btn active" data-axis="tag" data-value="all">All</button>
-        {tags.map(t => (
-          <button class="filter-btn" data-axis="tag" data-value={t}>{t}</button>
-        ))}
-      </>
+      <label class="filter-select">
+        <span class="filter-label-text">Tag</span>
+        <select data-axis="tag">
+          <option value="all">All</option>
+          {tags.map(t => (
+            <option value={t}>{t}</option>
+          ))}
+        </select>
+      </label>
     )}
 
-    <span class="group-sep"></span>
-    <button class="filter-reset" id="filter-reset" title="Clear all filters">×</button>
+    <button class="filter-reset" id="filter-reset" title="Clear all filters" aria-label="Clear filters">×</button>
     <span class="filter-count" id="filter-count"></span>
   </nav>
 
@@ -640,13 +658,13 @@ const totals = {
         }
       }
 
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const axis = btn.dataset.axis;
-          const value = btn.dataset.value;
-          state[axis] = value;
-          document.querySelectorAll(`.filter-btn[data-axis="${axis}"]`)
-            .forEach(b => b.classList.toggle('active', b.dataset.value === value));
+      // Dropdowns (Session 11) — replaced chip buttons with <select>s
+      document.querySelectorAll('.filter-select select').forEach(sel => {
+        sel.addEventListener('change', () => {
+          const axis = sel.dataset.axis;
+          state[axis] = sel.value;
+          // Highlight dropdown when non-"all"
+          sel.closest('.filter-select').classList.toggle('active', sel.value !== 'all');
           applyFilters();
         });
       });
@@ -721,8 +739,9 @@ const totals = {
           state.kind = 'all';
           state.format = 'all';
           state.tag = 'all';
-          document.querySelectorAll('.filter-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.value === 'all');
+          document.querySelectorAll('.filter-select select').forEach(sel => {
+            sel.value = 'all';
+            sel.closest('.filter-select').classList.remove('active');
           });
           applyFilters();
         });

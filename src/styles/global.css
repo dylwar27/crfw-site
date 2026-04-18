@@ -134,39 +134,48 @@ a:hover { color: var(--accent-2); }
   gap: 8px;
   align-items: center;
 }
-.filters-label {
+/* Filter dropdowns (Session 11 — replaced chunky chip buttons) */
+.filter-select {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.filter-select .filter-label-text {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  margin-right: 12px;
+  padding-left: 10px;
 }
-.filter-btn {
+.filter-select select {
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 6px 12px;
+  letter-spacing: 0.05em;
+  padding: 6px 28px 6px 10px;
   border: 1px solid var(--rule);
-  background: transparent;
-  color: var(--ink-dim);
-  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%23a59f91' stroke-width='1.5' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  min-width: 140px;
+  max-width: 240px;
+  text-overflow: ellipsis;
+  transition: border-color 0.15s ease;
 }
-.filter-btn:hover { color: var(--ink); border-color: var(--ink-dim); }
-.filter-btn.active {
-  background: var(--ink);
-  color: var(--bg);
-  border-color: var(--ink);
+.filter-select select:hover { border-color: var(--ink-dim); }
+.filter-select select:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+.filter-select.active select {
+  border-color: var(--accent-2);
+  color: var(--ink);
 }
-.filters .group-sep {
-  width: 1px;
-  height: 20px;
-  background: var(--rule);
-  margin: 0 6px;
-}
+.filter-select.active .filter-label-text { color: var(--accent-2); }
 .filter-reset {
   font-family: var(--mono);
   font-size: 14px;
@@ -595,3 +604,139 @@ a:hover { color: var(--accent-2); }
 .foot-nav a:hover { text-decoration: underline; }
 .foot-sep { color: var(--rule); }
 .foot-line { color: var(--ink-dim); }
+
+/* ===============================================================
+   MOBILE RESPONSIVE PASS (Session 11)
+   Target widths: 320 / 375 / 414 / 768 / 1024
+   =============================================================== */
+
+/* Tablet and below — consolidate filter bar */
+@media (max-width: 900px) {
+  .masthead { padding: 32px 20px 20px; }
+  .masthead h1 { font-size: clamp(36px, 10vw, 72px); }
+
+  .search-bar { padding: 10px 16px; }
+  .search-results { left: 16px; right: 16px; }
+
+  .filters {
+    padding: 10px 16px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-select { flex: 1 1 140px; min-width: 140px; }
+  .filter-select select {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 44px; /* WCAG AAA tap target */
+    font-size: 14px;  /* iOS avoids zoom on focus at ≥16 but 14 reads OK */
+  }
+  .filter-reset {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  .filter-count {
+    flex-basis: 100%;
+    text-align: center;
+    padding-top: 4px;
+  }
+
+  .timeline { padding: 24px 16px 64px; }
+  .year-label {
+    font-size: clamp(42px, 12vw, 72px);
+    margin-bottom: 12px;
+  }
+}
+
+/* Phone — tighten spacings further */
+@media (max-width: 600px) {
+  .masthead {
+    padding: 24px 16px 16px;
+  }
+  .masthead h1 { font-size: clamp(32px, 12vw, 52px); }
+  .masthead .sub { font-size: 10px; }
+
+  .timeline { padding: 16px 12px 48px; }
+  .entries { gap: 10px; }
+  .entry { padding: 12px; min-height: 100px; }
+  .entry .title { font-size: 18px; }
+  .entry.size-xl .title, .entry.size-lg .title { font-size: 22px; }
+
+  /* Popup goes full-screen on phones */
+  .popup-scrim { padding: 0; }
+  .popup {
+    margin: 0;
+    padding: 24px 20px 48px;
+    min-height: 100vh;
+    min-height: 100dvh; /* dynamic viewport, handles mobile chrome */
+    border: none;
+    max-width: 100%;
+  }
+  .popup-close {
+    top: 10px;
+    right: 10px;
+    width: 44px;
+    height: 44px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* larger tap target */
+  }
+  .popup-title { font-size: clamp(28px, 8vw, 44px); }
+  .popup-header {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .popup-cover { max-width: 100%; }
+  .popup-tracklist { grid-template-columns: 1fr; }
+
+  /* Embed iframes — always full-width on phone */
+  .embed-wrap { margin: 0 -4px; }
+
+  /* Admin table — convert to horizontal scroll with a sticky first col */
+  .admin-toolbar {
+    flex-wrap: wrap;
+    padding: 8px;
+    gap: 6px;
+  }
+  .admin-search { min-width: 0; flex: 1 1 100%; }
+  .admin-select { font-size: 12px; }
+  .admin-table th:nth-child(3),
+  .admin-table td:nth-child(3) {
+    position: sticky;
+    left: 40px;
+    background: var(--bg-soft);
+    z-index: 2;
+  }
+  .admin-table tr:hover td { background: var(--bg); } /* preserve sticky bg */
+
+  /* About + projects: comfortable phone reading */
+  .about-page, .projects-page { padding: 24px 16px 64px; }
+
+  /* Related chips: collapse to two cols */
+  .related-chip {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* Tighten very small screens */
+@media (max-width: 380px) {
+  .masthead h1 { font-size: clamp(28px, 14vw, 40px); }
+  .entry .title { font-size: 16px; }
+  .filter-select { flex: 1 1 100%; }
+}
+
+/* ========================================================
+   Dark-mode iOS Safari fixes — viewport-fit cover for notch
+   ======================================================== */
+body {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+.popup {
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(48px, env(safe-area-inset-bottom));
+}
