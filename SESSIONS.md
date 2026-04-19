@@ -4,6 +4,25 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 12 — 2026-04-19 — QA pass + next-sprint plan
+
+**Goal:** re-enter after 2 days away; verify the sprint 11 work held; plan the next sprint. No new features this entry.
+
+**QA findings:**
+- `npm run db:sync` — clean; 1,958 entries, 0 dead cross-refs, 30 missing archivePaths (same as Session 11).
+- `npm run build` — initially produced **863 pages** (should be 558). Investigation traced to a Dropbox sync-conflict duplicate `src/pages/voice-memo/[slug] 2.astro` that had appeared locally since Session 11. The duplicate route template had Astro generate 305 extra pages with slugs like `20150914-232447 2`.
+- Also found `scripts/fix-2digit-years 2.mjs` and `scripts/import-csv-edits 2.mjs` as sync dupes.
+- None of the dupes were tracked in git (gitignore patterns `* 2.*` / `* 2` still holding), but they WERE affecting local builds.
+- Cleanup: removed the 3 local files + clean rebuild → 558 pages restored.
+
+**Going forward:** the Dropbox-dupe class of bug will keep recurring as long as this machine syncs the repo path. The gitignore patterns prevent commits but not local pollution. Possible futures: (a) move repo outside any Dropbox-watched tree, (b) add a pre-build `scripts/clean-dropbox-dupes.sh` that deletes matching files, (c) accept the occasional build-size surprise and just clean when noticed. For now — (c).
+
+**git status was slow/hanging** during QA — Spotlight (`mds`/`mdworker`) and Dropbox processes were heavy in the background. Matches the Session-03 machine-load pattern. Not repo-specific.
+
+**No code changes; no commits.** Next: plan PR sprint for Session 12.
+
+---
+
 ## Session 11 — 2026-04-17 — DB + dropdowns/mobile + tag scaling + Curator's Kit (4 PRs)
 
 **Goal:** the big architectural sprint — bring in a proper database, fix the clunky filter bar, make the site mobile-ready, scale tags to handle 866+ IG photos, and stand up a custom browser-editable CMS. Planning pass committed to §10 of DATA_MODEL.md and to the DATABASE_BRIEF_FOR_CLAUDE_CODE.md vision, with the caveat that content files stay source of truth for Phase 1. Product-owner reframe on the CMS pivoted from Decap (off-the-shelf) to a purpose-built archival tool ("Curator's Kit") that can be reused on Dyl's other future archival project.
