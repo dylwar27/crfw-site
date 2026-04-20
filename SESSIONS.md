@@ -4,6 +4,57 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 15 — 2026-04-20 — Person pages, press pages, DB vault sync (3 PRs)
+
+**Goal (Sprint 15):** Sprint 15A — person detail + index pages; Sprint 15B — press detail + index pages; Sprint 15C — populate vault entity tables in SQLite. All three complete.
+
+**Done — PR #31: person pages (Sprint 15A)**
+
+- `src/lib/renderBody.ts` — new shared TypeScript renderer for vault markdown. Handles headings, bold, italic, links, bare URLs, blockquotes, lists, `[[coll/slug]]` and `[[coll/slug|label]]` wikilinks. Uses a stash/restore tokenizer to prevent double-escaping: wikilinks are stashed as sentinel tokens, remaining text is HTML-escaped, then sentinels are swapped back for the rendered HTML.
+- `src/pages/people/index.astro` — lists all `public_display !== false` vault_people (34 visible; jane-anne-ferguson and dyl-ward are `public_display: false`). Grouped by relationship tag (subject / family / collaborators / press / other). 3-column grid: name, aliases, role_summary.
+- `src/pages/person/[slug].astro` — 34 static person pages. Shows kind badge, name, aliases, `role_summary` via `renderInline()`, birth/death years, linked project chips, press mention chips, contact links, full `body` via `renderBody()`.
+- Project pages `[slug].astro` updated: member names now link to `/person/[slug]`.
+- `src/pages/index.astro` — added `<script id="site-config">` JSON block for `BASE_URL` injection to client-side JS; `simpleMarkdown()` now handles `[[wikilinks]]`, blockquotes, lists, bold, italic using the same stash/restore tokenizer.
+- `src/styles/global.css` — added `.wiki-link` (yellow underline) and `.wiki-chip` (grey monospace badge) global classes; popup `.summary` blockquote + list styles.
+
+**Done — PR #32: press pages (Sprint 15B)**
+
+- `src/pages/press/index.astro` — table of all 21 vault_press entries sorted newest-first. Columns: date, title (linked), publication, kind. Yellow dot for `colin_specific`. Mobile hides pub/kind columns.
+- `src/pages/press/[slug].astro` — 21 static press pages. Header: kind / date / pub / author / title / external link. Mentions section with person/project chips linked to their pages. Body via `renderBody()`. Falls back to external link when no local body text.
+
+**Done — PR #33: DB vault sync (Sprint 15C)**
+
+- `scripts/db-sync.mjs` now walks all 7 vault projected collections and INSERTs into schema-v1 entity tables: `projects`, `venues`, `organizations`, `people` (INSERT OR REPLACE), `press`, `press_mentions`, `funds`, `grants`.
+- Added `refSlug()` helper to resolve `coll/slug` wikilink refs to bare slugs for FK columns.
+- `walk()` dupe filter updated to `/ [2-9]\./` (handles both Dropbox and iCloud Drive conflict copies).
+- Summary report includes per-kind vault entity counts.
+
+**DB numbers:** 36 people · 15 projects · 9 venues · 22 orgs · 21 press · 1 fund · 6 grants → 0 dead refs.
+
+**Build state:** 631 pages / 19,446 words (up from 574 at end of Session 14). New pages: 34 person pages + 1 people index + 21 press pages + 1 press index. Build clean.
+
+**Key technical notes:**
+- `role_summary` with `*italic*` markdown: use `renderInline()` not raw text, or the markdown is printed verbatim.
+- YAML `>` folded block scalar was still unhandled in `sync-vault.mjs` for some vault entries — fixed in Session 14; no regression here.
+- `import.meta.env.BASE_URL` isn't available in Astro `is:inline` scripts — injected via a `<script id="site-config">` element instead.
+- iCloud Desktop sync creates ` N.json` conflict copies when vault sync rapidly rewrites 366 files — gitignored with `* [2-9].*` / `** [2-9].*` pattern.
+
+**Known not-done (deferred):**
+- Wikilinks to `venues/` and `organizations/` render as `.wiki-chip` badges (no pages for those collections yet).
+- Per-track reader pages (`/track/[slug]`) for 214 vault tracks — deferred.
+- Photo-sets across multiple IG posts — deferred.
+- Nav header doesn't yet have links to `/people` or `/press` index pages.
+- vault_tracks, vault_releases, vault_events, vault_series not walked by db-sync (these are the collections where the vault and site content overlap; deferred until reconciliation plan is clearer).
+
+**What's next (Sprint 16 candidates):**
+1. **Nav links** — add `/people` and `/press` to the site header/nav for discoverability (quick win, one commit).
+2. **Venue + organization pages** — 9 venues and 22 orgs have data; `/venue/[slug]` and `/org/[slug]` detail pages (same pattern as person/project/press).
+3. **Timeline cards for vault entities** — people/projects/venues/orgs showing up as mini-cards in the main timeline would dramatically increase the "overwhelming, many many" density.
+4. **Wikilink resolution for venues/orgs** — once pages exist, `.wiki-chip` chips become real links.
+5. **IG photo curation** — 866 photos are `published: false`; curation pass needed.
+
+---
+
 ## Session 14 — 2026-04-20 — QA pass (0 PRs, 2 direct commits)
 
 **Goal:** QA the Session 13 vault integration work, fix build issues, repush clean.

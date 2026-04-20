@@ -82,19 +82,20 @@ site/
 
 ---
 
-## Current state (as of Session 14, 2026-04-20)
+## Current state (as of Session 15, 2026-04-20)
 
 - **~1,958 total entries** (238 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
-- **28 PRs merged** across 11 sessions
-- Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /tags + /admin
-- **558 static pages**: timeline + admin + about + projects + tags + 305 voice memo readers + 249 video readers
+- **33 PRs merged** across 15 sessions
+- Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /tags + /admin + /people + /press
+- **631 static pages**: timeline + admin + about + projects + tags + 305 voice memo readers + 249 video readers + 15 project pages + 34 person pages + 1 people index + 21 press pages + 1 press index
 - **Filter UX (Session 11): four dropdowns** (Project, Format, Medium, Tag) with live counts, reset button, URL-param pre-selection (`?project=X&tag=Y`)
 - **Tag scaling (Session 11)**: tag dropdown recomputes scoped to other-axis selections; /tags page groups all tags by source (curator / script / hashtag)
-- **Database v1 (Session 11)**: SQLite schema at `data/schema.sql` mirrors content + has future-entity tables for rich model (projects, venues, press_mentions, sources, relationships, grants, assets, captures). `scripts/db-sync.mjs` projects 1,958 entries into `data/crfw.db` at build time and ships `dist/data/crfw.sqlite` for client-side queries. FTS5 indexed. 0 dead cross-refs.
-- **Curator's Kit v3 (Session 13)**: two-source CMS coordinator. Edit BOTH site content (git-tracked, auto-commits) and the Obsidian-style vault at `CRFW Archive/_Vault/` (Dropbox-tracked). Source switcher in sidebar. 11 vault collections added: people (34), projects (15), venues (7), organizations (20), tracks (214), releases (26), events (12), press (18), funds (1), grants (6), series (new kind). Same grid/bulk/keyboard UX from v2.
-- **Vault integration (Session 13)**: `scripts/sync-vault.mjs` projects vault entries into `src/content/vault_*/` for Astro rendering. 354 entries projected, 1,180 wikilinks parsed, 0 dead refs. New `/project/[slug]` pages (15) render vault project metadata.
+- **Database v1 (Session 11, extended Session 15)**: SQLite schema at `data/schema.sql`. `scripts/db-sync.mjs` projects 1,958 site entries + 110 vault entities into `data/crfw.db`. Vault entity tables now populated: 36 people, 15 projects, 9 venues, 22 orgs, 21 press, 1 fund, 6 grants. FTS5 indexed. 0 dead cross-refs.
+- **Curator's Kit v3 (Session 13)**: two-source CMS coordinator. Edit BOTH site content (git-tracked, auto-commits) and the Obsidian-style vault at `CRFW Archive/_Vault/` (Dropbox-tracked). Source switcher in sidebar. 11 vault collections: people (36), projects (15), venues (9), organizations (22), tracks (214), releases (26), events (12), press (21), funds (1), grants (6), series (new kind). Same grid/bulk/keyboard UX from v2.
+- **Vault integration (Session 13–14)**: `scripts/sync-vault.mjs` projects vault entries into `src/content/vault_*/` for Astro rendering. 366 entries projected, 1,180+ wikilinks parsed, 0 dead refs.
+- **Vault entity pages (Session 15)**: `/person/[slug]` (34 pages), `/people` index, `/press/[slug]` (21 pages), `/press` index. Shared `src/lib/renderBody.ts` renderer with stash/restore tokenizer for wikilink + markdown rendering. Wikilinks to people/projects/press resolve to real page links; venues/orgs render as `.wiki-chip` badges (no pages yet).
 - **Mobile-ready (Session 11)**: responsive CSS targeting 320/375/414/600/900/1024 px. 44×44 tap targets. Full-screen popups on phones. Safe-area insets for notch devices.
-- **Full-text search** via Pagefind (558 pages, 19,140 words indexed)
+- **Full-text search** via Pagefind (631 pages, 19,446 words indexed)
 - **CSV roundtrip** via `scripts/import-csv-edits.mjs` still works for bulk operations
 - **Embed integration**: Bandcamp/YouTube/SoundCloud iframes render in popups (priority BC > YT > SC); 22 releases have Bandcamp embeds; 32 videos have YouTube IDs
 - **Draft system**: `published: false` hides entries from public timeline; import scripts default to draft
@@ -158,6 +159,7 @@ Agent-doable next:
 - **Session 12:** QA cleanup (Dropbox dupe route template). ~~Curator's Kit v2~~ (PR #29, grid view + multi-select + bulk publish/tag/project + media preview + keyboard nav). Built for IG backlog burndown.
 - **Session 13:** ~~Vault integration~~ (PR #30). 354 structural entities projected from the Obsidian-style vault. Curator's Kit v3 = two-source coordinator. 15 new `/project/[slug]` pages. `series` kind seeded (DDR cross-project series).
 - **Session 14:** QA pass. Fixed better-sqlite3 Node version mismatch; fixed YAML `>` folded block scalar parser; cleared 721 iCloud sync-conflict dupe files; updated gitignore to cover ` [2-9].*` (not just ` 2.*`); picked up 12 new vault entries + 4 modified entries that Dyl had added in Obsidian since Session 13. Build: 574 pages, 366 vault entities, 0 dead refs.
+- **Session 15:** ~~Person pages~~ (PR #31 — `/person/[slug]` × 34, `/people` index, shared `renderBody.ts` renderer with stash/restore tokenizer). ~~Press pages~~ (PR #32 — `/press/[slug]` × 21, `/press` index, mention chips). ~~DB vault sync~~ (PR #33 — vault entities in SQLite: 36 people, 15 projects, 9 venues, 22 orgs, 21 press, 1 fund, 6 grants, 0 dead refs). Build: 631 pages, 19,446 words.
 
 ---
 
