@@ -82,7 +82,7 @@ site/
 
 ---
 
-## Current state (as of Session 12, 2026-04-20)
+## Current state (as of Session 13, 2026-04-20)
 
 - **~1,958 total entries** (238 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
 - **28 PRs merged** across 11 sessions
@@ -91,7 +91,8 @@ site/
 - **Filter UX (Session 11): four dropdowns** (Project, Format, Medium, Tag) with live counts, reset button, URL-param pre-selection (`?project=X&tag=Y`)
 - **Tag scaling (Session 11)**: tag dropdown recomputes scoped to other-axis selections; /tags page groups all tags by source (curator / script / hashtag)
 - **Database v1 (Session 11)**: SQLite schema at `data/schema.sql` mirrors content + has future-entity tables for rich model (projects, venues, press_mentions, sources, relationships, grants, assets, captures). `scripts/db-sync.mjs` projects 1,958 entries into `data/crfw.db` at build time and ships `dist/data/crfw.sqlite` for client-side queries. FTS5 indexed. 0 dead cross-refs.
-- **Curator's Kit (Session 11, extended Session 12)**: custom browser-editable CMS at `npm run cms` / `npm run cms:lan`. Archival-first defaults. **v2 (Session 12)** adds contact-sheet grid view, multi-select, bulk publish/unpublish/set-project/add-tag, image preview in editor, keyboard shortcuts (j/k/p/d//esc). Each bulk op = one git commit. Built for burning down the 866 unpublished IG photos fast.
+- **Curator's Kit v3 (Session 13)**: two-source CMS coordinator. Edit BOTH site content (git-tracked, auto-commits) and the Obsidian-style vault at `CRFW Archive/_Vault/` (Dropbox-tracked). Source switcher in sidebar. 11 vault collections added: people (34), projects (15), venues (7), organizations (20), tracks (214), releases (26), events (12), press (18), funds (1), grants (6), series (new kind). Same grid/bulk/keyboard UX from v2.
+- **Vault integration (Session 13)**: `scripts/sync-vault.mjs` projects vault entries into `src/content/vault_*/` for Astro rendering. 354 entries projected, 1,180 wikilinks parsed, 0 dead refs. New `/project/[slug]` pages (15) render vault project metadata.
 - **Mobile-ready (Session 11)**: responsive CSS targeting 320/375/414/600/900/1024 px. 44×44 tap targets. Full-screen popups on phones. Safe-area insets for notch devices.
 - **Full-text search** via Pagefind (558 pages, 19,140 words indexed)
 - **CSV roundtrip** via `scripts/import-csv-edits.mjs` still works for bulk operations
@@ -155,6 +156,7 @@ Agent-doable next:
 - **Session 10:** Instagram scraper pipeline + 866 IG photos + 47 IG videos (PR #24).
 - **Session 11:** ~~Database v1~~ (PR #25, SQLite + full schema + ships to dist). ~~Filter dropdowns + mobile pass~~ (PR #26). ~~Tag scaling + /tags page~~ (PR #27). ~~Curator's Kit~~ (PR #28, custom archival CMS at `npm run cms`).
 - **Session 12:** QA cleanup (Dropbox dupe route template). ~~Curator's Kit v2~~ (PR #29, grid view + multi-select + bulk publish/tag/project + media preview + keyboard nav). Built for IG backlog burndown.
+- **Session 13:** ~~Vault integration~~ (PR #30). 354 structural entities projected from the Obsidian-style vault. Curator's Kit v3 = two-source coordinator. 15 new `/project/[slug]` pages. `series` kind seeded (DDR cross-project series).
 
 ---
 

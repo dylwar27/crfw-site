@@ -4,6 +4,59 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 13 — 2026-04-20 — Vault integration (1 PR)
+
+**Goal (restarted mid-session):** originally plan was a new `sets` collection for release-series / photo-sets. Mid-planning, Dyl pointed at the CRFW vault at `CRFW Archive/_Vault/` — a 357-entry Obsidian-style parallel data model. Plan pivoted: instead of building a site-local grouping concept, adopt the vault as a second authoritative source for structural entities. Curator's Kit becomes a coordinator (editing BOTH site content and vault).
+
+**Done — PR #30 (merged):**
+
+**Schema + sync**
+- 10 new Astro collections (`vault_people`, `vault_projects`, `vault_venues`, `vault_organizations`, `vault_tracks`, `vault_releases`, `vault_events`, `vault_press`, `vault_funds`, `vault_grants`, `vault_series`). Permissive schemas (`.passthrough()`) so vault evolves upstream without migrations.
+- `scripts/sync-vault.mjs` — parses vault .md files with a narrow-but-thorough YAML dialect handler (inline arrays `[a, b]`, block literals `|`, Obsidian wikilinks `[[path/slug]]`, empty-array-on-continuation-line, URL-with-colon scalars distinguished from `- key: value` objects). Normalizes wikilinks to path strings; drops nulls (Zod-compat).
+- First sync: **354 entries projected** (34 people, 15 projects, 7 venues, 20 orgs, 214 tracks, 26 releases, 12 events, 18 press, 1 fund, 6 grants, 1 series). 1,180 wikilinks, 298 unique targets, 0 dead refs.
+
+**CMS two-source mode (Curator's Kit v3)**
+- `/api/sources` returns both content roots with commit semantics (`site` commits, `vault` doesn't)
+- All entry endpoints accept `/api/entries/:source/:collection[/:slug]`; legacy paths still work and default to site
+- `/api/bulk` routes to the right fs root
+- Frontend sidebar gets a Source switcher above the collection list; active source determines which collections are shown
+- Save button label adapts: **"Save & Commit"** (site) vs **"Save (vault)"** (vault)
+- Git commits only fire for site edits; vault edits write directly to Dropbox (curator's existing Obsidian workflow)
+
+**Series as the "children" model**
+- New vault kind `series` — seeded with `ddr.md` spanning alphabets (DDR 2011, DDR2/HAUNTED 2012) + killd by (DDR3:Loaner phone 2016). Cross-project series is a real shape in Colin's archive.
+- Tracks (already vault-first-class, 214 entries) and project memberships cover most "children" needs naturally via wikilinks.
+
+**Public surface: project pages**
+- New dynamic route `/project/[slug]` renders 15 project pages (alphabets, killd-by, aquakota, pocket-dove, tudaloos, bangplay, sex-therapy, snake-feathers, phonebooks, chamber-joy, bodymeat, clubtrek-tumblr, tha-mayoreo-show, 4-gypsy-dance-theatre). Each shows: kind + years + aliases + summary + members + releases + series + canonical URLs.
+- Build clean at **573 pages / 19,198 words** (up from 558 / 19,140).
+
+**State at end of session:**
+- **30 PRs merged across 13 sessions.**
+- Two content sources coordinated: site (git-tracked, curator-voice) + vault (Obsidian-tracked, structural).
+- Public site richer: project pages link to releases, members, series, external links.
+- Curator can now edit people/projects/venues/orgs/tracks/etc. from the CMS at `npm run cms`.
+
+**Known not-done (follow-up sessions):**
+- `db-sync.mjs` doesn't yet populate the rich entity tables (projects/venues/orgs/etc. from Session 11 schema) from vault content. Site content still in DB; vault content renders direct from Astro collections.
+- Wikilink rendering as click-through chips in content body/popups (v1 = plain text).
+- Per-track reader pages (`/track/[slug]`) for the 214 vault tracks — defer until there's a reason to surface them individually.
+- Photo-sets across multiple IG posts — revisited after curator ships IG backlog review.
+- Reverse sync (site → vault) — intentionally not done; each source owns its entries.
+
+**Files touched:**
+- `src/content/config.ts` — 10 new collection schemas (+vault_series)
+- `scripts/sync-vault.mjs` — new
+- `scripts/curators-kit/server.mjs` — two-source refactor + SOURCES config
+- `scripts/curators-kit/public/{app.js,styles.css}` — source switcher, save-label adaptation
+- `src/pages/project/[slug].astro` — new
+- `package.json` — `vault:sync` + build chain includes it
+- `src/content/vault_*/*.json` — 354 projected entries
+- `<vault>/series/ddr.md` — new kind seed
+- `SESSIONS.md`, `CLAUDE.md` — this log + current-state refresh
+
+---
+
 ## Session 12 — 2026-04-19/20 — QA + Curator's Kit v2 (1 PR)
 
 **Goal:** QA the Session 11 work; then burn the IG photo backlog down via a curator-leverage sprint (per Dyl's focus pick).
