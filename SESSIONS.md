@@ -4,22 +4,62 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
-## Session 12 — 2026-04-19 — QA pass + next-sprint plan
+## Session 12 — 2026-04-19/20 — QA + Curator's Kit v2 (1 PR)
 
-**Goal:** re-enter after 2 days away; verify the sprint 11 work held; plan the next sprint. No new features this entry.
+**Goal:** QA the Session 11 work; then burn the IG photo backlog down via a curator-leverage sprint (per Dyl's focus pick).
 
-**QA findings:**
-- `npm run db:sync` — clean; 1,958 entries, 0 dead cross-refs, 30 missing archivePaths (same as Session 11).
-- `npm run build` — initially produced **863 pages** (should be 558). Investigation traced to a Dropbox sync-conflict duplicate `src/pages/voice-memo/[slug] 2.astro` that had appeared locally since Session 11. The duplicate route template had Astro generate 305 extra pages with slugs like `20150914-232447 2`.
-- Also found `scripts/fix-2digit-years 2.mjs` and `scripts/import-csv-edits 2.mjs` as sync dupes.
-- None of the dupes were tracked in git (gitignore patterns `* 2.*` / `* 2` still holding), but they WERE affecting local builds.
-- Cleanup: removed the 3 local files + clean rebuild → 558 pages restored.
+**QA findings (Apr 19):**
+- `npm run db:sync` clean; 1,958 entries, 0 dead refs.
+- Initial build produced 863 pages instead of 558 — traced to a Dropbox sync-conflict duplicate `src/pages/voice-memo/[slug] 2.astro` that had appeared locally. Removed + clean rebuild restored 558 pages. Also removed 2 dupe scripts (`fix-2digit-years 2.mjs`, `import-csv-edits 2.mjs`). None of the three were tracked in git — gitignore `* 2.*` patterns still holding.
+- A 4-day-old hung `git commit` process (PID 81995 from last Friday's carousel-popup session) was holding git locks and stalling every subsequent git op. Killed it; pushes unblocked.
+- Ongoing class-of-bug: Dropbox will keep making these dupes. Gitignore prevents commits, but not local build pollution. Accepted risk; clean when noticed.
 
-**Going forward:** the Dropbox-dupe class of bug will keep recurring as long as this machine syncs the repo path. The gitignore patterns prevent commits but not local pollution. Possible futures: (a) move repo outside any Dropbox-watched tree, (b) add a pre-build `scripts/clean-dropbox-dupes.sh` that deletes matching files, (c) accept the occasional build-size surprise and just clean when noticed. For now — (c).
+**Done — PR #29 Curator's Kit v2 (merged):**
 
-**git status was slow/hanging** during QA — Spotlight (`mds`/`mdworker`) and Dropbox processes were heavy in the background. Matches the Session-03 machine-load pattern. Not repo-specific.
+The 866 unpublished IG photos (plus 30 YT drafts and 4 Bandcamp stubs) are the current curator bottleneck. v1 was a single-entry editor — at ~30 seconds per photo that's 7+ hours of review. v2 aims for 10-20× speedup via grid + bulk ops.
 
-**No code changes; no commits.** Next: plan PR sprint for Session 12.
+**Server additions** (`scripts/curators-kit/server.mjs`):
+- `GET /api/entries/<coll>` now returns `thumb`, `captionPreview`, `tags` per entry — enables grid rendering without per-card round-trips
+- `POST /api/bulk` — one patch applied to N slugs in a single git commit. Returns `{updated, unchanged, errors, commit}`.
+- `GET /media/*` — static proxy to `public/media/` so the CMS UI can render image/video thumbnails (confined to `public/` subtree for safety)
+
+**UI additions** (`scripts/curators-kit/public/`):
+- **View toggle** (☰ list / ▦ grid). Default grid for photos + videos; default list for text-heavy collections.
+- **Status filter**: all / published / unpublished.
+- **Multi-select checkboxes** on every entry (list + grid).
+- **Bulk action bar** (sticky) — Publish / Unpublish / Set project / Add tag / Clear. Each operation = one git commit covering all selected entries.
+- **Contact-sheet grid**: thumbnail + title + date+project meta + caption preview; published badge (● green / ○ gray); selection highlight.
+- **Media preview in editor**: inline image/video for photos, videos (covers, src, poster, localSrc).
+- **Keyboard shortcuts**:
+  - `j` / `k` — next / prev entry in current filter
+  - `p` / `d` — publish / draft (selected or current)
+  - `/` — focus search
+  - `esc` — clear multi-select
+
+**Deferred to v3:**
+- Cross-ref picker with type-ahead (plumbing exists; widget uses text input for now)
+- Carousel editor UI (carouselExtras still editable as JSON for now)
+- Image upload widget (paste file paths)
+- Diff viewer before commit
+- Revision history browser
+
+**State at end of Session 12:**
+- **29 PRs merged across 12 sessions.**
+- Curator tooling now supports bulk review at useful speed for the 866-photo backlog.
+- Server + UI smoke-tested locally; `/api/bulk` correctly commits a single entry when selected; `/media/` serves images with right MIME + cache; grid view renders thumbs.
+- **No public-site changes this session.** The Astro static site is unchanged; Curator's Kit is a local-only tool.
+
+**Next:**
+- **Curator work:** Dyl to spend a session burning through the IG backlog with the new grid view. Target: dramatic drop in unpublished count.
+- **Session 13 candidates:** (1) wire `/admin` dashboard to query `dist/data/crfw.sqlite` via sql.js (from Session 11 carry-over); (2) Curator's Kit v3 — cross-ref picker + carousel editor + image upload; (3) /discography share view + OG images. Pick one based on what emerges from curator session.
+
+**Files touched:**
+- `scripts/curators-kit/server.mjs` — bulk + media endpoints
+- `scripts/curators-kit/public/app.js` — grid view, selection, bulk, keyboard, preview
+- `scripts/curators-kit/public/styles.css` — grid / bulk / preview CSS
+- `scripts/curators-kit/public/index.html` — toolbar + bulk-bar containers
+- `SESSIONS.md` — this log
+- `CLAUDE.md` — current-state refresh
 
 ---
 

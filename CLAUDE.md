@@ -82,7 +82,7 @@ site/
 
 ---
 
-## Current state (as of Session 11, 2026-04-17)
+## Current state (as of Session 12, 2026-04-20)
 
 - **~1,958 total entries** (238 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
 - **28 PRs merged** across 11 sessions
@@ -91,7 +91,7 @@ site/
 - **Filter UX (Session 11): four dropdowns** (Project, Format, Medium, Tag) with live counts, reset button, URL-param pre-selection (`?project=X&tag=Y`)
 - **Tag scaling (Session 11)**: tag dropdown recomputes scoped to other-axis selections; /tags page groups all tags by source (curator / script / hashtag)
 - **Database v1 (Session 11)**: SQLite schema at `data/schema.sql` mirrors content + has future-entity tables for rich model (projects, venues, press_mentions, sources, relationships, grants, assets, captures). `scripts/db-sync.mjs` projects 1,958 entries into `data/crfw.db` at build time and ships `dist/data/crfw.sqlite` for client-side queries. FTS5 indexed. 0 dead cross-refs.
-- **Curator's Kit (Session 11)**: custom browser-editable CMS at `npm run cms` (localhost:4322) or `npm run cms:lan` (phone access). Archival-first defaults — no delete button, preservedTitle as distinct field, fuzzy dates, sensitivity model, curator-voice-only hint on summary fields. Reusable for other archival projects.
+- **Curator's Kit (Session 11, extended Session 12)**: custom browser-editable CMS at `npm run cms` / `npm run cms:lan`. Archival-first defaults. **v2 (Session 12)** adds contact-sheet grid view, multi-select, bulk publish/unpublish/set-project/add-tag, image preview in editor, keyboard shortcuts (j/k/p/d//esc). Each bulk op = one git commit. Built for burning down the 866 unpublished IG photos fast.
 - **Mobile-ready (Session 11)**: responsive CSS targeting 320/375/414/600/900/1024 px. 44×44 tap targets. Full-screen popups on phones. Safe-area insets for notch devices.
 - **Full-text search** via Pagefind (558 pages, 19,140 words indexed)
 - **CSV roundtrip** via `scripts/import-csv-edits.mjs` still works for bulk operations
@@ -154,6 +154,7 @@ Agent-doable next:
 - **Session 04–09:** killd by + killd-by-adjacent + alphabets bulk passes; GH Pages deploy; cover art; filter UX; voice memos + videos + video transcripts; bug pass; /admin + CSV roundtrip; DIMCP retag; tag filter axis; related entries; voice-memo reader; Pagefind; 2-digit year fix; draft-by-default; Bandcamp/YouTube/SoundCloud embeds + tracklist xref; 10 press events; /about + /projects.
 - **Session 10:** Instagram scraper pipeline + 866 IG photos + 47 IG videos (PR #24).
 - **Session 11:** ~~Database v1~~ (PR #25, SQLite + full schema + ships to dist). ~~Filter dropdowns + mobile pass~~ (PR #26). ~~Tag scaling + /tags page~~ (PR #27). ~~Curator's Kit~~ (PR #28, custom archival CMS at `npm run cms`).
+- **Session 12:** QA cleanup (Dropbox dupe route template). ~~Curator's Kit v2~~ (PR #29, grid view + multi-select + bulk publish/tag/project + media preview + keyboard nav). Built for IG backlog burndown.
 
 ---
 
