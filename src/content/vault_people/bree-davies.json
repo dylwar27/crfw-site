@@ -1,0 +1,17 @@
+{
+  "id": "bree-davies",
+  "kind": "person",
+  "title": "Bree Davies",
+  "display_name": "Bree Davies",
+  "role_summary": "Denver journalist; longtime Colin-adjacent bylines at Westword (2011 street drumming, 2012 alphabets, 2015 100 Colorado Creatives, 2018 death notice). Co-host of the 2021 City Cast Denver podcast episode on Colin.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "press-author"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

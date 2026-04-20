@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-cave-rave-01-running-with-snowshoes",
+  "slug": "alphabets-cave-rave-01-running-with-snowshoes",
+  "title": "running with snowshoes",
+  "preservedTitle": "running with snowshoes",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-cave-rave",
+  "project": "projects/alphabets",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# running with snowshoes\n\nTrack 1 from \"[[releases/alphabets-cave-rave]]\"."
+}

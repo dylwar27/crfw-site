@@ -1,0 +1,19 @@
+{
+  "id": "ben-donehower",
+  "kind": "person",
+  "title": "Ben Donehower",
+  "display_name": "Ben Donehower",
+  "aliases": [],
+  "role_summary": "Denver musician; bandmate in Bangplay; Homebody sideman. Performed at the 2/22/22 Aquakota memorial tribute.",
+  "primary_project": "projects/bangplay",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

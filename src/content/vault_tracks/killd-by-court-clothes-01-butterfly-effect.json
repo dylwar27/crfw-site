@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-court-clothes-01-butterfly-effect",
+  "slug": "killd-by-court-clothes-01-butterfly-effect",
+  "title": "butterFly eFFecT",
+  "preservedTitle": "butterFly eFFecT",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-court-clothes",
+  "project": "projects/killd-by",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# butterFly eFFecT\n\nTrack 1 from \"[[releases/killd-by-court-clothes]]\"."
+}

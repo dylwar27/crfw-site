@@ -1,0 +1,25 @@
+{
+  "id": "pocket-dove",
+  "kind": "project",
+  "title": "Pocket Dove",
+  "name": "Pocket Dove",
+  "aliases": [
+    "pocketdove",
+    "pocket-dove"
+  ],
+  "project_kind": "band",
+  "primary_medium": "music",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Early teenage project. Noted in the Biographical Summary as one of Colin's artist names alongside alphabets and killd by."
+}

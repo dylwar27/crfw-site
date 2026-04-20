@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-antpad-02-claw",
+  "slug": "alphabets-antpad-02-claw",
+  "title": "claw",
+  "preservedTitle": "claw",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-antpad",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# claw\n\nTrack 2 from \"[[releases/alphabets-antpad]]\"."
+}

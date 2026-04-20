@@ -1,0 +1,23 @@
+{
+  "id": "anton-krueger",
+  "kind": "person",
+  "title": "Anton Krueger",
+  "display_name": "Anton Krueger",
+  "aliases": [],
+  "role_summary": "Denver/LA musician; Aquakota Lead Sound Designer. Primary project Bollywood Life; also plays in Floor Freakers (with Luke Thinnes) and StaG.",
+  "primary_project": "projects/aquakota",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "aquakota",
+    "living-collaborator",
+    "sound-designer",
+    "bollywood-life"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/aquakota"
+  ]
+}

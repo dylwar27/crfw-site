@@ -1,0 +1,20 @@
+{
+  "id": "redline-venue",
+  "kind": "venue",
+  "title": "RedLine Contemporary Art Center",
+  "name": "RedLine Contemporary Art Center",
+  "venue_kind": "arts_center",
+  "address": "2350 Arapahoe St",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Denver contemporary art nonprofit. Host organization for the CRFW Fund (2019–present; possibly transitioning to CAST custodianship 2025–2026)."
+}

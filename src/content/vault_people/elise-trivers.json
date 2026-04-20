@@ -1,0 +1,17 @@
+{
+  "id": "elise-trivers",
+  "kind": "person",
+  "title": "Elise Trivers",
+  "display_name": "Elise Trivers",
+  "role_summary": "BIRDY Magazine writer; Oct 2023 Colin-crediting piece.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "press-author"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

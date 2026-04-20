@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-siberian-chill-05-dead-cactus-stem",
+  "slug": "alphabets-siberian-chill-05-dead-cactus-stem",
+  "title": "DEAD CACTUS STEM",
+  "preservedTitle": "DEAD CACTUS STEM",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-siberian-chill",
+  "project": "projects/alphabets",
+  "position": 5,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# DEAD CACTUS STEM\n\nTrack 5 from \"[[releases/alphabets-siberian-chill]]\"."
+}

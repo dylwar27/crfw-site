@@ -1,0 +1,17 @@
+{
+  "id": "tom-murphy",
+  "kind": "person",
+  "title": "Tom Murphy",
+  "display_name": "Tom Murphy",
+  "role_summary": "Denver writer; Queen City Sounds and Art blog. 2019 CRFW Fund grantee.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "press-author"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

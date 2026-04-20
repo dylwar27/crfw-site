@@ -1,0 +1,20 @@
+{
+  "id": "larimer-lounge",
+  "kind": "venue",
+  "title": "Larimer Lounge",
+  "name": "Larimer Lounge",
+  "venue_kind": "venue",
+  "address": "2721 Larimer St",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Denver music venue referenced in Colin's December 2015 Instagram: 'opening up for HEALTH and Pictureplane tomorrow night with BangPlay.'"
+}

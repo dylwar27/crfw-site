@@ -1,0 +1,36 @@
+{
+  "kind": "press",
+  "id": "2012-04-15-westword-milton-melvin-croissant-collab",
+  "slug": "2012-04-15-westword-milton-melvin-croissant-collab",
+  "title": "Milton Melvin Croissant III and Colin Ward give you Mel Gibson and hot dogs",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author": "people/bree-davies",
+  "author_name": "Bree Davies",
+  "published_date": "2012-04-15",
+  "canonical_url": "https://www.westword.com/music/milton-melvin-croissant-iii-and-colin-ward-give-you-mel-gibson-and-hot-dogs-lots-of-them-5694251/",
+  "local_md_path": "_Documentation/articles/2012-04-15_westword_milton-melvin-croissant-collab.md",
+  "local_pdf_path": "_Documentation/articles/2012-04-15_westword_milton-melvin-croissant-collab.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 6,
+  "archivePath": [
+    "_Documentation/articles/2012-04-15_westword_milton-melvin-croissant-collab.md",
+    "_Documentation/articles/2012-04-15_westword_milton-melvin-croissant-collab.pdf"
+  ],
+  "tags": [
+    "collaboration",
+    "video",
+    "alphabets-era"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "people/milton-melvin-croissant-iii",
+    "people/bree-davies"
+  ],
+  "body": "# Milton Melvin Croissant III and Colin Ward give you Mel Gibson and hot dogs\n\nCoverage of a Colin Ward / Milton Melvin Croissant III collaborative video piece.\n\n**Publication:** Denver Westword  \n**Author:** Bree Davies  \n**Date:** 2012-04-15  \n**URL:** https://www.westword.com/music/milton-melvin-croissant-iii-and-colin-ward-give-you-mel-gibson-and-hot-dogs-lots-of-them-5694251/  \n\nFull scraped text is at `_Documentation/articles/2012-04-15_westword_milton-melvin-croissant-collab.md`."
+}

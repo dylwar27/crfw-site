@@ -1,0 +1,32 @@
+{
+  "kind": "release",
+  "id": "alphabets-sweat-bee-dance-mix",
+  "slug": "alphabets-sweat-bee-dance-mix",
+  "title": "SWEAT BEE: DANCE MIX",
+  "preservedTitle": "SWEAT BEE: DANCE MIX",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "mixtape",
+  "release_date": "2012-07-17",
+  "release_year": 2012,
+  "canonical_url": "https://alphabets.bandcamp.com/album/sweat-bee-dance-mix",
+  "cover_path": "_Documentation/bandcamp/alphabets__sweat-bee-dance-mix/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__sweat-bee-dance-mix"
+  ],
+  "tracks": [
+    "tracks/alphabets-sweat-bee-dance-mix-01-i",
+    "tracks/alphabets-sweat-bee-dance-mix-02-ii",
+    "tracks/alphabets-sweat-bee-dance-mix-03-iii",
+    "tracks/alphabets-sweat-bee-dance-mix-04-iv",
+    "tracks/alphabets-sweat-bee-dance-mix-05-v"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# SWEAT BEE: DANCE MIX\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2012-07-17  \n**Bandcamp:** https://alphabets.bandcamp.com/album/sweat-bee-dance-mix  \n**Tracks:** 5  \n\n> SWEAT BEE: DANCE MIX by alphabets, released 17 July 2012\n> \n> 1. i\n> 2. ii\n> 3. iii\n> 4. iv\n> 5. v\n> \n> SWEAT BEE SO FOR WHEN YOU BUZZ AND STING/ MINIMAL/ REPETITIOUS/ SEXY/ RELEASED ON DEATHBOMB ARC, THEY SAY THIS: To those in the know, Denver&amp;#39;s Alphabets have been true stars for a long time now. Dedicate"
+}

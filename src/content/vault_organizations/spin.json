@@ -1,0 +1,14 @@
+{
+  "id": "spin",
+  "kind": "organization",
+  "title": "SPIN",
+  "name": "SPIN",
+  "org_kind": "media_publisher",
+  "website": "https://www.spin.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "National music publication."
+}

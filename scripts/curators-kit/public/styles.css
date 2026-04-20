@@ -34,6 +34,44 @@ body { display: flex; min-height: 100vh; overflow: hidden; }
 }
 .sidebar-head .subtitle { font-family: var(--serif); font-size: 20px; margin-top: 4px; }
 
+/* Source switcher (Session 13: Site / Vault) */
+.source-switcher {
+  display: flex;
+  gap: 2px;
+  padding: 8px 8px 4px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
+}
+.source-switcher .source-btn {
+  flex: 1;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-dim);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: all 0.15s;
+}
+.source-switcher .source-btn:hover { color: var(--ink); border-color: var(--ink-dim); }
+.source-switcher .source-btn.active {
+  background: var(--accent-2);
+  color: var(--bg);
+  border-color: var(--accent-2);
+}
+.source-switcher .source-hint {
+  font-size: 9px;
+  opacity: 0.7;
+  letter-spacing: 0.15em;
+}
+
 .collections { padding: 8px 0; flex: 1; }
 .collections button {
   display: block;

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-2014-2016-bsides-05-no-haiku",
+  "slug": "killd-by-2014-2016-bsides-05-no-haiku",
+  "title": "no haiku",
+  "preservedTitle": "no haiku",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-2014-2016-bsides",
+  "project": "projects/killd-by",
+  "position": 5,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# no haiku\n\nTrack 5 from \"[[releases/killd-by-2014-2016-bsides]]\"."
+}

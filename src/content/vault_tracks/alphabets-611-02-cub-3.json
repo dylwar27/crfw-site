@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-611-02-cub-3",
+  "slug": "alphabets-611-02-cub-3",
+  "title": "cub 3",
+  "preservedTitle": "cub 3",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-611",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# cub 3\n\nTrack 2 from \"[[releases/alphabets-611]]\"."
+}

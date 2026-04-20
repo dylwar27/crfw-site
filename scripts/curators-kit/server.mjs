@@ -22,7 +22,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from '
 import { join, extname, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { networkInterfaces } from 'node:os';
+import { networkInterfaces, homedir } from 'node:os';
 
 const args = process.argv.slice(2);
 const PORT = 4322;
@@ -30,31 +30,86 @@ const HOST = args.includes('--lan') ? '0.0.0.0' : '127.0.0.1';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const repo = resolve(__dirname, '..', '..');
-const contentDir = join(repo, 'src', 'content');
 const publicDir = join(__dirname, 'public');
 
-// Collections we support. Order matters for UI sidebar.
-const COLLECTIONS = [
-  { name: 'releases',    ext: '.md',   editable: true  },
-  { name: 'photos',      ext: '.json', editable: true  },
-  { name: 'videos',      ext: '.json', editable: true  },
-  { name: 'voice_memos', ext: '.json', editable: true  },
-  { name: 'events',      ext: '.md',   editable: true  },
-  { name: 'people',      ext: '.json', editable: true  },
-  { name: 'lyrics',      ext: '.md',   editable: true  },
-];
+const VAULT_PATH = process.env.CRFW_VAULT_PATH || join(
+  homedir(),
+  'Library', 'CloudStorage', 'Dropbox', 'CRFW', 'CRFW Archive', '_Vault'
+);
 
-// Fields editable per collection. Keep this minimal for v1 — the
-// frontend can add more as we refine the widgets.
-const EDITABLE_FIELDS = {
-  releases:    ['title','preservedTitle','project','date','format','era','summary','tags','published','archivePath','coverArt','bandcampUrl','bandcampItemId','bandcampItemType','youtubeId','soundcloudUrl'],
-  photos:      ['title','date','caption','project','source','sourceUrl','tags','published','archivePath'],
-  videos:      ['title','date','kind','project','youtubeId','vimeoEmbed','summary','tags','published','archivePath','transcript'],
-  voice_memos: ['title','date','summary','project','tags','published','archivePath'],
-  events:      ['title','date','kind','project','location','url','source','summary','tags','published'],
-  people:      ['name','role','relationship','note'],
-  lyrics:      ['title','project','date','relatedRelease','relatedTrack','tags','published','archivePath'],
+// Two content sources (Session 13). The CMS coordinates edits against
+// both. `site` content is git-tracked and commits on save. `vault`
+// content lives in Dropbox and writes directly without git commits
+// (that's the curator's existing Obsidian workflow).
+const SOURCES = {
+  site: {
+    label: 'Site',
+    root: join(repo, 'src', 'content'),
+    commits: true,
+    // Per-collection config
+    collections: [
+      { name: 'releases',    ext: '.md',   editable: true },
+      { name: 'photos',      ext: '.json', editable: true },
+      { name: 'videos',      ext: '.json', editable: true },
+      { name: 'voice_memos', ext: '.json', editable: true },
+      { name: 'events',      ext: '.md',   editable: true },
+      { name: 'people',      ext: '.json', editable: true },
+      { name: 'lyrics',      ext: '.md',   editable: true },
+    ],
+  },
+  vault: {
+    label: 'Vault',
+    root: VAULT_PATH,
+    commits: false, // vault is in Dropbox, not our git repo
+    collections: [
+      { name: 'people',        ext: '.md', editable: true },
+      { name: 'projects',      ext: '.md', editable: true },
+      { name: 'releases',      ext: '.md', editable: true },
+      { name: 'tracks',        ext: '.md', editable: true },
+      { name: 'venues',        ext: '.md', editable: true },
+      { name: 'organizations', ext: '.md', editable: true },
+      { name: 'events',        ext: '.md', editable: true },
+      { name: 'press',         ext: '.md', editable: true },
+      { name: 'funds',         ext: '.md', editable: true },
+      { name: 'grants',        ext: '.md', editable: true },
+      { name: 'series',        ext: '.md', editable: true },
+    ],
+  },
 };
+
+// Fields editable per (source, collection). Keep minimal; the frontend
+// can grow the list as widgets mature. Vault schemas are permissive by
+// design — the field list here is just what the editor UI surfaces;
+// saves preserve unknown fields untouched.
+const EDITABLE_FIELDS = {
+  'site:releases':    ['title','preservedTitle','project','date','format','era','summary','tags','published','archivePath','coverArt','bandcampUrl','bandcampItemId','bandcampItemType','youtubeId','soundcloudUrl'],
+  'site:photos':      ['title','date','caption','project','source','sourceUrl','tags','published','archivePath'],
+  'site:videos':      ['title','date','kind','project','youtubeId','vimeoEmbed','summary','tags','published','archivePath','transcript'],
+  'site:voice_memos': ['title','date','summary','project','tags','published','archivePath'],
+  'site:events':      ['title','date','kind','project','location','url','source','summary','tags','published'],
+  'site:people':      ['name','role','relationship','note'],
+  'site:lyrics':      ['title','project','date','relatedRelease','relatedTrack','tags','published','archivePath'],
+  // Vault shares a common header + kind-specific fields; we surface both.
+  'vault:people':        ['title','display_name','legal_name','aliases','born','died','hometown','role_summary','sensitivity','public_display','confidence','tags'],
+  'vault:projects':      ['title','name','aliases','project_kind','primary_medium','formed_year','dissolved_year','summary','sensitivity','public_display','tags'],
+  'vault:releases':      ['title','preservedTitle','project','release_kind','release_date','release_year','canonical_url','cover_path','is_posthumous','sensitivity','tags'],
+  'vault:tracks':        ['title','preservedTitle','release','position','duration_seconds','audio_path','sensitivity','tags'],
+  'vault:venues':        ['title','name','venue_kind','address','city','region','country','status','opened_year','closed_year','sensitivity','tags'],
+  'vault:organizations': ['title','name','org_kind','website','address','status','sensitivity','tags'],
+  'vault:events':        ['title','event_kind','date','venue','description','sensitivity','tags'],
+  'vault:press':         ['title','publication','author','published_date','press_kind','canonical_url','wayback_url','colin_specific','colin_mention_count','sensitivity','tags'],
+  'vault:funds':         ['title','name','host_organization','founded_year','dissolved_year','mission','workflow','sensitivity','tags'],
+  'vault:grants':        ['title','fund','grantee','year','amount','purpose','announcement_date','sensitivity','tags'],
+  'vault:series':        ['title','name','project','date_start','date_end','members','summary','sensitivity','tags'],
+};
+
+function findCollectionConfig(sourceId, collectionName) {
+  const src = SOURCES[sourceId];
+  if (!src) return null;
+  const coll = src.collections.find(c => c.name === collectionName);
+  if (!coll) return null;
+  return { source: src, coll, key: `${sourceId}:${collectionName}` };
+}
 
 // --- Frontmatter parser (shared conventions from scripts/import-csv-edits.mjs) ---
 function splitFrontmatter(text) {
@@ -116,14 +171,15 @@ function yamlQuote(v) {
   return '"' + String(v).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
 }
 
-// --- Read one entry ---
-function readEntry(collection, slug) {
-  const { ext } = COLLECTIONS.find(c => c.name === collection);
-  const path = join(contentDir, collection, `${slug}${ext}`);
+// --- Read one entry (source-aware) ---
+function readEntry(sourceId, collection, slug) {
+  const cfg = findCollectionConfig(sourceId, collection);
+  if (!cfg) return null;
+  const path = join(cfg.source.root, collection, `${slug}${cfg.coll.ext}`);
   if (!existsSync(path)) return null;
   const raw = readFileSync(path, 'utf8');
   let data, body = '';
-  if (ext === '.json') {
+  if (cfg.coll.ext === '.json') {
     data = JSON.parse(raw);
   } else {
     const { frontmatter, body: b } = splitFrontmatter(raw);
@@ -132,25 +188,27 @@ function readEntry(collection, slug) {
   }
   return {
     slug,
+    source: sourceId,
     collection,
     data,
     body,
-    path: `src/content/${collection}/${slug}${ext}`,
+    path, // absolute path — UI shows a prettified version
     mtime: Math.floor(statSync(path).mtimeMs / 1000),
   };
 }
 
 // --- List all entries in a collection (lightweight for the list view) ---
 // Enriched with thumbnail info so the grid view can render preview images.
-function listEntries(collection) {
-  const { ext } = COLLECTIONS.find(c => c.name === collection);
-  const dir = join(contentDir, collection);
+function listEntries(sourceId, collection) {
+  const cfg = findCollectionConfig(sourceId, collection);
+  if (!cfg) return [];
+  const dir = join(cfg.source.root, collection);
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
-    .filter(f => f.endsWith(ext) && !f.includes(' 2.'))
+    .filter(f => f.endsWith(cfg.coll.ext) && !f.includes(' 2.'))
     .map(f => {
-      const slug = f.replace(new RegExp(`\\${ext}$`), '');
-      const entry = readEntry(collection, slug);
+      const slug = f.replace(new RegExp(`\\${cfg.coll.ext}$`), '');
+      const entry = readEntry(sourceId, collection, slug);
       if (!entry) return null;
       const d = entry.data;
       // Thumbnail: prefer cover art / src / poster / first carousel extra
@@ -158,21 +216,30 @@ function listEntries(collection) {
       if (!thumb && Array.isArray(d.carouselExtras) && d.carouselExtras.length > 0) {
         thumb = d.carouselExtras[0];
       }
-      // Caption preview: IG caption / summary / transcript snippet
+      // Caption preview: caption → summary → role_summary → description →
+      // first line of body → transcript
       const captionPreview = d.caption
         ? String(d.caption).slice(0, 140)
         : (d.summary
           ? String(d.summary).slice(0, 140)
-          : (d.transcript
-            ? String(d.transcript).slice(0, 140).replace(/\s+/g, ' ').trim()
-            : ''));
+          : (d.role_summary
+            ? String(d.role_summary).slice(0, 140)
+            : (d.description
+              ? String(d.description).slice(0, 140)
+              : (entry.body
+                ? String(entry.body).slice(0, 140).replace(/\s+/g, ' ').trim()
+                : (d.transcript
+                  ? String(d.transcript).slice(0, 140).replace(/\s+/g, ' ').trim()
+                  : '')))));
       return {
-        slug, collection,
-        title: d.title || d.name || slug,
-        date: d.date || '',
-        project: d.project || '',
-        published: d.published !== false,
-        format: d.format || d.kind || '',
+        slug,
+        source: sourceId,
+        collection,
+        title: d.title || d.name || d.display_name || slug,
+        date: d.date || d.release_date || d.published_date || d.born || d.date_start || '',
+        project: typeof d.project === 'string' ? d.project : (d.project?.id || ''),
+        published: d.public_display !== false && d.published !== false,
+        format: d.format || d.release_kind || d.event_kind || d.kind || '',
         thumb,
         captionPreview,
         tags: Array.isArray(d.tags) ? d.tags : [],
@@ -181,18 +248,18 @@ function listEntries(collection) {
     .filter(Boolean);
 }
 
-// --- Write one entry ---
-function writeEntry(collection, slug, nextData, nextBody) {
-  const col = COLLECTIONS.find(c => c.name === collection);
-  if (!col) throw new Error(`Unknown collection: ${collection}`);
-  const path = join(contentDir, collection, `${slug}${col.ext}`);
+// --- Write one entry (source-aware) ---
+function writeEntry(sourceId, collection, slug, nextData, nextBody) {
+  const cfg = findCollectionConfig(sourceId, collection);
+  if (!cfg) throw new Error(`Unknown ${sourceId}/${collection}`);
+  const path = join(cfg.source.root, collection, `${slug}${cfg.coll.ext}`);
   if (!existsSync(path)) throw new Error(`File not found: ${path}`);
 
-  const allowed = new Set(EDITABLE_FIELDS[collection] || []);
+  const allowed = new Set(EDITABLE_FIELDS[cfg.key] || []);
   const raw = readFileSync(path, 'utf8');
 
   let finalText;
-  if (col.ext === '.json') {
+  if (cfg.coll.ext === '.json') {
     const existing = JSON.parse(raw);
     // Merge: only overwrite allowed fields
     const merged = { ...existing };
@@ -274,13 +341,11 @@ function setFrontmatterArray(fm, key, arr) {
   return fm.replace(/\n?$/, `\n${block.trimEnd()}\n`);
 }
 
-// --- Git commit ---
-function collectionFileExt(collection) {
-  return ['photos','videos','voice_memos','people'].includes(collection) ? 'json' : 'md';
-}
-
-function commitChange(collection, slug, changed) {
-  const relPath = `src/content/${collection}/${slug}.${collectionFileExt(collection)}`;
+// --- Git commit (site-only; vault edits skip this) ---
+function commitChange(sourceId, collection, slug, changed) {
+  if (!SOURCES[sourceId]?.commits) return { committed: false, skipped: 'not-a-git-source' };
+  const cfg = findCollectionConfig(sourceId, collection);
+  const relPath = `src/content/${collection}/${slug}${cfg.coll.ext}`;
   try {
     execSync(`git add ${JSON.stringify(relPath)}`, { cwd: repo });
     const msg = `CMS: edit ${collection}/${slug} (${changed.join(', ')})`;
@@ -291,11 +356,12 @@ function commitChange(collection, slug, changed) {
   }
 }
 
-// One git commit covering N entries — used by the bulk endpoint.
-function commitBulk(collection, slugs, summary) {
+function commitBulk(sourceId, collection, slugs, summary) {
+  if (!SOURCES[sourceId]?.commits) return { committed: false, skipped: 'not-a-git-source' };
+  const cfg = findCollectionConfig(sourceId, collection);
   try {
     for (const slug of slugs) {
-      const relPath = `src/content/${collection}/${slug}.${collectionFileExt(collection)}`;
+      const relPath = `src/content/${collection}/${slug}${cfg.coll.ext}`;
       execSync(`git add ${JSON.stringify(relPath)}`, { cwd: repo });
     }
     const msg = `CMS: bulk ${summary} — ${slugs.length} ${collection}`;
@@ -321,36 +387,47 @@ const server = createServer(async (req, res) => {
   const p = url.pathname;
 
   // --- API routes ---
-  if (p === '/api/collections') {
-    return json(res, 200, COLLECTIONS.map(c => ({ name: c.name, editable: c.editable })));
+  // New (Session 13): /api/sources — lists available content roots
+  if (p === '/api/sources') {
+    return json(res, 200, Object.entries(SOURCES).map(([id, s]) => ({
+      id,
+      label: s.label,
+      commits: s.commits,
+      collections: s.collections.map(c => ({ name: c.name, editable: c.editable })),
+    })));
   }
 
-  // --- Bulk write (v2): apply one patch to many slugs, one commit ---
+  // Back-compat: /api/collections defaults to site source
+  if (p === '/api/collections') {
+    return json(res, 200, SOURCES.site.collections.map(c => ({ name: c.name, editable: c.editable })));
+  }
+
+  // --- Bulk write: one patch to many slugs, one commit ---
+  // /api/bulk — body includes `source` (defaults to 'site')
   if (p === '/api/bulk' && req.method === 'POST') {
     try {
       const body = await readBody(req);
-      const { collection, slugs, patch, summary } = JSON.parse(body);
+      const { source = 'site', collection, slugs, patch, summary } = JSON.parse(body);
       if (!Array.isArray(slugs) || slugs.length === 0) {
         return json(res, 400, { error: 'slugs required' });
       }
-      if (!COLLECTIONS.find(c => c.name === collection)) {
-        return json(res, 404, { error: 'unknown collection' });
+      if (!findCollectionConfig(source, collection)) {
+        return json(res, 404, { error: `unknown ${source}/${collection}` });
       }
       const results = { updated: [], unchanged: [], errors: [] };
       for (const slug of slugs) {
         try {
-          const r = writeEntry(collection, slug, patch || {}, undefined);
+          const r = writeEntry(source, collection, slug, patch || {}, undefined);
           if (r.changed.length === 0) results.unchanged.push(slug);
           else results.updated.push({ slug, changed: r.changed });
         } catch (err) {
           results.errors.push({ slug, error: err.message });
         }
       }
-      // Single git commit covering all of them
       let commitRes = null;
       if (results.updated.length > 0) {
         const summ = summary || `patch ${Object.keys(patch || {}).join(',') || 'noop'}`;
-        commitRes = commitBulk(collection, results.updated.map(u => u.slug), summ);
+        commitRes = commitBulk(source, collection, results.updated.map(u => u.slug), summ);
       }
       return json(res, 200, { ...results, commit: commitRes });
     } catch (err) {
@@ -380,30 +457,41 @@ const server = createServer(async (req, res) => {
   }
 
   if (p.startsWith('/api/entries/')) {
-    // /api/entries/<collection>           → list
-    // /api/entries/<collection>/<slug>    → one entry
-    const parts = p.split('/').filter(Boolean); // ['api','entries',collection,slug?]
-    const collection = parts[2];
-    const slug = parts[3];
-    if (!COLLECTIONS.find(c => c.name === collection)) return json(res, 404, { error: 'unknown collection' });
+    // New form:   /api/entries/<source>/<collection>[/<slug>]
+    // Legacy:     /api/entries/<collection>[/<slug>]  (defaults to site)
+    const parts = p.split('/').filter(Boolean); // ['api','entries',…]
+    let source, collection, slug;
+    if (parts[2] in SOURCES) {
+      source = parts[2]; collection = parts[3]; slug = parts[4];
+    } else {
+      source = 'site'; collection = parts[2]; slug = parts[3];
+    }
+    if (!findCollectionConfig(source, collection)) {
+      return json(res, 404, { error: `unknown ${source}/${collection}` });
+    }
 
     if (req.method === 'GET') {
       if (slug) {
-        const entry = readEntry(collection, slug);
+        const entry = readEntry(source, collection, slug);
         if (!entry) return json(res, 404, { error: 'not found' });
-        return json(res, 200, { ...entry, editableFields: EDITABLE_FIELDS[collection] });
+        const key = `${source}:${collection}`;
+        return json(res, 200, {
+          ...entry,
+          editableFields: EDITABLE_FIELDS[key],
+          commits: !!SOURCES[source].commits,
+        });
       }
-      return json(res, 200, listEntries(collection));
+      return json(res, 200, listEntries(source, collection));
     }
 
     if (req.method === 'PATCH' && slug) {
       const body = await readBody(req);
       const { data, body: nextBody, commit } = JSON.parse(body);
       try {
-        const result = writeEntry(collection, slug, data, nextBody);
+        const result = writeEntry(source, collection, slug, data, nextBody);
         if (result.changed.length === 0) return json(res, 200, { changed: [] });
         let commitRes = null;
-        if (commit) commitRes = commitChange(collection, slug, result.changed);
+        if (commit) commitRes = commitChange(source, collection, slug, result.changed);
         return json(res, 200, { changed: result.changed, commit: commitRes });
       } catch (err) {
         return json(res, 500, { error: err.message });

@@ -1,0 +1,45 @@
+{
+  "kind": "press",
+  "id": "2022-02-21-westword-meow-wolf-colin-ward-tribute",
+  "slug": "2022-02-21-westword-meow-wolf-colin-ward-tribute",
+  "title": "Meow Wolf Colin Ward tribute (Aquakota)",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author_name": "(Westword staff)",
+  "published_date": "2022-02-21",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2022-02-21_westword_meow-wolf-colin-ward-tribute.md",
+  "local_pdf_path": "_Documentation/articles/2022-02-21_westword_meow-wolf-colin-ward-tribute.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 8,
+  "archivePath": [
+    "_Documentation/articles/2022-02-21_westword_meow-wolf-colin-ward-tribute.md",
+    "_Documentation/articles/2022-02-21_westword_meow-wolf-colin-ward-tribute.pdf"
+  ],
+  "tags": [
+    "meow-wolf",
+    "aquakota",
+    "tribute",
+    "convergence-station"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/aquakota",
+    "organizations/meow-wolf",
+    "venues/meow-wolf-convergence-station",
+    "events/aquakota-tribute-2022",
+    "people/pepe-apantenco",
+    "people/anton-krueger",
+    "people/kim-shively",
+    "people/kathryn-taylor",
+    "people/stephan-herrera",
+    "people/david-castillo",
+    "people/ben-donehower"
+  ],
+  "body": "# Meow Wolf Colin Ward tribute (Aquakota)\n\nCoverage of the 2/22/22 Meow Wolf tribute centered on Aquakota and Colin's lead-artist contribution to Convergence Station.\n\n**Publication:** Denver Westword  \n**Author:** (Westword staff)  \n**Date:** 2022-02-21  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2022-02-21_westword_meow-wolf-colin-ward-tribute.md`."
+}

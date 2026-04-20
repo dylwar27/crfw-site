@@ -1,0 +1,18 @@
+{
+  "id": "laura-conway",
+  "kind": "person",
+  "title": "Laura Conway",
+  "display_name": "Laura Conway",
+  "aliases": [],
+  "role_summary": "Denver musician; Bliss Body / Pre-Teen O.D.; organized the Bliss Body tribute at Black Cube (March 2018).",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

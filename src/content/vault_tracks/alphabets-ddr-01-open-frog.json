@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-ddr-01-open-frog",
+  "slug": "alphabets-ddr-01-open-frog",
+  "title": "open / frog",
+  "preservedTitle": "open / frog",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-ddr",
+  "project": "projects/alphabets",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# open / frog\n\nTrack 1 from \"[[releases/alphabets-ddr]]\"."
+}

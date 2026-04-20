@@ -1,0 +1,20 @@
+{
+  "id": "rhinoceropolis-shutdown-2016",
+  "kind": "event",
+  "title": "Rhinoceropolis shutdown",
+  "event_kind": "shutdown",
+  "date": "2016-12-08",
+  "venue": "venues/rhinoceropolis",
+  "participants": [
+    "people/colin-ward",
+    "people/john-golter"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Denver Fire surprise-inspected Rhinoceropolis and Glob in the wake of the Ghost Ship fire; both were shut down. Six contemporaneous press pieces archived in _Documentation/press/rhinoceropolis/."
+}

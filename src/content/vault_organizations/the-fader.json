@@ -1,0 +1,14 @@
+{
+  "id": "the-fader",
+  "kind": "organization",
+  "title": "The Fader",
+  "name": "The Fader",
+  "org_kind": "media_publisher",
+  "website": "https://www.thefader.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "National music publication."
+}

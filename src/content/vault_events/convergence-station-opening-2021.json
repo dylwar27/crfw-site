@@ -1,0 +1,17 @@
+{
+  "id": "convergence-station-opening-2021",
+  "kind": "event",
+  "title": "Meow Wolf Convergence Station opens",
+  "event_kind": "opening",
+  "date": "2021-09-17",
+  "venue": "venues/meow-wolf-convergence-station",
+  "participants": [],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Meow Wolf's Denver location opens to the public, including the Aquakota installation on C Street."
+}

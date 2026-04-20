@@ -1,0 +1,18 @@
+{
+  "id": "mark-sink",
+  "kind": "person",
+  "title": "Mark Sink",
+  "display_name": "Mark Sink",
+  "aliases": [],
+  "role_summary": "Denver photographer; co-founder of Month of Photography Denver. Published the Blurb photo book *killd_by* featuring Colin's iPhone photos of 'fragments of the underground Jurassic Denver 2014.'",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-cave-rave-05-sci-fi-moan-stars",
+  "slug": "alphabets-cave-rave-05-sci-fi-moan-stars",
+  "title": "sci - fi moan stars",
+  "preservedTitle": "sci - fi moan stars",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-cave-rave",
+  "project": "projects/alphabets",
+  "position": 5,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# sci - fi moan stars\n\nTrack 5 from \"[[releases/alphabets-cave-rave]]\"."
+}

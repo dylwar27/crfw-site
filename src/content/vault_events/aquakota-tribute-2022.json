@@ -1,0 +1,27 @@
+{
+  "id": "aquakota-tribute-2022",
+  "kind": "event",
+  "title": "Aquakota memorial tribute",
+  "event_kind": "memorial",
+  "date": "2022-02-22",
+  "venue": "venues/meow-wolf-convergence-station",
+  "participants": [
+    "people/colin-ward",
+    "people/pepe-apantenco",
+    "people/kim-shively",
+    "people/kathryn-taylor",
+    "people/stephan-herrera",
+    "people/anton-krueger",
+    "people/david-castillo",
+    "people/ben-donehower",
+    "people/jane-anne-ferguson"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Memorial tribute held in the Aquakota room. Mother Jane Anne Ferguson, Pepe Apantenco, Kim Shively, Kathryn Taylor, Stephan Herrera, Anton Krueger all participated; performances by David Castillo and Ben Donehower. Coordinated with the release of Castillo's *hardly working* and the premiere of the Meow Wolf Aquakota mini-documentary. Convergence Station gift shop sold a special-edition lemur statue bundled with a digital download of *Neotropical*."
+}

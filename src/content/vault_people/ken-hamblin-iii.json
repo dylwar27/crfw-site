@@ -1,0 +1,18 @@
+{
+  "id": "ken-hamblin-iii",
+  "kind": "person",
+  "title": "Ken Hamblin III",
+  "display_name": "Ken Hamblin III",
+  "aliases": [],
+  "role_summary": "Photographer; credited on Westword's 2018 Rhinoceropolis feature for the image of Colin and friends welcoming people to Rhinoceropolis at Fantasia 2016.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

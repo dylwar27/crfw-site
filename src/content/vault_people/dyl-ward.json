@@ -1,0 +1,19 @@
+{
+  "id": "dyl-ward",
+  "kind": "person",
+  "title": "Dyl Ward",
+  "display_name": "Dyl Ward",
+  "relationship_to_subject": "brother",
+  "role_summary": "Archive steward. Primary user / curator of this vault and the CRFW Archive.",
+  "created": "2026-04-20",
+  "sensitivity": "restricted",
+  "public_display": false,
+  "confidence": "high",
+  "tags": [
+    "family",
+    "steward"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

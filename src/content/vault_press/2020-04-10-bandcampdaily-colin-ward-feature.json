@@ -1,0 +1,35 @@
+{
+  "kind": "press",
+  "id": "2020-04-10-bandcampdaily-colin-ward-feature",
+  "slug": "2020-04-10-bandcampdaily-colin-ward-feature",
+  "title": "Colin Ward feature (Bandcamp Daily)",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/bandcamp",
+  "publication_name": "Bandcamp Daily",
+  "author_name": "(Bandcamp Daily staff)",
+  "published_date": "2020-04-10",
+  "canonical_url": "https://daily.bandcamp.com/",
+  "local_md_path": "_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.md",
+  "local_pdf_path": "_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 14,
+  "archivePath": [
+    "_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.md",
+    "_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.pdf"
+  ],
+  "tags": [
+    "feature",
+    "posthumous",
+    "bandcamp-daily"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/killd-by",
+    "projects/alphabets"
+  ],
+  "body": "# Colin Ward feature (Bandcamp Daily)\n\nPosthumous Bandcamp Daily feature on Colin's body of work.\n\n**Publication:** Bandcamp Daily  \n**Author:** (Bandcamp Daily staff)  \n**Date:** 2020-04-10  \n**URL:** https://daily.bandcamp.com/  \n\nFull scraped text is at `_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.md`."
+}

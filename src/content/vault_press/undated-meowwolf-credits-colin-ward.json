@@ -1,0 +1,35 @@
+{
+  "kind": "press",
+  "id": "undated-meowwolf-credits-colin-ward",
+  "slug": "undated-meowwolf-credits-colin-ward",
+  "title": "Colin Ward — Meow Wolf Artists and Contributors credits page",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "wiki_page",
+  "publication": "organizations/meow-wolf",
+  "publication_name": "Meow Wolf",
+  "author_name": "(Meow Wolf)",
+  "canonical_url": "https://credits.meowwolf.com/people/colin-ward/",
+  "local_md_path": "_Documentation/articles/undated_meowwolf-credits_credits-page.md",
+  "local_pdf_path": "_Documentation/articles/undated_meowwolf-credits_credits-page.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 12,
+  "archivePath": [
+    "_Documentation/articles/undated_meowwolf-credits_credits-page.md",
+    "_Documentation/articles/undated_meowwolf-credits_credits-page.pdf"
+  ],
+  "tags": [
+    "meow-wolf",
+    "credits",
+    "convergence-station"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/aquakota",
+    "organizations/meow-wolf",
+    "venues/meow-wolf-convergence-station"
+  ],
+  "body": "# Colin Ward — Meow Wolf Artists and Contributors credits page\n\nOfficial Meow Wolf credits page listing Colin's contributor roles on Convergence Station.\n\n**Publication:** Meow Wolf  \n**Author:** (Meow Wolf)  \n**Date:** undated  \n**URL:** https://credits.meowwolf.com/people/colin-ward/  \n\nFull scraped text is at `_Documentation/articles/undated_meowwolf-credits_credits-page.md`."
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-ddr3-loaner-phone-23-z100yourownmovie",
+  "slug": "killd-by-ddr3-loaner-phone-23-z100yourownmovie",
+  "title": "Z100YourOwnMovie",
+  "preservedTitle": "Z100YourOwnMovie",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-ddr3-loaner-phone",
+  "project": "projects/killd-by",
+  "position": 23,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# Z100YourOwnMovie\n\nTrack 23 from \"[[releases/killd-by-ddr3-loaner-phone]]\"."
+}

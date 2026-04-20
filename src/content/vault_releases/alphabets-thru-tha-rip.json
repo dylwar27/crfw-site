@@ -1,0 +1,40 @@
+{
+  "kind": "release",
+  "id": "alphabets-thru-tha-rip",
+  "slug": "alphabets-thru-tha-rip",
+  "title": "THRU THA RIP",
+  "preservedTitle": "THRU THA RIP",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2013-12-13",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/thru-tha-rip",
+  "cover_path": "_Documentation/bandcamp/alphabets__thru-tha-rip/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__thru-tha-rip"
+  ],
+  "tracks": [
+    "tracks/alphabets-thru-tha-rip-01-theory-of-tha-game",
+    "tracks/alphabets-thru-tha-rip-02-tropical-sex-in-my-head",
+    "tracks/alphabets-thru-tha-rip-03-fine-china",
+    "tracks/alphabets-thru-tha-rip-04-lemon-slices-in-my-cup",
+    "tracks/alphabets-thru-tha-rip-05-raptor-jazz",
+    "tracks/alphabets-thru-tha-rip-06-nasty-future",
+    "tracks/alphabets-thru-tha-rip-07-hack-tha-culture",
+    "tracks/alphabets-thru-tha-rip-08-snow-habit",
+    "tracks/alphabets-thru-tha-rip-09-a-r-t-i-l-e-c-t",
+    "tracks/alphabets-thru-tha-rip-10-evian-spray",
+    "tracks/alphabets-thru-tha-rip-11-lose-control",
+    "tracks/alphabets-thru-tha-rip-12-hyena-cristal",
+    "tracks/alphabets-thru-tha-rip-13-frog-eater"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# THRU THA RIP\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-12-13  \n**Bandcamp:** https://alphabets.bandcamp.com/album/thru-tha-rip  \n**Tracks:** 13  \n\n> THRU THA RIP by alphabets, released 13 December 2013\n> \n> 1. THEORY OF THA GAME\n> 2. TROPICAL SEX IN MY HEAD\n> 3. FINE CHINA\n> 4. LEMON SLICES IN MY CUP\n> 5. RAPTOR JAZZ\n> 6. NASTY FUTURE\n> 7. HACK THA CULTURE\n> 8. SNOW HABIT\n> 9. A R T I L E C T\n> 10. EVIAN SPRAY\n> 11. LOSE CONTROL\n> 12. HYENA CRISTAL\n> 13. FROG EATER"
+}

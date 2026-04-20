@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-recovery-02-shape-shifter",
+  "slug": "killd-by-recovery-02-shape-shifter",
+  "title": "SHAPE SHIFTER",
+  "preservedTitle": "SHAPE SHIFTER",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-recovery",
+  "project": "projects/killd-by",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# SHAPE SHIFTER\n\nTrack 2 from \"[[releases/killd-by-recovery]]\"."
+}

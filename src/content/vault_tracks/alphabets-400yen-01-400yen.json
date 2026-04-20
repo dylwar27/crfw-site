@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-400yen-01-400yen",
+  "slug": "alphabets-400yen-01-400yen",
+  "title": "400YEN",
+  "preservedTitle": "400YEN",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-400yen",
+  "project": "projects/alphabets",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# 400YEN\n\nTrack 1 from \"[[releases/alphabets-400yen]]\"."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "black-cube",
+  "kind": "venue",
+  "title": "Black Cube",
+  "name": "Black Cube",
+  "venue_kind": "gallery",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Nomadic Denver contemporary art museum. Hosted the Bliss Body tribute memorial for Colin in March 2018."
+}

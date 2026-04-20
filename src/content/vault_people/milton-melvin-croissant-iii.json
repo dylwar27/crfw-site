@@ -1,0 +1,18 @@
+{
+  "id": "milton-melvin-croissant-iii",
+  "kind": "person",
+  "title": "Milton Melvin Croissant III",
+  "display_name": "Milton Melvin Croissant III",
+  "aliases": [],
+  "role_summary": "Video collaborator; 2012 'Mel Gibson and hot dogs' collaboration with Colin.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

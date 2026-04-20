@@ -1,0 +1,33 @@
+{
+  "kind": "release",
+  "id": "alphabets-jeanjets",
+  "slug": "alphabets-jeanjets",
+  "title": "JEANJETS",
+  "preservedTitle": "JEANJETS",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_date": "2012-04-06",
+  "release_year": 2012,
+  "canonical_url": "https://alphabets.bandcamp.com/album/jeanjets",
+  "cover_path": "_Documentation/bandcamp/alphabets__jeanjets/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__jeanjets"
+  ],
+  "tracks": [
+    "tracks/alphabets-jeanjets-01-gulfstream-iv",
+    "tracks/alphabets-jeanjets-02-diamondii",
+    "tracks/alphabets-jeanjets-03-wulf-ta-154-night-fighter",
+    "tracks/alphabets-jeanjets-04-f22-raptor",
+    "tracks/alphabets-jeanjets-05-731-falcon-20f",
+    "tracks/alphabets-jeanjets-06-astra-sp"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# JEANJETS\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2012-04-06  \n**Bandcamp:** https://alphabets.bandcamp.com/album/jeanjets  \n**Tracks:** 6  \n\n> JEANJETS by alphabets, released 06 April 2012\n> \n> 1. GULFSTREAM IV\n> 2. DIAMONDII\n> 3. WULF TA 154 night fighter\n> 4. F22 RAPTOR\n> 5. 731 FALCON 20F\n> 6. ASTRA SP\n> \n> PRO-SURVIVAL / HIGH ALTITUDE DANCEGENRE / LIGHT SPEED / #FLIGHT OF THA JEANJETS"
+}

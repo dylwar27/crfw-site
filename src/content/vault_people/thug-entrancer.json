@@ -1,0 +1,20 @@
+{
+  "id": "thug-entrancer",
+  "kind": "person",
+  "title": "Thug Entrancer",
+  "display_name": "Thug Entrancer",
+  "aliases": [
+    "Ryan McRyhew"
+  ],
+  "role_summary": "Alias redirecting to Ryan McRyhew's artist name.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-cave-rave-03-cat-tats",
+  "slug": "alphabets-cave-rave-03-cat-tats",
+  "title": "CAT TATS",
+  "preservedTitle": "CAT TATS",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-cave-rave",
+  "project": "projects/alphabets",
+  "position": 3,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# CAT TATS\n\nTrack 3 from \"[[releases/alphabets-cave-rave]]\"."
+}

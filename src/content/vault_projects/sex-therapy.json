@@ -1,0 +1,24 @@
+{
+  "id": "sex-therapy",
+  "kind": "project",
+  "title": "Sex Therapy",
+  "name": "Sex Therapy",
+  "aliases": [],
+  "project_kind": "band",
+  "primary_medium": "music",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://sextherapy.bandcamp.com"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Duo with Kathryn Taylor. Bandcamp: sextherapy.bandcamp.com (not yet fully mirrored)."
+}

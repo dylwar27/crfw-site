@@ -1,0 +1,32 @@
+{
+  "id": "killd-by",
+  "kind": "project",
+  "title": "Killd By",
+  "name": "Killd By",
+  "aliases": [
+    "K!lld By",
+    "Killd By Tha Groove",
+    "KBTG"
+  ],
+  "project_kind": "solo_project",
+  "primary_medium": "music",
+  "formed_year": 2014,
+  "dissolved_year": 2017,
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://killdby.bandcamp.com",
+    "https://soundcloud.com/killdby",
+    "https://youtube.com/@colinrfw"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin's primary mature-era recording project. 10 Bandcamp releases 2014–2017."
+}

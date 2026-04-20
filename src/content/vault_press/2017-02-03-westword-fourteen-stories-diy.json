@@ -1,0 +1,37 @@
+{
+  "kind": "press",
+  "id": "2017-02-03-westword-fourteen-stories-diy",
+  "slug": "2017-02-03-westword-fourteen-stories-diy",
+  "title": "Fourteen Stories from Denver DIY",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author_name": "(Westword staff)",
+  "published_date": "2017-02-03",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2017-02-03_westword_fourteen-stories-diy.md",
+  "local_pdf_path": "_Documentation/articles/2017-02-03_westword_fourteen-stories-diy.pdf",
+  "colin_specific": false,
+  "colin_mention_count": 3,
+  "archivePath": [
+    "_Documentation/articles/2017-02-03_westword_fourteen-stories-diy.md",
+    "_Documentation/articles/2017-02-03_westword_fourteen-stories-diy.pdf"
+  ],
+  "tags": [
+    "diy",
+    "rhinoceropolis",
+    "glob",
+    "shutdown"
+  ],
+  "mentions": [
+    "venues/rhinoceropolis",
+    "venues/glob",
+    "events/rhinoceropolis-shutdown-2016",
+    "people/colin-ward"
+  ],
+  "body": "# Fourteen Stories from Denver DIY\n\nDenver DIY oral history after the Rhinoceropolis / Glob shutdowns. Colin appears in the chorus of voices.\n\n**Publication:** Denver Westword  \n**Author:** (Westword staff)  \n**Date:** 2017-02-03  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2017-02-03_westword_fourteen-stories-diy.md`."
+}

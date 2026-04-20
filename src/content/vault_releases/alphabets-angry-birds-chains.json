@@ -1,0 +1,28 @@
+{
+  "kind": "release",
+  "id": "alphabets-angry-birds-chains",
+  "slug": "alphabets-angry-birds-chains",
+  "title": "ANGRY BIRDS CHAINS",
+  "preservedTitle": "ANGRY BIRDS CHAINS",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "single",
+  "release_date": "2013-11-07",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/angry-birds-chains",
+  "cover_path": "_Documentation/bandcamp/alphabets__angry-birds-chains/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__angry-birds-chains"
+  ],
+  "tracks": [
+    "tracks/alphabets-angry-birds-chains-01-angry-birds-chains"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# ANGRY BIRDS CHAINS\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-11-07  \n**Bandcamp:** https://alphabets.bandcamp.com/album/angry-birds-chains  \n**Tracks:** 1  \n\n> ANGRY BIRDS CHAINS by alphabets, released 07 November 2013\n> \n> 1. ANGRY BIRDS CHAINS"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "jane-anne-ferguson",
+  "kind": "person",
+  "title": "Jane Anne Ferguson",
+  "display_name": "Jane Anne Ferguson",
+  "relationship_to_subject": "mother",
+  "role_summary": "Colin's mother. Quoted on the record in the Westword Aquakota tribute article (Feb 2022) and the Meow Wolf Aquakota mini-documentary. Central to the CRFW Fund and the family-side archive.",
+  "created": "2026-04-20",
+  "sensitivity": "restricted",
+  "public_display": false,
+  "confidence": "high",
+  "tags": [
+    "family",
+    "quoted-on-record"
+  ],
+  "related": [
+    "people/colin-ward",
+    "funds/crfw-fund"
+  ],
+  "notes_private": "Any public inclusion requires explicit Dyl-mediated approval per instance.\nHolds the family-side photo/video/journal archive."
+}

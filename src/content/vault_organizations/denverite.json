@@ -1,0 +1,14 @@
+{
+  "id": "denverite",
+  "kind": "organization",
+  "title": "Denverite",
+  "name": "Denverite",
+  "org_kind": "media_publisher",
+  "website": "https://denverite.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Denver news site."
+}

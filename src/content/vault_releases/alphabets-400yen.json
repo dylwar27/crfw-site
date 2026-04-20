@@ -1,0 +1,32 @@
+{
+  "kind": "release",
+  "id": "alphabets-400yen",
+  "slug": "alphabets-400yen",
+  "title": "400YEN",
+  "preservedTitle": "400YEN",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_date": "2013-03-04",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/400yen",
+  "cover_path": "_Documentation/bandcamp/alphabets__400yen/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__400yen"
+  ],
+  "tracks": [
+    "tracks/alphabets-400yen-01-400yen",
+    "tracks/alphabets-400yen-02-on-air-silk-tooth",
+    "tracks/alphabets-400yen-03-museum-security",
+    "tracks/alphabets-400yen-04-hair-pilot",
+    "tracks/alphabets-400yen-05-waver"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# 400YEN\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-03-04  \n**Bandcamp:** https://alphabets.bandcamp.com/album/400yen  \n**Tracks:** 5  \n\n> 400YEN by alphabets, released 04 March 2013\n> \n> 1. 400YEN\n> 2. on air silk tooth\n> 3. museum security\n> 4. hair pilot\n> 5. waver"
+}

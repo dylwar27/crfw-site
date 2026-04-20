@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-recovery-04-true-communication",
+  "slug": "killd-by-recovery-04-true-communication",
+  "title": "True Communication",
+  "preservedTitle": "True Communication",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-recovery",
+  "project": "projects/killd-by",
+  "position": 4,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# True Communication\n\nTrack 4 from \"[[releases/killd-by-recovery]]\"."
+}

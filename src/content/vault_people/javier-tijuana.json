@@ -1,0 +1,18 @@
+{
+  "id": "javier-tijuana",
+  "kind": "person",
+  "title": "Javier Tijuana",
+  "display_name": "Javier Tijuana",
+  "aliases": [],
+  "role_summary": "Posthumous collaborator on *Hillbilly Noir* (2021).",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

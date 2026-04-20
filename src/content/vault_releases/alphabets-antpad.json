@@ -1,0 +1,34 @@
+{
+  "kind": "release",
+  "id": "alphabets-antpad",
+  "slug": "alphabets-antpad",
+  "title": "antPAD",
+  "preservedTitle": "antPAD",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2012-04-20",
+  "release_year": 2012,
+  "canonical_url": "https://alphabets.bandcamp.com/album/antpad",
+  "cover_path": "_Documentation/bandcamp/alphabets__antpad/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__antpad"
+  ],
+  "tracks": [
+    "tracks/alphabets-antpad-01-oceangun",
+    "tracks/alphabets-antpad-02-claw",
+    "tracks/alphabets-antpad-03-roomkey",
+    "tracks/alphabets-antpad-04-floor",
+    "tracks/alphabets-antpad-05-treepunk",
+    "tracks/alphabets-antpad-06-see-weed",
+    "tracks/alphabets-antpad-07-rar-uzi"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# antPAD\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2012-04-20  \n**Bandcamp:** https://alphabets.bandcamp.com/album/antpad  \n**Tracks:** 7  \n\n> antPAD by alphabets, released 20 April 2012\n> \n> 1. oceangun\n> 2. claw\n> 3. roomkey\n> 4. floor\n> 5. #treepunk\n> 6. see weed\n> 7. .rar uzi\n> \n> PURPLE RAZZ 4 DAMP FOREST FLOORS / CANOPY VAMPS ONNA ICEY EYELASH #DENVER2012 TREEPUNK TOUR PROMO / 4:20 / DANCEGAME ANTQUEEN"
+}

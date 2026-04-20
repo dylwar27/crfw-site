@@ -1,0 +1,28 @@
+{
+  "kind": "release",
+  "id": "killd-by-uya-050",
+  "slug": "killd-by-uya-050",
+  "title": "uya-050",
+  "preservedTitle": "uya-050",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "single",
+  "release_date": "2016-09-22",
+  "release_year": 2016,
+  "canonical_url": "https://killdby.bandcamp.com/album/uya-050",
+  "cover_path": "_Documentation/bandcamp/killd_by__uya-050/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__uya-050"
+  ],
+  "tracks": [
+    "tracks/killd-by-uya-050-01-uya-050"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# uya-050\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2016-09-22  \n**Bandcamp:** https://killdby.bandcamp.com/album/uya-050  \n**Tracks:** 1  \n\n> uya-050 by killd by, released 22 September 2016\n> \n> 1. uya-050"
+}

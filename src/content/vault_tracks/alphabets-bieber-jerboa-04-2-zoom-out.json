@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-bieber-jerboa-04-2-zoom-out",
+  "slug": "alphabets-bieber-jerboa-04-2-zoom-out",
+  "title": "%%2 zoom out",
+  "preservedTitle": "%%2 zoom out",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-bieber-jerboa",
+  "project": "projects/alphabets",
+  "position": 4,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# %%2 zoom out\n\nTrack 4 from \"[[releases/alphabets-bieber-jerboa]]\"."
+}

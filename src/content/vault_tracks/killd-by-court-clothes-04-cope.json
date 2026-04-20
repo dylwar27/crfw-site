@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-court-clothes-04-cope",
+  "slug": "killd-by-court-clothes-04-cope",
+  "title": "COPE",
+  "preservedTitle": "COPE_",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-court-clothes",
+  "project": "projects/killd-by",
+  "position": 4,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# COPE\n\n*(Preserved title: `COPE_`)*\n\nTrack 4 from \"[[releases/killd-by-court-clothes]]\"."
+}

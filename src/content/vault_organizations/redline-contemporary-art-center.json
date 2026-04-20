@@ -1,0 +1,14 @@
+{
+  "id": "redline-contemporary-art-center",
+  "kind": "organization",
+  "title": "RedLine Contemporary Art Center",
+  "name": "RedLine Contemporary Art Center",
+  "org_kind": "arts_center",
+  "website": "https://redlineart.org",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Denver contemporary art nonprofit; host of the CRFW Fund."
+}

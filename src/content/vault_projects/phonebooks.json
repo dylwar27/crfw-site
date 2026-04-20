@@ -1,0 +1,22 @@
+{
+  "id": "phonebooks",
+  "kind": "project",
+  "title": "Phonebooks",
+  "name": "Phonebooks",
+  "aliases": [],
+  "project_kind": "band",
+  "primary_medium": "music",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Early project with Stephan Herrera. Archive folder: BIEBER JERBOA_2010_[phonebooks]."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "blurb",
+  "kind": "organization",
+  "title": "Blurb",
+  "name": "Blurb",
+  "org_kind": "media_publisher",
+  "website": "https://www.blurb.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Photo-book platform. Hosts Mark Sink's *killd_by* photo book."
+}

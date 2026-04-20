@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-cave-rave-08-cave-rave",
+  "slug": "alphabets-cave-rave-08-cave-rave",
+  "title": "CAVE RAVE",
+  "preservedTitle": "CAVE RAVE",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-cave-rave",
+  "project": "projects/alphabets",
+  "position": 8,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# CAVE RAVE\n\nTrack 8 from \"[[releases/alphabets-cave-rave]]\"."
+}

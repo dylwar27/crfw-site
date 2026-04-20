@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-cave-rave-06-snake-lady",
+  "slug": "alphabets-cave-rave-06-snake-lady",
+  "title": "SNAKE LADY",
+  "preservedTitle": "SNAKE LADY",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-cave-rave",
+  "project": "projects/alphabets",
+  "position": 6,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# SNAKE LADY\n\nTrack 6 from \"[[releases/alphabets-cave-rave]]\"."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "everybodywiki",
+  "kind": "organization",
+  "title": "EverybodyWiki",
+  "name": "EverybodyWiki",
+  "org_kind": "media_publisher",
+  "website": "https://en.everybodywiki.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Wiki mirror; source of the canonical Colin Ward biography page."
+}

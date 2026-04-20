@@ -1,0 +1,35 @@
+{
+  "kind": "press",
+  "id": "2018-03-14-westword-black-cube-memorial-slideshow",
+  "slug": "2018-03-14-westword-black-cube-memorial-slideshow",
+  "title": "Black Cube slideshow honoring Colin Ward",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author_name": "(Westword staff)",
+  "published_date": "2018-03-14",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2018-03-14_westword_black-cube-memorial-slideshow.md",
+  "local_pdf_path": "_Documentation/articles/2018-03-14_westword_black-cube-memorial-slideshow.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 9,
+  "archivePath": [
+    "_Documentation/articles/2018-03-14_westword_black-cube-memorial-slideshow.md",
+    "_Documentation/articles/2018-03-14_westword_black-cube-memorial-slideshow.pdf"
+  ],
+  "tags": [
+    "memorial",
+    "black-cube",
+    "slideshow"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "events/black-cube-memorial-2018",
+    "venues/black-cube"
+  ],
+  "body": "# Black Cube slideshow honoring Colin Ward\n\nCoverage of the Black Cube slideshow event honoring Colin.\n\n**Publication:** Denver Westword  \n**Author:** (Westword staff)  \n**Date:** 2018-03-14  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2018-03-14_westword_black-cube-memorial-slideshow.md`."
+}

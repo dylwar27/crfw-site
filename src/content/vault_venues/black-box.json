@@ -1,0 +1,19 @@
+{
+  "id": "black-box",
+  "kind": "venue",
+  "title": "Black Box",
+  "name": "Black Box",
+  "venue_kind": "venue",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Denver music venue. Hosted the Raptor Jazz / Ceremony of Life memorial event for Colin."
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "release",
+  "id": "alphabets-bieber-jerboa",
+  "slug": "alphabets-bieber-jerboa",
+  "title": "BIEBER JERBOA",
+  "preservedTitle": "BIEBER JERBOA",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2013-11-07",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/bieber-jerboa",
+  "cover_path": "_Documentation/bandcamp/alphabets__bieber-jerboa/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__bieber-jerboa"
+  ],
+  "tracks": [
+    "tracks/alphabets-bieber-jerboa-01-gel-pens-2010",
+    "tracks/alphabets-bieber-jerboa-02-brain-waves-dance-hall",
+    "tracks/alphabets-bieber-jerboa-03-dream-life-inter-missiles",
+    "tracks/alphabets-bieber-jerboa-04-2-zoom-out",
+    "tracks/alphabets-bieber-jerboa-05-dem-on-ya-k-pep",
+    "tracks/alphabets-bieber-jerboa-06-toy-lemurs",
+    "tracks/alphabets-bieber-jerboa-07-aah-real-monsters",
+    "tracks/alphabets-bieber-jerboa-08-cheree-suicide-cover",
+    "tracks/alphabets-bieber-jerboa-09-let-go-of-stress"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# BIEBER JERBOA\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-11-07  \n**Bandcamp:** https://alphabets.bandcamp.com/album/bieber-jerboa  \n**Tracks:** 9  \n\n> BIEBER JERBOA by alphabets, released 07 November 2013\n> \n> 1. GEL PENS 2010\n> 2. BRAIN WAVES DANCE HALL\n> 3. DREAM LIFE inter missiles\n> 4. %%2 zoom out\n> 5. DEM ON YA k pep\n> 6. toy lemurs\n> 7. aah real monsters\n> 8. CHEREE (suicide cover)\n> 9. LET GO OF STRESS\n> \n> ART BY ERIKO TSOGO \r\n> Dance, electronic, glam, experimen"
+}

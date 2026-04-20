@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-air-mall-3-01-air-mall",
+  "slug": "alphabets-air-mall-3-01-air-mall",
+  "title": "air mall",
+  "preservedTitle": "air mall",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-air-mall-3",
+  "project": "projects/alphabets",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# air mall\n\nTrack 1 from \"[[releases/alphabets-air-mall-3]]\"."
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-trapped-in-tha-back-of-a-jeep-02-monster-energy",
+  "slug": "alphabets-trapped-in-tha-back-of-a-jeep-02-monster-energy",
+  "title": "monster energy",
+  "preservedTitle": "monster energy",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-trapped-in-tha-back-of-a-jeep",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# monster energy\n\nTrack 2 from \"[[releases/alphabets-trapped-in-tha-back-of-a-jeep]]\"."
+}

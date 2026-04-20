@@ -1,0 +1,36 @@
+{
+  "kind": "press",
+  "id": "2015-02-03-westword-100-colorado-creatives-colin-ward",
+  "slug": "2015-02-03-westword-100-colorado-creatives-colin-ward",
+  "title": "100 Colorado Creatives: Colin Ward",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author": "people/bree-davies",
+  "author_name": "Bree Davies",
+  "published_date": "2015-02-03",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2015-02-03_westword_100-colorado-creatives-colin-ward.md",
+  "local_pdf_path": "_Documentation/articles/2015-02-03_westword_100-colorado-creatives-colin-ward.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 15,
+  "archivePath": [
+    "_Documentation/articles/2015-02-03_westword_100-colorado-creatives-colin-ward.md",
+    "_Documentation/articles/2015-02-03_westword_100-colorado-creatives-colin-ward.pdf"
+  ],
+  "tags": [
+    "profile",
+    "creatives-100"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/killd-by",
+    "projects/alphabets",
+    "people/bree-davies"
+  ],
+  "body": "# 100 Colorado Creatives: Colin Ward\n\nLong-form Q&A / profile naming Colin one of Westword's 100 Colorado Creatives.\n\n**Publication:** Denver Westword  \n**Author:** Bree Davies  \n**Date:** 2015-02-03  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2015-02-03_westword_100-colorado-creatives-colin-ward.md`."
+}

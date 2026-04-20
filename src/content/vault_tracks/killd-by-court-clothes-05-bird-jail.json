@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-court-clothes-05-bird-jail",
+  "slug": "killd-by-court-clothes-05-bird-jail",
+  "title": "birD jaiL",
+  "preservedTitle": "birD_jaiL",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-court-clothes",
+  "project": "projects/killd-by",
+  "position": 5,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# birD jaiL\n\n*(Preserved title: `birD_jaiL`)*\n\nTrack 5 from \"[[releases/killd-by-court-clothes]]\"."
+}

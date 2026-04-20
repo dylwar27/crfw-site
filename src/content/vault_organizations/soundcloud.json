@@ -1,0 +1,14 @@
+{
+  "id": "soundcloud",
+  "kind": "organization",
+  "title": "SoundCloud",
+  "name": "SoundCloud",
+  "org_kind": "media_publisher",
+  "website": "https://soundcloud.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Audio distribution platform; hosts soundcloud.com/killdby."
+}

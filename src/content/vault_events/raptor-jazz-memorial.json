@@ -1,0 +1,17 @@
+{
+  "id": "raptor-jazz-memorial",
+  "kind": "event",
+  "title": "Raptor Jazz — A Ceremony of Life for Colin Ward",
+  "event_kind": "memorial",
+  "date": "2018",
+  "venue": "venues/black-box",
+  "participants": [],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Memorial event at the Black Box."
+}

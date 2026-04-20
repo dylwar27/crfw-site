@@ -1,0 +1,24 @@
+{
+  "id": "aquakota",
+  "kind": "project",
+  "title": "Aquakota",
+  "name": "Aquakota",
+  "aliases": [],
+  "project_kind": "installation",
+  "primary_medium": "installation art",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://credits.meowwolf.com/convergence-station/c-street/aquakota/"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Meow Wolf Convergence Station installation on C Street — 'a futuristic nightclub run by alien lemurs.' Co-designed by Colin and Pepe Apantenco; built posthumously by a 6-person creative team in Colin's honor. Opened September 17, 2021. Feb 22, 2022 tribute event."
+}

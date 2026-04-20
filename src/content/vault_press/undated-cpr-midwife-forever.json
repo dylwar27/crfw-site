@@ -1,0 +1,32 @@
+{
+  "kind": "press",
+  "id": "undated-cpr-midwife-forever",
+  "slug": "undated-cpr-midwife-forever",
+  "title": "Colorado Public Radio — Midwife Forever (mention)",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "press_kind": "article",
+  "publication": "organizations/cpr",
+  "publication_name": "Colorado Public Radio",
+  "author_name": "(CPR staff)",
+  "local_md_path": "_Documentation/articles/undated_cpr_midwife-forever.md",
+  "local_pdf_path": "_Documentation/articles/undated_cpr_midwife-forever.pdf",
+  "colin_specific": false,
+  "colin_mention_count": 1,
+  "archivePath": [
+    "_Documentation/articles/undated_cpr_midwife-forever.md",
+    "_Documentation/articles/undated_cpr_midwife-forever.pdf"
+  ],
+  "tags": [
+    "cpr",
+    "midwife",
+    "collaborator"
+  ],
+  "mentions": [
+    "people/madeline-johnston",
+    "people/colin-ward"
+  ],
+  "body": "# Colorado Public Radio — Midwife Forever (mention)\n\nCPR coverage of Madeline Johnston (Midwife) referencing Colin as collaborator.\n\n**Publication:** Colorado Public Radio  \n**Author:** (CPR staff)  \n**Date:** undated  \n\nFull scraped text is at `_Documentation/articles/undated_cpr_midwife-forever.md`."
+}

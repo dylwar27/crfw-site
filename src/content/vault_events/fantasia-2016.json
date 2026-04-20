@@ -1,0 +1,20 @@
+{
+  "id": "fantasia-2016",
+  "kind": "event",
+  "title": "Fantasia 2016",
+  "event_kind": "show",
+  "date": "2016",
+  "venue": "venues/rhinoceropolis",
+  "participants": [
+    "people/colin-ward",
+    "people/ken-hamblin-iii"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Photographed by Ken Hamblin III. Westword's 2018 reopen feature caption: 'Colin Ward and friends welcoming people to Rhinoceropolis for the 2016 edition of Fantasia.'"
+}

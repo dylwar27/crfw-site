@@ -1,0 +1,33 @@
+{
+  "kind": "release",
+  "id": "alphabets-ddr",
+  "slug": "alphabets-ddr",
+  "title": "DDR",
+  "preservedTitle": "DDR",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_date": "2011-11-06",
+  "release_year": 2011,
+  "canonical_url": "https://alphabets.bandcamp.com/album/ddr",
+  "cover_path": "_Documentation/bandcamp/alphabets__ddr/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__ddr"
+  ],
+  "tracks": [
+    "tracks/alphabets-ddr-01-open-frog",
+    "tracks/alphabets-ddr-02-fish-jelly",
+    "tracks/alphabets-ddr-03-turtle-rainbow-bee-eater",
+    "tracks/alphabets-ddr-04-gulls",
+    "tracks/alphabets-ddr-05-dolphin-shark",
+    "tracks/alphabets-ddr-06-seal-sandpipers"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# DDR\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2011-11-06  \n**Bandcamp:** https://alphabets.bandcamp.com/album/ddr  \n**Tracks:** 6  \n\n> DDR by alphabets, released 06 November 2011\n> \n> 1. open / frog\n> 2. fish / jelly\n> 3. turtle / rainbow bee-eater\n> 4. gulls\n> 5. dolphin / shark\n> 6. seal / sandpipers"
+}

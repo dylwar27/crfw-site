@@ -1,0 +1,34 @@
+{
+  "kind": "press",
+  "id": "2018-03-06-westword-best-events-march-2018",
+  "slug": "2018-03-06-westword-best-events-march-2018",
+  "title": "Best events March 2018 (including Colin Ward tribute)",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author_name": "(Westword staff)",
+  "published_date": "2018-03-06",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2018-03-06_westword_best-events-march-2018.md",
+  "local_pdf_path": "_Documentation/articles/2018-03-06_westword_best-events-march-2018.pdf",
+  "colin_specific": false,
+  "colin_mention_count": 4,
+  "archivePath": [
+    "_Documentation/articles/2018-03-06_westword_best-events-march-2018.md",
+    "_Documentation/articles/2018-03-06_westword_best-events-march-2018.pdf"
+  ],
+  "tags": [
+    "listing",
+    "memorial"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "events/black-cube-memorial-2018",
+    "venues/black-cube"
+  ],
+  "body": "# Best events March 2018 (including Colin Ward tribute)\n\nEvents roundup listing the Black Cube memorial slideshow among the month's highlights.\n\n**Publication:** Denver Westword  \n**Author:** (Westword staff)  \n**Date:** 2018-03-06  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2018-03-06_westword_best-events-march-2018.md`."
+}

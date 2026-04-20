@@ -1,0 +1,17 @@
+{
+  "id": "kennedy-cottrell",
+  "kind": "person",
+  "title": "Kennedy Cottrell",
+  "display_name": "Kennedy Cottrell",
+  "role_summary": "Meow Wolf staff photographer.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "press-author"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

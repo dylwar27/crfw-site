@@ -1,0 +1,30 @@
+{
+  "id": "alphabets",
+  "kind": "project",
+  "title": "alphabets",
+  "name": "alphabets",
+  "aliases": [
+    "Alphabets"
+  ],
+  "project_kind": "solo_project",
+  "primary_medium": "music",
+  "formed_year": 2007,
+  "dissolved_year": 2013,
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://alphabets.bandcamp.com",
+    "https://www.mediafire.com/folder/ke7bakdi1t22y/alphabets_music",
+    "https://myspace.com/alphabetsabc"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin's primary solo output 2007–2013; ~47 releases; also served as his live DJ identity."
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-jeanjets-06-astra-sp",
+  "slug": "alphabets-jeanjets-06-astra-sp",
+  "title": "ASTRA SP",
+  "preservedTitle": "ASTRA SP",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-jeanjets",
+  "project": "projects/alphabets",
+  "position": 6,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# ASTRA SP\n\nTrack 6 from \"[[releases/alphabets-jeanjets]]\"."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "meow-wolf-convergence-station",
+  "kind": "venue",
+  "title": "Meow Wolf Convergence Station",
+  "name": "Meow Wolf Convergence Station",
+  "venue_kind": "museum",
+  "address": "1338 1st St",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "opened_year": 2021,
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Meow Wolf's Denver location. Opened September 17, 2021. Hosts the Aquakota installation on C Street, co-designed by Colin."
+}

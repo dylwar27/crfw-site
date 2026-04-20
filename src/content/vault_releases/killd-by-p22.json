@@ -1,0 +1,33 @@
+{
+  "kind": "release",
+  "id": "killd-by-p22",
+  "slug": "killd-by-p22",
+  "title": "P22",
+  "preservedTitle": "P22",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "ep",
+  "release_date": "2016-09-25",
+  "release_year": 2016,
+  "canonical_url": "https://killdby.bandcamp.com/album/p22",
+  "cover_path": "_Documentation/bandcamp/killd_by__p22/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__p22"
+  ],
+  "tracks": [
+    "tracks/killd-by-p22-01-310uu",
+    "tracks/killd-by-p22-02-apt-311",
+    "tracks/killd-by-p22-03-apt11ii",
+    "tracks/killd-by-p22-04-apt314",
+    "tracks/killd-by-p22-05-apt312",
+    "tracks/killd-by-p22-06-apt313"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# P22\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2016-09-25  \n**Bandcamp:** https://killdby.bandcamp.com/album/p22  \n**Tracks:** 6  \n\n> P22 by killd by, released 25 September 2016\n> \n> 1. 310uu\n> 2. apt 311\n> 3. apt11ii\n> 4. apt314\n> 5. apt312\n> 6. apt313\n> \n> atmospheric / lo-fi / cinematic \r\n> dedicated to kim shively\r\n> for her mini-documentary on the subject of P22; the mountain lion trapped in hollywood"
+}

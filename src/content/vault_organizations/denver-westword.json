@@ -1,0 +1,14 @@
+{
+  "id": "denver-westword",
+  "kind": "organization",
+  "title": "Denver Westword",
+  "name": "Denver Westword",
+  "org_kind": "media_publisher",
+  "website": "https://www.westword.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Denver's alt-weekly; the dominant press venue for Colin coverage (Bree Davies, Kyle Harris)."
+}

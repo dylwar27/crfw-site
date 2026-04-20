@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-611-08-dryad",
+  "slug": "alphabets-611-08-dryad",
+  "title": "dryad",
+  "preservedTitle": "dryad",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-611",
+  "project": "projects/alphabets",
+  "position": 8,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# dryad\n\nTrack 8 from \"[[releases/alphabets-611]]\"."
+}

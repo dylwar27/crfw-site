@@ -1,0 +1,39 @@
+{
+  "kind": "press",
+  "id": "2019-12-02-westword-three-years-ghost-ship",
+  "slug": "2019-12-02-westword-three-years-ghost-ship",
+  "title": "Three years after Ghost Ship — Denver DIY retrospective",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author": "people/kyle-harris",
+  "author_name": "Kyle Harris",
+  "published_date": "2019-12-02",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2019-12-02_westword_three-years-ghost-ship.md",
+  "local_pdf_path": "_Documentation/articles/2019-12-02_westword_three-years-ghost-ship.pdf",
+  "colin_specific": false,
+  "colin_mention_count": 5,
+  "archivePath": [
+    "_Documentation/articles/2019-12-02_westword_three-years-ghost-ship.md",
+    "_Documentation/articles/2019-12-02_westword_three-years-ghost-ship.pdf"
+  ],
+  "tags": [
+    "ghost-ship",
+    "rhinoceropolis",
+    "diy",
+    "retrospective"
+  ],
+  "mentions": [
+    "events/ghost-ship-fire-2016",
+    "events/rhinoceropolis-shutdown-2016",
+    "venues/rhinoceropolis",
+    "venues/glob",
+    "people/colin-ward"
+  ],
+  "body": "# Three years after Ghost Ship — Denver DIY retrospective\n\nThree-year retrospective on Ghost Ship and Denver's DIY shutdowns. Colin appears as a named loss.\n\n**Publication:** Denver Westword  \n**Author:** Kyle Harris  \n**Date:** 2019-12-02  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2019-12-02_westword_three-years-ghost-ship.md`."
+}

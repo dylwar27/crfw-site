@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-draw-blood-01-draw-blood",
+  "slug": "killd-by-draw-blood-01-draw-blood",
+  "title": "draw blood",
+  "preservedTitle": "draw blood",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-draw-blood",
+  "project": "projects/killd-by",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# draw blood\n\nTrack 1 from \"[[releases/killd-by-draw-blood]]\"."
+}

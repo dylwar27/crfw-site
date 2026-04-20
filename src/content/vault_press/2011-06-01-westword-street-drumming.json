@@ -1,0 +1,33 @@
+{
+  "kind": "press",
+  "id": "2011-06-01-westword-street-drumming",
+  "slug": "2011-06-01-westword-street-drumming",
+  "title": "Street drumming in Denver",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author_name": "(unattributed)",
+  "published_date": "2011-06-01",
+  "canonical_url": "https://www.westword.com/music/",
+  "local_md_path": "_Documentation/articles/2011-06-01_westword_street-drumming.md",
+  "local_pdf_path": "_Documentation/articles/2011-06-01_westword_street-drumming.pdf",
+  "colin_specific": false,
+  "colin_mention_count": 1,
+  "archivePath": [
+    "_Documentation/articles/2011-06-01_westword_street-drumming.md",
+    "_Documentation/articles/2011-06-01_westword_street-drumming.pdf"
+  ],
+  "tags": [
+    "early",
+    "street-drumming",
+    "denver"
+  ],
+  "mentions": [
+    "people/colin-ward"
+  ],
+  "body": "# Street drumming in Denver\n\nEarly coverage mentioning Colin's public drumming practice in Denver.\n\n**Publication:** Denver Westword  \n**Author:** (unattributed)  \n**Date:** 2011-06-01  \n**URL:** https://www.westword.com/music/  \n\nFull scraped text is at `_Documentation/articles/2011-06-01_westword_street-drumming.md`."
+}
