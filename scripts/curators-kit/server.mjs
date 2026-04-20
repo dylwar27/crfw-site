@@ -141,6 +141,7 @@ function readEntry(collection, slug) {
 }
 
 // --- List all entries in a collection (lightweight for the list view) ---
+// Enriched with thumbnail info so the grid view can render preview images.
 function listEntries(collection) {
   const { ext } = COLLECTIONS.find(c => c.name === collection);
   const dir = join(contentDir, collection);
@@ -151,8 +152,20 @@ function listEntries(collection) {
       const slug = f.replace(new RegExp(`\\${ext}$`), '');
       const entry = readEntry(collection, slug);
       if (!entry) return null;
-      // Return just what the list view needs
       const d = entry.data;
+      // Thumbnail: prefer cover art / src / poster / first carousel extra
+      let thumb = d.coverArt || d.src || d.poster || null;
+      if (!thumb && Array.isArray(d.carouselExtras) && d.carouselExtras.length > 0) {
+        thumb = d.carouselExtras[0];
+      }
+      // Caption preview: IG caption / summary / transcript snippet
+      const captionPreview = d.caption
+        ? String(d.caption).slice(0, 140)
+        : (d.summary
+          ? String(d.summary).slice(0, 140)
+          : (d.transcript
+            ? String(d.transcript).slice(0, 140).replace(/\s+/g, ' ').trim()
+            : ''));
       return {
         slug, collection,
         title: d.title || d.name || slug,
@@ -160,6 +173,9 @@ function listEntries(collection) {
         project: d.project || '',
         published: d.published !== false,
         format: d.format || d.kind || '',
+        thumb,
+        captionPreview,
+        tags: Array.isArray(d.tags) ? d.tags : [],
       };
     })
     .filter(Boolean);
@@ -259,11 +275,30 @@ function setFrontmatterArray(fm, key, arr) {
 }
 
 // --- Git commit ---
+function collectionFileExt(collection) {
+  return ['photos','videos','voice_memos','people'].includes(collection) ? 'json' : 'md';
+}
+
 function commitChange(collection, slug, changed) {
-  const relPath = `src/content/${collection}/${slug}.${collection === 'photos' || collection === 'videos' || collection === 'voice_memos' || collection === 'people' ? 'json' : 'md'}`;
+  const relPath = `src/content/${collection}/${slug}.${collectionFileExt(collection)}`;
   try {
     execSync(`git add ${JSON.stringify(relPath)}`, { cwd: repo });
     const msg = `CMS: edit ${collection}/${slug} (${changed.join(', ')})`;
+    execSync(`git commit -m ${JSON.stringify(msg)}`, { cwd: repo });
+    return { committed: true, message: msg };
+  } catch (err) {
+    return { committed: false, error: err.message };
+  }
+}
+
+// One git commit covering N entries — used by the bulk endpoint.
+function commitBulk(collection, slugs, summary) {
+  try {
+    for (const slug of slugs) {
+      const relPath = `src/content/${collection}/${slug}.${collectionFileExt(collection)}`;
+      execSync(`git add ${JSON.stringify(relPath)}`, { cwd: repo });
+    }
+    const msg = `CMS: bulk ${summary} — ${slugs.length} ${collection}`;
     execSync(`git commit -m ${JSON.stringify(msg)}`, { cwd: repo });
     return { committed: true, message: msg };
   } catch (err) {
@@ -288,6 +323,60 @@ const server = createServer(async (req, res) => {
   // --- API routes ---
   if (p === '/api/collections') {
     return json(res, 200, COLLECTIONS.map(c => ({ name: c.name, editable: c.editable })));
+  }
+
+  // --- Bulk write (v2): apply one patch to many slugs, one commit ---
+  if (p === '/api/bulk' && req.method === 'POST') {
+    try {
+      const body = await readBody(req);
+      const { collection, slugs, patch, summary } = JSON.parse(body);
+      if (!Array.isArray(slugs) || slugs.length === 0) {
+        return json(res, 400, { error: 'slugs required' });
+      }
+      if (!COLLECTIONS.find(c => c.name === collection)) {
+        return json(res, 404, { error: 'unknown collection' });
+      }
+      const results = { updated: [], unchanged: [], errors: [] };
+      for (const slug of slugs) {
+        try {
+          const r = writeEntry(collection, slug, patch || {}, undefined);
+          if (r.changed.length === 0) results.unchanged.push(slug);
+          else results.updated.push({ slug, changed: r.changed });
+        } catch (err) {
+          results.errors.push({ slug, error: err.message });
+        }
+      }
+      // Single git commit covering all of them
+      let commitRes = null;
+      if (results.updated.length > 0) {
+        const summ = summary || `patch ${Object.keys(patch || {}).join(',') || 'noop'}`;
+        commitRes = commitBulk(collection, results.updated.map(u => u.slug), summ);
+      }
+      return json(res, 200, { ...results, commit: commitRes });
+    } catch (err) {
+      return json(res, 500, { error: err.message });
+    }
+  }
+
+  // --- Media proxy: serve files from public/media/ to the CMS UI ---
+  if (p.startsWith('/media/')) {
+    const relPath = p.slice('/media/'.length);
+    const mediaFile = join(repo, 'public', 'media', relPath);
+    const normalized = resolve(mediaFile);
+    if (!normalized.startsWith(join(repo, 'public'))) {
+      res.writeHead(403); return res.end('Forbidden');
+    }
+    if (!existsSync(normalized) || statSync(normalized).isDirectory()) {
+      res.writeHead(404); return res.end('Not found');
+    }
+    const ext = extname(normalized).toLowerCase();
+    const mime = {
+      '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
+      '.gif': 'image/gif', '.webp': 'image/webp', '.svg': 'image/svg+xml',
+      '.mp4': 'video/mp4', '.mov': 'video/quicktime', '.webm': 'video/webm',
+    }[ext] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': mime, 'Cache-Control': 'max-age=3600' });
+    return res.end(readFileSync(normalized));
   }
 
   if (p.startsWith('/api/entries/')) {

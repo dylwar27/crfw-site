@@ -10,6 +10,10 @@ const state = {
   current: null,     // full entry with editableFields
   dirty: false,
   search: '',
+  // v2 additions
+  viewMode: 'list',          // 'list' | 'grid'
+  selected: new Set(),       // Set<slug> for multi-select
+  filterPublished: 'all',    // 'all' | 'published' | 'unpublished'
 };
 
 // ---------------------------------------------------------------
@@ -44,6 +48,9 @@ async function selectCollection(name) {
   state.selectedSlug = null;
   state.dirty = false;
   state.current = null;
+  state.selected.clear();
+  // Default to grid view for photos + videos (visual collections)
+  state.viewMode = (name === 'photos' || name === 'videos') ? 'grid' : 'list';
   listTitle.textContent = name.replace(/_/g, ' ');
   document.querySelectorAll('#collections button').forEach(b =>
     b.classList.toggle('active', b.dataset.collection === name));
@@ -51,44 +58,238 @@ async function selectCollection(name) {
   state.entries = await fetch(`${API}/entries/${name}`).then(r => r.json());
   // Sort newest first
   state.entries.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  renderToolbar();
   renderList();
-  updateSidebarCounts();
+}
+
+function currentlyFiltered() {
+  const q = state.search.toLowerCase().trim();
+  return state.entries.filter(e => {
+    if (state.filterPublished === 'published' && !e.published) return false;
+    if (state.filterPublished === 'unpublished' && e.published) return false;
+    if (!q) return true;
+    return (
+      (e.title || '').toLowerCase().includes(q) ||
+      (e.project || '').toLowerCase().includes(q) ||
+      (e.captionPreview || '').toLowerCase().includes(q) ||
+      (e.slug || '').toLowerCase().includes(q) ||
+      (e.tags || []).some(t => t.toLowerCase().includes(q))
+    );
+  });
+}
+
+function renderToolbar() {
+  const toolbar = $('list-toolbar');
+  if (!toolbar) return;
+  const total = state.entries.length;
+  const pub = state.entries.filter(e => e.published).length;
+  const draft = total - pub;
+  toolbar.innerHTML = `
+    <div class="toolbar-row">
+      <div class="toolbar-stat"><strong>${total}</strong> total · ${pub} published · ${draft} draft</div>
+      <div class="toolbar-spacer"></div>
+      <button class="view-toggle ${state.viewMode === 'list' ? 'active' : ''}" data-view="list" title="List view">☰</button>
+      <button class="view-toggle ${state.viewMode === 'grid' ? 'active' : ''}" data-view="grid" title="Grid view">▦</button>
+    </div>
+    <div class="toolbar-row">
+      <select class="status-filter" id="status-filter">
+        <option value="all" ${state.filterPublished === 'all' ? 'selected' : ''}>All status</option>
+        <option value="published" ${state.filterPublished === 'published' ? 'selected' : ''}>Published only</option>
+        <option value="unpublished" ${state.filterPublished === 'unpublished' ? 'selected' : ''}>Unpublished only</option>
+      </select>
+    </div>`;
+  toolbar.querySelectorAll('.view-toggle').forEach(btn =>
+    btn.addEventListener('click', () => {
+      state.viewMode = btn.dataset.view;
+      state.selected.clear();
+      renderToolbar();
+      renderList();
+    }));
+  const sf = toolbar.querySelector('#status-filter');
+  if (sf) sf.addEventListener('change', e => {
+    state.filterPublished = e.target.value;
+    renderList();
+  });
 }
 
 function renderList() {
-  const q = state.search.toLowerCase().trim();
-  const filtered = q
-    ? state.entries.filter(e =>
-        (e.title || '').toLowerCase().includes(q) ||
-        (e.project || '').toLowerCase().includes(q) ||
-        (e.slug || '').toLowerCase().includes(q))
-    : state.entries;
+  const filtered = currentlyFiltered();
   listEl.innerHTML = '';
+  listEl.className = 'entry-list view-' + state.viewMode;
   if (filtered.length === 0) {
-    listEl.innerHTML = `<div style="padding: 20px; color: var(--ink-dim); font-family: var(--mono); font-size: 12px;">No entries match</div>`;
+    listEl.innerHTML = `<div class="list-empty">No entries match</div>`;
+    renderBulkBar();
     return;
   }
+  if (state.viewMode === 'grid') {
+    renderGridView(filtered);
+  } else {
+    renderListView(filtered);
+  }
+  renderBulkBar();
+}
+
+function renderListView(filtered) {
   for (const e of filtered) {
-    const item = document.createElement('button');
-    item.className = 'entry-item' + (e.published ? '' : ' unpublished');
+    const item = document.createElement('div');
+    item.className = 'entry-item' + (e.published ? '' : ' unpublished') +
+      (state.selectedSlug === e.slug ? ' active' : '') +
+      (state.selected.has(e.slug) ? ' selected' : '');
     item.dataset.slug = e.slug;
-    if (state.selectedSlug === e.slug) item.classList.add('active');
     item.innerHTML = `
-      <div class="entry-title">${escapeHtml(e.title || e.slug)}</div>
-      <div class="entry-meta">
-        <span>${escapeHtml(e.date || '')}</span>
-        <span>${escapeHtml(e.project || '')}</span>
-        ${e.format ? `<span>${escapeHtml(e.format)}</span>` : ''}
+      <label class="entry-check"><input type="checkbox" ${state.selected.has(e.slug) ? 'checked' : ''}/></label>
+      <div class="entry-body">
+        <div class="entry-title">${escapeHtml(e.title || e.slug)}</div>
+        <div class="entry-meta">
+          <span>${escapeHtml(e.date || '')}</span>
+          <span>${escapeHtml(e.project || '')}</span>
+          ${e.format ? `<span>${escapeHtml(e.format)}</span>` : ''}
+        </div>
       </div>`;
-    item.addEventListener('click', () => selectEntry(e.slug));
+    item.querySelector('input[type=checkbox]').addEventListener('change', ev => {
+      ev.stopPropagation();
+      if (ev.target.checked) state.selected.add(e.slug); else state.selected.delete(e.slug);
+      item.classList.toggle('selected', ev.target.checked);
+      renderBulkBar();
+    });
+    item.querySelector('.entry-body').addEventListener('click', () => selectEntry(e.slug));
     listEl.appendChild(item);
   }
 }
 
-function updateSidebarCounts() {
-  // Show count of entries per collection (poll all in parallel; cheap)
-  // Skipped for v1 simplicity — just show the selected collection's count.
-  // TODO v2: add per-collection counts.
+function renderGridView(filtered) {
+  for (const e of filtered) {
+    const item = document.createElement('div');
+    item.className = 'grid-item' + (e.published ? '' : ' unpublished') +
+      (state.selected.has(e.slug) ? ' selected' : '') +
+      (state.selectedSlug === e.slug ? ' active' : '');
+    item.dataset.slug = e.slug;
+    const thumbUrl = e.thumb ? (e.thumb.startsWith('/media/') ? e.thumb : '/media/' + e.thumb.replace(/^\//, '')) : '';
+    const thumbHtml = thumbUrl
+      ? `<img class="grid-thumb" src="${escapeHtml(thumbUrl)}" alt="" loading="lazy" />`
+      : `<div class="grid-thumb grid-thumb-empty">${escapeHtml((e.format || e.title || '').slice(0, 16))}</div>`;
+    item.innerHTML = `
+      <label class="grid-check"><input type="checkbox" ${state.selected.has(e.slug) ? 'checked' : ''}/></label>
+      <div class="grid-pub-badge ${e.published ? 'is-pub' : 'is-draft'}" title="${e.published ? 'Published' : 'Draft'}">${e.published ? '●' : '○'}</div>
+      ${thumbHtml}
+      <div class="grid-caption">
+        <div class="grid-title">${escapeHtml(e.title || e.slug)}</div>
+        <div class="grid-meta">${escapeHtml(e.date || '')} · ${escapeHtml(e.project || '—')}</div>
+        ${e.captionPreview ? `<div class="grid-preview">${escapeHtml(e.captionPreview)}</div>` : ''}
+      </div>`;
+    item.querySelector('input[type=checkbox]').addEventListener('change', ev => {
+      ev.stopPropagation();
+      if (ev.target.checked) state.selected.add(e.slug); else state.selected.delete(e.slug);
+      item.classList.toggle('selected', ev.target.checked);
+      renderBulkBar();
+    });
+    // Click anywhere on the card (not the checkbox) opens the editor
+    item.addEventListener('click', ev => {
+      if (ev.target.closest('.grid-check')) return;
+      selectEntry(e.slug);
+    });
+    listEl.appendChild(item);
+  }
+}
+
+function renderBulkBar() {
+  const bar = $('bulk-bar');
+  if (!bar) return;
+  const n = state.selected.size;
+  if (n === 0) { bar.hidden = true; bar.innerHTML = ''; return; }
+  bar.hidden = false;
+  const uniqueProjects = [...new Set(state.entries.map(e => e.project).filter(Boolean))];
+  bar.innerHTML = `
+    <span class="bulk-count"><strong>${n}</strong> selected</span>
+    <button class="bulk-btn bulk-publish" title="Set published: true">▶ Publish</button>
+    <button class="bulk-btn bulk-unpublish" title="Set published: false">■ Unpublish</button>
+    <span class="bulk-sep">·</span>
+    <label class="bulk-inline">
+      <span>Project:</span>
+      <select class="bulk-project-sel">
+        <option value="">—</option>
+        ${uniqueProjects.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('')}
+      </select>
+      <button class="bulk-btn bulk-set-project">Set</button>
+    </label>
+    <label class="bulk-inline">
+      <span>Add tag:</span>
+      <input type="text" class="bulk-tag-input" placeholder="e.g. reviewed" />
+      <button class="bulk-btn bulk-add-tag">Add</button>
+    </label>
+    <span class="bulk-spacer"></span>
+    <button class="bulk-btn bulk-clear">Clear</button>`;
+
+  bar.querySelector('.bulk-publish').addEventListener('click', () => bulkApply({ published: true }, 'publish'));
+  bar.querySelector('.bulk-unpublish').addEventListener('click', () => bulkApply({ published: false }, 'unpublish'));
+  bar.querySelector('.bulk-set-project').addEventListener('click', () => {
+    const v = bar.querySelector('.bulk-project-sel').value;
+    if (!v) return toast('Pick a project first', true);
+    bulkApply({ project: v }, `set project=${v}`);
+  });
+  bar.querySelector('.bulk-add-tag').addEventListener('click', () => {
+    const tag = bar.querySelector('.bulk-tag-input').value.trim();
+    if (!tag) return toast('Enter a tag first', true);
+    bulkAddTag(tag);
+  });
+  bar.querySelector('.bulk-clear').addEventListener('click', () => {
+    state.selected.clear();
+    renderList();
+  });
+}
+
+async function bulkApply(patch, summary) {
+  const slugs = [...state.selected];
+  const confirmMsg = `${summary} on ${slugs.length} ${state.collection}?`;
+  if (!confirm(confirmMsg)) return;
+  toast(`Applying to ${slugs.length}…`);
+  const r = await fetch(`${API}/bulk`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ collection: state.collection, slugs, patch, summary }),
+  }).then(r => r.json());
+  if (r.error) return toast('Error: ' + r.error, true);
+  // Refresh list with new values (don't reload from server for speed;
+  // patch the in-memory entries directly)
+  for (const u of r.updated) {
+    const e = state.entries.find(x => x.slug === u.slug);
+    if (!e) continue;
+    if ('published' in patch) e.published = patch.published;
+    if ('project' in patch) e.project = patch.project;
+  }
+  state.selected.clear();
+  renderToolbar();
+  renderList();
+  const msg = `${r.updated.length} updated, ${r.unchanged.length} unchanged${r.errors.length ? `, ${r.errors.length} errors` : ''}. ${r.commit?.committed ? 'Committed.' : ''}`;
+  toast(msg, r.errors.length > 0);
+}
+
+async function bulkAddTag(tag) {
+  const slugs = [...state.selected];
+  // Fetch each entry's current tags, append, PATCH via bulk endpoint
+  // (simpler: do individual PATCHes for this one since tags vary per-entry)
+  toast(`Adding tag "${tag}" to ${slugs.length}…`);
+  let ok = 0, err = 0;
+  for (const slug of slugs) {
+    const e = state.entries.find(x => x.slug === slug);
+    if (!e) continue;
+    const nextTags = Array.from(new Set([...(e.tags || []), tag]));
+    const r = await fetch(`${API}/entries/${state.collection}/${slug}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: { tags: nextTags }, commit: false }),
+    }).then(r => r.json()).catch(() => ({ error: 'network' }));
+    if (r.error) err++; else { ok++; e.tags = nextTags; }
+  }
+  // One git commit at the end
+  await fetch(`${API}/bulk`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ collection: state.collection, slugs, patch: {}, summary: `add tag ${tag}` }),
+  });
+  state.selected.clear();
+  renderList();
+  toast(`Added "${tag}" to ${ok}${err ? ` (${err} errors)` : ''}`, err > 0);
 }
 
 // ---------------------------------------------------------------
@@ -125,6 +326,18 @@ function renderEditor() {
 
   parts.push(`<h1 class="editor-title">${escapeHtml(title)}</h1>`);
   parts.push(`<div class="editor-subtitle">${escapeHtml(entry.collection)} / ${escapeHtml(entry.slug)} · ${escapeHtml(entry.path)}</div>`);
+
+  // Media preview (v2) — cover art / src / poster / local video
+  const mediaUrl = d.coverArt || d.src || d.poster || d.localSrc;
+  if (mediaUrl) {
+    const url = mediaUrl.startsWith('/media/') ? mediaUrl : '/media/' + mediaUrl.replace(/^\//, '');
+    const isVideo = /\.(mp4|mov|m4v|webm)$/i.test(mediaUrl);
+    parts.push(`<div class="editor-preview">
+      ${isVideo
+        ? `<video src="${escapeHtml(url)}" controls></video>`
+        : `<img src="${escapeHtml(url)}" alt="" />`}
+    </div>`);
+  }
 
   for (const key of fields) {
     parts.push(renderField(key, d[key]));
@@ -357,6 +570,49 @@ window.addEventListener('beforeunload', e => {
   if (state.dirty) {
     e.preventDefault();
     e.returnValue = '';
+  }
+});
+
+// ---------------------------------------------------------------
+// Keyboard shortcuts (v2)
+// ---------------------------------------------------------------
+//   p / shift-p   publish selected / current
+//   d / shift-d   unpublish (draft) selected / current
+//   j / k         next / prev entry in list
+//   /             focus search
+//   esc           clear selection
+document.addEventListener('keydown', e => {
+  // Don't hijack when typing in an input/textarea
+  const t = e.target;
+  const isInput = t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable;
+  if (isInput && e.key !== 'Escape') return;
+
+  if (e.key === '/') { e.preventDefault(); searchInput.focus(); return; }
+  if (e.key === 'Escape') {
+    if (state.selected.size > 0) {
+      state.selected.clear();
+      renderList();
+      return;
+    }
+  }
+  if (e.key === 'j' || e.key === 'k') {
+    const filtered = currentlyFiltered();
+    if (filtered.length === 0) return;
+    const cur = filtered.findIndex(x => x.slug === state.selectedSlug);
+    const next = e.key === 'j' ? (cur < 0 ? 0 : Math.min(cur + 1, filtered.length - 1))
+                               : (cur <= 0 ? 0 : cur - 1);
+    selectEntry(filtered[next].slug);
+    return;
+  }
+  if (e.key === 'p' || e.key === 'd') {
+    const slugs = state.selected.size > 0 ? [...state.selected] :
+                  (state.selectedSlug ? [state.selectedSlug] : []);
+    if (slugs.length === 0) return;
+    const targetPub = e.key === 'p';
+    e.preventDefault();
+    // Temporarily use state.selected to reuse bulkApply
+    if (state.selected.size === 0) state.selected.add(state.selectedSlug);
+    bulkApply({ published: targetPub }, targetPub ? 'publish' : 'unpublish');
   }
 });
 
