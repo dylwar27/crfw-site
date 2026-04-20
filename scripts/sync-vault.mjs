@@ -32,6 +32,14 @@ const VAULT_PATH = process.env.CRFW_VAULT_PATH || join(
 );
 
 if (!existsSync(VAULT_PATH)) {
+  // In CI the vault isn't available — projected files are already committed.
+  // Exit 0 when --write so `npm run build` can proceed using committed projections.
+  if (write) {
+    console.log(`Vault not found at: ${VAULT_PATH}`);
+    console.log(`Skipping sync — using committed vault projections.`);
+    console.log(`(Set CRFW_VAULT_PATH env var to point at a local vault.)`);
+    process.exit(0);
+  }
   console.error(`Vault not found: ${VAULT_PATH}`);
   console.error(`Set CRFW_VAULT_PATH env var to override.`);
   process.exit(2);
