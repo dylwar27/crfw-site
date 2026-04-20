@@ -730,6 +730,29 @@ a:hover { color: var(--accent-2); }
 }
 
 /* ========================================================
+   Wikilink chips — used in popup body text + vault entity pages
+   ======================================================== */
+.wiki-link {
+  color: var(--accent-2);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 209, 102, 0.35);
+}
+.wiki-link:hover { border-bottom-color: var(--accent-2); }
+.wiki-chip {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  color: var(--ink-dim);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.summary .wiki-link { color: var(--accent-2); text-decoration: none; border-bottom: 1px solid rgba(255,209,102,0.3); }
+.summary .wiki-link:hover { border-bottom-color: var(--accent-2); }
+.summary blockquote { border-left: 3px solid var(--accent-2); margin: 0.5em 0; padding: 0 0 0 12px; color: var(--ink-dim); font-style: italic; }
+.summary ul { padding-left: 1.2em; margin: 0 0 0.5em; }
+
+/* ========================================================
    Dark-mode iOS Safari fixes — viewport-fit cover for notch
    ======================================================== */
 body {

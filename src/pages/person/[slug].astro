@@ -1,0 +1,295 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody, renderInline } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const people = await getCollection('vault_people');
+  return people
+    .filter(p => p.data.public_display !== false)
+    .map(p => ({
+      params: { slug: p.id },
+      props: { person: p },
+    }));
+}
+
+const { person } = Astro.props;
+const d = person.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const [allProjects, allPress] = await Promise.all([
+  getCollection('vault_projects'),
+  getCollection('vault_press'),
+]);
+
+function refSlug(ref: string | undefined) {
+  if (!ref) return '';
+  return String(ref).split('/').at(-1) ?? '';
+}
+
+// Projects this person is connected to (via person.projects or person.primary_project)
+const personProjectSlugs = new Set([
+  ...((d.projects || []).map(refSlug)),
+  ...(d.primary_project ? [refSlug(d.primary_project)] : []),
+]);
+const projects = allProjects.filter(p => personProjectSlugs.has(p.id));
+
+// Press that mentions this person
+const personSlug = person.id;
+const press = allPress.filter(a => {
+  const mentions = (a.data.mentions || []).map(refSlug);
+  return mentions.includes(personSlug);
+});
+
+// External links from contact_public
+const contact = (d.contact_public as Record<string, string | null>) || {};
+const links = Object.entries(contact)
+  .filter(([, v]) => v && String(v).startsWith('http'))
+  .map(([k, v]) => ({ label: k.replace(/_/g, ' '), url: String(v) }));
+
+// Canonical URLs (some entries use this instead)
+const canonicalUrls: string[] = d.canonical_urls || [];
+
+const name = d.display_name || d.title || person.id;
+const bodyHtml = renderBody(d.body || '', BASE);
+---
+<Base title={`${name} — CRFW`}>
+  <article class="person-page">
+    <nav class="person-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/people`}>All people</a>
+    </nav>
+
+    <header class="person-header">
+      <div class="person-kind">person</div>
+      <h1>{name}</h1>
+
+      {d.aliases && d.aliases.length > 0 && (
+        <div class="person-aliases">
+          {d.aliases.join(' · ')}
+        </div>
+      )}
+
+      {d.role_summary && (
+        <div class="person-role" set:html={renderInline(d.role_summary, BASE)} />
+      )}
+
+      {(d.born || d.died) && (
+        <div class="person-dates">
+          {d.born && <span>{d.born.slice(0, 4)}</span>}
+          {d.born && d.died && <span class="date-sep"> – </span>}
+          {d.died && <span>{d.died.slice(0, 4)}</span>}
+        </div>
+      )}
+    </header>
+
+    {projects.length > 0 && (
+      <section class="person-section">
+        <h2>Projects</h2>
+        <ul class="person-projects">
+          {projects.map(p => (
+            <li>
+              <a href={`${BASE}/project/${p.id}`} class="project-link">
+                <span class="proj-name">{p.data.name || p.data.title || p.id}</span>
+                {p.data.formed_year && (
+                  <span class="proj-years">
+                    {p.data.formed_year}{p.data.dissolved_year ? `–${p.data.dissolved_year}` : ''}
+                  </span>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {press.length > 0 && (
+      <section class="person-section">
+        <h2>Press</h2>
+        <ul class="person-press">
+          {press.map(a => (
+            <li>
+              <span class="press-date">{(a.data.published_date || a.data.published_year || '—').toString().slice(0, 10)}</span>
+              {a.data.canonical_url
+                ? <a href={a.data.canonical_url} target="_blank" rel="noopener" class="press-title">{a.data.title}</a>
+                : <span class="press-title">{a.data.title}</span>
+              }
+              {a.data.publication && (
+                <span class="press-pub">
+                  {String(a.data.publication).split('/').at(-1)?.replace(/-/g, ' ')}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {(links.length > 0 || canonicalUrls.length > 0) && (
+      <section class="person-section">
+        <h2>Links</h2>
+        <ul class="person-links">
+          {links.map(l => (
+            <li><a href={l.url} target="_blank" rel="noopener">{l.label}</a></li>
+          ))}
+          {canonicalUrls.map((url: string) => (
+            <li><a href={url} target="_blank" rel="noopener">{url.replace(/^https?:\/\//, '')}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {bodyHtml && (
+      <section class="person-body" set:html={bodyHtml} />
+    )}
+  </article>
+</Base>
+
+<style>
+  .person-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .person-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .person-nav a { color: var(--ink-dim); text-decoration: none; }
+  .person-nav a:hover { color: var(--accent-2); }
+  .person-nav .sep { color: var(--rule); margin: 0 8px; }
+
+  .person-header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+  }
+  .person-kind {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .person-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .person-aliases {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  .person-role {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .person-dates {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+  .date-sep { color: var(--rule); }
+
+  .person-section { margin-bottom: 40px; }
+  .person-section h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .person-projects { list-style: none; padding: 0; margin: 0; }
+  .person-projects li { padding: 5px 0; }
+  .project-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .project-link:hover .proj-name { color: var(--accent-2); }
+  .proj-name { font-family: var(--serif); font-size: 17px; }
+  .proj-years { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+
+  .person-press { list-style: none; padding: 0; margin: 0; }
+  .person-press li {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .press-date { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+  .press-title { font-family: var(--serif); font-size: 16px; color: inherit; text-decoration: none; }
+  a.press-title:hover { color: var(--accent-2); text-decoration: underline; }
+  .press-pub { font-family: var(--mono); font-size: 10px; color: var(--accent-2); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .person-links { list-style: none; padding: 0; margin: 0; }
+  .person-links li { padding: 4px 0; font-family: var(--mono); font-size: 13px; }
+  .person-links a { color: var(--accent-2); text-decoration: none; }
+  .person-links a:hover { text-decoration: underline; }
+
+  /* Body prose */
+  .person-body {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .person-body :global(p) { margin: 0 0 1em; }
+  .person-body :global(h4),
+  .person-body :global(h5) {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 2em 0 0.6em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .person-body :global(blockquote) {
+    border-left: 3px solid var(--accent-2);
+    margin: 1em 0;
+    padding: 0 0 0 16px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .person-body :global(ul) { padding-left: 1.4em; margin: 0 0 1em; }
+  .person-body :global(li) { margin-bottom: 0.3em; }
+  .person-body :global(.wiki-link) { color: var(--accent-2); text-decoration: none; }
+  .person-body :global(.wiki-link:hover) { text-decoration: underline; }
+  .person-body :global(.wiki-chip) {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--ink-dim);
+    background: var(--surface-2, rgba(255,255,255,0.05));
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .person-body :global(a) { color: var(--accent-2); text-decoration: none; }
+  .person-body :global(a:hover) { text-decoration: underline; }
+  .person-body :global(strong) { font-weight: 700; }
+</style>
