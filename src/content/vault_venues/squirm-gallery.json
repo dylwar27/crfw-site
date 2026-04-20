@@ -1,0 +1,26 @@
+{
+  "id": "squirm-gallery",
+  "kind": "venue",
+  "title": "Squirm Gallery",
+  "name": "Squirm Gallery",
+  "venue_kind": "diy_space",
+  "address": "3553 Brighton Blvd",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "opened_year": 2022,
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-diy",
+    "rhinoceropolis-successor"
+  ],
+  "related": [
+    "venues/rhinoceropolis",
+    "people/colin-ward"
+  ],
+  "body": "Denver DIY gallery and performance space that opened at **3553 Brighton Blvd** — the same address as the former [[venues/rhinoceropolis|Rhinoceropolis]]. Most of Squirm's founding members met at Rhinoceropolis; the venue explicitly carries forward Rhinoceropolis's mission of equal weight on music and visual art in a community-inclusive DIY environment.\n\nThe front room serves as gallery and performance space. The back room is a shared artists' workspace with screen and risograph printers, a kiln, darkroom, metalsmithing setup, and open space for art-making.\n\nSquirm won **Westword's \"Best DIY Gallery and Event Space\" in 2024**.\n\n## Relevance to Colin Ward\n\nSquirm is the direct successor to Rhinoceropolis, which was Colin's central creative home from approximately 2010 until its 2016 closure. Several Squirm founders are Rhinoceropolis alumni from Colin's era. The space represents continuity of the scene Colin was part of.\n\n## Sources\n\n- [Westword — Best DIY Gallery and Event Space 2024](https://www.westword.com/best-of-denver/2024/arts-and-entertainment/best-diy-gallery-and-event-space-20275559)\n- [Westword — Squirm opens in former Rhinoceropolis location](https://www.westword.com/arts-culture/new-denver-diy-venue-squirm-opens-in-former-rhinoceropolis-location-18376100/)\n- [Squirm Instagram: @squirmgallery](https://www.instagram.com/squirmgallery/)"
+}

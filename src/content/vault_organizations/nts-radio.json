@@ -1,0 +1,22 @@
+{
+  "id": "nts-radio",
+  "kind": "organization",
+  "title": "NTS Radio",
+  "name": "NTS Radio",
+  "org_kind": "media_publisher",
+  "website": "https://www.nts.live",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "radio",
+    "streaming"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/killd-by"
+  ],
+  "body": "Online radio platform. NTS has a confirmed Killd By artist page at **https://www.nts.live/artists/113356-killd-by** listing shows and mixes.\n\n**Action item (next active pass):** Enumerate every show/mix on the NTS Killd By page and capture via SPN. Also check NTS for tribute shows by Denver artists (2018–2022) that may feature Killd By tracks."
+}

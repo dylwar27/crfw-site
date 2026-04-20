@@ -6,7 +6,13 @@
   "aliases": [],
   "role_summary": "Denver artist and documentary filmmaker; Colin's girlfriend at the time of his death; Aquakota Artist team member. Director of the feature documentary *Buildings Are Heavy* about Denver DIY spaces and gentrification.",
   "primary_project": "projects/aquakota",
+  "contact_public": {
+    "website": "https://www.kimshively.com/",
+    "imdb": "https://www.imdb.com/name/nm3209667/",
+    "instagram": null
+  },
   "created": "2026-04-20",
+  "updated": "2026-04-20",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
@@ -18,6 +24,8 @@
   ],
   "related": [
     "people/colin-ward",
-    "projects/aquakota"
-  ]
+    "projects/aquakota",
+    "venues/rhinoceropolis"
+  ],
+  "body": "Denver multimedia artist and filmmaker. Colin Ward's girlfriend at the time of his death (February 2018), confirmed publicly in the City Cast Denver podcast (August 2021). Member of the Aquakota installation team at Meow Wolf Convergence Station, credited as **Artist** on the official credits page alongside Pepe Apantenco, Anton Krueger, Kathryn Taylor, and Stephan Herrera.\n\n## Documentary: *Buildings Are Heavy*\n\nKim Shively directed the feature documentary *Buildings Are Heavy*, an intimate portrait of Denver artist-run DIY spaces and gentrification. The film's central subjects are three longstanding artist-run spaces and a hundred-year-old bank building in north Denver. The film focuses on how residents react to their changing environment and looming building closures, exploring community and the role art plays in gentrification.\n\n- **Screened:** Denver Month of Video, July 12, 2025\n- **Source:** https://www.denvermov.com/events/buildings-are-heavy-a-documentary-film-by-kim-shively\n\nThis film is **mission-critical** for the CRFW archive. Given Shively's close relationship with Colin and her role building Aquakota, the film almost certainly touches on the Rhinoceropolis/Glob world Colin inhabited. **Action item (Dyl-gated):** Watch this film in full and extract: any on-camera Colin footage or references, which three DIY spaces are depicted, any archival material not yet in the vault.\n\n## Press\n\n- [100 Colorado Creatives: Kim Shively — Westword](https://www.westword.com/arts/100-colorado-creatives-kim-shively-5810559)\n- [Meet Kim Shively — Shoutout Colorado](https://shoutoutcolorado.com/meet-kim-shively-filmmaker-multi-media-artist/)"
 }

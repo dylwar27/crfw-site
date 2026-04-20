@@ -1,0 +1,23 @@
+{
+  "id": "josh-gondrez",
+  "kind": "person",
+  "title": "Josh Gondrez",
+  "display_name": "Josh Gondrez",
+  "role_summary": "Denver artist; co-owner of Leisure Gallery; co-directed the Killd By \"No Energy Vamp\" music video (Spring 2015).",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "archivePath": [],
+  "tags": [
+    "video-collaborator",
+    "denver-diy",
+    "santa-fe-arts-district"
+  ],
+  "related": [
+    "people/colin-ward",
+    "venues/leisure-gallery",
+    "press/2015-spring-tinymixtapes-no-energy-vamp"
+  ],
+  "body": "Denver-based artist; co-owner of Leisure Gallery at 555 Santa Fe Drive. Co-directed and shot the \"No Energy Vamp\" music video for Killd By with Janice Schindler, filmed at Leisure Gallery in Spring 2015."
+}

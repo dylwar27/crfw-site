@@ -1,0 +1,34 @@
+{
+  "id": "killd-by-neotropical",
+  "kind": "release",
+  "title": "Neotropical",
+  "preservedTitle": "Neotropical",
+  "artist": "projects/killd-by",
+  "release_date": "2020-04-03",
+  "label": "organizations/noumenal-loom",
+  "format": [
+    "digital",
+    "cassette"
+  ],
+  "edition": "100 cassette copies",
+  "track_count": 17,
+  "bandcamp": "https://noumenalloom.bandcamp.com/album/killd-by-neotropical",
+  "notes": "Posthumous curation of work recorded 2014–2017 from the Killd By series. Assembled by Colin's friends and collaborators. All proceeds donated to the CRFW Fund at RedLine Contemporary Art Center. Sold as a cassette by Tobira Records and Ear Candy Music in addition to Noumenal Loom's own Bandcamp.",
+  "created": "2026-04-20",
+  "discovered": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "archivePath": [],
+  "tags": [
+    "posthumous",
+    "killd-by-era",
+    "noumenal-loom"
+  ],
+  "related": [
+    "projects/killd-by",
+    "organizations/noumenal-loom",
+    "funds/crfw-fund"
+  ],
+  "body": "Posthumous compilation released April 3, 2020 by Noumenal Loom. Draws from material recorded 2014–2017 across the Killd By catalog. Limited to 100 cassettes. All proceeds benefit the CRFW Fund. Described in press as featuring \"vocoded vox, featherweight synths, scattershot drums and icy timbres.\"\n\n## Sources\n- [Noumenal Loom Bandcamp](https://noumenalloom.bandcamp.com/album/killd-by-neotropical)\n- [Tobira Records](https://tobirarecords.com/collections/nouloo/products/killd-by-neotropical-tape)\n- [Bandcamp Daily feature](https://daily.bandcamp.com/features/colin-ward-interview)"
+}

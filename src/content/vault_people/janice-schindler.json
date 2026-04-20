@@ -1,0 +1,22 @@
+{
+  "id": "janice-schindler",
+  "kind": "person",
+  "title": "Janice Schindler",
+  "display_name": "Janice Schindler",
+  "role_summary": "Denver filmmaker/videographer; co-directed the Killd By \"No Energy Vamp\" music video with Josh Gondrez (Spring 2015).",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "archivePath": [],
+  "tags": [
+    "video-collaborator",
+    "denver-diy"
+  ],
+  "related": [
+    "people/colin-ward",
+    "people/josh-gondrez",
+    "press/2015-spring-tinymixtapes-no-energy-vamp"
+  ],
+  "body": "Co-directed and shot the \"No Energy Vamp\" music video for Killd By with Josh Gondrez, filmed at Leisure Gallery in Spring 2015."
+}

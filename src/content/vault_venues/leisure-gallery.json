@@ -1,0 +1,22 @@
+{
+  "id": "leisure-gallery",
+  "kind": "venue",
+  "title": "Leisure Gallery",
+  "address": "555 Santa Fe Drive, Denver, CO",
+  "neighborhood": "Santa Fe Arts District",
+  "status": "closed",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "archivePath": [],
+  "tags": [
+    "denver-diy",
+    "santa-fe-arts-district"
+  ],
+  "related": [
+    "people/colin-ward",
+    "press/2015-spring-tinymixtapes-no-energy-vamp"
+  ],
+  "body": "Artist-run gallery and studio space at 555 Santa Fe Drive in Denver's Santa Fe Arts District. Co-owned by Josh Gondrez. The \"No Energy Vamp\" music video for Killd By was filmed here in Spring 2015. Described by Westword as \"a modest two-room storefront\" functioning as an artists' studio.\n\n## Source\n- [Westword — Leisure Gallery piece](https://www.westword.com/music/leisure-gallery-offers-a-blank-slate-for-live-music-6886104/)"
+}

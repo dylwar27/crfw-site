@@ -1,0 +1,21 @@
+{
+  "id": "discogs",
+  "kind": "organization",
+  "title": "Discogs",
+  "name": "Discogs",
+  "org_kind": "media_publisher",
+  "website": "https://www.discogs.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "music-database"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/killd-by"
+  ],
+  "body": "Music database and marketplace. Discogs has a confirmed Killd By artist page at **https://www.discogs.com/artist/6264374-killd-by**.\n\n**Action item (next active pass):** Pull the full Discogs page including `Appearances` and `Credits` tabs. Download each release's metadata (catalog number, year, tracklist) into a `CRFW_Discogs.xlsx` workbook. Also search for: `alphabets denver`, `pocketdove`, `tudaloos`, `colin ward denver`."
+}

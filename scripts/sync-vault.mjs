@@ -97,7 +97,7 @@ function parseFrontmatter(fm) {
       out[key] = [];
       i++;
     } else if (rest.startsWith('|')) {
-      // Literal block scalar (common for `summary`, `description`, `mission`)
+      // Literal block scalar — preserve newlines as-is
       let j = i + 1;
       const lit = [];
       while (j < lines.length && (/^\s{2,}/.test(lines[j]) || lines[j] === '')) {
@@ -105,6 +105,21 @@ function parseFrontmatter(fm) {
         j++;
       }
       out[key] = lit.join('\n').replace(/^\n+/, '').replace(/\n+$/, '');
+      i = j;
+    } else if (rest.startsWith('>')) {
+      // Folded block scalar — fold newlines into spaces, blank lines into \n
+      let j = i + 1;
+      const foldLines = [];
+      while (j < lines.length && (/^\s{2,}/.test(lines[j]) || lines[j] === '')) {
+        foldLines.push(lines[j].replace(/^\s{2}/, ''));
+        j++;
+      }
+      // Fold: blank lines become \n; other newlines become spaces
+      out[key] = foldLines.join('\n')
+        .replace(/\n\n+/g, '\0')
+        .replace(/\n/g, ' ')
+        .replace(/\0/g, '\n')
+        .trim();
       i = j;
     } else {
       out[key] = unquote(rest);

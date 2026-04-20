@@ -6,15 +6,19 @@
   "aliases": [
     "Pictureplane"
   ],
-  "role_summary": "Denver musician; scene peer from the Rhinoceropolis era. Colin-related releases include Color Spectrum (Tokyo Drift) and Degenerate (2018).",
+  "role_summary": "Denver musician (Pictureplane); scene peer from the Rhinoceropolis era. Met Colin when Colin was 15 and Travis was 19. Dedicated \"Color Spectrum (Tokyo Drift)\" on Degenerate (2018) to Colin.",
   "created": "2026-04-20",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
+  "archivePath": [],
   "tags": [
-    "living-collaborator"
+    "living-collaborator",
+    "rhinoceropolis-era"
   ],
   "related": [
-    "people/colin-ward"
-  ]
+    "people/colin-ward",
+    "venues/rhinoceropolis"
+  ],
+  "body": "Travis Egedy (Pictureplane) lived at Rhinoceropolis for six years until 2012. He and Colin knew each other for a long time — they met when Colin was fifteen and Egedy was nineteen. After Colin's death, Egedy released the album *Degenerate* (September 2018, Alien Body Music label) and dedicated the track \"Color Spectrum (Tokyo Drift)\" — feat. smrtdeath — to Colin, referencing Colin's online alias \"Tokyo Drift.\" The music video is a tribute to Colin's spirit and artistic presence at Rhinoceropolis. Per a Westword interview: \"Both lyrically and visually, the song and music video are tributes to Ward, a friend and cohort of Egedy's, whose spirit and artistic presence shaped Rhinoceropolis.\"\n\n## Sources\n- [Westword — Pictureplane's Travis Egedy Remembers Rhinoceropolis and Colin Ward (2018)](https://www.westword.com/music/pictureplanes-travis-egedy-remembers-rhinoceropolis-and-colin-ward-in-new-music-video-11031024)\n- [Pictureplane Bandcamp — Color Spectrum (Tokyo Drift)](https://pictureplane.bandcamp.com/track/color-spectrum-tokyo-drift-feat-smrt-death)"
 }
