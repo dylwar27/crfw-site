@@ -86,7 +86,9 @@ const title = d.name || d.title || project.id;
         <ul class="project-members">
           {members.map((m: any) => (
             <li>
-              <span class="member-name">{m.person?.data.display_name || m.person?.data.title || m.personSlug}</span>
+              <a href={`${BASE}/person/${m.personSlug}`} class="member-link">
+                {m.person?.data.display_name || m.person?.data.title || m.personSlug}
+              </a>
               {m.role && <span class="member-role">— {m.role}</span>}
               {m.is_primary && <span class="member-primary">primary</span>}
             </li>
@@ -218,6 +220,8 @@ const title = d.name || d.title || project.id;
     font-family: var(--serif);
     font-size: 16px;
   }
+  .member-link { color: inherit; text-decoration: none; }
+  .member-link:hover { color: var(--accent-2); }
   .member-role { color: var(--ink-dim); }
   .member-primary {
     margin-left: 8px;

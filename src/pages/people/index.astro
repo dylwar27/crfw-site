@@ -1,0 +1,171 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const people = (await getCollection('vault_people'))
+  .filter(p => p.data.public_display !== false)
+  .sort((a, b) => {
+    const nameA = (a.data.display_name || a.data.title || a.id).toLowerCase();
+    const nameB = (b.data.display_name || b.data.title || b.id).toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+// Group by relationship_to_subject tag or a heuristic
+// Tags used: 'subject' (Colin himself), 'family', 'living-collaborator', 'collaborator', etc.
+function groupLabel(p: any): string {
+  const tags: string[] = p.data.tags || [];
+  if (tags.includes('subject')) return 'subject';
+  if (tags.includes('family')) return 'family';
+  if (tags.includes('living-collaborator') || tags.includes('collaborator')) return 'collaborators';
+  if (tags.includes('press') || tags.includes('journalist')) return 'press';
+  return 'other';
+}
+
+const ORDER = ['subject', 'family', 'collaborators', 'press', 'other'];
+const groups: Record<string, typeof people> = {};
+for (const p of people) {
+  const g = groupLabel(p);
+  (groups[g] ??= []).push(p);
+}
+---
+<Base title="People — CRFW">
+  <div class="people-page">
+    <nav class="people-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+    </nav>
+
+    <header class="people-header">
+      <div class="people-eyebrow">Archive</div>
+      <h1>People</h1>
+      <p class="people-sub">{people.length} people connected to Colin's work and world</p>
+    </header>
+
+    {ORDER.filter(g => groups[g]?.length).map(groupKey => (
+      <section class="people-group">
+        <h2>{groupKey}</h2>
+        <ul class="people-list">
+          {groups[groupKey].map(p => (
+            <li>
+              <a href={`${BASE}/person/${p.id}`} class="person-row">
+                <span class="person-name">
+                  {p.data.display_name || p.data.title || p.id}
+                </span>
+                {p.data.aliases?.length > 0 && (
+                  <span class="person-aka">{p.data.aliases.slice(0, 2).join(' · ')}</span>
+                )}
+                {p.data.role_summary && (
+                  <span class="person-role">{p.data.role_summary}</span>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .people-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .people-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .people-nav a { color: var(--ink-dim); text-decoration: none; }
+  .people-nav a:hover { color: var(--accent-2); }
+
+  .people-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .people-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .people-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .people-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin: 0;
+  }
+
+  .people-group { margin-bottom: 48px; }
+  .people-group h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .people-list { list-style: none; padding: 0; margin: 0; }
+  .people-list li { border-bottom: 1px solid var(--rule); }
+
+  .person-row {
+    display: grid;
+    grid-template-columns: 200px 140px 1fr;
+    gap: 12px;
+    padding: 10px 4px;
+    text-decoration: none;
+    color: inherit;
+    align-items: baseline;
+    transition: background 0.1s;
+  }
+  .person-row:hover { background: rgba(255,255,255,0.03); }
+  .person-row:hover .person-name { color: var(--accent-2); }
+
+  .person-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .person-aka {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .person-role {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.35;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  @media (max-width: 600px) {
+    .person-row {
+      grid-template-columns: 1fr;
+      gap: 3px;
+    }
+    .person-aka { display: none; }
+  }
+</style>
