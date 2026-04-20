@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-400yen-04-hair-pilot",
+  "slug": "alphabets-400yen-04-hair-pilot",
+  "title": "hair pilot",
+  "preservedTitle": "hair pilot",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-400yen",
+  "project": "projects/alphabets",
+  "position": 4,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# hair pilot\n\nTrack 4 from \"[[releases/alphabets-400yen]]\"."
+}

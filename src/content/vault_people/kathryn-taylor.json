@@ -1,0 +1,24 @@
+{
+  "id": "kathryn-taylor",
+  "kind": "person",
+  "title": "Kathryn Taylor",
+  "display_name": "Kathryn Taylor",
+  "aliases": [
+    "Katherine Taylor"
+  ],
+  "role_summary": "Denver visual artist and musician; Aquakota Artist team member. Plays in Earth Control Pill, Future Single Mom, Born Dumb. With Colin in duo Sex Therapy.",
+  "primary_project": "projects/aquakota",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "aquakota",
+    "sex-therapy",
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/aquakota"
+  ]
+}

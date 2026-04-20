@@ -1,0 +1,19 @@
+{
+  "id": "luke-leavitt",
+  "kind": "person",
+  "title": "Luke Leavitt",
+  "display_name": "Luke Leavitt",
+  "aliases": [],
+  "role_summary": "Denver musician; bandmate in Bangplay. Solo project Bildungsroman for Cricket.",
+  "primary_project": "projects/bangplay",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

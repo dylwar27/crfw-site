@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-djpoolside-vol-1-02-x2x",
+  "slug": "killd-by-djpoolside-vol-1-02-x2x",
+  "title": "x2x",
+  "preservedTitle": "x2x",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-djpoolside-vol-1",
+  "project": "projects/killd-by",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# x2x\n\nTrack 2 from \"[[releases/killd-by-djpoolside-vol-1]]\"."
+}

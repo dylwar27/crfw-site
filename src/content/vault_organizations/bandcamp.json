@@ -1,0 +1,14 @@
+{
+  "id": "bandcamp",
+  "kind": "organization",
+  "title": "Bandcamp",
+  "name": "Bandcamp",
+  "org_kind": "media_publisher",
+  "website": "https://bandcamp.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Audio distribution platform; hosts killdby.bandcamp.com, alphabets.bandcamp.com, and the peripheral project accounts."
+}

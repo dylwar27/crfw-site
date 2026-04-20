@@ -1,0 +1,262 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('vault_projects');
+  return projects.map(p => ({
+    params: { slug: p.id },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+const d = project.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+// Pull in connected entities by resolving wikilink-style refs against
+// the projected vault collections. Each ref is a string like
+// "people/colin-ward" or just "colin-ward" (if stripped).
+const [allPeople, allReleases, allSeries] = await Promise.all([
+  getCollection('vault_people'),
+  getCollection('vault_releases'),
+  getCollection('vault_series'),
+]);
+
+function refSlug(ref: string | undefined) {
+  if (!ref) return '';
+  const s = String(ref);
+  const parts = s.split('/');
+  return parts[parts.length - 1];
+}
+
+// Members: { person: "[[people/colin-ward]]", role, is_primary }
+const members = (d.members || []).map((m: any) => {
+  const personSlug = refSlug(m.person);
+  const person = allPeople.find(p => p.id === personSlug);
+  return { ...m, personSlug, person };
+}).filter((m: any) => m.person);
+
+// Releases under this project (match via project field)
+const projectSlug = project.id;
+const releases = allReleases
+  .filter(r => refSlug(r.data.project) === projectSlug)
+  .sort((a, b) => (b.data.release_date || '').localeCompare(a.data.release_date || ''));
+
+// Series that include any release from this project
+const series = allSeries.filter(s => {
+  const memberSlugs = (s.data.members || []).map(refSlug);
+  return releases.some(r => memberSlugs.includes(r.id));
+});
+
+const title = d.name || d.title || project.id;
+---
+<Base title={`${title} — CRFW`}>
+  <article class="project-page">
+    <nav class="project-nav">
+      <a href={`${BASE}/`}>← Back to timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/projects`}>All projects</a>
+    </nav>
+
+    <header class="project-header">
+      <div class="project-kind">{d.project_kind || 'project'}</div>
+      <h1>{title}</h1>
+      {d.formed_year && (
+        <div class="project-years">
+          {d.formed_year}{d.dissolved_year ? `–${d.dissolved_year}` : ' – open'}
+        </div>
+      )}
+      {d.aliases && d.aliases.length > 0 && (
+        <div class="project-aliases">
+          Also known as: {d.aliases.join(' · ')}
+        </div>
+      )}
+      {d.summary && (
+        <div class="project-summary">
+          {d.summary.split(/\n\n+/).map((p: string) => <p>{p}</p>)}
+        </div>
+      )}
+    </header>
+
+    {members.length > 0 && (
+      <section class="project-section">
+        <h2>Members</h2>
+        <ul class="project-members">
+          {members.map((m: any) => (
+            <li>
+              <span class="member-name">{m.person?.data.display_name || m.person?.data.title || m.personSlug}</span>
+              {m.role && <span class="member-role">— {m.role}</span>}
+              {m.is_primary && <span class="member-primary">primary</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {releases.length > 0 && (
+      <section class="project-section">
+        <h2>Releases ({releases.length})</h2>
+        <ul class="project-releases">
+          {releases.map(r => (
+            <li>
+              <span class="release-date">{r.data.release_date || r.data.release_year || '—'}</span>
+              <span class="release-title">{r.data.title}</span>
+              {r.data.release_kind && <span class="release-kind">{r.data.release_kind}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {series.length > 0 && (
+      <section class="project-section">
+        <h2>Series</h2>
+        <ul class="project-series">
+          {series.map(s => (
+            <li>
+              <span class="series-name">{s.data.name || s.data.title || s.id}</span>
+              <span class="series-count">{(s.data.members || []).length} items</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {d.canonical_urls && d.canonical_urls.length > 0 && (
+      <section class="project-section">
+        <h2>Links</h2>
+        <ul class="project-links">
+          {d.canonical_urls.map((url: string) => (
+            <li><a href={url} target="_blank" rel="noopener">{url.replace(/^https?:\/\//, '')}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</Base>
+
+<style>
+  .project-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .project-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .project-nav a { color: var(--ink-dim); text-decoration: none; }
+  .project-nav a:hover { color: var(--accent-2); }
+  .project-nav .sep { color: var(--rule); margin: 0 8px; }
+
+  .project-header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+  }
+  .project-kind {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .project-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .project-years {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+  .project-aliases {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .project-summary {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-top: 16px;
+  }
+  .project-summary p { margin: 0 0 1em; }
+
+  .project-section { margin-bottom: 40px; }
+  .project-section h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .project-members, .project-releases, .project-series, .project-links {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .project-members li {
+    padding: 6px 0;
+    font-family: var(--serif);
+    font-size: 16px;
+  }
+  .member-role { color: var(--ink-dim); }
+  .member-primary {
+    margin-left: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent-3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-releases li {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    align-items: baseline;
+  }
+  .release-date { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+  .release-title { font-family: var(--serif); font-size: 17px; }
+  .release-kind {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--accent-2); letter-spacing: 0.15em; text-transform: uppercase;
+  }
+
+  .project-series li {
+    padding: 6px 0;
+    font-family: var(--sans);
+  }
+  .series-name { font-family: var(--serif); font-size: 17px; }
+  .series-count {
+    margin-left: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+
+  .project-links li { padding: 4px 0; font-family: var(--mono); font-size: 13px; }
+  .project-links a { color: var(--accent-2); text-decoration: none; }
+  .project-links a:hover { text-decoration: underline; }
+</style>

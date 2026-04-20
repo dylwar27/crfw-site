@@ -1,0 +1,14 @@
+{
+  "id": "cargo-collective",
+  "kind": "organization",
+  "title": "Cargo Collective",
+  "name": "Cargo Collective",
+  "org_kind": "media_publisher",
+  "website": "https://cargocollective.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Portfolio platform. Colin's portfolio at cargocollective.com/killdby with six sections."
+}

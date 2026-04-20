@@ -1,0 +1,14 @@
+{
+  "id": "meow-wolf",
+  "kind": "organization",
+  "title": "Meow Wolf",
+  "name": "Meow Wolf",
+  "org_kind": "arts_center",
+  "website": "https://meowwolf.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Immersive art company headquartered in Santa Fe, NM, with locations in Santa Fe, Las Vegas, Denver, Grapevine (TX), and Houston. Denver's Convergence Station hosts the Aquakota installation."
+}

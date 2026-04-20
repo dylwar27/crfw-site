@@ -1,0 +1,14 @@
+{
+  "id": "cast",
+  "kind": "organization",
+  "title": "CAST (Community Arts Stabilization Trust)",
+  "name": "CAST (Community Arts Stabilization Trust)",
+  "org_kind": "nonprofit",
+  "website": "https://cast-sf.org",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Nonprofit acquiring and stewarding affordable space for arts organizations. Possibly taking on custodianship of Colin's work and the CRFW Fund as of 2025–2026. Name correction: 'Stabilization', not 'Sustainment'."
+}

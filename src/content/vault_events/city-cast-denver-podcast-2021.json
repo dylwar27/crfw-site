@@ -1,0 +1,19 @@
+{
+  "id": "city-cast-denver-podcast-2021",
+  "kind": "event",
+  "title": "City Cast Denver podcast on Colin",
+  "event_kind": "interview",
+  "date": "2021-08-17",
+  "participants": [
+    "people/bree-davies",
+    "people/colin-ward"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "City Cast Denver podcast episode 'A Denver DIY Icon Lives On at Meow Wolf' with Bree Davies."
+}

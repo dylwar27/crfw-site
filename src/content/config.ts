@@ -173,4 +173,220 @@ const events = defineCollection({
   }),
 });
 
-export const collections = { releases, photos, videos, voice_memos, lyrics, people, events };
+// ================================================================
+// VAULT-PROJECTED COLLECTIONS (Session 13)
+//
+// The vault at ~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/_Vault/
+// is the authoritative source for structural entities (people,
+// projects, venues, orgs, tracks, etc.) — an Obsidian-flavored
+// parallel model aligned with DATABASE_BRIEF §3.
+//
+// `scripts/sync-vault.mjs` projects vault entries into these
+// read-only collections so the site can render them. Editing
+// happens at the vault source (via Obsidian or Curator's Kit
+// vault mode); re-running sync refreshes the projection.
+//
+// Schemas are deliberately permissive: they preserve ALL the vault
+// frontmatter fields we've seen without forcing a migration every
+// time the vault grows a new field. The curator keeps adding
+// conventions upstream; we accept them here.
+// ================================================================
+
+// Common to all vault entries (matches _Vault/SCHEMA.md).
+// Wikilinks like [[people/colin-ward]] are normalized by the sync
+// script to either an unwrapped "people/colin-ward" string or a
+// structured { collection, slug } object (see sync-vault.mjs).
+const vaultCommon = {
+  id: z.string(),
+  kind: z.string(),
+  title: z.string().optional(),
+  preservedTitle: z.string().optional(),
+  aliases: z.array(z.string()).optional(),
+  created: z.string().optional(),
+  updated: z.string().optional(),
+  sensitivity: z.enum(['public','restricted','private','redacted']).default('public'),
+  public_display: z.boolean().default(true),
+  confidence: z.enum(['high','medium','low','speculative']).default('high'),
+  source_ids: z.array(z.string()).default([]),
+  archivePath: z.array(z.string()).default([]),
+  tags: z.array(z.string()).default([]),
+  related: z.array(z.string()).default([]),
+  body: z.string().optional(),   // markdown body (preserved by sync script)
+};
+
+const vault_people = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    legal_name: z.string().optional(),
+    display_name: z.string().optional(),
+    born: z.string().optional(),
+    died: z.string().optional(),
+    cause_of_death: z.string().optional(),
+    hometown: z.string().optional(),
+    role_summary: z.string().optional(),
+    primary_project: z.string().optional(),
+    projects: z.array(z.string()).default([]),
+    contact_public: z.record(z.any()).optional(),
+    primary_photo: z.string().nullable().optional(),
+  }).passthrough(),
+});
+
+const vault_projects = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    name: z.string().optional(),
+    project_kind: z.string().optional(),
+    primary_medium: z.string().optional(),
+    formed_year: z.union([z.number(), z.string()]).nullable().optional(),
+    dissolved_year: z.union([z.number(), z.string()]).nullable().optional(),
+    primary_person: z.string().optional(),
+    members: z.array(z.record(z.any())).default([]),
+    canonical_urls: z.array(z.string()).default([]),
+    cover_asset: z.string().nullable().optional(),
+    summary: z.string().optional(),
+  }).passthrough(),
+});
+
+const vault_venues = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    name: z.string().optional(),
+    venue_kind: z.string().optional(),
+    address: z.string().nullable().optional(),
+    city: z.string().nullable().optional(),
+    region: z.string().nullable().optional(),
+    country: z.string().nullable().optional(),
+    lat: z.number().nullable().optional(),
+    lon: z.number().nullable().optional(),
+    status: z.string().optional(),
+    opened_year: z.union([z.number(), z.string()]).nullable().optional(),
+    closed_year: z.union([z.number(), z.string()]).nullable().optional(),
+  }).passthrough(),
+});
+
+const vault_organizations = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    name: z.string().optional(),
+    org_kind: z.string().optional(),
+    website: z.string().nullable().optional(),
+    address: z.string().nullable().optional(),
+    status: z.string().optional(),
+  }).passthrough(),
+});
+
+const vault_tracks = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    release: z.string().optional(),
+    position: z.number().optional(),
+    duration_seconds: z.number().nullable().optional(),
+    audio_path: z.string().nullable().optional(),
+    credits: z.array(z.record(z.any())).default([]),
+  }).passthrough(),
+});
+
+const vault_releases = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    project: z.string().optional(),
+    release_kind: z.string().optional(),
+    release_date: z.string().optional(),
+    release_year: z.union([z.number(), z.string()]).optional(),
+    label: z.string().nullable().optional(),
+    catalog_number: z.string().nullable().optional(),
+    canonical_url: z.string().nullable().optional(),
+    cover_path: z.string().nullable().optional(),
+    tracks: z.array(z.string()).default([]),
+    is_posthumous: z.boolean().optional(),
+  }).passthrough(),
+});
+
+const vault_events = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    event_kind: z.string().optional(),
+    date: z.string().optional(),
+    start_datetime: z.string().nullable().optional(),
+    end_datetime: z.string().nullable().optional(),
+    venue: z.string().nullable().optional(),
+    related_projects: z.array(z.string()).default([]),
+    participants: z.array(z.string()).default([]),
+    description: z.string().optional(),
+  }).passthrough(),
+});
+
+const vault_press = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    publication: z.string().optional(),
+    author: z.string().nullable().optional(),
+    published_date: z.string().optional(),
+    press_kind: z.string().optional(),
+    canonical_url: z.string().nullable().optional(),
+    wayback_url: z.string().nullable().optional(),
+    wayback_captured_at: z.string().nullable().optional(),
+    local_md_path: z.string().nullable().optional(),
+    local_pdf_path: z.string().nullable().optional(),
+    local_html_path: z.string().nullable().optional(),
+    colin_specific: z.boolean().optional(),
+    colin_mention_count: z.number().nullable().optional(),
+    mentions: z.array(z.string()).default([]),
+  }).passthrough(),
+});
+
+const vault_funds = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    name: z.string().optional(),
+    host_organization: z.string().nullable().optional(),
+    founded_year: z.union([z.number(), z.string()]).nullable().optional(),
+    dissolved_year: z.union([z.number(), z.string()]).nullable().optional(),
+    mission: z.string().optional(),
+    workflow: z.string().optional(),
+  }).passthrough(),
+});
+
+const vault_grants = defineCollection({
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    fund: z.string().optional(),
+    grantee: z.string().optional(),
+    year: z.union([z.number(), z.string()]).optional(),
+    amount: z.union([z.number(), z.string()]).nullable().optional(),
+    purpose: z.string().optional(),
+    announcement_date: z.string().optional(),
+  }).passthrough(),
+});
+
+const vault_series = defineCollection({
+  // NEW vault kind introduced this session for release/work series
+  // (underwaters I-VI, DDR, SUNPOWER). See vault /series/ folder.
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    name: z.string().optional(),
+    project: z.string().optional(),
+    date_start: z.string().optional(),
+    date_end: z.string().nullable().optional(),
+    members: z.array(z.string()).default([]),
+    summary: z.string().optional(),
+  }).passthrough(),
+});
+
+export const collections = {
+  releases, photos, videos, voice_memos, lyrics, people, events,
+  vault_people, vault_projects, vault_venues, vault_organizations,
+  vault_tracks, vault_releases, vault_events, vault_press,
+  vault_funds, vault_grants, vault_series,
+};

@@ -1,0 +1,19 @@
+{
+  "id": "fantasia-2014",
+  "kind": "event",
+  "title": "Fantasia 2014",
+  "event_kind": "show",
+  "date": "2014",
+  "venue": "venues/rhinoceropolis",
+  "participants": [
+    "people/colin-ward"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Party Colin threw/curated. The Westword *Cave Rave* preview and *Fantasia 2014* piece cover the event. Colin's Cargo Collective portfolio has an entire F2014-* poster series (F2014-THA-ART-, F2014-SPIDER-DREAM, AIR SHAMAN, AIRPORT, CASH CONTROL, CLUB GLOBE, RAPTOR JAZZ, HOW2GET-WHAT-U-WANT4)."
+}

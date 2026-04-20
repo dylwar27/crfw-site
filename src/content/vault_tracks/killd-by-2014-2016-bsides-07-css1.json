@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-2014-2016-bsides-07-css1",
+  "slug": "killd-by-2014-2016-bsides-07-css1",
+  "title": "CSS1",
+  "preservedTitle": "CSS1",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-2014-2016-bsides",
+  "project": "projects/killd-by",
+  "position": 7,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# CSS1\n\nTrack 7 from \"[[releases/killd-by-2014-2016-bsides]]\"."
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "release",
+  "id": "alphabets-ddr2-haunted",
+  "slug": "alphabets-ddr2-haunted",
+  "title": "DDR2/ HAUNTED",
+  "preservedTitle": "DDR2/ HAUNTED",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_date": "2012-05-18",
+  "release_year": 2012,
+  "canonical_url": "https://alphabets.bandcamp.com/album/ddr2-haunted",
+  "cover_path": "_Documentation/bandcamp/alphabets__ddr2-haunted/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__ddr2-haunted"
+  ],
+  "tracks": [
+    "tracks/alphabets-ddr2-haunted-01-raptor-signal",
+    "tracks/alphabets-ddr2-haunted-02-blood-spill",
+    "tracks/alphabets-ddr2-haunted-03-made-u-sick",
+    "tracks/alphabets-ddr2-haunted-04-horror-trax-tha-cycles",
+    "tracks/alphabets-ddr2-haunted-05-st-rl-te-hunnym00n",
+    "tracks/alphabets-ddr2-haunted-06-dead-haunter-field-bludd-in-my-iand-39-s"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# DDR2/ HAUNTED\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2012-05-18  \n**Bandcamp:** https://alphabets.bandcamp.com/album/ddr2-haunted  \n**Tracks:** 6  \n\n> DDR2/ HAUNTED by alphabets, released 18 May 2012\n> \n> 1. raptor signal.\n> 2. blood spill\n> 3. made u sick\n> 4. horror trax tha cycles\n> 5. st@rl!te hunnym00n\n> 6. dead haunter field. bludd in my i&amp;#39;s."
+}

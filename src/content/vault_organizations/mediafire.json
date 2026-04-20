@@ -1,0 +1,14 @@
+{
+  "id": "mediafire",
+  "kind": "organization",
+  "title": "MediaFire",
+  "name": "MediaFire",
+  "org_kind": "media_publisher",
+  "website": "https://www.mediafire.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "File-sharing host. Canonical source for the alphabets music archive (ke7bakdi1t22y folder)."
+}

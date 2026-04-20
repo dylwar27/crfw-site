@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-bieber-jerboa-02-brain-waves-dance-hall",
+  "slug": "alphabets-bieber-jerboa-02-brain-waves-dance-hall",
+  "title": "BRAIN WAVES DANCE HALL",
+  "preservedTitle": "BRAIN WAVES DANCE HALL",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-bieber-jerboa",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# BRAIN WAVES DANCE HALL\n\nTrack 2 from \"[[releases/alphabets-bieber-jerboa]]\"."
+}

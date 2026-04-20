@@ -1,0 +1,20 @@
+{
+  "id": "crfw-fund",
+  "kind": "fund",
+  "title": "CRFW Fund",
+  "name": "CRFW Fund",
+  "host_organization": "organizations/redline-contemporary-art-center",
+  "transitional_host": "organizations/cast",
+  "founded_year": 2019,
+  "announcement_date_each_year": "08-29",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward",
+    "organizations/redline-contemporary-art-center",
+    "organizations/cast"
+  ],
+  "body": "# CRFW Fund\n\nAnnual memorial grant for Denver artists facing financial barriers, founded in Colin's memory and first awarded in 2019. Administered by RedLine Contemporary Art Center. As of 2025–2026, possibly transitioning custodianship to CAST (Community Arts Stabilization Trust).\n\nAnnouncement date each year: August 29 (Colin's birthday).\n\nThe RedLine CRFW Fund page (redlineart.org/crfw-fund) is currently 404; the 2025-07-21 Wayback snapshot is the canonical source for grantee data until RedLine restores the page.\n\n## Known grantees (as of April 2026)\n\n- 2019 — [[people/luke-thinnes]]\n- 2019 — [[people/tom-murphy]]\n- 2020 — [[people/jimmy-v]] (James Wilson)\n- 2020 — [[people/trish-bryant]]\n- 2021 — *no grantee on record*\n- 2022 — *no grantee on record*\n- 2023 — [[people/marcos-garibay]]\n- 2024 — [[people/denise-zubizarreta]]"
+}

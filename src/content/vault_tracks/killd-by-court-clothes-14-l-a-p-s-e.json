@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-court-clothes-14-l-a-p-s-e",
+  "slug": "killd-by-court-clothes-14-l-a-p-s-e",
+  "title": "Lapse",
+  "preservedTitle": "*L*a*p*s*e*",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-court-clothes",
+  "project": "projects/killd-by",
+  "position": 14,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# Lapse\n\n*(Preserved title: `*L*a*p*s*e*`)*\n\nTrack 14 from \"[[releases/killd-by-court-clothes]]\"."
+}

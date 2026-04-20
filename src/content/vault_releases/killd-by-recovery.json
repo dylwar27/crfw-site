@@ -1,0 +1,43 @@
+{
+  "kind": "release",
+  "id": "killd-by-recovery",
+  "slug": "killd-by-recovery",
+  "title": "Recovery",
+  "preservedTitle": "Recovery",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "album",
+  "release_date": "2015-09-17",
+  "release_year": 2015,
+  "canonical_url": "https://killdby.bandcamp.com/album/recovery",
+  "cover_path": "_Documentation/bandcamp/killd_by__recovery/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__recovery"
+  ],
+  "tracks": [
+    "tracks/killd-by-recovery-01-like-a-pelican",
+    "tracks/killd-by-recovery-02-shape-shifter",
+    "tracks/killd-by-recovery-03-canand-39-t-stand-still",
+    "tracks/killd-by-recovery-04-true-communication",
+    "tracks/killd-by-recovery-05-zentai",
+    "tracks/killd-by-recovery-06-on-fly",
+    "tracks/killd-by-recovery-07-no-energy-vamp",
+    "tracks/killd-by-recovery-08-afterlife-on-loop",
+    "tracks/killd-by-recovery-09-tekno-cheetah",
+    "tracks/killd-by-recovery-10-cameras-in-my-body",
+    "tracks/killd-by-recovery-11-mind-control",
+    "tracks/killd-by-recovery-12-sex-with-lightning",
+    "tracks/killd-by-recovery-13-in-the-throw",
+    "tracks/killd-by-recovery-14-issues",
+    "tracks/killd-by-recovery-15-out-of-your-head",
+    "tracks/killd-by-recovery-16-no-memory-s-w-i-m"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# Recovery\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2015-09-17  \n**Bandcamp:** https://killdby.bandcamp.com/album/recovery  \n**Tracks:** 16  \n\n> Recovery by killd by, released 17 September 2015\n> \n> 1. Like a PeLiCaN\n> 2. SHAPE SHIFTER\n> 3. can&amp;#39;t stand sTiLL\n> 4. True Communication\n> 5. Zentai\n> 6. on FLy\n> 7. No Energy Vamp\n> 8. afterlife on Loop\n> 9. Tekno Cheetah\n> 10. cameras in my body\n> 11. Mind ControL\n> 12. seX wiTh lightning\n> 13. in the throw\n> 14. iss"
+}

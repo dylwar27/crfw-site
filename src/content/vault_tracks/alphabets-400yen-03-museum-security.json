@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-400yen-03-museum-security",
+  "slug": "alphabets-400yen-03-museum-security",
+  "title": "museum security",
+  "preservedTitle": "museum security",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-400yen",
+  "project": "projects/alphabets",
+  "position": 3,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# museum security\n\nTrack 3 from \"[[releases/alphabets-400yen]]\"."
+}

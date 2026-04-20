@@ -1,0 +1,17 @@
+{
+  "id": "jimmy-v",
+  "kind": "person",
+  "title": "Jimmy V (James Wilson)",
+  "display_name": "Jimmy V (James Wilson)",
+  "role_summary": "2020 CRFW Fund grantee.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "crfw-fund-grantee"
+  ],
+  "related": [
+    "funds/crfw-fund"
+  ]
+}

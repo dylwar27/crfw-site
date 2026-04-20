@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-jeanjets-02-diamondii",
+  "slug": "alphabets-jeanjets-02-diamondii",
+  "title": "DIAMONDII",
+  "preservedTitle": "DIAMONDII",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-jeanjets",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# DIAMONDII\n\nTrack 2 from \"[[releases/alphabets-jeanjets]]\"."
+}

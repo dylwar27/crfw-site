@@ -1,0 +1,14 @@
+{
+  "id": "youtube",
+  "kind": "organization",
+  "title": "YouTube",
+  "name": "YouTube",
+  "org_kind": "media_publisher",
+  "website": "https://youtube.com",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Video hosting; three Colin channels (@colinward2252, @thamayoreoshow2729, @tudaloos)."
+}

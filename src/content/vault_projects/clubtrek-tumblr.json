@@ -1,0 +1,24 @@
+{
+  "id": "clubtrek-tumblr",
+  "kind": "project",
+  "title": "clubtrek Tumblr",
+  "name": "clubtrek Tumblr",
+  "aliases": [],
+  "project_kind": "tumblr",
+  "primary_medium": "zine",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://clubtrek.tumblr.com"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin's tumblr presence at clubtrek.tumblr.com. Wayback-frozen at April 2013."
+}

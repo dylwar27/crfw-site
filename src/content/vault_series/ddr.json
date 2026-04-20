@@ -1,0 +1,28 @@
+{
+  "kind": "series",
+  "slug": "ddr",
+  "id": "ddr",
+  "title": "DDR",
+  "name": "DDR",
+  "project": "projects/alphabets",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "date_start": "2011",
+  "date_end": "2016",
+  "summary": "The DDR series — three releases spanning Colin's alphabets era into killd by:\nDDR (2011, alphabets), DDR2/HAUNTED (2012, alphabets), DDR3:Loaner phone\n(2016, killd by). Each iteration revisits the motif with new textures; the\nseries crosses the project transition from alphabets to killd by.",
+  "members": [
+    "releases/alphabets-ddr",
+    "releases/alphabets-ddr2-haunted",
+    "releases/killd-by-ddr3-loaner-phone"
+  ],
+  "source_ids": [],
+  "archivePath": [],
+  "tags": [
+    "series",
+    "multi-project"
+  ],
+  "related": [],
+  "body": "# DDR\n\nA cross-project series that Colin returned to three times over five years. The\nfirst DDR (2011) appeared in the alphabets catalog as a compact meditation on\nchiptune-adjacent dance textures. DDR2/HAUNTED (2012) extended the motif into\nnoisier territory. DDR3:Loaner phone (2016) landed on the killd by Bandcamp,\ncarrying the naming forward into his mature-era project.\n\nSeeded 2026-04-20 as the first vault `series` entry — proves that cross-project\ngroupings are a real shape in the archive."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "colin-ward-death-2018",
+  "kind": "event",
+  "title": "Colin Ward died",
+  "event_kind": "death",
+  "date": "2018-02-01",
+  "participants": [
+    "people/colin-ward"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin died by suicide, age 27. Per Kyle Harris's December 2018 Westword piece: 'In early January, Colin Ward, a Rhinoceropolis luminary who had been working with Golter on resurrecting the spaces, died by suicide.' Exact day per EverybodyWiki: February 1, 2018."
+}

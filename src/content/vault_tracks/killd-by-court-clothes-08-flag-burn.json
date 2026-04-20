@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-court-clothes-08-flag-burn",
+  "slug": "killd-by-court-clothes-08-flag-burn",
+  "title": "FLAG burn",
+  "preservedTitle": "FLAG_burn**",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-court-clothes",
+  "project": "projects/killd-by",
+  "position": 8,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# FLAG burn\n\n*(Preserved title: `FLAG_burn**`)*\n\nTrack 8 from \"[[releases/killd-by-court-clothes]]\"."
+}

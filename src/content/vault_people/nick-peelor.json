@@ -1,0 +1,21 @@
+{
+  "id": "nick-peelor",
+  "kind": "person",
+  "title": "Nick Peelor",
+  "display_name": "Nick Peelor",
+  "aliases": [
+    "N. Peelor"
+  ],
+  "role_summary": "Denver musician; early long-term collaborator; co-founder of Tudaloos with Colin.",
+  "primary_project": "projects/tudaloos",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

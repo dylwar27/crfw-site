@@ -1,0 +1,21 @@
+{
+  "id": "luke-thinnes",
+  "kind": "person",
+  "title": "Luke Thinnes",
+  "display_name": "Luke Thinnes",
+  "aliases": [
+    "Luke Thiness (misspelling)"
+  ],
+  "role_summary": "Denver musician; bandmate in Bangplay; also plays in sleepdial, French Kettle Station, Floor Freakers.",
+  "primary_project": "projects/bangplay",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

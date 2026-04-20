@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-ddr2-haunted-01-raptor-signal",
+  "slug": "alphabets-ddr2-haunted-01-raptor-signal",
+  "title": "raptor signal.",
+  "preservedTitle": "raptor signal.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-ddr2-haunted",
+  "project": "projects/alphabets",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# raptor signal.\n\nTrack 1 from \"[[releases/alphabets-ddr2-haunted]]\"."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "colin-ward-birth-1990",
+  "kind": "event",
+  "title": "Colin Ward born",
+  "event_kind": "birth",
+  "date": "1990-08-29",
+  "participants": [
+    "people/colin-ward"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin Richard Ferguson Ward born in Atlanta, Georgia. Raised in Hamden, Connecticut; family moved to Denver in 1999."
+}

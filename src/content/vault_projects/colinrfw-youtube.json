@@ -1,0 +1,26 @@
+{
+  "id": "colinrfw-youtube",
+  "kind": "project",
+  "title": "colinrfw / Colin Ward YouTube",
+  "name": "colinrfw / Colin Ward YouTube",
+  "aliases": [],
+  "project_kind": "solo_project",
+  "primary_medium": "video",
+  "formed_year": 2011,
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://youtube.com/@colinrfw",
+    "https://youtube.com/@colinward2252"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin's primary YouTube channel @colinward2252 (ID UC-KjUdqrNpbgmEEo-4JRNlQ) — 26 videos: music videos, alphabets full-album uploads, street drumming, Fantasia 2014 video piece. Note: the Biographical Summary references @colinrfw with channel ID UC2eZSfqeHgHG7Ggb44gKRCg for older material; PASS 3 yt-dlp confirmed @colinward2252 as the active/complete channel. Both channel IDs belong to Colin."
+}

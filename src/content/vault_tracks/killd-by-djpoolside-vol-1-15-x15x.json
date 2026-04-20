@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-djpoolside-vol-1-15-x15x",
+  "slug": "killd-by-djpoolside-vol-1-15-x15x",
+  "title": "x15x",
+  "preservedTitle": "x15x",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-djpoolside-vol-1",
+  "project": "projects/killd-by",
+  "position": 15,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# x15x\n\nTrack 15 from \"[[releases/killd-by-djpoolside-vol-1]]\"."
+}

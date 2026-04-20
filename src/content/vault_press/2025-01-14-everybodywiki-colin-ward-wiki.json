@@ -1,0 +1,35 @@
+{
+  "kind": "press",
+  "id": "2025-01-14-everybodywiki-colin-ward-wiki",
+  "slug": "2025-01-14-everybodywiki-colin-ward-wiki",
+  "title": "Colin Ward (EverybodyWiki page)",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "press_kind": "wiki_page",
+  "publication": "organizations/everybodywiki",
+  "publication_name": "EverybodyWiki",
+  "author_name": "(EverybodyWiki contributors)",
+  "published_date": "2025-01-14",
+  "local_md_path": "_Documentation/articles/2025-01-14_everybodywiki_colin-ward-wiki.md",
+  "local_pdf_path": "_Documentation/articles/2025-01-14_everybodywiki_colin-ward-wiki.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 25,
+  "archivePath": [
+    "_Documentation/articles/2025-01-14_everybodywiki_colin-ward-wiki.md",
+    "_Documentation/articles/2025-01-14_everybodywiki_colin-ward-wiki.pdf"
+  ],
+  "tags": [
+    "wiki",
+    "biographical"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/killd-by",
+    "projects/alphabets",
+    "projects/aquakota",
+    "organizations/meow-wolf"
+  ],
+  "body": "# Colin Ward (EverybodyWiki page)\n\nPublic encyclopedia page compiling biographical and artistic facts about Colin.\n\n**Publication:** EverybodyWiki  \n**Author:** (EverybodyWiki contributors)  \n**Date:** 2025-01-14  \n\nFull scraped text is at `_Documentation/articles/2025-01-14_everybodywiki_colin-ward-wiki.md`."
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "release",
+  "id": "killd-by-carolina-reaper",
+  "slug": "killd-by-carolina-reaper",
+  "title": "Carolina Reaper",
+  "preservedTitle": "Carolina Reaper",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "single",
+  "release_date": "2016-10-21",
+  "release_year": 2016,
+  "canonical_url": "https://killdby.bandcamp.com/album/carolina-reaper",
+  "cover_path": "_Documentation/bandcamp/killd_by__carolina-reaper/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__carolina-reaper"
+  ],
+  "tracks": [
+    "tracks/killd-by-carolina-reaper-01-carolina-reaper"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# Carolina Reaper\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2016-10-21  \n**Bandcamp:** https://killdby.bandcamp.com/album/carolina-reaper  \n**Tracks:** 1  \n\n> Carolina Reaper by killd by, released 21 October 2016\n> \n> 1. Carolina Reaper"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "bliss-body-tribute-2018",
+  "kind": "event",
+  "title": "Bliss Body: A tribute to Colin Ward",
+  "event_kind": "memorial",
+  "date": "2018",
+  "venue": "venues/black-cube",
+  "participants": [
+    "people/laura-conway"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Tribute show organized by Laura Conway at Black Cube. GoFundMe: /f/bliss-body-a-tribute-to-colin-ward."
+}

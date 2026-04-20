@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-recovery-05-zentai",
+  "slug": "killd-by-recovery-05-zentai",
+  "title": "Zentai",
+  "preservedTitle": "Zentai",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-recovery",
+  "project": "projects/killd-by",
+  "position": 5,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# Zentai\n\nTrack 5 from \"[[releases/killd-by-recovery]]\"."
+}

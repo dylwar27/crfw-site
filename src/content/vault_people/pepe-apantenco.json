@@ -1,0 +1,25 @@
+{
+  "id": "pepe-apantenco",
+  "kind": "person",
+  "title": "Pepe Apantenco",
+  "display_name": "Peniel \"Pepe\" Apantenco",
+  "aliases": [
+    "Peniel Apantenco",
+    "Pepe"
+  ],
+  "role_summary": "Denver artist; member of the Rhinoceropolis collective; Aquakota co-Lead Artist with Colin.",
+  "primary_project": "projects/aquakota",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "aquakota",
+    "rhinoceropolis-collective",
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/aquakota"
+  ]
+}

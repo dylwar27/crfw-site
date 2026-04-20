@@ -1,0 +1,13 @@
+{
+  "id": "birdy-magazine",
+  "kind": "organization",
+  "title": "BIRDY Magazine",
+  "name": "BIRDY Magazine",
+  "org_kind": "media_publisher",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Arts publication; Elise Trivers Oct 2023 piece."
+}

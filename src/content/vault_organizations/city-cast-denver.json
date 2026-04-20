@@ -1,0 +1,14 @@
+{
+  "id": "city-cast-denver",
+  "kind": "organization",
+  "title": "City Cast Denver",
+  "name": "City Cast Denver",
+  "org_kind": "media_publisher",
+  "website": "https://denver.citycast.fm",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Denver daily news podcast. Hosted the August 2021 episode 'A Denver DIY Icon Lives On at Meow Wolf' with Bree Davies."
+}

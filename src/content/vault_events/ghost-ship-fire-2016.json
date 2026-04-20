@@ -1,0 +1,16 @@
+{
+  "id": "ghost-ship-fire-2016",
+  "kind": "event",
+  "title": "Ghost Ship warehouse fire",
+  "event_kind": "context",
+  "date": "2016-12-02",
+  "participants": [],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Oakland, CA warehouse fire that killed 36 people at a DIY show and triggered a nationwide wave of municipal inspections of similar spaces — including Rhinoceropolis six days later."
+}

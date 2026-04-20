@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-siberian-chill-02-pad-thai-cup",
+  "slug": "alphabets-siberian-chill-02-pad-thai-cup",
+  "title": "PAD THAI CUP",
+  "preservedTitle": "PAD THAI CUP",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-siberian-chill",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# PAD THAI CUP\n\nTrack 2 from \"[[releases/alphabets-siberian-chill]]\"."
+}

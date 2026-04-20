@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-antpad-06-see-weed",
+  "slug": "alphabets-antpad-06-see-weed",
+  "title": "see weed",
+  "preservedTitle": "see weed",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-antpad",
+  "project": "projects/alphabets",
+  "position": 6,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# see weed\n\nTrack 6 from \"[[releases/alphabets-antpad]]\"."
+}

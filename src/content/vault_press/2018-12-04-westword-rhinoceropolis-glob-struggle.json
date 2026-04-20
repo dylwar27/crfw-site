@@ -1,0 +1,40 @@
+{
+  "kind": "press",
+  "id": "2018-12-04-westword-rhinoceropolis-glob-struggle",
+  "slug": "2018-12-04-westword-rhinoceropolis-glob-struggle",
+  "title": "Rhinoceropolis and Glob Struggle to Reopen After Denver Shut Them Down",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author": "people/kyle-harris",
+  "author_name": "Kyle Harris",
+  "published_date": "2018-12-04",
+  "canonical_url": "https://www.westword.com/arts/rhinoceropolis-and-glob-struggle-to-reopen-two-years-after-denver-shut-them-down-11070796",
+  "local_md_path": "_Documentation/articles/2018-12-04_westword_rhinoceropolis-glob-struggle.md",
+  "local_pdf_path": "_Documentation/articles/2018-12-04_westword_rhinoceropolis-glob-struggle.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 11,
+  "archivePath": [
+    "_Documentation/articles/2018-12-04_westword_rhinoceropolis-glob-struggle.md",
+    "_Documentation/articles/2018-12-04_westword_rhinoceropolis-glob-struggle.pdf"
+  ],
+  "tags": [
+    "rhinoceropolis",
+    "glob",
+    "shutdown",
+    "diy"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "people/john-golter",
+    "people/ken-hamblin-iii",
+    "venues/rhinoceropolis",
+    "venues/glob",
+    "events/rhinoceropolis-shutdown-2016"
+  ],
+  "body": "# Rhinoceropolis and Glob Struggle to Reopen After Denver Shut Them Down\n\nTwo-year retrospective on the Rhinoceropolis and Glob shutdowns. Colin is a named \"Rhinoceropolis luminary.\"\n\n**Publication:** Denver Westword  \n**Author:** Kyle Harris  \n**Date:** 2018-12-04  \n**URL:** https://www.westword.com/arts/rhinoceropolis-and-glob-struggle-to-reopen-two-years-after-denver-shut-them-down-11070796  \n\nFull scraped text is at `_Documentation/articles/2018-12-04_westword_rhinoceropolis-glob-struggle.md`."
+}

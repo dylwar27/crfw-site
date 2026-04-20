@@ -1,0 +1,19 @@
+{
+  "id": "jane-roberts",
+  "kind": "person",
+  "title": "Jane Roberts",
+  "display_name": "Jane Roberts",
+  "aliases": [],
+  "role_summary": "Member of Snake Feathers with Colin.",
+  "primary_project": "projects/snake-feathers",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

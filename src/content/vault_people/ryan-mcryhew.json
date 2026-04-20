@@ -1,0 +1,21 @@
+{
+  "id": "ryan-mcryhew",
+  "kind": "person",
+  "title": "Ryan McRyhew",
+  "display_name": "Ryan McRyhew",
+  "aliases": [
+    "Entrancer",
+    "Thug Entrancer"
+  ],
+  "role_summary": "Denver producer; peer; co-released on Noumenal Loom. Tribute SoundCloud track 'Dedication — For Colin Ward.'",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

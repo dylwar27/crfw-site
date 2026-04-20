@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-2014-2016-bsides-01-swim",
+  "slug": "killd-by-2014-2016-bsides-01-swim",
+  "title": "SWIM",
+  "preservedTitle": "SWIM",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-2014-2016-bsides",
+  "project": "projects/killd-by",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# SWIM\n\nTrack 1 from \"[[releases/killd-by-2014-2016-bsides]]\"."
+}

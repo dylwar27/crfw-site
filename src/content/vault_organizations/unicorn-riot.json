@@ -1,0 +1,14 @@
+{
+  "id": "unicorn-riot",
+  "kind": "organization",
+  "title": "Unicorn Riot",
+  "name": "Unicorn Riot",
+  "org_kind": "media_publisher",
+  "website": "https://unicornriot.ninja",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Independent media."
+}

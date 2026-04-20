@@ -1,0 +1,37 @@
+{
+  "kind": "release",
+  "id": "alphabets-611",
+  "slug": "alphabets-611",
+  "title": "611",
+  "preservedTitle": "611",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2013-11-07",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/611",
+  "cover_path": "_Documentation/bandcamp/alphabets__611/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__611"
+  ],
+  "tracks": [
+    "tracks/alphabets-611-01-999-stat-ups",
+    "tracks/alphabets-611-02-cub-3",
+    "tracks/alphabets-611-03-do-spells",
+    "tracks/alphabets-611-04-where-r-those-wolves",
+    "tracks/alphabets-611-05-porch-level",
+    "tracks/alphabets-611-06-turtle-stair",
+    "tracks/alphabets-611-07-jay-low",
+    "tracks/alphabets-611-08-dryad",
+    "tracks/alphabets-611-09-high-lite-saber",
+    "tracks/alphabets-611-10-tequila-backpack"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# 611\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-11-07  \n**Bandcamp:** https://alphabets.bandcamp.com/album/611  \n**Tracks:** 10  \n\n> 611 by alphabets, released 07 November 2013\n> \n> 1. 999 stat ups\n> 2. cub 3\n> 3. do spells\n> 4. where R those wolves\n> 5. porch level\n> 6. turtle stair\n> 7. jay low\n> 8. dryad\n> 9. high lite saber\n> 10. tequila backpack\n> \n> island styles"
+}

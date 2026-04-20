@@ -1,0 +1,47 @@
+{
+  "kind": "release",
+  "id": "killd-by-2014-2016-bsides",
+  "slug": "killd-by-2014-2016-bsides",
+  "title": "2014-2016 [Bsides]",
+  "preservedTitle": "2014-2016 [Bsides]",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "compilation",
+  "release_date": "2016-12-31",
+  "release_year": 2016,
+  "canonical_url": "https://killdby.bandcamp.com/album/2014-2016-bsides",
+  "cover_path": "_Documentation/bandcamp/killd_by__2014-2016-bsides/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__2014-2016-bsides"
+  ],
+  "tracks": [
+    "tracks/killd-by-2014-2016-bsides-01-swim",
+    "tracks/killd-by-2014-2016-bsides-02-tha-goodlife-2xxx",
+    "tracks/killd-by-2014-2016-bsides-03-captivity",
+    "tracks/killd-by-2014-2016-bsides-04-lulz-nrg-physicalandmental",
+    "tracks/killd-by-2014-2016-bsides-05-no-haiku",
+    "tracks/killd-by-2014-2016-bsides-06-on-fly-1",
+    "tracks/killd-by-2014-2016-bsides-07-css1",
+    "tracks/killd-by-2014-2016-bsides-08-shape-shiftr1",
+    "tracks/killd-by-2014-2016-bsides-09-rain-hula",
+    "tracks/killd-by-2014-2016-bsides-10-last-animal",
+    "tracks/killd-by-2014-2016-bsides-11-kiss-over-glass",
+    "tracks/killd-by-2014-2016-bsides-12-call-you",
+    "tracks/killd-by-2014-2016-bsides-13-show-me-love-robin-s-remix",
+    "tracks/killd-by-2014-2016-bsides-14-ez-bb",
+    "tracks/killd-by-2014-2016-bsides-15-leave-pompeii",
+    "tracks/killd-by-2014-2016-bsides-16-hell",
+    "tracks/killd-by-2014-2016-bsides-17-saywut-now-turn-up",
+    "tracks/killd-by-2014-2016-bsides-18-jongo",
+    "tracks/killd-by-2014-2016-bsides-19-million-dollr-app",
+    "tracks/killd-by-2014-2016-bsides-20-psy-trail"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# 2014-2016 [Bsides]\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2016-12-31  \n**Bandcamp:** https://killdby.bandcamp.com/album/2014-2016-bsides  \n**Tracks:** 20  \n\n> 2014-2016 [Bsides] by killd by, released 31 December 2016\n> \n> 1. SWIM\n> 2. tha GoodLife 2xxx\n> 3. captivity\n> 4. lulz nrg [physical&amp;amp;mental]\n> 5. no haiku\n> 6. on fly 1\n> 7. CSS1\n> 8. SHAPE SHIFTR1\n> 9. rain HuLa\n> 10. Last Animal\n> 11. kiss over glass\n> 12. Call You\n> 13. show me love [ Robin S. remix ]\n> 14. ez bb\n> 15."
+}

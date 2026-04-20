@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-cave-rave-02-not-my-house-but-it-was",
+  "slug": "alphabets-cave-rave-02-not-my-house-but-it-was",
+  "title": "not my house but it was",
+  "preservedTitle": "not my house but it was",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-cave-rave",
+  "project": "projects/alphabets",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# not my house but it was\n\nTrack 2 from \"[[releases/alphabets-cave-rave]]\"."
+}

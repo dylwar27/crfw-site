@@ -1,0 +1,20 @@
+{
+  "id": "madeline-johnston",
+  "kind": "person",
+  "title": "Madeline Johnston",
+  "display_name": "Madeline Johnston",
+  "aliases": [
+    "Midwife"
+  ],
+  "role_summary": "Denver musician; Midwife. Album *Forever* (2020) dedicated to Colin.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

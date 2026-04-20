@@ -1,0 +1,19 @@
+{
+  "id": "black-cube-memorial-2018",
+  "kind": "event",
+  "title": "Black Cube memorial for Colin",
+  "event_kind": "memorial",
+  "date": "2018-02-17",
+  "venue": "venues/black-cube",
+  "participants": [
+    "people/laura-conway"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "DIY community memorial at Black Cube's nomadic space. Organized in part by Laura Conway. Photographed by Slentz; 28-frame Westword slideshow preserved at _Documentation/articles/westword_black_cube_slideshow/."
+}

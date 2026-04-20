@@ -1,0 +1,35 @@
+{
+  "kind": "release",
+  "id": "alphabets-siberian-chill",
+  "slug": "alphabets-siberian-chill",
+  "title": "SIBERIAN CHILL",
+  "preservedTitle": "SIBERIAN CHILL",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2013-11-07",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/siberian-chill",
+  "cover_path": "_Documentation/bandcamp/alphabets__siberian-chill/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__siberian-chill"
+  ],
+  "tracks": [
+    "tracks/alphabets-siberian-chill-01-siberian-chill",
+    "tracks/alphabets-siberian-chill-02-pad-thai-cup",
+    "tracks/alphabets-siberian-chill-03-astral-projector-blu-razz",
+    "tracks/alphabets-siberian-chill-04-jade-lean",
+    "tracks/alphabets-siberian-chill-05-dead-cactus-stem",
+    "tracks/alphabets-siberian-chill-06-thieff",
+    "tracks/alphabets-siberian-chill-07-spliff-2xx",
+    "tracks/alphabets-siberian-chill-08-ice-castle"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# SIBERIAN CHILL\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-11-07  \n**Bandcamp:** https://alphabets.bandcamp.com/album/siberian-chill  \n**Tracks:** 8  \n\n> SIBERIAN CHILL by alphabets, released 07 November 2013\n> \n> 1. SIBERIAN CHILL\n> 2. PAD THAI CUP\n> 3. ASTRAL PROJECTOR BLU RAZZ\n> 4. JADE LEAN\n> 5. DEAD CACTUS STEM\n> 6. THIEFF\n> 7. SPLIFF 2XX\n> 8. ICE CASTLE"
+}

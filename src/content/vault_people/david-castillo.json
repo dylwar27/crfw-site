@@ -1,0 +1,18 @@
+{
+  "id": "david-castillo",
+  "kind": "person",
+  "title": "David Castillo",
+  "display_name": "David Castillo",
+  "aliases": [],
+  "role_summary": "Denver musician-producer; friend of Colin's. Performed at the 2/22/22 Aquakota memorial tribute. Released Aim Higher EP and hardly working.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

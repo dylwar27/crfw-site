@@ -1,0 +1,36 @@
+{
+  "kind": "release",
+  "id": "alphabets-cave-rave",
+  "slug": "alphabets-cave-rave",
+  "title": "CAVE RAVE",
+  "preservedTitle": "CAVE RAVE",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2013-11-07",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/cave-rave",
+  "cover_path": "_Documentation/bandcamp/alphabets__cave-rave/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__cave-rave"
+  ],
+  "tracks": [
+    "tracks/alphabets-cave-rave-01-running-with-snowshoes",
+    "tracks/alphabets-cave-rave-02-not-my-house-but-it-was",
+    "tracks/alphabets-cave-rave-03-cat-tats",
+    "tracks/alphabets-cave-rave-04-radio-free-egypt",
+    "tracks/alphabets-cave-rave-05-sci-fi-moan-stars",
+    "tracks/alphabets-cave-rave-06-snake-lady",
+    "tracks/alphabets-cave-rave-07-dino",
+    "tracks/alphabets-cave-rave-08-cave-rave",
+    "tracks/alphabets-cave-rave-09-gospel-doctor"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# CAVE RAVE\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-11-07  \n**Bandcamp:** https://alphabets.bandcamp.com/album/cave-rave  \n**Tracks:** 9  \n\n> CAVE RAVE by alphabets, released 07 November 2013\n> \n> 1. running with snowshoes\n> 2. not my house but it was\n> 3. CAT TATS\n> 4. RADIO FREE EGYPT\n> 5. sci - fi moan stars\n> 6. SNAKE LADY\n> 7. DINO\n> 8. CAVE RAVE\n> 9. gospel doctor\n> \n> PHOTO BY ANIA URBANSKI\r\n> instagram.com/futurebones\r\n> \r\n> Dance, electronic, glam, experimen"
+}

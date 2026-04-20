@@ -1,0 +1,36 @@
+{
+  "kind": "press",
+  "id": "2012-03-23-westword-alphabets-colin-ward",
+  "slug": "2012-03-23-westword-alphabets-colin-ward",
+  "title": "Colin Ward of alphabets",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "article",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author": "people/bree-davies",
+  "author_name": "Bree Davies",
+  "published_date": "2012-03-23",
+  "canonical_url": "https://www.westword.com/",
+  "local_md_path": "_Documentation/articles/2012-03-23_westword_alphabets-colin-ward.md",
+  "local_pdf_path": "_Documentation/articles/2012-03-23_westword_alphabets-colin-ward.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 10,
+  "archivePath": [
+    "_Documentation/articles/2012-03-23_westword_alphabets-colin-ward.md",
+    "_Documentation/articles/2012-03-23_westword_alphabets-colin-ward.pdf"
+  ],
+  "tags": [
+    "alphabets",
+    "profile",
+    "early"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/alphabets",
+    "people/bree-davies"
+  ],
+  "body": "# Colin Ward of alphabets\n\nProfile of Colin as the figure behind alphabets.\n\n**Publication:** Denver Westword  \n**Author:** Bree Davies  \n**Date:** 2012-03-23  \n**URL:** https://www.westword.com/  \n\nFull scraped text is at `_Documentation/articles/2012-03-23_westword_alphabets-colin-ward.md`."
+}

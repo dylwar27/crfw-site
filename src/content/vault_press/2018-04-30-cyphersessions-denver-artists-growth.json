@@ -1,0 +1,32 @@
+{
+  "kind": "press",
+  "id": "2018-04-30-cyphersessions-denver-artists-growth",
+  "slug": "2018-04-30-cyphersessions-denver-artists-growth",
+  "title": "Denver artists' growth (Cypher Sessions)",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "blog_post",
+  "publication_name": "Cypher Sessions",
+  "author_name": "(unattributed)",
+  "published_date": "2018-04-30",
+  "local_md_path": "_Documentation/articles/2018-04-30_cyphersessions_denver-artists-growth.md",
+  "local_pdf_path": "_Documentation/articles/2018-04-30_cyphersessions_denver-artists-growth.pdf",
+  "colin_specific": false,
+  "colin_mention_count": 2,
+  "archivePath": [
+    "_Documentation/articles/2018-04-30_cyphersessions_denver-artists-growth.md",
+    "_Documentation/articles/2018-04-30_cyphersessions_denver-artists-growth.pdf"
+  ],
+  "tags": [
+    "scene",
+    "denver",
+    "blog"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "projects/killd-by"
+  ],
+  "body": "# Denver artists' growth (Cypher Sessions)\n\nBlog post on the growth of Denver artists; references Colin's work.\n\n**Publication:** Cypher Sessions  \n**Author:** (unattributed)  \n**Date:** 2018-04-30  \n\nFull scraped text is at `_Documentation/articles/2018-04-30_cyphersessions_denver-artists-growth.md`."
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "killd-by-2014-2016-bsides-02-tha-goodlife-2xxx",
+  "slug": "killd-by-2014-2016-bsides-02-tha-goodlife-2xxx",
+  "title": "tha GoodLife 2xxx",
+  "preservedTitle": "tha GoodLife 2xxx",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/killd-by-2014-2016-bsides",
+  "project": "projects/killd-by",
+  "position": 2,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# tha GoodLife 2xxx\n\nTrack 2 from \"[[releases/killd-by-2014-2016-bsides]]\"."
+}

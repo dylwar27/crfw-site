@@ -1,0 +1,24 @@
+{
+  "id": "stephan-herrera",
+  "kind": "person",
+  "title": "Stephan Herrera",
+  "display_name": "Stephan Herrera",
+  "aliases": [
+    "Stephan Hererra"
+  ],
+  "role_summary": "Colin's co-creator on Tha Mayoreo Show; Aquakota Artist team member. Spelling note: Meow Wolf's credits page has a typo (\"Hererra\"); Westword and the Aquakota documentary chyron both use \"Herrera.\"",
+  "primary_project": "projects/tha-mayoreo-show",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "aquakota",
+    "mayoreo",
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/aquakota"
+  ]
+}

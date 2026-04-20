@@ -1,0 +1,28 @@
+{
+  "kind": "release",
+  "id": "killd-by-emt",
+  "slug": "killd-by-emt",
+  "title": "EMT",
+  "preservedTitle": "EMT",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "single",
+  "release_date": "2017-02-12",
+  "release_year": 2017,
+  "canonical_url": "https://killdby.bandcamp.com/album/emt",
+  "cover_path": "_Documentation/bandcamp/killd_by__emt/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__emt"
+  ],
+  "tracks": [
+    "tracks/killd-by-emt-01-emt"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# EMT\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2017-02-12  \n**Bandcamp:** https://killdby.bandcamp.com/album/emt  \n**Tracks:** 1  \n\n> EMT by killd by, released 12 February 2017\n> \n> 1. EMT"
+}

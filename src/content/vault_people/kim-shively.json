@@ -1,0 +1,23 @@
+{
+  "id": "kim-shively",
+  "kind": "person",
+  "title": "Kim Shively",
+  "display_name": "Kim Shively",
+  "aliases": [],
+  "role_summary": "Denver artist and documentary filmmaker; Colin's girlfriend at the time of his death; Aquakota Artist team member. Director of the feature documentary *Buildings Are Heavy* about Denver DIY spaces and gentrification.",
+  "primary_project": "projects/aquakota",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "aquakota",
+    "living-collaborator",
+    "filmmaker",
+    "partner"
+  ],
+  "related": [
+    "people/colin-ward",
+    "projects/aquakota"
+  ]
+}

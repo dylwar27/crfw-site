@@ -1,0 +1,27 @@
+{
+  "id": "tha-mayoreo-show",
+  "kind": "project",
+  "title": "Tha Mayoreo Show",
+  "name": "Tha Mayoreo Show",
+  "aliases": [
+    "Mayoreo"
+  ],
+  "project_kind": "film",
+  "primary_medium": "animation",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [
+    "https://youtube.com/@thamayoreoshow2729",
+    "https://cargocollective.com/killdby/Tha-Mayoreo-Show"
+  ],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Animated web cartoon co-created with Stephan Herrera about Mayoreo, the sandwich-creme-cookie mayor of the dystopian city Oreville. Three episodes on YouTube channel @thamayoreoshow2729. Colin voiced 'a drug-addled cartoon cookie.'"
+}

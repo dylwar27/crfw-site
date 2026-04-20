@@ -1,0 +1,17 @@
+{
+  "id": "kyle-harris",
+  "kind": "person",
+  "title": "Kyle Harris",
+  "display_name": "Kyle Harris",
+  "role_summary": "Denver Westword journalist; author of the Dec 2018 Rhinoceropolis reopen feature (11 Colin mentions) and the Feb 2022 Meow Wolf Aquakota tribute feature.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "press-author"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

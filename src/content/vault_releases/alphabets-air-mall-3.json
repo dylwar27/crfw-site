@@ -1,0 +1,28 @@
+{
+  "kind": "release",
+  "id": "alphabets-air-mall-3",
+  "slug": "alphabets-air-mall-3",
+  "title": "air mall",
+  "preservedTitle": "air mall",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "single",
+  "release_date": "2012-01-03",
+  "release_year": 2012,
+  "canonical_url": "https://alphabets.bandcamp.com/track/air-mall-3",
+  "cover_path": "_Documentation/bandcamp/alphabets__air-mall-3/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__air-mall-3"
+  ],
+  "tracks": [
+    "tracks/alphabets-air-mall-3-01-air-mall"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# air mall\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2012-01-03  \n**Bandcamp:** https://alphabets.bandcamp.com/track/air-mall-3  \n**Tracks:** 1  \n\n> air mall by alphabets, released 03 January 2012"
+}

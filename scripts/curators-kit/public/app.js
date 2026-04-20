@@ -4,13 +4,14 @@
 
 const API = '/api';
 const state = {
+  source: 'site',            // 'site' | 'vault' (Session 13)
+  sources: [],               // from /api/sources
   collection: null,
   entries: [],
   selectedSlug: null,
-  current: null,     // full entry with editableFields
+  current: null,             // full entry with editableFields
   dirty: false,
   search: '',
-  // v2 additions
   viewMode: 'list',          // 'list' | 'grid'
   selected: new Set(),       // Set<slug> for multi-select
   filterPublished: 'all',    // 'all' | 'published' | 'unpublished'
@@ -28,12 +29,55 @@ const editorEmpty = document.querySelector('.editor-empty');
 const editorBody = $('editor-body');
 
 // ---------------------------------------------------------------
-// Load + render collection list
+// Load sources + collection list
 // ---------------------------------------------------------------
 async function loadCollections() {
-  const cols = await fetch(`${API}/collections`).then(r => r.json());
+  // Fetch the multi-source manifest
+  state.sources = await fetch(`${API}/sources`).then(r => r.json());
+  renderSourceSwitcher();
+  renderCollectionSidebar();
+}
+
+function renderSourceSwitcher() {
+  let el = $('source-switcher');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'source-switcher';
+    el.className = 'source-switcher';
+    const sidebarHead = document.querySelector('.sidebar-head');
+    if (sidebarHead) sidebarHead.after(el);
+  }
+  el.innerHTML = state.sources.map(s => `
+    <button data-source="${s.id}" class="source-btn ${state.source === s.id ? 'active' : ''}">
+      ${s.label}
+      <span class="source-hint">${s.commits ? 'git' : 'vault'}</span>
+    </button>
+  `).join('');
+  el.querySelectorAll('.source-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.dirty && !confirm('Discard unsaved changes?')) return;
+      state.source = btn.dataset.source;
+      state.collection = null;
+      state.selectedSlug = null;
+      state.current = null;
+      state.selected.clear();
+      state.entries = [];
+      listTitle.textContent = 'Choose a collection';
+      renderSourceSwitcher();
+      renderCollectionSidebar();
+      renderEmpty();
+      listEl.innerHTML = '';
+      const tb = $('list-toolbar'); if (tb) tb.innerHTML = '';
+      const bb = $('bulk-bar'); if (bb) { bb.innerHTML = ''; bb.hidden = true; }
+    });
+  });
+}
+
+function renderCollectionSidebar() {
+  const activeSource = state.sources.find(s => s.id === state.source);
+  if (!activeSource) return;
   sidebar.innerHTML = '';
-  for (const c of cols) {
+  for (const c of activeSource.collections) {
     const btn = document.createElement('button');
     btn.dataset.collection = c.name;
     btn.textContent = c.name.replace(/_/g, ' ');
@@ -55,7 +99,7 @@ async function selectCollection(name) {
   document.querySelectorAll('#collections button').forEach(b =>
     b.classList.toggle('active', b.dataset.collection === name));
   renderEmpty();
-  state.entries = await fetch(`${API}/entries/${name}`).then(r => r.json());
+  state.entries = await fetch(`${API}/entries/${state.source}/${name}`).then(r => r.json());
   // Sort newest first
   state.entries.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   renderToolbar();
@@ -246,7 +290,7 @@ async function bulkApply(patch, summary) {
   const r = await fetch(`${API}/bulk`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ collection: state.collection, slugs, patch, summary }),
+    body: JSON.stringify({ source: state.source, collection: state.collection, slugs, patch, summary }),
   }).then(r => r.json());
   if (r.error) return toast('Error: ' + r.error, true);
   // Refresh list with new values (don't reload from server for speed;
@@ -274,18 +318,18 @@ async function bulkAddTag(tag) {
     const e = state.entries.find(x => x.slug === slug);
     if (!e) continue;
     const nextTags = Array.from(new Set([...(e.tags || []), tag]));
-    const r = await fetch(`${API}/entries/${state.collection}/${slug}`, {
+    const r = await fetch(`${API}/entries/${state.source}/${state.collection}/${slug}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: { tags: nextTags }, commit: false }),
     }).then(r => r.json()).catch(() => ({ error: 'network' }));
     if (r.error) err++; else { ok++; e.tags = nextTags; }
   }
-  // One git commit at the end
+  // One git commit at the end (site only; vault saves are committed implicitly or not at all)
   await fetch(`${API}/bulk`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ collection: state.collection, slugs, patch: {}, summary: `add tag ${tag}` }),
+    body: JSON.stringify({ source: state.source, collection: state.collection, slugs, patch: {}, summary: `add tag ${tag}` }),
   });
   state.selected.clear();
   renderList();
@@ -301,7 +345,7 @@ async function selectEntry(slug) {
   state.dirty = false;
   document.querySelectorAll('.entry-item').forEach(el =>
     el.classList.toggle('active', el.dataset.slug === slug));
-  const entry = await fetch(`${API}/entries/${state.collection}/${slug}`).then(r => r.json());
+  const entry = await fetch(`${API}/entries/${state.source}/${state.collection}/${slug}`).then(r => r.json());
   if (entry.error) { toast('Failed to load entry: ' + entry.error, true); return; }
   state.current = entry;
   renderEditor();
@@ -343,7 +387,12 @@ function renderEditor() {
     parts.push(renderField(key, d[key]));
   }
 
-  // Actions
+  // Actions — Save button label depends on destination
+  const commits = entry.commits !== false;
+  const saveLabel = commits ? 'Save & Commit' : 'Save (vault)';
+  const saveTitle = commits
+    ? 'Write to site content + git commit'
+    : 'Write directly to the vault file in Dropbox (no git commit)';
   parts.push(`
     <div class="actions">
       <button class="btn" id="btn-mark-unpublished" title="Hide from public timeline">
@@ -352,7 +401,7 @@ function renderEditor() {
       <div class="spacer"></div>
       <span class="status" id="save-status"></span>
       <button class="btn" id="btn-cancel">Cancel</button>
-      <button class="btn btn-primary" id="btn-save">Save & Commit</button>
+      <button class="btn btn-primary" id="btn-save" title="${saveTitle}">${saveLabel}</button>
     </div>
   `);
 
@@ -506,10 +555,10 @@ async function saveEntry() {
   updateStatus('Saving…');
   $('btn-save').disabled = true;
 
-  const resp = await fetch(`${API}/entries/${entry.collection}/${entry.slug}`, {
+  const resp = await fetch(`${API}/entries/${entry.source || state.source}/${entry.collection}/${entry.slug}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data, commit: true }),
+    body: JSON.stringify({ data, commit: entry.commits !== false }),
   }).then(r => r.json());
 
   $('btn-save').disabled = false;

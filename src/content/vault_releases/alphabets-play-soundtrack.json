@@ -1,0 +1,38 @@
+{
+  "kind": "release",
+  "id": "alphabets-play-soundtrack",
+  "slug": "alphabets-play-soundtrack",
+  "title": "play soundtrack",
+  "preservedTitle": "play soundtrack",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2011-11-10",
+  "release_year": 2011,
+  "canonical_url": "https://alphabets.bandcamp.com/album/play-soundtrack",
+  "cover_path": "_Documentation/bandcamp/alphabets__play-soundtrack/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__play-soundtrack"
+  ],
+  "tracks": [
+    "tracks/alphabets-play-soundtrack-01-seating-open",
+    "tracks/alphabets-play-soundtrack-02-ii-iii",
+    "tracks/alphabets-play-soundtrack-03-iii-iiii",
+    "tracks/alphabets-play-soundtrack-04-interim-i",
+    "tracks/alphabets-play-soundtrack-05-iii",
+    "tracks/alphabets-play-soundtrack-06-iii-iii",
+    "tracks/alphabets-play-soundtrack-07-iii-iii",
+    "tracks/alphabets-play-soundtrack-08-iiiii-iiiv",
+    "tracks/alphabets-play-soundtrack-09-interim-ii",
+    "tracks/alphabets-play-soundtrack-10-iiii-iiiiv",
+    "tracks/alphabets-play-soundtrack-11-iiiiv-close"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# play soundtrack\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2011-11-10  \n**Bandcamp:** https://alphabets.bandcamp.com/album/play-soundtrack  \n**Tracks:** 11  \n\n> play soundtrack by alphabets, released 10 November 2011\n> \n> 1. seating-open\n> 2. Ii-Iii\n> 3. Iii-Iiii\n> 4. interim I\n> 5. IIi\n> 6. IIi-Iii\n> 7. Iii-Iii\n> 8. IIiii-IIiv\n> 9. Interim II\n> 10. IIIi-IIIiv\n> 11. IIIiv-close\n> \n> music for \r\n> \r\n> &amp;quot;Alice Invents A Little Game And Alice Always Wins&amp;quot;\r\n> By Nick Flynn\r\n> Di"
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "release",
+  "id": "killd-by-court-clothes",
+  "slug": "killd-by-court-clothes",
+  "title": "Court Clothes",
+  "preservedTitle": "Court Clothes",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "album",
+  "release_date": "2015-09-17",
+  "release_year": 2015,
+  "canonical_url": "https://killdby.bandcamp.com/album/court-clothes",
+  "cover_path": "_Documentation/bandcamp/killd_by__court-clothes/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__court-clothes"
+  ],
+  "tracks": [
+    "tracks/killd-by-court-clothes-01-butterfly-effect",
+    "tracks/killd-by-court-clothes-02-hopeless-222",
+    "tracks/killd-by-court-clothes-03-e-v-i-l-a-n-g-elz",
+    "tracks/killd-by-court-clothes-04-cope",
+    "tracks/killd-by-court-clothes-05-bird-jail",
+    "tracks/killd-by-court-clothes-06-thunder-stoned",
+    "tracks/killd-by-court-clothes-07-l-i-g-h-t-and-acid",
+    "tracks/killd-by-court-clothes-08-flag-burn",
+    "tracks/killd-by-court-clothes-09-generation-zebra",
+    "tracks/killd-by-court-clothes-10-no-decision",
+    "tracks/killd-by-court-clothes-11-g-e-n-i-e-club",
+    "tracks/killd-by-court-clothes-12-gong-water",
+    "tracks/killd-by-court-clothes-13-river-inside",
+    "tracks/killd-by-court-clothes-14-l-a-p-s-e"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# Court Clothes\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2015-09-17  \n**Bandcamp:** https://killdby.bandcamp.com/album/court-clothes  \n**Tracks:** 14  \n\n> Court Clothes by killd by, released 17 September 2015\n> \n> 1. butterFly eFFecT\n> 2. hopeless [222]\n> 3. *e*v*i*L_*a*n*g*eLz*\n> 4. COPE_\n> 5. birD_jaiL\n> 6. thunder*_stoned*\n> 7. *L*i*g*h*t*&amp;amp;*Acid*\n> 8. FLAG_burn**\n> 9. generation-zebra\n> 10. _no_decision_\n> 11. *G*e*n*i*e_CluB\n> 12. __gong-water\n> 13. *river_inside_\n> 1"
+}

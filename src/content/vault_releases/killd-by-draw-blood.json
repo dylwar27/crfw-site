@@ -1,0 +1,28 @@
+{
+  "kind": "release",
+  "id": "killd-by-draw-blood",
+  "slug": "killd-by-draw-blood",
+  "title": "draw blood",
+  "preservedTitle": "draw blood",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "single",
+  "release_date": "2016-09-22",
+  "release_year": 2016,
+  "canonical_url": "https://killdby.bandcamp.com/track/draw-blood",
+  "cover_path": "_Documentation/bandcamp/killd_by__draw-blood/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/killd_by__draw-blood"
+  ],
+  "tracks": [
+    "tracks/killd-by-draw-blood-01-draw-blood"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# draw blood\n\n**Project:** [[projects/killd-by]]  \n**Released:** 2016-09-22  \n**Bandcamp:** https://killdby.bandcamp.com/track/draw-blood  \n**Tracks:** 1  \n\n> draw blood by killd by, released 22 September 2016"
+}

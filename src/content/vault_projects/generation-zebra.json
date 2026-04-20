@@ -1,0 +1,24 @@
+{
+  "id": "generation-zebra",
+  "kind": "project",
+  "title": "generation zebra",
+  "name": "generation zebra",
+  "aliases": [
+    "GenZebraJazz"
+  ],
+  "project_kind": "label",
+  "primary_medium": "DIY C/D releases",
+  "primary_person": "people/colin-ward",
+  "canonical_urls": [],
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colin-project"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "Colin's self-documented DIY label — Posters, music, C/D Releases. See Cargo Collective subfolder /generation-zebra-Posters-music-C-D-Release-labeL."
+}

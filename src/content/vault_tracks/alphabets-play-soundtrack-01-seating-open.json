@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-play-soundtrack-01-seating-open",
+  "slug": "alphabets-play-soundtrack-01-seating-open",
+  "title": "seating-open",
+  "preservedTitle": "seating-open",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-play-soundtrack",
+  "project": "projects/alphabets",
+  "position": 1,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# seating-open\n\nTrack 1 from \"[[releases/alphabets-play-soundtrack]]\"."
+}

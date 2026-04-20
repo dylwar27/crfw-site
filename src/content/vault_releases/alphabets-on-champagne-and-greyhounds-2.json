@@ -1,0 +1,34 @@
+{
+  "kind": "release",
+  "id": "alphabets-on-champagne-and-greyhounds-2",
+  "slug": "alphabets-on-champagne-and-greyhounds-2",
+  "title": "ON CHAMPAGNE AND GREYHOUNDS",
+  "preservedTitle": "ON CHAMPAGNE AND GREYHOUNDS",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2013-11-07",
+  "release_year": 2013,
+  "canonical_url": "https://alphabets.bandcamp.com/album/on-champagne-and-greyhounds-2",
+  "cover_path": "_Documentation/bandcamp/alphabets__on-champagne-and-greyhounds-2/cover.jpg",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/bandcamp/alphabets__on-champagne-and-greyhounds-2"
+  ],
+  "tracks": [
+    "tracks/alphabets-on-champagne-and-greyhounds-2-01-gel-stripper",
+    "tracks/alphabets-on-champagne-and-greyhounds-2-02-scene-girl-hair-sprayer",
+    "tracks/alphabets-on-champagne-and-greyhounds-2-03-airport-store-gifts",
+    "tracks/alphabets-on-champagne-and-greyhounds-2-04-landscaper",
+    "tracks/alphabets-on-champagne-and-greyhounds-2-05-gecko-ring",
+    "tracks/alphabets-on-champagne-and-greyhounds-2-06-sashimi-in-tha-terminal",
+    "tracks/alphabets-on-champagne-and-greyhounds-2-07-still-born-shut-up"
+  ],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# ON CHAMPAGNE AND GREYHOUNDS\n\n**Project:** [[projects/alphabets]]  \n**Released:** 2013-11-07  \n**Bandcamp:** https://alphabets.bandcamp.com/album/on-champagne-and-greyhounds-2  \n**Tracks:** 7  \n\n> ON CHAMPAGNE AND GREYHOUNDS by alphabets, released 07 November 2013\n> \n> 1. GEL STRIPPER\n> 2. SCENE GIRL HAIR SPRAYER\n> 3. AIRPORT STORE GIFTS\n> 4. LANDSCAPER\n> 5. GECKO RING\n> 6. SASHIMI IN THA TERMINAL\n> 7. STILL BORN, SHUT UP\n> \n> ON CHAMPAGNE AND GREYHOUNDS.\r\n> RELEASED ON FIRETALK RECS AUTUMN 2012\r\n> \r\n> write up on FA"
+}

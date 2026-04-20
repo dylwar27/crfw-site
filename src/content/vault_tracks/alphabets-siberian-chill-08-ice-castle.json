@@ -1,0 +1,19 @@
+{
+  "kind": "track",
+  "id": "alphabets-siberian-chill-08-ice-castle",
+  "slug": "alphabets-siberian-chill-08-ice-castle",
+  "title": "ICE CASTLE",
+  "preservedTitle": "ICE CASTLE",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "release": "releases/alphabets-siberian-chill",
+  "project": "projects/alphabets",
+  "position": 8,
+  "credits": [],
+  "tags": [
+    "bandcamp"
+  ],
+  "body": "# ICE CASTLE\n\nTrack 8 from \"[[releases/alphabets-siberian-chill]]\"."
+}

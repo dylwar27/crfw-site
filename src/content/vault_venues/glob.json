@@ -1,0 +1,20 @@
+{
+  "id": "glob",
+  "kind": "venue",
+  "title": "Glob",
+  "name": "Glob",
+  "venue_kind": "diy_space",
+  "city": "Denver",
+  "region": "CO",
+  "country": "US",
+  "closed_year": 2016,
+  "status": "closed",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "DIY venue sister to Rhinoceropolis, closed in the same December 2016 sweep. 'Colin Forever' graffiti on the garage door."
+}

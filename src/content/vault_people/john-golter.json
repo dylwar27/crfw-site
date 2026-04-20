@@ -1,0 +1,18 @@
+{
+  "id": "john-golter",
+  "kind": "person",
+  "title": "John Golter",
+  "display_name": "John Golter",
+  "aliases": [],
+  "role_summary": "Collaborator on the post-shutdown effort to reopen Rhinoceropolis and Glob. Working with Colin on the reopening at the time of Colin's death.",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "living-collaborator"
+  ],
+  "related": [
+    "people/colin-ward"
+  ]
+}

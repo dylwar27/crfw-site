@@ -1,0 +1,14 @@
+{
+  "id": "internet-archive",
+  "kind": "organization",
+  "title": "Internet Archive",
+  "name": "Internet Archive",
+  "org_kind": "nonprofit",
+  "website": "https://archive.org",
+  "status": "active",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "body": "Wayback Machine and Save Page Now host; preservation partner."
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "press",
+  "id": "2018-02-09-westword-colin-ward-dies-at-27",
+  "slug": "2018-02-09-westword-colin-ward-dies-at-27",
+  "title": "Colin Ward's Magic Will Be Missed",
+  "created": "2026-04-20",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "press_kind": "obituary",
+  "publication": "organizations/denver-westword",
+  "publication_name": "Denver Westword",
+  "author": "people/bree-davies",
+  "author_name": "Bree Davies",
+  "published_date": "2018-02-09",
+  "canonical_url": "https://www.westword.com/music/denver-artist-colin-ward-dies-at-27-9969201/",
+  "local_md_path": "_Documentation/articles/2018-02-09_westword_colin-ward-dies-at-27.md",
+  "local_pdf_path": "_Documentation/articles/2018-02-09_westword_colin-ward-dies-at-27.pdf",
+  "colin_specific": true,
+  "colin_mention_count": 18,
+  "archivePath": [
+    "_Documentation/articles/2018-02-09_westword_colin-ward-dies-at-27.md",
+    "_Documentation/articles/2018-02-09_westword_colin-ward-dies-at-27.pdf"
+  ],
+  "tags": [
+    "obituary",
+    "memorial"
+  ],
+  "mentions": [
+    "people/colin-ward",
+    "people/kim-shively",
+    "projects/killd-by",
+    "projects/alphabets",
+    "events/colin-ward-death-2018"
+  ],
+  "body": "# Colin Ward's Magic Will Be Missed\n\nObituary. Central published record of Colin's death and an arc of his work.\n\n**Publication:** Denver Westword  \n**Author:** Bree Davies  \n**Date:** 2018-02-09  \n**URL:** https://www.westword.com/music/denver-artist-colin-ward-dies-at-27-9969201/  \n\nFull scraped text is at `_Documentation/articles/2018-02-09_westword_colin-ward-dies-at-27.md`."
+}
