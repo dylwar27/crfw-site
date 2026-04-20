@@ -82,7 +82,7 @@ site/
 
 ---
 
-## Current state (as of Session 13, 2026-04-20)
+## Current state (as of Session 14, 2026-04-20)
 
 - **~1,958 total entries** (238 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
 - **28 PRs merged** across 11 sessions
@@ -157,6 +157,7 @@ Agent-doable next:
 - **Session 11:** ~~Database v1~~ (PR #25, SQLite + full schema + ships to dist). ~~Filter dropdowns + mobile pass~~ (PR #26). ~~Tag scaling + /tags page~~ (PR #27). ~~Curator's Kit~~ (PR #28, custom archival CMS at `npm run cms`).
 - **Session 12:** QA cleanup (Dropbox dupe route template). ~~Curator's Kit v2~~ (PR #29, grid view + multi-select + bulk publish/tag/project + media preview + keyboard nav). Built for IG backlog burndown.
 - **Session 13:** ~~Vault integration~~ (PR #30). 354 structural entities projected from the Obsidian-style vault. Curator's Kit v3 = two-source coordinator. 15 new `/project/[slug]` pages. `series` kind seeded (DDR cross-project series).
+- **Session 14:** QA pass. Fixed better-sqlite3 Node version mismatch; fixed YAML `>` folded block scalar parser; cleared 721 iCloud sync-conflict dupe files; updated gitignore to cover ` [2-9].*` (not just ` 2.*`); picked up 12 new vault entries + 4 modified entries that Dyl had added in Obsidian since Session 13. Build: 574 pages, 366 vault entities, 0 dead refs.
 
 ---
 

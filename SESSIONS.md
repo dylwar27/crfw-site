@@ -4,6 +4,41 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 14 — 2026-04-20 — QA pass (0 PRs, 2 direct commits)
+
+**Goal:** QA the Session 13 vault integration work, fix build issues, repush clean.
+
+**Findings and fixes:**
+
+**Build infrastructure**
+- `better-sqlite3` needed a rebuild for Node v25 (`NODE_MODULE_VERSION 141`). Fixed via `npm rebuild better-sqlite3`.
+- Astro build with 1,958 entries takes ~3.5 minutes for "Collecting build info" — not a hang, just slow. Two background build runs from the investigation were killed; direct foreground run confirmed the pipeline.
+
+**Dropbox/iCloud dupe files**
+- `src/pages/project/[slug] 2.astro` appeared — Dropbox/iCloud sync conflict of the new project route template from Session 13. Was generating 15 bogus `/project/X 2/` pages in the build. Deleted locally (was untracked/gitignored).
+- Vault sync had been run multiple times during QA; iCloud Drive (Desktop sync) created ` 3.json`, ` 4.json`, ` 5.json` conflict copies of ALL 366 projected vault files — 721 conflict files total. gitignore only covered ` 2.*`. Updated to `* [2-9].*` / `** [2-9].*` to catch all digit suffixes; deleted all 721 dupe files.
+
+**YAML parser: folded block scalar (`>`) fix**
+- The vault `notes:` field on `killd-by-neotropical.md` uses `>` (folded block scalar, which joins continuation lines into a space-separated paragraph). The parser handled `|` (literal) but not `>` — was storing the literal string `">"`. Fixed with a proper fold implementation (join lines with `\n`, replace non-blank-line newlines with spaces, collapse blank lines to `\n`).
+
+**Vault content updated (Dyl adding entries in Obsidian)**
+- 12 new entries projected: `janice-schindler` (videographer, "No Energy Vamp"), `josh-gondrez` (co-director), `discogs`, `nts-radio`, three press items (Tiny Mix Tapes "No Energy Vamp" 2015, Denver Month of Video "Buildings Are Heavy" 2025 screening — **priority research item, Kim Shively film with likely Colin footage**, Westword "Another 100 Creatives"), `alphabets-remix09`, `alphabets-wetdollar-11`, `killd-by-neotropical` (2020 posthumous compilation, Noumenal Loom), `leisure-gallery`, `squirm-gallery`.
+- 4 modified projections: `colin-ward` (new aliases `legalizedmischief` + `Tokyo Drift`, secondary IG handle `@legalizedmischief`, new "Online monikers" section in body, new quote "alien safari rainforest style"), `kim-shively`, `travis-egedy`, `rhinoceropolis`.
+
+**Final build state:** 574 pages (was 573; +1 net from Session 13 QA), 366 vault entities (was 354), 0 dead cross-refs.
+
+**Commits (direct to main, no PR):**
+- `5be7353` — QA pass: vault sync updates + folded-block-scalar parser fix
+- `36e55f1` — gitignore: cover all sync-conflict digit suffixes ( 2 through  9)
+
+**Known not-done (carries forward from Session 13):**
+- `db-sync.mjs` not yet populating rich entity tables (projects/venues/orgs) from vault content.
+- Wikilink rendering as click-through chips in body/popups (v1 = plain text).
+- Per-track reader pages (`/track/[slug]`) for 214 vault tracks — deferred.
+- Photo-sets across multiple IG posts — deferred until curator ships IG backlog.
+
+---
+
 ## Session 13 — 2026-04-20 — Vault integration (1 PR)
 
 **Goal (restarted mid-session):** originally plan was a new `sets` collection for release-series / photo-sets. Mid-planning, Dyl pointed at the CRFW vault at `CRFW Archive/_Vault/` — a 357-entry Obsidian-style parallel data model. Plan pivoted: instead of building a site-local grouping concept, adopt the vault as a second authoritative source for structural entities. Curator's Kit becomes a coordinator (editing BOTH site content and vault).
