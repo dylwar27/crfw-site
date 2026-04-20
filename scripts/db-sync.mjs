@@ -216,6 +216,39 @@ const stmts = {
                     VALUES (?, ?, ?, ?, ?, ?)`),
   fts: db.prepare(`INSERT INTO entries_fts (slug, collection, title, preserved_title, body, transcript)
                    VALUES (?, ?, ?, ?, ?, ?)`),
+
+  // Vault entity tables
+  vaultPerson: db.prepare(`INSERT OR REPLACE INTO people
+    (slug, name, role, relationship, note, sensitivity, published, file_path, updated_at)
+    VALUES (@slug, @name, @role, @relationship, @note, @sensitivity, @published, @file_path, @updated_at)`),
+
+  vaultProject: db.prepare(`INSERT OR REPLACE INTO projects
+    (slug, name, kind, primary_medium, formed_year, dissolved_year, summary, aliases_json, sensitivity, updated_at)
+    VALUES (@slug, @name, @kind, @primary_medium, @formed_year, @dissolved_year, @summary, @aliases_json, @sensitivity, @updated_at)`),
+
+  vaultVenue: db.prepare(`INSERT OR REPLACE INTO venues
+    (slug, name, kind, city, status, description, updated_at)
+    VALUES (@slug, @name, @kind, @city, @status, @description, @updated_at)`),
+
+  vaultOrg: db.prepare(`INSERT OR REPLACE INTO organizations
+    (slug, name, kind, description, website, status, updated_at)
+    VALUES (@slug, @name, @kind, @description, @website, @status, @updated_at)`),
+
+  vaultPress: db.prepare(`INSERT OR REPLACE INTO press
+    (slug, title, kind, publication, published_date, canonical_url, summary, colin_specific, sensitivity, updated_at)
+    VALUES (@slug, @title, @kind, @publication, @published_date, @canonical_url, @summary, @colin_specific, @sensitivity, @updated_at)`),
+
+  vaultPressMention: db.prepare(`INSERT OR REPLACE INTO press_mentions
+    (press_slug, target_kind, target_slug, mention_count)
+    VALUES (?, ?, ?, ?)`),
+
+  vaultFund: db.prepare(`INSERT OR REPLACE INTO funds
+    (slug, name, host_org_slug, founded_year, mission, updated_at)
+    VALUES (@slug, @name, @host_org_slug, @founded_year, @mission, @updated_at)`),
+
+  vaultGrant: db.prepare(`INSERT OR REPLACE INTO grants
+    (slug, fund_slug, grantee_person_slug, year, amount, purpose, notes, updated_at)
+    VALUES (@slug, @fund_slug, @grantee_person_slug, @year, @amount, @purpose, @notes, @updated_at)`),
 };
 
 // ---------------------------------------------------------------
@@ -449,12 +482,155 @@ function loadLyric(filename) {
 }
 
 // ---------------------------------------------------------------
+// Vault entity loaders
+// ---------------------------------------------------------------
+function refSlug(ref) {
+  if (!ref) return null;
+  return String(ref).split('/').at(-1) || null;
+}
+
+const vaultStats = { people: 0, projects: 0, venues: 0, organizations: 0, press: 0, funds: 0, grants: 0 };
+
+function loadVaultPerson(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_people', filename);
+  stmts.vaultPerson.run({
+    slug,
+    name: data.display_name || data.title || slug,
+    role: data.role_summary ?? null,
+    relationship: data.relationship_to_subject ?? null,
+    note: typeof data.body === 'string' ? data.body.slice(0, 500) : null,
+    sensitivity: data.sensitivity || 'public',
+    published: data.public_display === false ? 0 : 1,
+    file_path: filePath,
+    updated_at: updatedAt,
+  });
+  for (const tag of data.tags ?? []) stmts.tag.run('vault_people', slug, tag);
+  stmts.fts.run(slug, 'vault_people', data.display_name || data.title || slug, '', data.role_summary || '', '');
+  vaultStats.people++;
+}
+
+function loadVaultProject(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_projects', filename);
+  stmts.vaultProject.run({
+    slug,
+    name: data.name || data.title || slug,
+    kind: data.project_kind ?? null,
+    primary_medium: data.primary_medium ?? null,
+    formed_year: data.formed_year ?? null,
+    dissolved_year: data.dissolved_year ?? null,
+    summary: data.summary ?? null,
+    aliases_json: data.aliases?.length ? JSON.stringify(data.aliases) : null,
+    sensitivity: data.sensitivity || 'public',
+    updated_at: updatedAt,
+  });
+  for (const tag of data.tags ?? []) stmts.tag.run('vault_projects', slug, tag);
+  stmts.fts.run(slug, 'vault_projects', data.name || data.title || slug, '', data.summary || '', '');
+  vaultStats.projects++;
+}
+
+function loadVaultVenue(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_venues', filename);
+  stmts.vaultVenue.run({
+    slug,
+    name: data.name || data.title || slug,
+    kind: data.venue_kind ?? null,
+    city: data.city ?? null,
+    status: data.operational_status ?? null,
+    description: data.summary ?? data.role_summary ?? null,
+    updated_at: updatedAt,
+  });
+  for (const tag of data.tags ?? []) stmts.tag.run('vault_venues', slug, tag);
+  stmts.fts.run(slug, 'vault_venues', data.name || data.title || slug, '', data.summary || '', '');
+  vaultStats.venues++;
+}
+
+function loadVaultOrganization(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_organizations', filename);
+  const website = data.contact_public?.website
+    || data.canonical_urls?.[0]
+    || null;
+  stmts.vaultOrg.run({
+    slug,
+    name: data.name || data.title || slug,
+    kind: data.org_kind ?? null,
+    description: data.summary ?? data.mission ?? null,
+    website,
+    status: data.status ?? null,
+    updated_at: updatedAt,
+  });
+  for (const tag of data.tags ?? []) stmts.tag.run('vault_organizations', slug, tag);
+  stmts.fts.run(slug, 'vault_organizations', data.name || data.title || slug, '', data.summary || data.mission || '', '');
+  vaultStats.organizations++;
+}
+
+function loadVaultPress(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_press', filename);
+  const pubName = data.publication_name
+    || (data.publication ? String(data.publication).split('/').at(-1)?.replace(/-/g, ' ') : null)
+    || null;
+  stmts.vaultPress.run({
+    slug,
+    title: data.title || slug,
+    kind: data.press_kind ?? null,
+    publication: pubName,
+    published_date: String(data.published_date || data.date || ''),
+    canonical_url: data.canonical_url ?? null,
+    summary: typeof data.body === 'string' ? data.body.slice(0, 400) : null,
+    colin_specific: data.colin_specific ? 1 : 0,
+    sensitivity: data.sensitivity || 'public',
+    updated_at: updatedAt,
+  });
+  // Mentions
+  for (const mention of data.mentions ?? []) {
+    const mSlug = refSlug(mention);
+    const mKind = mention.startsWith('people/') ? 'person'
+      : mention.startsWith('projects/') ? 'project'
+      : mention.startsWith('venues/') ? 'venue'
+      : 'other';
+    if (mSlug) stmts.vaultPressMention.run(slug, mKind, mSlug, 1);
+  }
+  for (const tag of data.tags ?? []) stmts.tag.run('vault_press', slug, tag);
+  stmts.fts.run(slug, 'vault_press', data.title || slug, '', typeof data.body === 'string' ? data.body : '', '');
+  vaultStats.press++;
+}
+
+function loadVaultFund(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_funds', filename);
+  stmts.vaultFund.run({
+    slug,
+    name: data.name || data.title || slug,
+    host_org_slug: refSlug(data.host_org) ?? null,
+    founded_year: data.founded_year ?? null,
+    mission: data.mission ?? null,
+    updated_at: updatedAt,
+  });
+  vaultStats.funds++;
+}
+
+function loadVaultGrant(filename) {
+  const { slug, data, filePath, updatedAt } = loadFile('vault_grants', filename);
+  stmts.vaultGrant.run({
+    slug,
+    fund_slug: refSlug(data.fund) ?? null,
+    grantee_person_slug: refSlug(data.grantee) ?? null,
+    year: data.year ?? null,
+    amount: data.amount_cents ?? null,
+    purpose: data.purpose ?? null,
+    notes: data.notes ?? null,
+    updated_at: updatedAt,
+  });
+  vaultStats.grants++;
+}
+
+// ---------------------------------------------------------------
 // Walk and load
 // ---------------------------------------------------------------
+// Filter out iCloud/Dropbox sync-conflict copies (space + digit suffix)
+const DUPE_RE = / [2-9]\./;
 function walk(collection, ext, loader) {
   const dir = join(contentDir, collection);
   if (!existsSync(dir)) return;
-  const files = readdirSync(dir).filter(f => f.endsWith(ext) && !f.includes(' 2.'));
+  const files = readdirSync(dir).filter(f => f.endsWith(ext) && !DUPE_RE.test(f));
   const batch = db.transaction(() => files.forEach(loader));
   batch();
   log(`  ${collection}: ${files.length}`);
@@ -468,6 +644,15 @@ walk('voice_memos','.json', loadVoiceMemo);
 walk('events',     '.md',   loadEvent);
 walk('people',     '.json', loadPerson);
 walk('lyrics',     '.md',   loadLyric);
+
+log('Syncing vault entities → SQLite…');
+walk('vault_people',        '.json', loadVaultPerson);
+walk('vault_projects',      '.json', loadVaultProject);
+walk('vault_venues',        '.json', loadVaultVenue);
+walk('vault_organizations', '.json', loadVaultOrganization);
+walk('vault_press',         '.json', loadVaultPress);
+walk('vault_funds',         '.json', loadVaultFund);
+walk('vault_grants',        '.json', loadVaultGrant);
 
 db.exec('ANALYZE');
 
@@ -489,6 +674,14 @@ log(`  voice_memos:        ${stats.voice_memos}`);
 log(`  events:             ${stats.events}`);
 log(`  people:             ${stats.people}`);
 log(`  lyrics:             ${stats.lyrics}`);
+log(`Vault entities:`);
+log(`  people:             ${vaultStats.people}`);
+log(`  projects:           ${vaultStats.projects}`);
+log(`  venues:             ${vaultStats.venues}`);
+log(`  organizations:      ${vaultStats.organizations}`);
+log(`  press:              ${vaultStats.press}`);
+log(`  funds:              ${vaultStats.funds}`);
+log(`  grants:             ${vaultStats.grants}`);
 log(`Unique tags:         ${tagCount}`);
 log(`Dead cross-refs:     ${deadRefs}`);
 log(`Missing archivePath: ${missingAP}`);
