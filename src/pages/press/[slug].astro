@@ -1,0 +1,252 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const press = await getCollection('vault_press');
+  return press
+    .filter(a => a.data.public_display !== false)
+    .map(a => ({
+      params: { slug: a.id },
+      props: { article: a },
+    }));
+}
+
+const { article } = Astro.props;
+const d = article.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const [allPeople, allProjects] = await Promise.all([
+  getCollection('vault_people'),
+  getCollection('vault_projects'),
+]);
+
+function refSlug(ref: string | undefined) {
+  if (!ref) return '';
+  return String(ref).split('/').at(-1) ?? '';
+}
+
+// People and projects mentioned
+const mentionedPeople = (d.mentions || [])
+  .filter((m: string) => String(m).startsWith('people/'))
+  .map((m: string) => allPeople.find(p => p.id === refSlug(m)))
+  .filter(Boolean);
+
+const mentionedProjects = (d.mentions || [])
+  .filter((m: string) => String(m).startsWith('projects/'))
+  .map((m: string) => allProjects.find(p => p.id === refSlug(m)))
+  .filter(Boolean);
+
+function pubName(): string {
+  if (d.publication_name) return d.publication_name;
+  if (d.publication) return String(d.publication).split('/').at(-1)?.replace(/-/g, ' ') ?? '';
+  return '';
+}
+
+function dateDisplay(): string {
+  const dt = String(d.published_date || d.date || '');
+  if (!dt || dt === 'undefined') return '';
+  return dt.slice(0, 10);
+}
+
+const bodyHtml = renderBody(d.body || '', BASE);
+---
+<Base title={`${d.title} — CRFW`}>
+  <article class="press-article">
+    <nav class="press-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/press`}>All press</a>
+    </nav>
+
+    <header class="press-header">
+      <div class="press-meta-top">
+        {d.press_kind && <span class="press-kind">{d.press_kind}</span>}
+        {dateDisplay() && <span class="press-date">{dateDisplay()}</span>}
+        {pubName() && <span class="press-pub">{pubName()}</span>}
+        {d.author_name && <span class="press-author">by {d.author_name}</span>}
+      </div>
+      <h1>{d.title}</h1>
+      {d.canonical_url && (
+        <a class="press-external" href={d.canonical_url} target="_blank" rel="noopener">
+          Read original ↗
+        </a>
+      )}
+    </header>
+
+    {(mentionedPeople.length > 0 || mentionedProjects.length > 0) && (
+      <section class="press-section">
+        <h2>Mentions</h2>
+        <div class="press-mentions">
+          {mentionedPeople.map((p: any) => (
+            <a href={`${BASE}/person/${p.id}`} class="mention-chip mention-person">
+              {p.data.display_name || p.data.title || p.id}
+            </a>
+          ))}
+          {mentionedProjects.map((p: any) => (
+            <a href={`${BASE}/project/${p.id}`} class="mention-chip mention-project">
+              {p.data.name || p.data.title || p.id}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {bodyHtml && (
+      <section class="press-body" set:html={bodyHtml} />
+    )}
+
+    {!bodyHtml && d.canonical_url && (
+      <div class="press-no-body">
+        <p>Full text not archived locally. Read the original at:</p>
+        <a href={d.canonical_url} target="_blank" rel="noopener">{d.canonical_url}</a>
+      </div>
+    )}
+  </article>
+</Base>
+
+<style>
+  .press-article {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .press-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .press-nav a { color: var(--ink-dim); text-decoration: none; }
+  .press-nav a:hover { color: var(--accent-2); }
+  .press-nav .sep { color: var(--rule); margin: 0 8px; }
+
+  .press-header {
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 28px;
+  }
+  .press-meta-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .press-kind {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+  }
+  .press-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
+  .press-pub {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    text-transform: capitalize;
+  }
+  .press-author {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .press-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .press-external {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-2);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .press-external:hover { text-decoration: underline; }
+
+  .press-section { margin-bottom: 36px; }
+  .press-section h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 14px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .press-mentions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mention-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    transition: border-color 0.1s;
+  }
+  .mention-chip:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  .mention-person { color: var(--ink-dim); }
+  .mention-project { color: var(--accent-3); border-color: rgba(6, 214, 160, 0.3); }
+  .mention-project:hover { border-color: var(--accent-3); color: var(--accent-3); }
+
+  /* Body prose — same as person-body */
+  .press-body {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .press-body :global(p) { margin: 0 0 1em; }
+  .press-body :global(h4),
+  .press-body :global(h5) {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 2em 0 0.6em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .press-body :global(blockquote) {
+    border-left: 3px solid var(--accent-2);
+    margin: 1em 0;
+    padding: 0 0 0 16px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .press-body :global(ul) { padding-left: 1.4em; margin: 0 0 1em; }
+  .press-body :global(li) { margin-bottom: 0.4em; }
+  .press-body :global(.wiki-link) { color: var(--accent-2); text-decoration: none; border-bottom: 1px solid rgba(255,209,102,0.35); }
+  .press-body :global(.wiki-link:hover) { border-bottom-color: var(--accent-2); }
+  .press-body :global(.wiki-chip) { font-family: var(--mono); font-size: 0.85em; color: var(--ink-dim); background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 3px; }
+  .press-body :global(a) { color: var(--accent-2); text-decoration: none; }
+  .press-body :global(a:hover) { text-decoration: underline; }
+  .press-body :global(strong) { font-weight: 700; }
+
+  .press-no-body {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink-dim);
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  .press-no-body a { color: var(--accent-2); word-break: break-all; }
+</style>
