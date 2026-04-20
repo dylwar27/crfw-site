@@ -21,11 +21,11 @@ data/crfw.db-wal
 # subset into public/media/ and src/content/.
 tmp/
 
-# Dropbox sync-conflict duplicates ("filename 2.ext"). The repo
-# lives outside Dropbox but this machine's Dropbox copies files
-# with a literal-space-2 suffix on sync collisions and they
-# sometimes leak into the working tree.
-* 2.*
-* 2
-** 2.*
-** 2
+# Sync-conflict duplicates. Dropbox appends " 2" / " 3" etc.; iCloud Drive
+# (Desktop sync) does the same when multiple devices write simultaneously.
+# Cover " 2" through " 9" with a character-class glob so all conflict copies
+# are ignored regardless of which digit suffix they carry.
+* [2-9].*
+* [2-9]
+** [2-9].*
+** [2-9]
