@@ -173,6 +173,27 @@ const events = defineCollection({
   }),
 });
 
+// Curator-defined groupings of photos/videos into named sets.
+// Forward-only membership: the set stores member slugs; individual
+// photos/videos store nothing. The CMS computes membership in memory.
+const sets = defineCollection({
+  type: 'data',
+  schema: z.object({
+    name: z.string(),
+    description: z.string().optional(),
+    date: fuzzyDate.optional(),
+    date_end: fuzzyDate.optional(),
+    project: z.string().optional(),
+    cover: z.string().optional(),          // representative image path
+    members: z.array(z.object({
+      kind: z.enum(['photo', 'video', 'voice_memo']),
+      slug: z.string(),
+    })).default([]),
+    tags: z.array(z.string()).default([]),
+    published: z.boolean().default(false), // draft until explicitly approved
+  }),
+});
+
 // ================================================================
 // VAULT-PROJECTED COLLECTIONS (Session 13)
 //
@@ -385,7 +406,7 @@ const vault_series = defineCollection({
 });
 
 export const collections = {
-  releases, photos, videos, voice_memos, lyrics, people, events,
+  releases, photos, videos, voice_memos, lyrics, people, events, sets,
   vault_people, vault_projects, vault_venues, vault_organizations,
   vault_tracks, vault_releases, vault_events, vault_press,
   vault_funds, vault_grants, vault_series,

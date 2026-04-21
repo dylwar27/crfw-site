@@ -18,7 +18,7 @@
 // - Sensitivity is a first-class field with defaults per entity kind.
 
 import { createServer } from 'node:http';
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync } from 'node:fs';
 import { join, extname, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -50,6 +50,7 @@ const SOURCES = {
     collections: [
       { name: 'releases',    ext: '.md',   editable: true },
       { name: 'photos',      ext: '.json', editable: true },
+      { name: 'sets',        ext: '.json', editable: true },
       { name: 'videos',      ext: '.json', editable: true },
       { name: 'voice_memos', ext: '.json', editable: true },
       { name: 'events',      ext: '.md',   editable: true },
@@ -84,6 +85,7 @@ const SOURCES = {
 const EDITABLE_FIELDS = {
   'site:releases':    ['title','preservedTitle','project','date','format','era','summary','tags','published','archivePath','coverArt','bandcampUrl','bandcampItemId','bandcampItemType','youtubeId','soundcloudUrl'],
   'site:photos':      ['title','date','caption','project','source','sourceUrl','tags','published','archivePath'],
+  'site:sets':        ['name','description','date','date_end','project','cover','tags','published','members'],
   'site:videos':      ['title','date','kind','project','youtubeId','vimeoEmbed','summary','tags','published','archivePath','transcript'],
   'site:voice_memos': ['title','date','summary','project','tags','published','archivePath'],
   'site:events':      ['title','date','kind','project','location','url','source','summary','tags','published'],
@@ -212,7 +214,7 @@ function listEntries(sourceId, collection) {
       if (!entry) return null;
       const d = entry.data;
       // Thumbnail: prefer cover art / src / poster / first carousel extra
-      let thumb = d.coverArt || d.src || d.poster || null;
+      let thumb = d.coverArt || d.src || d.poster || d.cover || null;
       if (!thumb && Array.isArray(d.carouselExtras) && d.carouselExtras.length > 0) {
         thumb = d.carouselExtras[0];
       }
@@ -243,6 +245,7 @@ function listEntries(sourceId, collection) {
         thumb,
         captionPreview,
         tags: Array.isArray(d.tags) ? d.tags : [],
+        members: Array.isArray(d.members) ? d.members : [],
       };
     })
     .filter(Boolean);
@@ -493,6 +496,24 @@ const server = createServer(async (req, res) => {
         let commitRes = null;
         if (commit) commitRes = commitChange(source, collection, slug, result.changed);
         return json(res, 200, { changed: result.changed, commit: commitRes });
+      } catch (err) {
+        return json(res, 500, { error: err.message });
+      }
+    }
+
+    // POST /api/entries/site/sets — create a new set file
+    if (req.method === 'POST' && !slug && source === 'site' && collection === 'sets') {
+      try {
+        const body = await readBody(req);
+        const { slug: newSlug, data } = JSON.parse(body);
+        if (!newSlug || !data) return json(res, 400, { error: 'slug and data required' });
+        const setsDir = join(repo, 'src', 'content', 'sets');
+        const filePath = join(setsDir, `${newSlug}.json`);
+        if (existsSync(filePath)) return json(res, 409, { error: 'slug already exists' });
+        mkdirSync(setsDir, { recursive: true });
+        writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n', 'utf8');
+        commitChange('site', 'sets', newSlug, ['created']);
+        return json(res, 201, { slug: newSlug });
       } catch (err) {
         return json(res, 500, { error: err.message });
       }
