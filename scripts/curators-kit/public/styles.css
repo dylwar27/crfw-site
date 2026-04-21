@@ -584,3 +584,113 @@ body { display: flex; min-height: 100vh; overflow: hidden; }
   .editor-body { padding: 20px 16px 80px; }
   .actions { margin: 20px -16px -80px; padding: 14px 16px; }
 }
+
+/* ----------------------------------------------------------------
+   Asset Sets
+   ---------------------------------------------------------------- */
+.panel-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+}
+
+/* Set members panel (inside set editor) */
+.set-members-panel {
+  margin: 4px 0 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+.set-members-empty {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+.set-members-list { display: flex; flex-direction: column; gap: 4px; }
+.set-member-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.set-member-row:hover { background: rgba(255,255,255,0.04); }
+.member-kind-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  background: rgba(255,209,102,0.1);
+  border: 1px solid rgba(255,209,102,0.3);
+  padding: 1px 5px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.member-slug-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.member-remove {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-dim);
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.1s;
+  padding: 0;
+}
+.set-member-row:hover .member-remove { opacity: 1; }
+.member-remove:hover { border-color: var(--accent); color: var(--accent); }
+
+/* IN SETS chips (photo/video editor) */
+.set-membership {
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+.set-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.set-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid var(--accent-2);
+  color: var(--accent-2);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.set-chip:hover { background: rgba(255,209,102,.1); }
+
+/* Bulk bar: set name input */
+.bulk-set-input {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  padding: 3px 8px;
+  border-radius: 3px;
+  width: 160px;
+  outline: none;
+}
+.bulk-set-input:focus { border-color: var(--accent-2); }

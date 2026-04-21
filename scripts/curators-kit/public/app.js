@@ -15,6 +15,8 @@ const state = {
   viewMode: 'list',          // 'list' | 'grid'
   selected: new Set(),       // Set<slug> for multi-select
   filterPublished: 'all',    // 'all' | 'published' | 'unpublished'
+  allSets: [],               // lightweight set entries cached for membership lookup
+  setsLoaded: false,
 };
 
 // ---------------------------------------------------------------
@@ -94,7 +96,7 @@ async function selectCollection(name) {
   state.current = null;
   state.selected.clear();
   // Default to grid view for photos + videos (visual collections)
-  state.viewMode = (name === 'photos' || name === 'videos') ? 'grid' : 'list';
+  state.viewMode = (name === 'photos' || name === 'videos' || name === 'sets') ? 'grid' : 'list';
   listTitle.textContent = name.replace(/_/g, ' ');
   document.querySelectorAll('#collections button').forEach(b =>
     b.classList.toggle('active', b.dataset.collection === name));
@@ -262,6 +264,10 @@ function renderBulkBar() {
       <button class="bulk-btn bulk-add-tag">Add</button>
     </label>
     <span class="bulk-spacer"></span>
+    ${(state.collection === 'photos' || state.collection === 'videos') ? `
+    <span id="bulk-set-area">
+      <button class="bulk-btn" id="bulk-group-btn">+ Set</button>
+    </span>` : ''}
     <button class="bulk-btn bulk-clear">Clear</button>`;
 
   bar.querySelector('.bulk-publish').addEventListener('click', () => bulkApply({ published: true }, 'publish'));
@@ -280,6 +286,61 @@ function renderBulkBar() {
     state.selected.clear();
     renderList();
   });
+
+  const groupBtn = document.getElementById('bulk-group-btn');
+  if (groupBtn) groupBtn.addEventListener('click', showGroupSetForm);
+}
+
+function showGroupSetForm() {
+  const area = document.getElementById('bulk-set-area');
+  if (!area) return;
+  area.innerHTML = `
+    <input id="bulk-set-name" class="bulk-set-input" placeholder="Set name…" />
+    <button class="bulk-btn" id="bulk-set-create">Create</button>
+    <button class="bulk-btn" id="bulk-set-cancel">✕</button>`;
+  document.getElementById('bulk-set-create').addEventListener('click', async () => {
+    const name = document.getElementById('bulk-set-name')?.value.trim();
+    if (name) await createSet(name);
+  });
+  document.getElementById('bulk-set-cancel').addEventListener('click', renderBulkBar);
+  document.getElementById('bulk-set-name')?.focus();
+}
+
+function slugify(str) {
+  const base = str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
+  const ts = Date.now().toString(36).slice(-4);
+  return `${base}-${ts}`;
+}
+
+async function loadAllSets() {
+  if (state.setsLoaded) return;
+  try {
+    state.allSets = await fetch(`${API}/entries/site/sets`).then(r => r.json());
+    state.setsLoaded = true;
+  } catch (e) { state.allSets = []; }
+}
+
+async function createSet(name) {
+  const slug = slugify(name);
+  const kind = state.collection === 'videos' ? 'video' : 'photo';
+  const slugs = [...state.selected];
+  const members = slugs.map(s => ({ kind, slug: s }));
+  const dates = slugs.map(s => state.entries.find(e => e.slug === s)?.date).filter(Boolean).sort();
+  const data = { name, date: dates[0] || '', members, tags: [], published: false };
+
+  toast(`Creating set "${name}"…`);
+  const r = await fetch(`${API}/entries/site/sets`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slug, data }),
+  }).then(r => r.json());
+
+  if (r.error) return toast('Error: ' + r.error, true);
+  state.setsLoaded = false;  // invalidate cache
+  state.selected.clear();
+  toast(`Set "${name}" created.`);
+  await selectCollection('sets');
+  selectEntry(slug);
 }
 
 async function bulkApply(patch, summary) {
@@ -357,7 +418,7 @@ function renderEmpty() {
   editorBody.innerHTML = '';
 }
 
-function renderEditor() {
+async function renderEditor() {
   const entry = state.current;
   editorEmpty.hidden = true;
   editorBody.hidden = false;
@@ -384,7 +445,13 @@ function renderEditor() {
   }
 
   for (const key of fields) {
+    if (key === 'members') continue; // rendered separately below
     parts.push(renderField(key, d[key]));
+  }
+
+  // Set members panel — rendered as HTML but wired after innerHTML is set
+  if (entry.collection === 'sets') {
+    parts.push(renderSetMembersPanel(d.members || []));
   }
 
   // Actions — Save button label depends on destination
@@ -407,6 +474,28 @@ function renderEditor() {
 
   editorBody.innerHTML = parts.join('');
   wireEditor();
+
+  // Wire set members panel (click-to-jump + remove buttons)
+  if (entry.collection === 'sets') {
+    wireMemberPanel();
+  }
+
+  // "IN SETS" chips for photo/video entries
+  if (entry.collection === 'photos' || entry.collection === 'videos') {
+    await loadAllSets();
+    const memberSets = state.allSets.filter(s =>
+      (s.members || []).some(m => m.slug === entry.slug)
+    );
+    if (memberSets.length > 0) {
+      editorBody.insertAdjacentHTML('beforeend', renderSetChips(memberSets));
+      editorBody.querySelectorAll('.set-chip[data-slug]').forEach(chip => {
+        chip.addEventListener('click', async () => {
+          await selectCollection('sets');
+          selectEntry(chip.dataset.slug);
+        });
+      });
+    }
+  }
 }
 
 function renderField(key, value) {
@@ -466,6 +555,68 @@ function enumValues(key, collection) {
     events_kind:     ['life','show','release','milestone','residence','collaboration','press'],
   };
   return ENUMS[`${collection}_${key}`];
+}
+
+// ---------------------------------------------------------------
+// Set helpers — members panel + membership chips
+// ---------------------------------------------------------------
+function renderSetMembersPanel(members) {
+  if (!members.length) {
+    return `<div class="set-members-panel">
+      <div class="panel-label">Members</div>
+      <div class="set-members-empty">No members yet. Use the bulk "+ Set" action in Photos or Videos to add assets.</div>
+    </div>`;
+  }
+  const rows = members.map((m, i) => `
+    <div class="set-member-row" data-kind="${escapeHtml(m.kind)}" data-slug="${escapeHtml(m.slug)}">
+      <span class="member-kind-badge">${escapeHtml(m.kind)}</span>
+      <span class="member-slug-text">${escapeHtml(m.slug)}</span>
+      <button type="button" class="member-remove" data-idx="${i}" title="Remove from set">×</button>
+    </div>`).join('');
+  return `<div class="set-members-panel">
+    <div class="panel-label">Members (${members.length})</div>
+    <div class="set-members-list">${rows}</div>
+  </div>`;
+}
+
+function wireMemberPanel() {
+  const panel = editorBody.querySelector('.set-members-panel');
+  if (!panel) return;
+  panel.querySelectorAll('.member-remove').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const i = +btn.dataset.idx;
+      state.current.data.members.splice(i, 1);
+      state.dirty = true;
+      updateStatus('Unsaved');
+      const newPanel = renderSetMembersPanel(state.current.data.members);
+      panel.outerHTML = newPanel;
+      wireMemberPanel();
+    });
+  });
+  panel.querySelectorAll('.set-member-row').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.closest('.member-remove')) return;
+      jumpToMember(row.dataset.kind, row.dataset.slug);
+    });
+  });
+}
+
+async function jumpToMember(kind, slug) {
+  const coll = kind === 'photo' ? 'photos' : kind === 'video' ? 'videos' : 'voice_memos';
+  if (state.collection !== coll) await selectCollection(coll);
+  selectEntry(slug);
+}
+
+function renderSetChips(memberSets) {
+  const chips = memberSets.map(s => `
+    <button type="button" class="set-chip" data-slug="${escapeHtml(s.slug)}">
+      ${escapeHtml(s.title || s.slug)} · ${(s.members || []).length} items
+    </button>`).join('');
+  return `<div class="set-membership">
+    <div class="panel-label">In sets</div>
+    <div class="set-chips">${chips}</div>
+  </div>`;
 }
 
 // ---------------------------------------------------------------
@@ -544,8 +695,9 @@ async function saveEntry() {
   for (const key of fields) {
     const el = $(`f-${key}`);
     if (!el) {
-      // Tags stays in state.current.data.tags; read from there
+      // Tags and members are managed via custom widgets, not form inputs
       if (key === 'tags') data.tags = state.current.data.tags || [];
+      if (key === 'members') data.members = state.current.data.members || [];
       continue;
     }
     if (el.type === 'checkbox') data[key] = el.checked;
