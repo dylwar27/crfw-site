@@ -9,6 +9,7 @@ tags:
   - archive-only
   - unreleased
   - "2017"
+  - "2017"
 summary: "Named after the TRAPPIST-1 star system, whose seven Earth-sized planets were announced by NASA in February 2017 in one of the most celebrated astronomical press events of the decade. Colin created this track approximately two months after that announcement, naming the project after the newly-discovered system."
 tracklist:
   - n: 1

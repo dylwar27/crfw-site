@@ -10,6 +10,7 @@ tags:
   - archive-only
   - unreleased
   - "2016"
+  - "2016"
 summary: "An alternate/unreleased curation of b-sides material from the 2014-2016 killd by period, distinct from the released *2014-2016 [Bsides]* Bandcamp album. The title \"OUTCASTS\" suggests material that was explicitly excluded or didn't fit the main releases — tracks identified as leftovers or rejects but collected under a named project."
 tracklist:
   - n: 1

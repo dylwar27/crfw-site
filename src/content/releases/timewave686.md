@@ -9,6 +9,7 @@ tags:
   - archive-only
   - unreleased
   - "2016"
+  - "2016"
 summary: "An 8-track unreleased killd by project from August 2016. The name \"Timewave686\" may reference *Timewave Zero*, a numerological theory by Terence McKenna proposing that time has a wave-like structure of novelty — a concept circulating in psychedelic and counterculture communities. The \"686\" suffix is unresolved: it may be a frequency (686 Hz is within the red light spectrum), a code, or a personal reference."
 tracklist:
   - n: 1

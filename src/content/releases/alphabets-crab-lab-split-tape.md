@@ -9,6 +9,7 @@ tags:
   - archive-only
   - split
   - "2012"
+  - "2012"
 summary: "A collaborative release pairing alphabets with an act called [[organizations/crab-lab]]. One track confirmed: *tienesquelavartelasmanos* (Spanish: \"you have to wash your hands\"). Whether this is an alphabets track, a Crab Lab track, or a collaboration between both is unknown."
 tracklist:
   - n: 1

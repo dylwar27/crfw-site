@@ -11,6 +11,7 @@ tags:
   - draft
   - "2015"
   - court-clothes-era
+  - "2015"
 summary: "An earlier draft or precursor to the released *Court Clothes* album. The folder contains two Ableton session reference files (.asd), no completed audio exports:"
 tracklist:
   - n: 1

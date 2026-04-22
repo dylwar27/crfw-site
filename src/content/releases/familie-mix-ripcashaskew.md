@@ -11,6 +11,7 @@ tags:
   - tribute
   - ghost-ship
   - "2016"
+  - "2016"
 summary: "A tribute mix created three days after the Ghost Ship warehouse fire in Oakland, California (December 2, 2016), which killed 36 people at an underground electronic music event. Among the dead was **Cash Askew** (Audrey Harvey), a musician and member of the band Them Are Us Too. The filename *Familie-Mix.RIPCashAskew* names the tribute explicitly."
 tracklist:
   - n: 1

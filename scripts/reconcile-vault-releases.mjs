@@ -96,6 +96,23 @@ const SLUG_MAP = {
   'alphabets-underwaters-v':                  'underwaters-v',
   'alphabets-underwaters-vi':                 'underwaters-vi',
   'alphabets-wetdollar-11':                   'wetdollar-11',
+  // Monthly alphabets releases (unmapped until session 16)
+  'alphabets-april-co-eds-2011':              'april-co-eds-2011',
+  'alphabets-dec09scifi':                     'dec09scifi',
+  'alphabets-feb2012':                        'feb2012',
+  'alphabets-forjaniechantdance':             'forjaniechantdance',
+  'alphabets-janfeb09':                       'janfeb09',
+  'alphabets-janfeb11-pirate-life':           'janfeb11-pirate-life',
+  'alphabets-july2010':                       'july2010',
+  'alphabets-june-monsters-09':               'june-monsters-09',
+  'alphabets-lifebeforetime-soundtrack':      'lifebeforetimesoundtrack',
+  'alphabets-march09':                        'march09hopdanceshakebump',
+  'alphabets-may10':                          'may10',
+  'alphabets-nov09':                          'nov09',
+  'alphabets-octobrr09':                      'octobrr09',
+  'alphabets-octobrr2010':                    'octobrr2010',
+  'alphabets-sep09':                          'sep09',
+  'alphabets-sftwr-synths-dec09':             'sftwrsynthzdec09',
   // New releases discovered in vault session 5
   'alphabets-crab-lab-split-tape':            'alphabets-crab-lab-split-tape',
   'killd-by-b-sides-2017':                    null, // → create kb-b-sides-2017.md
