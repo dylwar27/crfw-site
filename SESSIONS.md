@@ -4,6 +4,38 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 17 — 2026-04-21 — SLUG_MAP auto-check
+
+**Goal:** Maintenance — ensure new vault releases are caught automatically after each sync.
+
+**Done:**
+- `scripts/reconcile-vault-releases.mjs` — added prominent stderr WARNING when unmatched vault releases are detected, listing exact slugs and the command to add them.
+- `package.json` — chained `reconcile-vault-releases.mjs` (dry-run) after `vault:sync` and inside `build`. New vault releases now surface immediately without a manual check.
+- `HANDOFF_PROMPT.md` — added git identity setup (`git config --global user.name/email`) to the "Before you start" checklist to avoid the "configured automatically" commit warning.
+- Committed directly to main (two-line infra change, no PR).
+
+**Open questions / next up:** Same as Session 16 — see outstanding work in CLAUDE.md.
+
+---
+
+## Session 16 — 2026-04-21 — Asset sets, vault reconciliation (2 PRs)
+
+**Goal:** Sprint 16A — asset sets in CMS; Sprint 16B — vault-to-site release reconciliation.
+
+**Done — PR #34: asset sets**
+- CMS feature for grouping photos/videos into named sets (deferred from Session 13). Curator can create/name a set, drag entries in, and the set renders as a carousel in the popup.
+
+**Done — PR #35: vault reconciliation**
+- `scripts/reconcile-vault-releases.mjs` — merges all 62 vault release entries into site stubs. Fields synced: date, format, bandcampUrl, tracklist (with `preservedTitle` per track), summary, tags, archivePath. Vault wins on conflict; BIN file preserves displaced curator content.
+- Schema: `archivePath` now accepts `string | string[]` in releases.
+- 2 new site stubs created (killd-by-b-sides-2017, killd-by-neotropical). Zero unmatched.
+- SLUG_MAP covers all 64 vault releases.
+- Build: 671 pages, 19,552 words.
+
+**Open questions / next up:** See outstanding work list in CLAUDE.md. Priority curator ask: fill `summary:` fields on empty stubs via CSV export from /admin.
+
+---
+
 ## Session 15 — 2026-04-20 — Person pages, press pages, DB vault sync (3 PRs)
 
 **Goal (Sprint 15):** Sprint 15A — person detail + index pages; Sprint 15B — press detail + index pages; Sprint 15C — populate vault entity tables in SQLite. All three complete.

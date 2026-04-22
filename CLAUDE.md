@@ -82,7 +82,7 @@ site/
 
 ---
 
-## Current state (as of Session 16, 2026-04-21)
+## Current state (as of Session 17, 2026-04-21)
 
 - **~1,960 total entries** (240 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
 - **35 PRs merged** across 16 sessions (PRs #34 asset sets, #35 vault reconciliation committed to main)
@@ -162,6 +162,7 @@ Agent-doable next:
 - **Session 14:** QA pass. Fixed better-sqlite3 Node version mismatch; fixed YAML `>` folded block scalar parser; cleared 721 iCloud sync-conflict dupe files; updated gitignore to cover ` [2-9].*` (not just ` 2.*`); picked up 12 new vault entries + 4 modified entries that Dyl had added in Obsidian since Session 13. Build: 574 pages, 366 vault entities, 0 dead refs.
 - **Session 15:** ~~Person pages~~ (PR #31 — `/person/[slug]` × 34, `/people` index, shared `renderBody.ts` renderer with stash/restore tokenizer). ~~Press pages~~ (PR #32 — `/press/[slug]` × 21, `/press` index, mention chips). ~~DB vault sync~~ (PR #33 — vault entities in SQLite: 36 people, 15 projects, 9 venues, 22 orgs, 21 press, 1 fund, 6 grants, 0 dead refs). Build: 631 pages, 19,446 words.
 - **Session 16:** ~~Asset sets (PR #34)~~ — CMS feature for grouping photos/videos; deferred from Session 13. ~~Vault-to-site release reconciliation~~ (PR #35 — `scripts/reconcile-vault-releases.mjs` merges all 62 vault releases into site stubs: dates, formats, tracklists with `preservedTitle`, summaries, tags, archivePaths; BIN files for displaced curator content; 2 new release stubs created; zero unmatched). Schema: `archivePath` accepts `string|array` in releases. Build: 671 pages, 19,552 words.
+- **Session 17:** ~~SLUG_MAP auto-check~~ — `reconcile-vault-releases.mjs` (dry-run) now chains after every `vault:sync` and `build`. Unmatched vault releases print a prominent stderr WARNING listing exact slugs to add. Committed directly to main (no PR — two-line infra change).
 
 ---
 

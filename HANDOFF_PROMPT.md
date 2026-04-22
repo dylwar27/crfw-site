@@ -18,6 +18,11 @@ You need:
 - **Node 18+** (`node -v`). If missing: `brew install node`.
 - **GitHub CLI** (`gh --version`). If missing: `brew install gh`, then `gh auth login`.
 - **Git** (`git --version`). Comes with Xcode Command Line Tools.
+- **Git identity** — set once globally so commits don't warn "configured automatically":
+  ```
+  git config --global user.name "Dylan Ward"
+  git config --global user.email "your@email.com"
+  ```
 
 Optional but recommended:
 - This folder should probably live **outside Dropbox** eventually — git repos and Dropbox don't love each other (Dropbox tries to sync `node_modules/`, which has ~30,000 files). For the first session, in-Dropbox is fine because `.gitignore` excludes `node_modules/` and `dist/`. If Dropbox complains, move the folder to `~/code/crfw-site/` or similar.
