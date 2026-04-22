@@ -2,13 +2,20 @@
 title: "REMIX09"
 preservedTitle: "REMIX09"
 project: "alphabets"
-date: "2009"
+date: "2009-12-30"
 format: other
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/REMIX09/"
 tags:
   - alphabets
-summary: ""
+  - alphabets-era
+summary: "First annual alphabets remix collection. Released December 30, 2009 on Bandcamp. Followed by REMIX10 (December 2010). Total track count TBD."
 ---
+First annual alphabets remix collection. Released December 30, 2009 on Bandcamp. Followed by REMIX10 (December 2010). Total track count TBD.
 
-Stub entry — folder preserved from the archive. Summary intentionally empty
-(per CLAUDE.md golden rule #6: no AI-generated summaries of Colin's work).
+## Partial Tracklist (1 confirmed)
+
+1. TALONS [HIDEOUS MEN]
+_(remaining tracks not yet documented)_
+
+## Sources
+- [alphabets Bandcamp — REMIX09](https://alphabets.bandcamp.com/album/remix09)

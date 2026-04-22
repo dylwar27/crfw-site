@@ -1,0 +1,26 @@
+{
+  "kind": "release",
+  "id": "alphabets-sep09",
+  "slug": "alphabets-sep09",
+  "title": "sep09",
+  "preservedTitle": "sep09",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2009-09-27",
+  "release_year": 2009,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/sep09"
+  ],
+  "series": "series/album-a-month",
+  "tags": [
+    "archive-only",
+    "album-a-month",
+    "2009"
+  ],
+  "body": "# sep09\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/album-a-month]] — Month 9  \n**Release date:** 2009-09-27  \n**Archive location:** `_Documentation/Music/alphabets/sep09`  \n**Tracks:** 9  \n**Format:** MP3 — first MP3-format album in the archive  \n\nThe moment the format changes. sep09 is the first alphabets album in MP3, signaling a production shift from GarageBand/iPhone M4A output to dedicated audio software. The gap between June and September 2009 (no July or August album in the archive) may reflect the transition period.\n\nThe titles here are the direct ancestors of the underwaters series: *giant amphibian's island noise*, *turtle games shell bonks*, *plesiosaur howl outs and swim bump*, *jive shark and lulla fish*. The aquatic-animal vocabulary that defines the underwaters series is fully formed here — Colin had been circling this territory since \"getting astounded by blue whales on videos\" in JANFEB09, and by September 2009 it's his primary naming register.\n\n*autumn cub bites ferocious* opens the album with season — autumn, a fitting opener for September. *night explodes* and *seasons moves* are more abstract, less animal-specific. *whatever face swamp walk* is a complete absurdist sentence: \"whatever face\" (dismissive expression as a noun phrase) + \"swamp walk\" (a specific gait through specific terrain).\n\n## Track Listing\n\n1. autumn cub bites ferocious\n2. giant amphibian's island noise\n3. turtle games shell bonks\n4. plesiosaur howl outs and swim bump\n5. night explodes\n6. up time\n7. jive shark and lulla fish\n8. seasons moves\n9. whatever face swamp walk\n\n## Archive Notes\n\n- File dates: 2009-09-27 — first MP3 format; format transition from M4A complete\n- 9 tracks — more compact than the June album (15 tracks) and March album (22 tracks); the monthly pace may have influenced track count\n- Direct predecessor to the underwaters series; many tracks would fit on any of the six underwaters volumes"
+}

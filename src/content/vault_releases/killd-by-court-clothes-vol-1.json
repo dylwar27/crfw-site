@@ -1,0 +1,31 @@
+{
+  "kind": "release",
+  "id": "killd-by-court-clothes-vol-1",
+  "slug": "killd-by-court-clothes-vol-1",
+  "title": "Court Clothes vol. 1",
+  "preservedTitle": "Court Clothes vol. 1",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/killd-by",
+  "release_kind": "unreleased",
+  "release_year": 2015,
+  "is_posthumous": false,
+  "is_unreleased": true,
+  "archivePath": [
+    "_Documentation/Music/KB/killd by/Court Clothes vol. 1"
+  ],
+  "tracks": [
+    "tracks/killd-by-court-clothes-vol-1-i-gen-zebra",
+    "tracks/killd-by-court-clothes-vol-1-ii-court-clothes"
+  ],
+  "tags": [
+    "archive-only",
+    "unreleased",
+    "draft",
+    "2015",
+    "court-clothes-era"
+  ],
+  "body": "# Court Clothes vol. 1\n\n**Project:** [[projects/killd-by]]  \n**Status:** Unreleased — draft/early version  \n**File date:** 2015-08-25 (.asd session references)  \n**Archive location:** `_Documentation/Music/KB/killd by/Court Clothes vol. 1`  \n**Tracks:** 2 (referenced via .asd Ableton session files; no audio exports)  \n**Confidence:** medium — tracks are referenced but not confirmed as completed audio\n\nAn earlier draft or precursor to the released *Court Clothes* album. The folder contains two Ableton session reference files (.asd), no completed audio exports:\n\n- `i _ gen zebra.aif.asd` — session reference for a track called \"gen zebra\" (or \"Generation Zebra\")\n- `ii_ court clothes.aif.asd` — session reference for the title track \"court clothes\"\n\nThe Roman numeral track numbering (*i*, *ii*) is unusual in Colin's catalog — suggesting this version had a more formal, structured tracklist than the working filenames used in other projects. The track titled *gen zebra* connects to *Generation Zebra* (a known killd by Bandcamp release), implying that the Court Clothes vol. 1 concept may have incorporated material that was later separated into its own release.\n\nThe \"vol. 1\" designation implies a planned series that either continued (resulting in the released *Court Clothes* album) or was abandoned and reconceived.\n\n## Archive Notes\n\n- Only .asd files present — Ableton session references that point to .aif audio files, which either weren't preserved in this folder or were moved\n- The .asd files are from August 2015; the released *Court Clothes* album is from 2016\n- \"gen zebra\" / \"Generation Zebra\" appearing in the Court Clothes vol. 1 folder suggests these concepts were once bundled together before being split\n- Confidence medium: session references confirm track intent but not completion\n\n## Research Gaps\n\n- Do the .aif files referenced by these .asd files exist elsewhere in the archive?\n- Is \"i _ gen zebra\" a precursor to the released *Generation Zebra* tracks, or a different composition with the same name?\n- Was there ever a Court Clothes vol. 2?"
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "series",
+  "slug": "remix",
+  "id": "remix",
+  "title": "REMIX series",
+  "name": "REMIX series (REMIX08, REMIX09, REMIX10)",
+  "project": "projects/alphabets",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "date_start": "2008",
+  "date_end": "2010",
+  "summary": "An annual remix compilation series: REMIX08 (2008), REMIX09 (2009), REMIX10 (2010).\nEach release collects remixes Colin made of other artists' tracks during that year,\nwith the title format \"[ARTIST]-[ORIGINAL TITLE] ([remix descriptor] mix).\" REMIX10\nis the most thoroughly documented, with 24 tracks — confirming that Colin was actively\nremixing other artists at high volume throughout the alphabets era. The naming convention\nconfirms Colin as the remixer (not the remixed artist).",
+  "members": [
+    "releases/alphabets-remix08",
+    "releases/alphabets-remix09",
+    "releases/alphabets-remix10"
+  ],
+  "source_ids": [],
+  "archivePath": [
+    "_Documentation/Music/alphabets/REMIX08",
+    "_Documentation/Music/alphabets/REMIX09",
+    "_Documentation/Music/alphabets/REMIX10"
+  ],
+  "tags": [
+    "series",
+    "alphabets-era",
+    "remix"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# REMIX series\n\nThree annual remix compilations — REMIX08, REMIX09, REMIX10 — collecting the remix work Colin did as alphabets each year. The format is consistent: each track title identifies the original artist, the original song title, and a parenthetical remix name coined by Colin.\n\n## Known Track Format\n\n`[ORIGINAL ARTIST]-[ORIGINAL TRACK TITLE] ([colin's mix name] mix)`\n\nExamples from REMIX10:\n- MODERN WITCH – HOLLYWOOD BABYLON *(nine inch witch mix)*\n- THUNDERCADE – PERIOD OF THE FUNCTION *(deep tattoo smooches mix)*\n- CONSTELLATIONS – SAVAGE ORB *(scary dipper mix)*\n- CVLTS – RADD PITT *(clavinova_mic2 mix)*\n\nThe parenthetical mix names follow the same absurdist word-collision style as Colin's track titles across all his work — *nine inch witch*, *deep tattoo smooches*, *scary dipper* are clearly his coinages, not the original artists'.\n\n## Scale\n\nREMIX10 alone has 24 tracks — confirming this was high-volume, year-round activity. 24 remixes in a single year means Colin was regularly engaging with other artists' work as a creative practice parallel to his own releases. The artists remixed span the experimental/indie/electronic scene contemporary to the alphabets era.\n\n## REMIX09\n\nRelease date confirmed: December 30, 2009. One confirmed track: *TALONS [HIDEOUS MEN]*.\n\n## Research Gaps\n\n- REMIX08: track count and individual tracks not yet confirmed from archive\n- REMIX09: only one track confirmed; full tracklist not yet extracted\n- REMIX10: 4 of 24 tracks confirmed; full tracklist pending deeper archive scan\n- The original artists remixed in REMIX08 and REMIX09 have not been systematically identified\n\n## Notes for Website\n\nThe REMIX series reveals a significant dimension of Colin's practice that isn't visible from his solo releases alone: he was an active participant in a remix culture, building relationships with other artists' work as a form of creative dialogue. For the website, this could be framed as \"Colin as collaborator and interpreter\" — not just a solo artist but someone in active conversation with a broader experimental music community."
+}

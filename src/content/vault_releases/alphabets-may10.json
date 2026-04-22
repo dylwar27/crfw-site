@@ -1,0 +1,26 @@
+{
+  "kind": "release",
+  "id": "alphabets-may10",
+  "slug": "alphabets-may10",
+  "title": "may10",
+  "preservedTitle": "may10",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2010-05",
+  "release_year": 2010,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/may10"
+  ],
+  "series": "series/album-a-month",
+  "tags": [
+    "archive-only",
+    "album-a-month",
+    "2010"
+  ],
+  "body": "# may10\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/album-a-month]] — May 2010  \n**File dates:** 2010-05-23 to 2010-05-30  \n**Archive location:** `_Documentation/Music/alphabets/may10`  \n**Tracks:** 9  \n**Format:** MP3  \n\nMay 2010 — the same month that moonpower (May 7) and SUNPOWER (May 30) were released. This was Colin's single most prolific calendar month, with at least three releases (may10, moonpower, SUNPOWER) and possibly more. The album-a-month project and the [___]POWER family were running simultaneously.\n\nThe may10 titles are warmer and more open than the winter 2009 albums: *cloudy*, *friend ships*, *light talk*, *make those plans*, *sweat*. Spring vocabulary. *friend ships* (as two words — friendship rendered as vessels) and *sad trains* sit alongside the warmer titles, keeping the emotional range honest.\n\n*hott* — a single word, one of the simplest titles in the catalog — would echo in the later *stupid HOTT* Bandcamp release. *funky weather stuff* is a quintessentially alphabets title: a vague modifier (*funky*), a natural phenomenon (*weather*), and a vague noun (*stuff*).\n\n## Track Listing\n\n1. cloudy\n2. duh\n3. friend ships\n4. funky weather stuff\n5. hott\n6. light talk\n7. make those plans\n8. sad trains\n9. sweat\n\n*(Archive filenames are untitled/alphabetical rather than numbered; order above follows filesystem order)*\n\n## Archive Notes\n\n- File dates: 2010-05-23 to 2010-05-30\n- Same month as moonpower (May 7) and SUNPOWER (May 30) — May 2010 was extremely productive\n- \"hott\" (lowercase, double-t): echoes forward to *stupid HOTT* (Bandcamp release)\n- \"friend ships\": two words in the archive — deliberate separation of \"friend\" and \"ships\""
+}

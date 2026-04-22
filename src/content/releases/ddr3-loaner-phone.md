@@ -60,6 +60,7 @@ tracklist:
     title: "worldVocal stretch"
   - n: 23
     title: "Z100YourOwnMovie"
+archivePath: CRFW Archive/_Documentation/bandcamp/killd_by__ddr3-loaner-phone
 ---
 
 Stub entry — created from Bandcamp embed catalog

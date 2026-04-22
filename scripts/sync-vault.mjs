@@ -332,6 +332,10 @@ for (const [folder, collName] of Object.entries(KIND_MAP)) {
     if (typeof normalized.archivePath === 'string') {
       normalized.archivePath = [normalized.archivePath];
     }
+    // Ensure tags are always strings (YAML 1.1 parses bare integers like 2011 as numbers)
+    if (Array.isArray(normalized.tags)) {
+      normalized.tags = normalized.tags.map(t => typeof t === 'number' ? String(t) : t);
+    }
     // Ensure id matches filename
     const slug = f.replace(/\.md$/, '');
     normalized.id = slug;

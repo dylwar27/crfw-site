@@ -4,23 +4,26 @@
   "title": "REMIX09",
   "preservedTitle": "REMIX09",
   "artist": "projects/alphabets",
-  "date_note": "alphabets era (2008–2013); title suggests 2009",
+  "release_date": "2009-12-30",
+  "label": "self-released",
   "format": [
     "digital"
   ],
+  "date_note": "Released December 30, 2009",
   "bandcamp": "https://alphabets.bandcamp.com/album/remix09",
   "created": "2026-04-20",
+  "updated": "2026-04-21",
   "sensitivity": "public",
   "public_display": true,
-  "confidence": "medium",
+  "confidence": "high",
   "archivePath": [],
   "tags": [
     "alphabets-era"
   ],
-  "notes": "Found on alphabets Bandcamp page. Tracklist and date TBD — needs to be matched against archive folders.",
   "related": [
     "projects/alphabets",
-    "people/colin-ward"
+    "people/colin-ward",
+    "releases/alphabets-remix10"
   ],
-  "body": "Alphabets release. Found on the alphabets Bandcamp page. Full tracklist and release date TBD — needs to be matched against archive folders. Title suggests 2009 content or a 2009-era remix collection."
+  "body": "First annual alphabets remix collection. Released December 30, 2009 on Bandcamp. Followed by REMIX10 (December 2010). Total track count TBD.\n\n## Partial Tracklist (1 confirmed)\n\n1. TALONS [HIDEOUS MEN]\n_(remaining tracks not yet documented)_\n\n## Sources\n- [alphabets Bandcamp — REMIX09](https://alphabets.bandcamp.com/album/remix09)"
 }

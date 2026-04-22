@@ -2,46 +2,15 @@
 title: Court Clothes
 preservedTitle: CourtClothes
 project: "killd by"
-date: "2014"
+date: "2015-09-17"
 era: "killd by — early LPs"
 format: LP
 coverArt: /media/releases/court-clothes/cover.svg
-tracklist:
-  - n: 1
-    title: "butterFly eFFecT"
-    preservedTitle: "butterFly eFFecT"
-  - n: 2
-    title: "hopeless [222]"
-    preservedTitle: "hopeless [222]"
-  - n: 3
-    title: "e.v.i.L a.n.g.eLz"
-    preservedTitle: "_e_v_i_L__a_n_g_eLz_"
-  - n: 4
-    title: "COPE"
-    preservedTitle: "COPE_"
-  - n: 5
-    title: "birD jaiL"
-    preservedTitle: "birD__jaiL"
-  - n: 6
-    title: "thunder stoned"
-    preservedTitle: "thunder__stoned_"
-  - n: 7
-    title: "L.i.g.h.t & Acid"
-    preservedTitle: "_L_i_g_h_t_&_Acid"
-  - n: 8
-    title: "FLAG burn"
-    preservedTitle: "FLAG_burn__"
-  - n: 9
-    title: "generation-zebra"
-    preservedTitle: "generation-zebra"
-  - n: 10
-    title: "no decision"
-    preservedTitle: "_no_decision_"
 tags:
   - killd-by
   - debut-lp
   - court-clothes
-archivePath: "CRFW Archive/_Documentation/Music/KB/killd by/41 CCFinaLsWAVs/"
+  - bandcamp
 summary: >
   Court Clothes is the first full-length LP to surface under the "killd by" name.
   The archive holds it in multiple stages — CCdrafts (working versions), CCFinaLsWAVs
@@ -53,6 +22,49 @@ summary: >
 bandcampUrl: "https://killdby.bandcamp.com/album/court-clothes"
 bandcampItemId: "3159341709"
 bandcampItemType: "album"
+tracklist:
+  - n: 1
+    title: butterFly eFFecT
+  - n: 2
+    title: "hopeless [222]"
+  - n: 3
+    title: eviL angeLz
+    preservedTitle: "*e*v*i*L_*a*n*g*eLz*"
+  - n: 4
+    title: COPE
+    preservedTitle: COPE_
+  - n: 5
+    title: birD jaiL
+    preservedTitle: birD_jaiL
+  - n: 6
+    title: thunder stoned
+    preservedTitle: "thunder*_stoned*"
+  - n: 7
+    title: "Light&Acid"
+    preservedTitle: "*L*i*g*h*t*&amp;*Acid*"
+  - n: 8
+    title: FLAG burn
+    preservedTitle: "FLAG_burn**"
+  - n: 9
+    title: generation-zebra
+  - n: 10
+    title: no decision
+    preservedTitle: _no_decision_
+  - n: 11
+    title: Genie CluB
+    preservedTitle: "*G*e*n*i*e_CluB"
+  - n: 12
+    title: gong-water
+    preservedTitle: __gong-water
+  - n: 13
+    title: river inside
+    preservedTitle: "*river_inside_"
+  - n: 14
+    title: Lapse
+    preservedTitle: "*L*a*p*s*e*"
+archivePath:
+  - CRFW Archive/_Documentation/Music/KB/killd by/41 CCFinaLsWAVs/
+  - CRFW Archive/_Documentation/bandcamp/killd_by__court-clothes
 ---
 
 ## How Colin kept this album

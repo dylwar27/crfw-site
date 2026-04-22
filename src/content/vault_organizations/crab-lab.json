@@ -1,0 +1,23 @@
+{
+  "id": "crab-lab",
+  "kind": "organization",
+  "title": "Crab Lab",
+  "display_name": "Crab Lab",
+  "aliases": [],
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "role_summary": "Denver-area act/collective that co-released a split tape with alphabets (2012). Identity and membership not yet confirmed.",
+  "tags": [
+    "collaborator",
+    "alphabets-era",
+    "split-tape"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward",
+    "releases/alphabets-crab-lab-split-tape"
+  ],
+  "body": "# Crab Lab\n\nA musical act or collective that co-released a split tape with alphabets in 2012. The archive folder `alphabets_ Crab Lab split tape` contains one confirmed track: *tienesquelavartelasmanos* (Spanish: \"you have to wash your hands\"), dated October 23, 2012.\n\nWhether the Spanish-language title was contributed by alphabets or Crab Lab is unknown. The split tape format (each act contributes tracks to a shared release) was common in the cassette/lo-fi DIY scene of the early 2010s.\n\nNothing further is known about Crab Lab — whether they were a Denver act, a touring band Colin connected with, or a short-lived project. The name suggests a creative/experimental aesthetic consistent with the alphabets scene.\n\n## Archive Notes\n\n- Folder: `_Documentation/Music/alphabets/alphabets_ Crab Lab split tape`\n- One MP3 confirmed: *tienesquelavartelasmanos.mp3* (Oct 23, 2012)\n- Confidence low: only the folder name and one track provide any information\n\n## Research Gaps\n\n- Who is/was Crab Lab? Members, city, other releases?\n- Was the split tape released physically (cassette) or digitally?\n- Which tracks on the split are by alphabets and which by Crab Lab?\n- What does *tienesquelavartelasmanos* refer to in this context?"
+}

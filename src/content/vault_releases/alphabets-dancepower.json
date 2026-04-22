@@ -1,0 +1,29 @@
+{
+  "kind": "release",
+  "id": "alphabets-dancepower",
+  "slug": "alphabets-dancepower",
+  "title": "DANCEPOWER",
+  "preservedTitle": "DANCEPOWER",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/alphabets",
+  "release_kind": "single",
+  "release_date": "2010-07-08",
+  "release_year": 2010,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/DANCEPOWER"
+  ],
+  "series": "series/power",
+  "tracks": [
+    "tracks/alphabets-dancepower-01-toby-dance"
+  ],
+  "tags": [
+    "archive-only",
+    "power-series",
+    "single"
+  ],
+  "body": "# DANCEPOWER\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/power]] — [___]POWER family  \n**File date:** 2010-07-08  \n**Archive location:** `_Documentation/Music/alphabets/DANCEPOWER`  \n**Tracks:** 1 (single)  \n**Confidence:** medium — single-track archive folder may indicate an incomplete release or a single\n\nOne track: *toby dance*. Whether DANCEPOWER was intended as a single, a named song-as-release, or an unfinished EP is unclear from the archive alone. The naming suggests it was conceived as a standalone POWER-family release rather than a leftover — it has the correct naming format (*DANCEPOWER*) and its own folder.\n\n*Toby dance* combines a proper name (*Toby*) with a simple verb form. \"Toby\" is uncommon in Colin's catalog — it may refer to a specific person, a character, or be a phonetic play on a word. The dance theme connects to the series title (DANCE + POWER).\n\n## Track Listing\n\n1. toby dance\n\n## Archive Notes\n\nFile date: 2010-07-08. Single MP3 in dedicated folder. Confidence medium — could be an incomplete EP or an intentional single. The [___]POWER naming convention strongly suggests this was conceived as part of the family."
+}

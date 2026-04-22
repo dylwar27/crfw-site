@@ -13,6 +13,10 @@ tags:
   - needs-review
 summary: ""
 published: false
+tracklist:
+  - n: 1
+    title: draw blood
+archivePath: CRFW Archive/_Documentation/bandcamp/killd_by__draw-blood
 ---
 
 Stub entry — created from Bandcamp embed catalog

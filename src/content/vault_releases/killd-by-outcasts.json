@@ -1,0 +1,31 @@
+{
+  "kind": "release",
+  "id": "killd-by-outcasts",
+  "slug": "killd-by-outcasts",
+  "title": "OUTCASTS (b-sides 2014-2016)",
+  "preservedTitle": "OUTCASTS (b-sides 2014-2016)",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/killd-by",
+  "release_kind": "unreleased",
+  "release_date": "2016-12-07",
+  "release_year": 2016,
+  "is_posthumous": false,
+  "is_unreleased": true,
+  "archivePath": [
+    "_Documentation/Music/KB/killd by/OUTCASTS (b-sides 2014-2016)"
+  ],
+  "tracks": [
+    "tracks/killd-by-outcasts-01-pine-high",
+    "tracks/killd-by-outcasts-02-putaway"
+  ],
+  "tags": [
+    "archive-only",
+    "unreleased",
+    "b-sides",
+    "2016"
+  ],
+  "body": "# OUTCASTS (b-sides 2014-2016)\n\n**Project:** [[projects/killd-by]]  \n**Status:** Unreleased  \n**File date:** 2016-12-07  \n**Archive location:** `_Documentation/Music/KB/killd by/OUTCASTS (b-sides 2014-2016)`  \n**Tracks:** 2 confirmed (pine high.aif, putaway.aif)  \n**Confidence:** medium — 2-track folder may be incomplete or an early draft\n\nAn alternate/unreleased curation of b-sides material from the 2014-2016 killd by period, distinct from the released *2014-2016 [Bsides]* Bandcamp album. The title \"OUTCASTS\" suggests material that was explicitly excluded or didn't fit the main releases — tracks identified as leftovers or rejects but collected under a named project.\n\nTwo tracks: *pine high* and *putaway*. Both in .aif format (unmastered), dated December 7, 2016 — the same date as the *NoHaiku* folder (which contains *welcome2thajongo.aif*). This shared date suggests a session in early December 2016 during which Colin was organizing and naming multiple archive folders.\n\nDecember 2016 was a significant moment: the Ghost Ship fire had just occurred (December 2, 2016), and Colin created the *Familie-Mix.RIPCashAskew* on December 5. The OUTCASTS folder appears two days later, suggesting a broader archiving or creative session in the days immediately following the fire.\n\n## Track Listing\n\n1. pine high\n2. putaway\n\n## Archive Notes\n\n- File date: 2016-12-07\n- Format: .aif (unmastered)\n- 2 tracks; folder may be an early stage of a larger planned release\n- Shares file date with *NoHaiku* folder\n- The parenthetical \"(b-sides 2014-2016)\" in the folder name distinguishes this from the released Bsides album and B-SIDES2017\n\n## Relationship to Other Releases\n\n- Released: *2014-2016 [Bsides]* — Bandcamp album, the official b-sides collection\n- Also: *b-sides 2014-2016* folder, *117 killd by - 2014-2016 -Bsides* folder — multiple archiving layers around this material\n- OUTCASTS appears to be material that didn't make even the b-sides cut"
+}

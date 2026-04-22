@@ -14,7 +14,17 @@
   "public_display": true,
   "confidence": "high",
   "related": [
-    "people/colin-ward"
+    "people/colin-ward",
+    "people/ken-hamblin-iii",
+    "venues/rhinoceropolis",
+    "events/fantasia-2011",
+    "events/fantasia-2012",
+    "events/fantasia-2014"
   ],
-  "body": "Photographed by Ken Hamblin III. Westword's 2018 reopen feature caption: 'Colin Ward and friends welcoming people to Rhinoceropolis for the 2016 edition of Fantasia.'"
+  "tags": [
+    "fantasia",
+    "rhinoceropolis",
+    "2016"
+  ],
+  "body": "Photographed by Ken Hamblin III. Westword's 2018 reopen feature caption: \"Colin Ward and friends welcoming people to Rhinoceropolis for the 2016 edition of Fantasia.\"\n\nPart of a series running from at least 2009 (earliest archive reference) through 2016. See [[events/fantasia-2011]] for the series' documented origins."
 }

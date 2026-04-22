@@ -1,0 +1,30 @@
+{
+  "id": "firetalk-records",
+  "kind": "organization",
+  "title": "Firetalk Records",
+  "display_name": "Fire Talk Records",
+  "aliases": [
+    "Firetalk Records",
+    "Fire Talk",
+    "firetalkrecs"
+  ],
+  "website": "https://firetalkrecs.com/",
+  "shop": "https://firetalk.shop/",
+  "discogs": "https://www.discogs.com/label/2364499-Firetalk-Records",
+  "founded": 2009,
+  "role_summary": "Independent record label. Released alphabets' \"ON CHAMPAGNE AND GREYHOUNDS\" (2012).",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "label",
+    "alphabets-era"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward",
+    "releases/alphabets-on-champagne-and-greyhounds-2"
+  ],
+  "body": "Independent record label founded in 2009. Released alphabets' *ON CHAMPAGNE AND GREYHOUNDS* (autumn 2012). The Bandcamp edition carries the slug `on-champagne-and-greyhounds-2`, suggesting Firetalk may have released two volumes or that the Bandcamp version was a sequel/updated release. The label has a broad experimental/indie catalog.\n\nNote: Firetalk releasing alphabets material is a significant discovery — it means Colin's music had distribution beyond self-release, connecting him to a recognized experimental music label network.\n\n## Sources\n- [Firetalk Records official site](https://firetalkrecs.com/)\n- [Firetalk Records — Discogs](https://www.discogs.com/label/2364499-Firetalk-Records)\n- [alphabets Bandcamp — ON CHAMPAGNE AND GREYHOUNDS](https://alphabets.bandcamp.com/album/on-champagne-and-greyhounds-2)"
+}

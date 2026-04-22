@@ -1,0 +1,31 @@
+{
+  "id": "fantasia-2011",
+  "kind": "event",
+  "title": "Fantasia 2011",
+  "event_kind": "show",
+  "date": "2011",
+  "date_note": "Approximate — spring 2011 based on APRIL CO-EDS 2011 archive folder date (May 4, 2011)",
+  "venue": "venues/rhinoceropolis",
+  "participants": [
+    "people/colin-ward"
+  ],
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "related": [
+    "people/colin-ward",
+    "venues/rhinoceropolis",
+    "events/fantasia-2012",
+    "events/fantasia-2014",
+    "events/fantasia-2016",
+    "releases/alphabets-april-co-eds-2011",
+    "releases/alphabets-nov09"
+  ],
+  "tags": [
+    "fantasia",
+    "rhinoceropolis",
+    "2011"
+  ],
+  "body": "# Fantasia 2011\n\nConfirmed by archive evidence: the alphabets release *APRIL CO-EDS 2011* contains a track titled **fantasia2011.mp3** (file date May 4, 2011), confirming a Fantasia event occurred in spring 2011. This is the earliest directly dated Fantasia in the archive, though the concept itself predates it.\n\n## Archive Evidence\n\n**Primary:** `fantasia2011.mp3` — track 05 on the *APRIL CO-EDS 2011* monthly album (file dated May 4, 2011). A track named specifically after a year-stamped Fantasia event, created within days of the event's apparent date.\n\n**Earlier reference:** `run it run it fantasia mixx` — a track on *NOV09* (November 29, 2009). This is the first known mention of Fantasia in the archive and establishes the concept as active by late 2009, suggesting Fantasia may have begun as early as 2009 before it became the annual named event.\n\n## Fantasia as a Concept\n\nFantasia was not a one-time event invented in 2012 — the archive shows a continuous thread:\n- **November 2009**: \"run it run it fantasia mixx\" on NOV09 — Fantasia named explicitly, with a \"mixx\" suggesting it was already a recurring event with associated music\n- **Spring 2011**: \"fantasia2011.mp3\" on APRIL CO-EDS 2011 — year-stamped, indicating Fantasia had become an annual named event by this point\n- **2012**: Fantasia 2012 at Rhinoceropolis — first fully documented event in prior vault entries\n- **2014**: Fantasia 2014 — fully documented (Westword feature, participant list, visual theme)\n- **2016**: Fantasia 2016 — documented\n\nThe Westword coverage of Fantasia 2014 described it as an established multi-year event; the archive now confirms the series' roots extend at least to 2009.\n\n## Notes\n\n- Confidence medium: the event is confirmed by archive artifact; details (venue, participants, program, date) are not yet confirmed\n- Venue assumed to be Rhinoceropolis based on the 2012–2016 pattern; not confirmed for 2011\n- Additional participants in 2011 are unknown — Stephan Herrera co-produced subsequent Fantasias but his involvement in 2011 is unconfirmed\n\n## Research Gaps\n\n- Exact date of Fantasia 2011?\n- What was the program / lineup?\n- Was the \"run it run it fantasia mixx\" (Nov 2009) music created for a specific 2009 Fantasia event, or was it aspirational/named in advance?\n- Should a \"Fantasia 2009\" or \"Fantasia 2010\" stub be created?"
+}

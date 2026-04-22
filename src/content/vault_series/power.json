@@ -1,0 +1,41 @@
+{
+  "kind": "series",
+  "slug": "power",
+  "id": "power",
+  "title": "[___]POWER",
+  "name": "[___]POWER series",
+  "project": "projects/alphabets",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "date_start": "2011",
+  "date_end": "2013",
+  "summary": "A recurring naming pattern in the alphabets catalog: releases suffixed with \"POWER\" —\nSUNPOWER (three volumes), MOONPOWER, DANCEPOWER, BELLPOWER. Six confirmed releases\nshare this naming convention, all from the alphabets era. The prefix rotates through\nnatural forces (SUN, MOON), activity (DANCE), and object (BELL), suggesting Colin\nwas mapping a kind of elemental taxonomy through the series. SUNPOWER is the only\nsub-series to receive multiple numbered volumes (1, 2, 3).",
+  "members": [
+    "releases/alphabets-moonpower",
+    "releases/alphabets-sunpower",
+    "releases/alphabets-sunpower-2",
+    "releases/alphabets-bellpower",
+    "releases/alphabets-dancepower",
+    "releases/alphabets-sunpower-3"
+  ],
+  "source_ids": [],
+  "archivePath": [
+    "_Documentation/Music/alphabets/SUNPOWER",
+    "_Documentation/Music/alphabets/SUNPOWER 2",
+    "_Documentation/Music/alphabets/SUNPOWER 3",
+    "_Documentation/Music/alphabets/MOONPOWER",
+    "_Documentation/Music/alphabets/DANCEPOWER",
+    "_Documentation/Music/alphabets/BELLPOWER"
+  ],
+  "tags": [
+    "series",
+    "alphabets-era"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# [___]POWER\n\nA naming series in the alphabets catalog organized around the suffix \"POWER.\" Six releases are confirmed: SUNPOWER (three volumes), MOONPOWER, DANCEPOWER, and BELLPOWER. The format — a single noun or concept prepended to \"POWER\" — creates a modular naming system Colin could theoretically extend indefinitely, and the archive shows him doing so across multiple years.\n\nThe elemental logic of the series: SUN and MOON are celestial; DANCE is motion/action; BELL is object/instrument. Whether BELLPOWER involves literal bells in the music is unconfirmed. Each release is a distinct piece of work, not a continuation — the suffix signals a family resemblance rather than a serialized narrative.\n\nSUNPOWER's three-volume run makes it the only sub-series within the [___]POWER family. SUNPOWER 3 was distributed via Mediafire circa 2011, confirming it circulated publicly during the alphabets peak period.\n\n## Releases\n\n| Release | Date | Tracks | Notes |\n|---|---|---|---|\n| moonpower | 2010-05-07 | 10 | Chronologically first; largest volume |\n| SUNPOWER | 2010-05-30 | 6 | Founding SUNPOWER volume |\n| SUNPOWER2 | 2010-06-15 | 6 | Second SUNPOWER installment |\n| BELLPOWER | 2010-06-23 | 1 | Single; track titled \"two\" |\n| DANCEPOWER | 2010-07-08 | 1 | Single; track titled \"toby dance\" |\n| SUNPOWER3 | 2011-07-23 | 5 | Distributed via Mediafire; one year gap |\n\n## Notes for Website\n\nThe [___]POWER series is a good example of how Colin used naming conventions to create loose thematic families across releases. It reflects the same impulse visible in the underwaters series (aquatic taxonomy) and the REMIX series (annual curation) — a practice of organizing output into recurring gestures rather than standalone albums. For website summaries, these can be framed as \"systems of release\" rather than individual records."
+}

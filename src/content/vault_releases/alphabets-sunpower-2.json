@@ -1,0 +1,33 @@
+{
+  "kind": "release",
+  "id": "alphabets-sunpower-2",
+  "slug": "alphabets-sunpower-2",
+  "title": "SUNPOWER2",
+  "preservedTitle": "SUNPOWER2",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_date": "2010-06-15",
+  "release_year": 2010,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/SUNPOWER2"
+  ],
+  "series": "series/power",
+  "tracks": [
+    "tracks/alphabets-sunpower-2-01-rooster",
+    "tracks/alphabets-sunpower-2-02-other-birds",
+    "tracks/alphabets-sunpower-2-03-enya-got-punkd",
+    "tracks/alphabets-sunpower-2-04-whatever",
+    "tracks/alphabets-sunpower-2-05-2-clock",
+    "tracks/alphabets-sunpower-2-06-power-hunger"
+  ],
+  "tags": [
+    "archive-only",
+    "power-series"
+  ],
+  "body": "# SUNPOWER2\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/power]] — [___]POWER family / SUNPOWER Vol. 2  \n**File date:** 2010-06-15  \n**Archive location:** `_Documentation/Music/alphabets/SUNPOWER2`  \n**Tracks:** 6  \n\nThe second SUNPOWER volume, released two weeks after the first. The track naming here is looser and more pop-cultural than Vol. 1: *enya got punkd* references both the musician Enya and the MTV show Punk'd — an image of new-age ambient pop being pranked. *Power hunger* as a closing track mirrors the series title — a reflexive gesture, making the theme of \"power\" the subject of the final song.\n\n*Rooster* and *other birds* continue a subtle ornithological streak that runs through the POWER family (SUNPOWER's *hoops* has avian associations; BELLPOWER's *two* recalls bird calls in some readings). *2 clock* echoes *three clock* from Vol. 1 — Colin noting the time again, slightly earlier in the night.\n\n## Track Listing\n\n1. rooster\n2. other birds\n3. enya got punkd\n4. whatever\n5. 2 clock\n6. power hunger\n\n## Archive Notes\n\nFile dates: 2010-06-15. Tracklist confirmed from MP3 filenames. Part of the dense spring/summer 2010 cluster. No Bandcamp URL identified."
+}

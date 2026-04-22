@@ -1,0 +1,34 @@
+{
+  "kind": "release",
+  "id": "alphabets-underwaters",
+  "slug": "alphabets-underwaters",
+  "title": "underwaters",
+  "preservedTitle": "underwaters",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_year": 2010,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/underwaters"
+  ],
+  "series": "series/underwaters",
+  "tracks": [
+    "tracks/alphabets-underwaters-01-webbystreets",
+    "tracks/alphabets-underwaters-02-swimmer-mammoths",
+    "tracks/alphabets-underwaters-03-seehorses",
+    "tracks/alphabets-underwaters-04-radio-sink-slow",
+    "tracks/alphabets-underwaters-05-lakey-pearrs",
+    "tracks/alphabets-underwaters-06-ice-cream-eagle",
+    "tracks/alphabets-underwaters-07-blingbling-mermaids",
+    "tracks/alphabets-underwaters-08-ballet-starfish"
+  ],
+  "tags": [
+    "archive-only",
+    "underwaters-series"
+  ],
+  "body": "# underwaters\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/underwaters]] — Vol. I  \n**Release year:** ~2010 (exact date unconfirmed)  \n**Archive location:** `_Documentation/Music/alphabets/underwaters`  \n**Tracks:** 8  \n\nThe founding volume of the underwaters series. Establishes the aquatic taxonomy that Colin would develop across five more volumes: sea creatures rendered in surreal, affectionate combinations — swimmer mammoths, blingbling mermaids, ballet starfish. The naming style is distinctly alphabets: lowercase, compound, mixing the archaic (mammoths) with the contemporary (blingbling).\n\n*Radio sink slow* and *lakey pearrs* add a warped domesticity to the oceanic cast. The series begins understated relative to later volumes.\n\n## Track Listing\n\n1. webbystreets\n2. swimmer mammoths\n3. seehorses\n4. radio sink slow\n5. lakey pearrs\n6. ice cream eagle\n7. blingbling mermaids\n8. ballet starfish\n\n## Archive Notes\n\nTracklist confirmed from MP3 filenames in archive. No Bandcamp URL identified — may be a private/distributed release. Exact release date unconfirmed; estimated ~2010 based on series chronology relative to other alphabets releases."
+}

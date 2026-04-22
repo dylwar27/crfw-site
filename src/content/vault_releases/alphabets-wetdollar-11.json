@@ -4,24 +4,25 @@
   "title": "WETDOLLAR$11",
   "preservedTitle": "WETDOLLAR$11",
   "artist": "projects/alphabets",
-  "date_note": "alphabets era (2008–2013)",
+  "release_date": "2011-08-24",
+  "label": "self-released",
   "format": [
     "digital"
   ],
   "track_count": 12,
   "bandcamp": "https://alphabets.bandcamp.com/album/wetdollar-11",
   "created": "2026-04-20",
+  "updated": "2026-04-21",
   "sensitivity": "public",
   "public_display": true,
-  "confidence": "medium",
+  "confidence": "high",
   "archivePath": [],
   "tags": [
     "alphabets-era"
   ],
-  "notes": "Found on alphabets Bandcamp page. 12 tracks. Date and full tracklist to be confirmed.",
   "related": [
     "projects/alphabets",
     "people/colin-ward"
   ],
-  "body": "Alphabets release, 12 tracks. Found on the alphabets Bandcamp page. Full tracklist and release date TBD — needs to be matched against archive folders."
+  "body": "Alphabets digital release, 12 tracks. Released August 24, 2011 on Bandcamp.\n\n## Tracklist\n\n1. seaweeds made\n2. spliff\n3. wet\n4. buzzy\n5. pup\n6. NF haircuts\n7. hot mango\n8. up all lusty\n9. bunk\n10. secret bed\n11. squirtle\n12. surf breath\n\n## Sources\n- [alphabets Bandcamp — WETDOLLAR$11](https://alphabets.bandcamp.com/album/wetdollar-11)"
 }

@@ -3,7 +3,7 @@ title: "Carolina Reaper"
 preservedTitle: "Carolina Reaper"
 project: "killd by"
 date: "2016-10-21"
-format: LP
+format: single
 bandcampUrl: "https://killdby.bandcamp.com/album/carolina-reaper"
 bandcampItemId: "1435868671"
 bandcampItemType: "album"
@@ -16,6 +16,7 @@ published: false
 tracklist:
   - n: 1
     title: "Carolina Reaper"
+archivePath: CRFW Archive/_Documentation/bandcamp/killd_by__carolina-reaper
 ---
 
 Stub entry — created from Bandcamp embed catalog

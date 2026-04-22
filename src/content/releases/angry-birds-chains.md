@@ -2,15 +2,21 @@
 title: "angry birds chains"
 preservedTitle: "angry birds chains"
 project: "alphabets"
-date: "2012"
+date: "2013-11-07"
 format: single
-archivePath: "CRFW Archive/_Documentation/Music/alphabets/angry birds chains/"
 tags:
   - alphabets
+  - bandcamp
 summary: ""
 bandcampUrl: "https://alphabets.bandcamp.com/album/angry-birds-chains"
 bandcampItemId: "109723474"
 bandcampItemType: "album"
+tracklist:
+  - n: 1
+    title: ANGRY BIRDS CHAINS
+archivePath:
+  - CRFW Archive/_Documentation/Music/alphabets/angry birds chains/
+  - CRFW Archive/_Documentation/bandcamp/alphabets__angry-birds-chains
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

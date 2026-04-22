@@ -2,13 +2,21 @@
 title: "MAY2011DTE"
 preservedTitle: "MAY2011DTE"
 project: "alphabets"
-date: "2011"
+date: "2011-05-31"
 format: LP
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/MAY2011DTE/"
 tags:
   - alphabets
-summary: ""
+  - alphabets-era
+summary: "Alphabets digital release, May 31, 2011. Title format follows Colin's convention of date-stamped releases (cf. WETDOLLAR$11, REMIX09, REMIX10). Full tracklist not yet documented."
 ---
+Alphabets digital release, May 31, 2011. Title format follows Colin's convention of date-stamped releases (cf. WETDOLLAR$11, REMIX09, REMIX10). Full tracklist not yet documented.
 
-Stub entry — folder preserved from the archive. Summary intentionally empty
-(per CLAUDE.md golden rule #6: no AI-generated summaries of Colin's work).
+## Partial Tracklist (1 confirmed)
+
+1. caw caw mana tree
+_(remaining tracks not yet documented)_
+
+## Sources
+- [alphabets Bandcamp](https://alphabets.bandcamp.com/)
+- [caw caw mana tree — Bandcamp track page](https://alphabets.bandcamp.com/track/caw-caw-mana-tree)

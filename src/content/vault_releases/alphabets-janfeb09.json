@@ -1,0 +1,51 @@
+{
+  "kind": "release",
+  "id": "alphabets-janfeb09",
+  "slug": "alphabets-janfeb09",
+  "title": "JANFEB09",
+  "preservedTitle": "JANFEB09",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_date": "2009-02",
+  "release_year": 2009,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/JANFEB09"
+  ],
+  "series": "series/album-a-month",
+  "format_note": "M4A (GarageBand/iPhone era — earliest surviving alphabets recordings)",
+  "tracks": [
+    "tracks/alphabets-janfeb09-01-sweater-wearing",
+    "tracks/alphabets-janfeb09-03-he-seessaw-planes",
+    "tracks/alphabets-janfeb09-08-tumble-time",
+    "tracks/alphabets-janfeb09-11-1spacemissionsounds",
+    "tracks/alphabets-janfeb09-12-2sunmountainchampions",
+    "tracks/alphabets-janfeb09-13-3smiledaysdaze",
+    "tracks/alphabets-janfeb09-14-4dissapears",
+    "tracks/alphabets-janfeb09-15-5shakeshakeshakeshakeshake",
+    "tracks/alphabets-janfeb09-16-6davidhasseenbelugas",
+    "tracks/alphabets-janfeb09-17-7rumbletime-outout",
+    "tracks/alphabets-janfeb09-18-8mothmonkmonth",
+    "tracks/alphabets-janfeb09-19-9fur-brent",
+    "tracks/alphabets-janfeb09-20-10talktalktalk",
+    "tracks/alphabets-janfeb09-21-11d-town-imaclown",
+    "tracks/alphabets-janfeb09-22-12yourboytoy",
+    "tracks/alphabets-janfeb09-bubbletrance-soccermatch",
+    "tracks/alphabets-janfeb09-getting-astounded-by-blue-whales",
+    "tracks/alphabets-janfeb09-graham-and-chocolate",
+    "tracks/alphabets-janfeb09-pounce-around-song",
+    "tracks/alphabets-janfeb09-prizes-surprises-bonus-ups",
+    "tracks/alphabets-janfeb09-robo-elephant"
+  ],
+  "tags": [
+    "archive-only",
+    "album-a-month",
+    "2009",
+    "m4a-era"
+  ],
+  "body": "# JANFEB09\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/album-a-month]] — Month 1–2  \n**Release date:** January–February 2009  \n**File dates:** 2009-05-07 (archival upload), 2009-08-04 (late additions)  \n**Archive location:** `_Documentation/Music/alphabets/JANFEB09`  \n**Tracks:** 21  \n**Format:** M4A — GarageBand or iPhone recording era  \n\nThe earliest surviving alphabets recordings. JANFEB09 is where the catalog begins — 21 tracks in M4A format, the native output of GarageBand on Mac (or iPhone voice memos). The file dates (May 7, 2009) likely reflect when these were archived to the computer, not when they were created; the folder name places the music in January–February 2009.\n\nThe titles are already distinctly Colin: run-on, compound, combining abstract activity with mundane objects. \"sweater wearing as an activity for small objects in the couch\" is both a perfect image and an absurdist refusal of the conventional track title. Several tracks carry numbered prefixes embedded mid-title (e.g., \"11 1spacemissionsounds_fromtakeofftoplanetarrival\") suggesting a numerical naming system within the album that runs alongside the main track numbers.\n\n\"getting astounded by blue whales on videos\" is the first aquatic title in the catalog — an ancestor of the entire underwaters series. The subject is not whales in general but whales *on videos*, as experienced through a screen: a specifically 2009 internet-age image.\n\n\"robo elephant in trouble and on the run in some sort of chrome hallways\" is the longest track title in this release and possibly the longest in the full catalog.\n\n## Track Listing\n\n1. sweater wearing as an activity for small objects in the couch\n3. he seessaw planes\n8. tumble time\n11. 1spacemissionsounds_fromtakeofftoplanetarrival\n12. 2sunmountainchampions\n13. 3smiledaysdaze,ya-gnaw_\n14. 4dissa pears\n15. 5shakeshakeshakeshakeshake\n16. 6davidhasseenbelugas,rightupclosetoo\n17. 7rumbletime outout\n18. 8mothmonkmonth\n19. 9fur brent\n20. 10talktalktalktalktalktalktalktalktalk\n21. 11d-town i'maclown\n22. 12yourboytoywhenyouwantitthencrazy\n— bubbletrance__soccermatch\n— getting astounded by blue whales on videos\n— graham & chocolate\n— pounce around song\n— prizes surprises and bonus ups\n— robo elephant in trouble and on the run in some sort of chrome hallways\n\n*(Track numbers reflect original filenames; gaps in sequence indicate tracks not preserved in this folder.)*\n\n## Archive Notes\n\n- Format: M4A (not MP3) — earliest format in the archive; production shifted to MP3 by September 2009\n- File dates suggest archival upload in May 2009, with additions in August 2009\n- Some tracks carry embedded numbering in titles (tracks 11–22 in the above list have numerals embedded), suggesting a hybrid numbering system\n- \"d-town\" = Denver, Colorado; a rare geographic self-identification in the early catalog"
+}

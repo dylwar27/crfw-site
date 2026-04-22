@@ -1,0 +1,27 @@
+{
+  "kind": "release",
+  "id": "alphabets-underwaters-vi",
+  "slug": "alphabets-underwaters-vi",
+  "title": "underwaters VI",
+  "preservedTitle": "underwaters VI",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/alphabets",
+  "release_kind": "unreleased",
+  "is_posthumous": false,
+  "is_unreleased": true,
+  "archivePath": [
+    "_Documentation/Music/alphabets/underwaters VI"
+  ],
+  "series": "series/underwaters",
+  "tracks": [],
+  "tags": [
+    "archive-only",
+    "underwaters-series",
+    "unreleased",
+    "incomplete"
+  ],
+  "body": "# underwaters VI\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/underwaters]] — Vol. VI  \n**Status:** Incomplete / unreleased  \n**Archive location:** `_Documentation/Music/alphabets/underwaters VI`  \n\nThe archive folder for underwaters VI exists but contains only work files — Ableton session references (.asd files) and possibly session data — without completed, exported MP3 tracks. No tracklist can be confirmed. It is unclear whether Colin began recording material for a sixth volume and stopped, or whether VI represents an early-stage folder that never produced finished tracks.\n\nGiven that Vol. V closes with *sea sick* and Vol. VI is unfinished, it's possible the series ended with V as a functional terminus, with VI as an unrealized intention.\n\n## Archive Notes\n\n- Folder confirmed present: `_Documentation/Music/alphabets/underwaters VI`\n- No MP3 files found; only session/reference files\n- Confidence: medium (folder existence is certain; contents interpretation is tentative)\n- No release date or tracklist available\n- Listed in vault to document the series boundary and flag potential incomplete material\n\n## Research Gaps\n\n- Were any sketches or demos from VI circulated privately?\n- Did Colin reference a sixth volume in any known communications?\n- Could the .asd files, if loaded into Ableton, reveal song ideas or sketch arrangements?"
+}

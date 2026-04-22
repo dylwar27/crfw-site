@@ -1,0 +1,36 @@
+{
+  "kind": "release",
+  "id": "killd-by-timewave686",
+  "slug": "killd-by-timewave686",
+  "title": "Timewave686",
+  "preservedTitle": "Timewave686",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "unreleased",
+  "release_date": "2016-08-10",
+  "release_year": 2016,
+  "is_posthumous": false,
+  "is_unreleased": true,
+  "archivePath": [
+    "_Documentation/Music/KB/killd by/Timewave686"
+  ],
+  "tracks": [
+    "tracks/killd-by-timewave686-01-dna-timewave",
+    "tracks/killd-by-timewave686-02-dangerous-behaviour",
+    "tracks/killd-by-timewave686-03-burndownthezoo",
+    "tracks/killd-by-timewave686-04-captivity-muviez",
+    "tracks/killd-by-timewave686-05-jf-bmx1",
+    "tracks/killd-by-timewave686-06-jf-bmx2",
+    "tracks/killd-by-timewave686-07-saywut-now-turnitup",
+    "tracks/killd-by-timewave686-08-showmeluvbassline127"
+  ],
+  "tags": [
+    "archive-only",
+    "unreleased",
+    "2016"
+  ],
+  "body": "# Timewave686\n\n**Project:** [[projects/killd-by]]  \n**Status:** Unreleased  \n**File date:** 2016-08-10  \n**Archive location:** `_Documentation/Music/KB/killd by/Timewave686`  \n**Tracks:** 8 (unmastered AIF files)  \n\nAn 8-track unreleased killd by project from August 2016. The name \"Timewave686\" may reference *Timewave Zero*, a numerological theory by Terence McKenna proposing that time has a wave-like structure of novelty — a concept circulating in psychedelic and counterculture communities. The \"686\" suffix is unresolved: it may be a frequency (686 Hz is within the red light spectrum), a code, or a personal reference.\n\nSeveral track names in this folder overlap with *janefonda_beta-max* (a December 2015 folder), suggesting these tracks were developed across sessions over roughly 8 months before being grouped under the Timewave686 name:\n- *captivity_-muviez* appears in both\n- *jF_bmx1* and *jF_bmx2* appear in both (the \"jF\" prefix = \"jane fonda\")\n- *burndownthezoo* appears in G2D2demos as well\n\nThis cross-folder recurrence is significant: it confirms Colin used a working method of developing tracks across multiple project folders before finalizing them under a release name.\n\n## Track Listing\n\n1. DNA TimeWave\n2. DangerousBehaviour\n3. burndownthezoo\n4. captivity_-muviez\n5. jF_bmx1\n6. jF_bmx2\n7. saywut_now_turnitup\n8. showmeLuvbassline127\n\n## Archive Notes\n\n- File dates: 2016-08-10 (all tracks on same date — likely a consolidation session)\n- Format: .aif (unmastered)\n- Track names appear as filenames; capitalization preserved from archive\n- Overlapping tracks with *janefonda_beta-max* (Dec 2015) suggest these are finalized versions of earlier sketches\n- *showmeLuvbassline127* contains a BPM/tempo marker (127) embedded in the filename — a studio notation\n\n## Research Gaps\n\n- What does \"686\" refer to? Frequency, date, address, personal code?\n- Was this intended as a Bandcamp release?\n- Are the *janefonda_beta-max* versions earlier drafts of the same tracks, or parallel versions?"
+}

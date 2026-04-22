@@ -1,0 +1,29 @@
+{
+  "id": "fantasia-2012",
+  "kind": "event",
+  "title": "Fantasia 2012",
+  "event_kind": "show",
+  "date": "2012",
+  "venue": "venues/rhinoceropolis",
+  "participants": [
+    "people/colin-ward",
+    "people/stephan-herrera"
+  ],
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "related": [
+    "people/colin-ward",
+    "venues/rhinoceropolis",
+    "events/fantasia-2011",
+    "events/fantasia-2014",
+    "events/fantasia-2016"
+  ],
+  "tags": [
+    "fantasia",
+    "rhinoceropolis",
+    "2012"
+  ],
+  "body": "Multi-arts party event managed and co-produced by Colin Ward, part of the recurring Fantasia series. Mentioned in Westword's \"Another 100 Colorado Creatives: Colin Ward\" alongside Fantasia 2014 as examples of Colin's curation work. Co-produced with Stephan Herrera and others from the Rhinoceropolis underground installation arts and music performance scene.\n\n**Note on series origins:** Fantasia 2012 was previously the earliest documented Fantasia event in the vault, but archive evidence now confirms the series predates it significantly. A track titled \"run it run it fantasia mixx\" appears on the alphabets monthly album *NOV09* (November 29, 2009), and \"fantasia2011.mp3\" appears on *APRIL CO-EDS 2011* (May 2011). Fantasia as a concept and named event appears to have begun by 2009. See [[events/fantasia-2011]] for the earliest confirmed dated event.\n\n## Sources\n- [Westword — Another 100 Colorado Creatives: Colin Ward](https://www.westword.com/arts/another-100-colorado-creatives-colin-ward-6280465)"
+}

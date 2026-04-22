@@ -61,7 +61,7 @@ const releases = defineCollection({
     relatedVoiceMemos: z.array(reference('voice_memos')).optional(),
     relatedLyrics: z.array(reference('lyrics')).optional(),
     tags: z.array(z.string()).default([]),
-    archivePath: z.string().optional()
+    archivePath: z.union([z.string(), z.array(z.string())]).optional()
       .describe('Where this lives in the Dropbox archive for curator reference'),
     summary: z.string().optional(),
     published,

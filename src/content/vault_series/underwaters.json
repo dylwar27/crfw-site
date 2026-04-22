@@ -1,0 +1,43 @@
+{
+  "kind": "series",
+  "slug": "underwaters",
+  "id": "underwaters",
+  "title": "underwaters",
+  "name": "underwaters",
+  "project": "projects/alphabets",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "date_start": "2010",
+  "date_end": "2013",
+  "volume_count": 6,
+  "summary": "Six-volume series of aquatic-themed instrumental/ambient beat releases under the alphabets\nalias. Each volume uses an underwater ecosystem as metaphor — sea creatures, ocean depths,\nfluid texture — carried through in both the track titles and the sonic palette. Volumes I–V\nare fully archive-confirmed with complete tracklists derived from MP3 filenames. Volume VI\nexists as work files only and is considered unfinished/unreleased.",
+  "members": [
+    "releases/alphabets-underwaters",
+    "releases/alphabets-underwaters-ii",
+    "releases/alphabets-underwaters-iii",
+    "releases/alphabets-underwaters-iv",
+    "releases/alphabets-underwaters-v",
+    "releases/alphabets-underwaters-vi"
+  ],
+  "source_ids": [],
+  "archivePath": [
+    "_Documentation/Music/alphabets/underwaters",
+    "_Documentation/Music/alphabets/underwaters II",
+    "_Documentation/Music/alphabets/underwaters III",
+    "_Documentation/Music/alphabets/underwaters IV",
+    "_Documentation/Music/alphabets/underwaters V",
+    "_Documentation/Music/alphabets/underwaters VI"
+  ],
+  "tags": [
+    "series",
+    "alphabets-era",
+    "aquatic"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# underwaters\n\nA recurring series that Colin returned to at least six times across the alphabets era. Each volume carries a unified aquatic mythology — sea creatures rendered as suburban or surreal characters, ocean environments as stages for domestic or emotional scenes. The naming convention is entirely lowercase and singular (\"underwaters\"), suggesting the series was conceived as a continuous body of water rather than discrete volumes.\n\nTrack titles across the series are consistently absurdist and vivid: *nyquil gator dreams*, *lusty crawfish fuck hard*, *punkd out screamer dolphins*, *otter shaman dark magic potions*. This naming style — mixing animal life with human pop-cultural slang and emotional registers — is one of the most distinctly Colin gestures in the alphabets catalog. The music itself is beat-driven with ambient textures, fitting the broader chillwave/lo-fi hip-hop aesthetic of the early 2010s.\n\n## Volumes at a Glance\n\n**underwaters** (Vol. I) — 8 tracks. The founding installment. Establishes the aquatic palette and creature-naming convention.\n\n**underwaters II** — 9 tracks. Expands the cast: lobsters, sharks, otters, crawfish, salamanders, whales. Introduces the \"party\" and \"pool\" motifs that recur later.\n\n**underwaters III** — 11 tracks. The largest volume. Broader register — glam fish, pirate deaths, scuba bats, sad whale. The title *sad whale* stands alone as the emotional anchor of the series.\n\n**underwaters IV** — 10 tracks. Shifts toward darker, more ceremonial imagery: ancient tortoises, shaman potions, deepsea pegasus armies. The word \"deep\" enters — the series going further down.\n\n**underwaters V** — 6 tracks. More compact and spare. *Sea sick* closes the volume, a note of discomfort or end-of-voyage.\n\n**underwaters VI** — Unfinished. Archive folder contains work files (Ableton references, session data) without completed MP3 exports. Flagged as unreleased/in-progress.\n\n## Track Listing (complete, from archive)\n\n### underwaters (Vol. I)\n1. webbystreets\n2. swimmer mammoths\n3. seehorses\n4. radio sink slow\n5. lakey pearrs\n6. ice cream eagle\n7. blingbling mermaids\n8. ballet starfish\n\n### underwaters II\n1. lobster party\n2. shark pukes\n3. robo turtles party\n4. otter pools\n5. lusty crawfish fuck hard\n6. nyquil gator dreams\n7. doll fins\n8. giant salamander dragons\n9. robo whale growl swims\n\n### underwaters III\n1. glam fish bubble barf\n2. walk it crabs\n3. manta float boys\n4. pirate deaths\n5. scuba bats\n6. seal beach flutes\n7. builder lobster workers\n8. submarine deaths\n9. punkd out screamer dolphins\n10. inky squid pools\n11. sad whale\n\n### underwaters IV\n1. ancient tortoise chants low\n2. scubaboon\n3. whistle whales whisper tells\n4. fashion fish dance clubs\n5. big baby seahorse\n6. deepsea doctor operate\n7. otter shaman dark magic potions\n8. deepsea pegasus armies\n9. r lab\n10. ribbon raptors\n\n### underwaters V\n1. bubbles and vitamins\n2. deep creak speak\n3. dolphin robots\n4. seacow beauty contest\n5. giant poison beach lizards\n6. sea sick\n\n### underwaters VI\n*(incomplete — work files only, no confirmed tracklist)*"
+}

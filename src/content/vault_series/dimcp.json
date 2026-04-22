@@ -1,0 +1,35 @@
+{
+  "kind": "series",
+  "slug": "dimcp",
+  "id": "dimcp",
+  "title": "Dog is my Copilot",
+  "name": "Dog is my Copilot (DIMCP)",
+  "abbreviation": "DIMCP",
+  "project": "projects/colin-ward",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "date_start": "2018",
+  "date_end": "2018",
+  "episode_count": 96,
+  "season_count": 2,
+  "format": "video",
+  "summary": "\"Dog is my Copilot\" (abbreviated DIMCP) is a long-form episodic video series Colin created\nin 2018. It's a food delivery vlog featuring recurring characters — including a co-host\nnamed \"Tracy\" — filmed during actual delivery runs. The series spans at least two seasons\nand 96+ numbered episodes (EP_01 through EP_96), archived as MP4 files under\n_Documentation/Videos/2018/Dog is my Copilot/. One of the most prolific single creative\nprojects in the archive by file count (130+ video files).",
+  "members": [],
+  "source_ids": [],
+  "archivePath": [
+    "_Documentation/Videos/2018/Dog is my Copilot"
+  ],
+  "tags": [
+    "series",
+    "video",
+    "2018",
+    "vlog",
+    "late-era"
+  ],
+  "related": [
+    "people/colin-ward"
+  ],
+  "body": "# Dog is my Copilot (DIMCP)\n\nOne of Colin's most prolific late-era creative projects. In 2018, he created and self-produced a long-running episodic video series while working food delivery. The show is raw and documentary in register — filmed from the vehicle during deliveries, featuring a recurring co-host named \"Tracy\" and the kind of off-the-cuff commentary, humor, and observation that characterizes Colin's voice across mediums.\n\nThe transcript for EP_01 opens with the premise stated plainly: *\"It's a show where two badass bad bitches deliver food.\"* The vlog runs through the actual texture of the delivery shift — routes, customers, conversations, asides — while establishing an ongoing cast and running jokes between the hosts.\n\nBy file count, DIMCP may be the single largest creative project in the archive. 130+ MP4 files spread across at least two seasons (Season 1 and Season 2 folders), with episodes numbered EP_01 through at least EP_96. Each episode presumably corresponds to a delivery shift or partial shift.\n\n## Format & Structure\n\n- **Medium**: Video (MP4)\n- **Format**: Episodic vlog; filmed during food delivery runs\n- **Hosts**: Colin Ward + \"Tracy\" (recurring co-host, full name unconfirmed)\n- **Seasons**: At least 2 (Season 1 and Season 2 archive folders confirmed)\n- **Episode count**: 96+ confirmed (EP_01–EP_96 in archive)\n- **File count**: 130+ MP4 files total\n\n## Context\n\nDIMCP represents a significant shift in medium relative to Colin's music projects. While alphabets and killd by are purely audio, DIMCP is video-native — a vlog format that anticipates the creator-economy idiom even as it stays entirely in Colin's DIY, unpolished aesthetic. The fact that he sustained it for 96+ episodes in a single year suggests it was a genuine ongoing practice, not a one-off experiment.\n\nThe series title — \"Dog is my Copilot\" — riffs on the \"God is my Copilot\" phrase, grounding it in the secular and the canine (or possibly ironic). Whether a dog appears on-screen is unconfirmed from transcripts reviewed.\n\n## Archive Notes\n\n- Location: `_Documentation/Videos/2018/Dog is my Copilot/`\n- Season folders: Season 1, Season 2\n- Transcript .txt files present for some episodes (EP_01 confirmed)\n- No known public upload location; assumed private/unreleased\n- Created in the same year as Colin's death (October 2018) — the series may be incomplete"
+}

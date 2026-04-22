@@ -1,0 +1,31 @@
+{
+  "kind": "release",
+  "id": "alphabets-crab-lab-split-tape",
+  "slug": "alphabets-crab-lab-split-tape",
+  "title": "alphabets / Crab Lab split tape",
+  "preservedTitle": "alphabets_ Crab Lab split tape",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/alphabets",
+  "release_kind": "split",
+  "release_date": "2012-10-23",
+  "release_year": 2012,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/alphabets_ Crab Lab split tape"
+  ],
+  "collaborators": [
+    "organizations/crab-lab"
+  ],
+  "tracks": [
+    "tracks/alphabets-crab-lab-split-01-tienesquelavartelasmanos"
+  ],
+  "tags": [
+    "archive-only",
+    "split",
+    "2012"
+  ],
+  "body": "# alphabets / Crab Lab split tape\n\n**Project:** [[projects/alphabets]]  \n**Collaborator:** [[organizations/crab-lab]]  \n**File date:** 2012-10-23  \n**Archive location:** `_Documentation/Music/alphabets/alphabets_ Crab Lab split tape`  \n**Format:** Split tape  \n**Confidence:** medium — one track confirmed in archive, full split tracklist unknown  \n\nA collaborative release pairing alphabets with an act called [[organizations/crab-lab]]. One track confirmed: *tienesquelavartelasmanos* (Spanish: \"you have to wash your hands\"). Whether this is an alphabets track, a Crab Lab track, or a collaboration between both is unknown.\n\nThe Spanish title is unusual in Colin's catalog — nearly all his track titles are in English. If this is an alphabets track, it may represent an instance of Colin working with Spanish-language text. If it's a Crab Lab track included in Colin's archive, it reflects him preserving a collaborator's work alongside his own.\n\nSplit tapes in the DIY cassette tradition typically divide side A and side B between the two acts; whether this release had a physical cassette form is unknown.\n\n## Track Listing (confirmed)\n\n1. tienesquelavartelasmanos *(translation: \"you have to wash your hands\")*\n\n## Archive Notes\n\n- File date: 2012-10-23\n- Format: MP3 (single track in folder)\n- Attribution of track to alphabets vs. Crab Lab is unresolved\n- A separate \"split\" folder in the alphabets archive (dated 2012-10-22) contains one other track: *maku skream.mp3* — possibly the other side or an alternate draft"
+}

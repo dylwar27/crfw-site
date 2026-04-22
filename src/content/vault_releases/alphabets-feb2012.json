@@ -1,0 +1,26 @@
+{
+  "kind": "release",
+  "id": "alphabets-feb2012",
+  "slug": "alphabets-feb2012",
+  "title": "feb2012",
+  "preservedTitle": "feb2012",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/alphabets",
+  "release_kind": "single",
+  "release_date": "2012-02-03",
+  "release_year": 2012,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/feb2012"
+  ],
+  "series": "series/album-a-month",
+  "tags": [
+    "archive-only",
+    "album-a-month",
+    "2012"
+  ],
+  "body": "# feb2012\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/album-a-month]] — February 2012 (final entry)  \n**Release date:** 2012-02-03  \n**Archive location:** `_Documentation/Music/alphabets/feb2012`  \n**Tracks:** 1 (s2.mp3)  \n**Format:** MP3  \n**Confidence:** medium  \n\nOne track: *s2*. The album-a-month project's last known entry is a single file with an abbreviated, anonymous title. No description, no running title, no thematic frame — just *s2*.\n\nThe \"s\" prefix likely abbreviates \"sounds\" (continuing the *sounds 1*–*9* convention from LIFEBEFORETIMESOUNDTRACK) or \"session\" or \"sketch.\" \"2\" suggests a second in a series, though no \"s1\" is found in the feb2012 folder.\n\nThe contrast with JANFEB09 — 21 tracks, elaborate titles, a full album — makes this single abbreviated file feel like an ending. Three years of monthly albums, from the 21-track *sweater wearing as an activity for small objects in the couch* opener through dozens of releases, concluding with a file named *s2*. Whether Colin consciously felt the project was ending, or whether this is simply what survived, is unknown.\n\nBy 2012, Colin's attention had shifted to the underwaters series, the Bandcamp catalog, and eventually the killd by era. The album-a-month format was giving way to more curated releases.\n\n## Track Listing\n\n1. s2\n\n## Archive Notes\n\n- File date: 2012-02-03\n- Single track; no numbered sequence or theme\n- \"s2\" — function of the \"s\" prefix unresolved\n- Final entry in the album-a-month series; the project effectively ends here\n- Confidence medium: whether this was intended as a \"month\" entry or a standalone fragment is unclear"
+}

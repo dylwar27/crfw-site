@@ -1,0 +1,48 @@
+{
+  "kind": "series",
+  "slug": "album-a-month",
+  "id": "album-a-month",
+  "title": "Album a Month",
+  "name": "Album a Month project (2009–2012)",
+  "project": "projects/alphabets",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "date_start": "2009-01",
+  "date_end": "2012-02",
+  "summary": "Colin explicitly stated a goal: \"I'm going to try for an album a month.\" The archive\nconfirms he largely achieved it, producing a sustained run of monthly releases from\nearly 2009 through 2012 — sometimes two in a single month (December 2009). This was the\nfoundational creative practice of the alphabets era: high-volume, lo-fi, themed monthly\ndrops that established his naming style, his aquatic vocabulary, and his practice of\norganizing output into conceptual batches. The earliest releases (JANFEB09, MARCH09,\nJUNE_MONSTERS_09) are in M4A format — GarageBand or iPhone recordings; by September 2009\nhe had shifted to MP3, signaling a production upgrade.",
+  "members": [
+    "releases/alphabets-janfeb09",
+    "releases/alphabets-march09",
+    "releases/alphabets-june-monsters-09",
+    "releases/alphabets-sep09",
+    "releases/alphabets-octobrr09",
+    "releases/alphabets-nov09",
+    "releases/alphabets-dec09scifi",
+    "releases/alphabets-sftwr-synths-dec09",
+    "releases/alphabets-lifebeforetime-soundtrack",
+    "releases/alphabets-may10",
+    "releases/alphabets-july2010",
+    "releases/alphabets-octobrr2010",
+    "releases/alphabets-janfeb11-pirate-life",
+    "releases/alphabets-forjaniechantdance",
+    "releases/alphabets-april-co-eds-2011",
+    "releases/alphabets-feb2012"
+  ],
+  "source_ids": [],
+  "archivePath": [],
+  "tags": [
+    "series",
+    "alphabets-era",
+    "album-a-month",
+    "2009",
+    "2010",
+    "2011"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# Album a Month\n\nColin stated his goal plainly: he was going to try to release an album a month. The archive shows him doing it — a sustained run of monthly drops beginning in early 2009 and continuing, with some gaps, through 2012.\n\n## The Practice\n\nThe albums are home-produced and often short — some 6 tracks, some 20 — recorded, titled, organized, and archived within the month. The earliest ones (JANFEB09 and MARCH09) are in M4A format, the native output of GarageBand on Mac or iPhone voice memos, suggesting these were made on whatever tools Colin had at hand in early 2009. By September 2009, he'd upgraded to MP3 export, and the production quality (while still deliberately lo-fi) reflects more intentional studio work.\n\nEach album tends to have a theme or naming convention:\n- **JANFEB09 and MARCH09**: Free-associative, run-on titles — \"sweater wearing as an activity for small objects in the couch,\" \"BOB ROSS RAVEGROOVE LOVE TRIBUTE\"\n- **JUNE_MONSTERS_09**: Rigidly themed — every track is \"[adjective] monster [action].\" The earliest fully themed album in the catalog.\n- **sep09**: Aquatic/animal vocabulary that prefigures the underwaters series\n- **NOV09**: Introduces \"bliss body\" (later a memorial event name) and \"fantasia mixx\" (Fantasia as concept, November 2009)\n- **DEC09SCIFI**: Sci-fi register — robots, hover jets, star wars puns\n- **SFTWRSYNTHZdec09**: \"Software synths\" — explicitly about the tools; two December releases in 2009\n- **JANFEB11 PIRATE LIFE**: Pirate theme; the most cohesively themed of the 2011 albums\n- **APRIL CO-EDS 2011**: Contains \"fantasia2011.mp3\" — the earliest archive evidence of a Fantasia 2011 event\n\n## Timeline\n\n| Album | Month/Year | Tracks | Format |\n|---|---|---|---|\n| JANFEB09 | Jan–Feb 2009 | 21 | M4A |\n| MARCH09hopdanceshakebump | March 2009 | 22 | M4A |\n| JUNE_MONSTERS_09 | June 2009 | 15 | M4A |\n| sep09 | September 2009 | 9 | MP3 |\n| octobrr09 | October 2009 | 11 | MP3 |\n| NOV09 | November 2009 | 15 | MP3 |\n| DEC09SCIFI | December 2009 | 10 | MP3 |\n| SFTWRSYNTHZdec09 | December 2009 | 8 | MP3 |\n| LIFEBEFORETIMESOUNDTRACK | January 2010 | 10 | MP3 |\n| may10 | May 2010 | 9 | MP3 |\n| JULY2010 | July 2010 | 9 | MP3 |\n| OCTOBRR2010 | October 2010 | 21 | MP3 |\n| JANFEB11 PIRATE LIFE | Jan–Feb 2011 | 14 | MP3 |\n| forjaniechantdance | February 2011 | 1 | MP3 |\n| APRIL CO-EDS 2011 | April 2011 | 6 | MP3 |\n| feb2012 | February 2012 | 1 | MP3 |\n\n*Gap months (April–May 2009, July–August 2009, Jan–April 2010, etc.) may reflect missing archived material or intentional breaks.*\n\n## Significance\n\nThis project is the foundation of everything. The underwaters series, the [___]POWER family, the REMIX compilations — all of these emerge from the discipline and creative surplus of a practice that was already producing albums monthly. The album-a-month approach is also the context for understanding track titles: when you're releasing 10–20 tracks a month, titles become fast, intuitive, associative — no time for deliberation.\n\nBy 2010, the monthly cadence becomes less consistent as Colin develops longer-form projects (underwaters, SUNPOWER, the Bandcamp catalog). By 2011 the practice is winding down. By February 2012, a single-track stub (\"s2.mp3\") is all that remains of the goal.\n\n## Notes for Website\n\nThis is the origin story of alphabets — a prolific, self-imposed creative challenge that produced hundreds of tracks over three years. For the website, this can be framed as: \"Colin set a goal and kept it. The archive is the proof.\""
+}

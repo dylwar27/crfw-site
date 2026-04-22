@@ -3,17 +3,37 @@
   "kind": "event",
   "title": "Fantasia 2014",
   "event_kind": "show",
-  "date": "2014",
+  "date": "2014-06-06",
+  "date_note": "June 6 opening night; two-day event",
   "venue": "venues/rhinoceropolis",
   "participants": [
-    "people/colin-ward"
+    "people/colin-ward",
+    "people/stephan-herrera",
+    "people/luke-leavitt",
+    "people/ben-donehower",
+    "people/laura-conway"
   ],
   "created": "2026-04-20",
+  "updated": "2026-04-21",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
-  "related": [
-    "people/colin-ward"
+  "sources": [
+    "https://www.westword.com/music/fantasia-2014-part-art-exhibition-part-concert-all-interactive-crazy-aquarium-experience-5695364",
+    "https://www.westword.com/music/cave-rave-sets-a-sweaty-stage-on-the-path-to-fantasia-8066434/"
   ],
-  "body": "Party Colin threw/curated. The Westword *Cave Rave* preview and *Fantasia 2014* piece cover the event. Colin's Cargo Collective portfolio has an entire F2014-* poster series (F2014-THA-ART-, F2014-SPIDER-DREAM, AIR SHAMAN, AIRPORT, CASH CONTROL, CLUB GLOBE, RAPTOR JAZZ, HOW2GET-WHAT-U-WANT4)."
+  "related": [
+    "people/colin-ward",
+    "people/stephan-herrera",
+    "venues/rhinoceropolis",
+    "events/fantasia-2011",
+    "events/fantasia-2012",
+    "events/fantasia-2016"
+  ],
+  "tags": [
+    "fantasia",
+    "rhinoceropolis",
+    "2014"
+  ],
+  "body": "Two-day immersive art/music event at Rhinoceropolis, opening June 6, 2014. Co-curated by **Colin Ward** and **Stephan Herrera**. \n\nWestword described it as \"part art exhibition, part concert, all interactive crazy aquarium experience.\" Colin described the visual theme as \"a laser-tag arena/coral reef/planetarium/aquarium sort of feel.\" In the month leading up to the event, Rhinoceropolis was transformed — rooms and outdoor spaces \"morphed into multi-level, color- and light-saturated sculpture gardens and installations from local and national artists.\"\n\nA massive white tarp angled down from the roof into the backyard to create a projection canvas for video-manipulation duo **VidKidz**. The front room housed a continuous loop of video art clips curated by Herrera. Collaborators included **Luke Leavitt**, **Ben Donehower**, **Laura Conway**, and many more. Designed as an intimate, welcoming event for people who had never visited a DIY space.\n\nColin's Cargo Collective portfolio preserved an entire F2014-* poster series: F2014-THA-ART-, F2014-SPIDER-DREAM, AIR SHAMAN, AIRPORT, CASH CONTROL, CLUB GLOBE, RAPTOR JAZZ, HOW2GET-WHAT-U-WANT4.\n\nA separate Westword piece, \"Cave Rave Will Set a Sweaty Stage on the Path to Fantasia,\" served as a preview/lead-up to the event.\n\n## Press coverage\n- [Westword — Fantasia 2014 full feature](https://www.westword.com/music/fantasia-2014-part-art-exhibition-part-concert-all-interactive-crazy-aquarium-experience-5695364)\n- [Westword — Cave Rave sets the stage for Fantasia (preview)](https://www.westword.com/music/cave-rave-sets-a-sweaty-stage-on-the-path-to-fantasia-8066434/)"
 }

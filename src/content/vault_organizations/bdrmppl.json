@@ -1,0 +1,25 @@
+{
+  "id": "bdrmppl",
+  "kind": "organization",
+  "title": "bdrmppl",
+  "display_name": "bdrmppl",
+  "aliases": [
+    "bedroom people",
+    "bdrm ppl"
+  ],
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "role_summary": "Act referenced in an alphabets split tape folder (2012). Identity unconfirmed; possibly \"bedroom people.\" The archive folder for the split tape is empty.",
+  "tags": [
+    "collaborator",
+    "alphabets-era",
+    "split-tape"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# bdrmppl\n\nAn act referenced by the archive folder `split tape w_ bdrmppl` (dated July 20, 2012). The folder is empty — no audio files are present, suggesting the split tape was either never completed, the files were moved, or the folder is a placeholder.\n\n\"bdrmppl\" likely abbreviates \"bedroom people\" — a name consistent with the bedroom-pop/lo-fi aesthetics of the early 2010s DIY scene. Whether this was a Denver act or an online connection is unknown.\n\n## Archive Notes\n\n- Folder: `_Documentation/Music/alphabets/split tape w_ bdrmppl`\n- Folder date: 2012-07-20\n- Empty folder — no audio files present\n- Confidence low: only the folder name provides any information\n\n## Research Gaps\n\n- Who is bdrmppl? Real name, location, other releases?\n- Was the split tape ever completed or released?\n- Did the files exist and get lost, or was the collaboration never finished?\n- \"bdrmppl\" search: any results on Bandcamp, SoundCloud, or other platforms?"
+}

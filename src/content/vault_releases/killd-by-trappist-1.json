@@ -1,0 +1,29 @@
+{
+  "kind": "release",
+  "id": "killd-by-trappist-1",
+  "slug": "killd-by-trappist-1",
+  "title": "trappist-1",
+  "preservedTitle": "trappist-1",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/killd-by",
+  "release_kind": "unreleased",
+  "release_date": "2017-04-26",
+  "release_year": 2017,
+  "is_posthumous": false,
+  "is_unreleased": true,
+  "archivePath": [
+    "_Documentation/Music/KB/killd by/trappist-1"
+  ],
+  "tracks": [
+    "tracks/killd-by-trappist-1-01-plasser"
+  ],
+  "tags": [
+    "archive-only",
+    "unreleased",
+    "2017"
+  ],
+  "body": "# trappist-1\n\n**Project:** [[projects/killd-by]]  \n**Status:** Unreleased  \n**File date:** 2017-04-26  \n**Archive location:** `_Documentation/Music/KB/killd by/trappist-1`  \n**Tracks:** 1 confirmed (plasser.aif)  \n\nNamed after the TRAPPIST-1 star system, whose seven Earth-sized planets were announced by NASA in February 2017 in one of the most celebrated astronomical press events of the decade. Colin created this track approximately two months after that announcement, naming the project after the newly-discovered system.\n\nOne track confirmed from the archive: *plasser* (.aif format, unmastered). Whether additional tracks were planned under the TRAPPIST-1 name or whether this was conceived as a single-track release is unknown.\n\nThe TRAPPIST-1 announcement was culturally significant in early 2017 — widely shared as evidence of potentially habitable worlds. Colin's naming of this project reflects the same pattern visible elsewhere in the killd by era: referencing news and scientific discovery as titles (*trappist-1*, *Timewave686*), grounding abstract sonic work in contemporary cultural moments.\n\n## Track Listing\n\n1. plasser *(unmastered AIF)*\n\n## Archive Notes\n\n- File date: 2017-04-26\n- Format: .aif (unmastered/session audio)\n- Single-track folder; no export or distribution found\n- Named ~2 months after NASA TRAPPIST-1 announcement (February 22, 2017)\n- Confidence high: folder and file are clearly named and dated\n\n## Research Gaps\n\n- Was *plasser* intended as the title or a filename placeholder?\n- Were additional tracks for this release in progress?\n- Did Colin share any context about this project?"
+}

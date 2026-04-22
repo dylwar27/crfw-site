@@ -1,0 +1,33 @@
+{
+  "kind": "release",
+  "id": "alphabets-sunpower",
+  "slug": "alphabets-sunpower",
+  "title": "SUNPOWER",
+  "preservedTitle": "SUNPOWER",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "project": "projects/alphabets",
+  "release_kind": "ep",
+  "release_date": "2010-05-30",
+  "release_year": 2010,
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/SUNPOWER"
+  ],
+  "series": "series/power",
+  "tracks": [
+    "tracks/alphabets-sunpower-01-hoops",
+    "tracks/alphabets-sunpower-02-stress-busting",
+    "tracks/alphabets-sunpower-03-three-clock",
+    "tracks/alphabets-sunpower-04-romantidrunk",
+    "tracks/alphabets-sunpower-05-minutes",
+    "tracks/alphabets-sunpower-06-happened"
+  ],
+  "tags": [
+    "archive-only",
+    "power-series"
+  ],
+  "body": "# SUNPOWER\n\n**Project:** [[projects/alphabets]]  \n**Series:** [[series/power]] — [___]POWER family  \n**File date:** 2010-05-30  \n**Archive location:** `_Documentation/Music/alphabets/SUNPOWER`  \n**Tracks:** 6  \n\nThe first SUNPOWER release and the second in the broader [___]POWER family (moonpower preceded it by 23 days, on May 7, 2010). Released within the same fertile spring 2010 period that also produced moonpower, SUNPOWER2, BELLPOWER, and DANCEPOWER.\n\nThe track titles shift register from the aquatic vocabulary of the underwaters series toward something warmer and more domestic: *hoops*, *stress busting*, *three clock*, *romantidrunk*, *minutes*, *happened*. The suffix \"drunk\" in *romantidrunk* (romantic + drunk) is a characteristic Colin portmanteau. *Three clock* likely refers to 3am — time as emotional state rather than measure.\n\n## Track Listing\n\n1. hoops\n2. stress busting\n3. three clock\n4. romantidrunk\n5. minutes\n6. happened\n\n## Archive Notes\n\nFile dates: 2010-05-30. Tracklist confirmed from MP3 filenames. No Bandcamp URL identified. Part of a prolific spring/summer 2010 output cluster. SUNPOWER was followed by two more volumes (SUNPOWER2, SUNPOWER3), making it the only [___]POWER sub-series with numbered continuation."
+}

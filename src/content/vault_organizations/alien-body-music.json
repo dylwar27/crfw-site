@@ -1,0 +1,21 @@
+{
+  "id": "alien-body-music",
+  "kind": "organization",
+  "title": "Alien Body Music",
+  "name": "Alien Body Music",
+  "org_kind": "record_label",
+  "status": "active",
+  "founded_note": "operated by Travis Egedy / Pictureplane",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "record-label"
+  ],
+  "related": [
+    "people/travis-egedy",
+    "people/colin-ward"
+  ],
+  "body": "Independent record label operated by Travis Egedy (Pictureplane). Released *Degenerate* (September 2018), which contains the track \"Color Spectrum (Tokyo Drift)\" — a direct tribute to Colin Ward.\n\n## Known releases\n- *Degenerate* by Pictureplane (September 2018) — includes \"Color Spectrum (Tokyo Drift) feat. smrtdeath,\" dedicated to Colin Ward\n\n## Sources\n- [Westword — Pictureplane Rhinoceropolis tribute](https://www.westword.com/music/pictureplanes-travis-egedy-remembers-rhinoceropolis-and-colin-ward-in-new-music-video-11031024)"
+}
