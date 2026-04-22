@@ -82,12 +82,12 @@ site/
 
 ---
 
-## Current state (as of Session 15, 2026-04-20)
+## Current state (as of Session 16, 2026-04-21)
 
-- **~1,958 total entries** (238 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
-- **33 PRs merged** across 15 sessions
+- **~1,960 total entries** (240 releases + 866 photos + 538 videos + 305 voice memos + 11 events)
+- **35 PRs merged** across 16 sessions (PRs #34 asset sets, #35 vault reconciliation committed to main)
 - Live at https://dylwar27.github.io/crfw-site/ + /about + /projects + /tags + /admin + /people + /press
-- **631 static pages**: timeline + admin + about + projects + tags + 305 voice memo readers + 249 video readers + 15 project pages + 34 person pages + 1 people index + 21 press pages + 1 press index
+- **671 static pages**: timeline + admin + about + projects + tags + 305 voice memo readers + 249 video readers + 15 project pages + 34 person pages + 1 people index + 21 press pages + 1 press index
 - **Filter UX (Session 11): four dropdowns** (Project, Format, Medium, Tag) with live counts, reset button, URL-param pre-selection (`?project=X&tag=Y`)
 - **Tag scaling (Session 11)**: tag dropdown recomputes scoped to other-axis selections; /tags page groups all tags by source (curator / script / hashtag)
 - **Database v1 (Session 11, extended Session 15)**: SQLite schema at `data/schema.sql`. `scripts/db-sync.mjs` projects 1,958 site entries + 110 vault entities into `data/crfw.db`. Vault entity tables now populated: 36 people, 15 projects, 9 venues, 22 orgs, 21 press, 1 fund, 6 grants. FTS5 indexed. 0 dead cross-refs.
@@ -130,6 +130,7 @@ site/
 - [scripts/retag-dimcp.mjs](scripts/retag-dimcp.mjs) — one-off DIMCP project reassignment (Session 07)
 - [scripts/fix-2digit-years.mjs](scripts/fix-2digit-years.mjs) — one-off 2-digit-year fix pass (Session 08)
 - [scripts/import-csv-edits.mjs](scripts/import-csv-edits.mjs) — **CSV import-back** — diffs a CSV against content files, applies changes. Editable cols: title, preservedTitle, project, date, format, summary, tags, published. Dry-run by default; `--write` to apply.
+- [scripts/reconcile-vault-releases.mjs](scripts/reconcile-vault-releases.mjs) — **vault reconciler** — merges vault release research into site stubs. Fields: date, format, bandcampUrl, tracklist, summary, tags, archivePath. Vault wins on conflict; BIN file preserves displaced curator content. Dry-run by default; `--write` to apply; `--vault-slug X` for single entry.
 
 ---
 
@@ -160,6 +161,7 @@ Agent-doable next:
 - **Session 13:** ~~Vault integration~~ (PR #30). 354 structural entities projected from the Obsidian-style vault. Curator's Kit v3 = two-source coordinator. 15 new `/project/[slug]` pages. `series` kind seeded (DDR cross-project series).
 - **Session 14:** QA pass. Fixed better-sqlite3 Node version mismatch; fixed YAML `>` folded block scalar parser; cleared 721 iCloud sync-conflict dupe files; updated gitignore to cover ` [2-9].*` (not just ` 2.*`); picked up 12 new vault entries + 4 modified entries that Dyl had added in Obsidian since Session 13. Build: 574 pages, 366 vault entities, 0 dead refs.
 - **Session 15:** ~~Person pages~~ (PR #31 — `/person/[slug]` × 34, `/people` index, shared `renderBody.ts` renderer with stash/restore tokenizer). ~~Press pages~~ (PR #32 — `/press/[slug]` × 21, `/press` index, mention chips). ~~DB vault sync~~ (PR #33 — vault entities in SQLite: 36 people, 15 projects, 9 venues, 22 orgs, 21 press, 1 fund, 6 grants, 0 dead refs). Build: 631 pages, 19,446 words.
+- **Session 16:** ~~Asset sets (PR #34)~~ — CMS feature for grouping photos/videos; deferred from Session 13. ~~Vault-to-site release reconciliation~~ (PR #35 — `scripts/reconcile-vault-releases.mjs` merges all 62 vault releases into site stubs: dates, formats, tracklists with `preservedTitle`, summaries, tags, archivePaths; BIN files for displaced curator content; 2 new release stubs created; zero unmatched). Schema: `archivePath` accepts `string|array` in releases. Build: 671 pages, 19,552 words.
 
 ---
 
