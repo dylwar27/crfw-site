@@ -42,9 +42,12 @@ const VAULT_RELEASES = join(VAULT_PATH, 'releases');
 const VAULT_TRACKS   = join(VAULT_PATH, 'tracks');
 
 if (!existsSync(VAULT_PATH)) {
-  console.error(`Vault not found: ${VAULT_PATH}`);
-  console.error(`Set CRFW_VAULT_PATH env var to override.`);
-  process.exit(2);
+  // In CI the vault isn't available — site stubs are already committed.
+  // Exit 0 so the build proceeds using committed release stubs.
+  console.log(`Vault not found at: ${VAULT_PATH}`);
+  console.log(`Skipping reconcile — using committed release stubs.`);
+  console.log(`(Set CRFW_VAULT_PATH env var to point at a local vault.)`);
+  process.exit(0);
 }
 
 // ─── Slug mapping ────────────────────────────────────────────────────────────
