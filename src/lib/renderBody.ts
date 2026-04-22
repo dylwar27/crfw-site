@@ -9,10 +9,11 @@
 
 // Collections that have pages; maps vault folder name → URL prefix
 const WIKILINK_ROUTES: Record<string, string> = {
-  people:   '/person',
-  projects: '/project',
-  press:    '/press',
-  venues:   '/venue',
+  people:        '/person',
+  projects:      '/project',
+  press:         '/press',
+  venues:        '/venue',
+  organizations: '/org',
 };
 
 function escHtml(s: string): string {

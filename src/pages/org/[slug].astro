@@ -1,0 +1,185 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const orgs = await getCollection('vault_organizations');
+  return orgs
+    .filter(o => o.data.public_display !== false)
+    .map(o => ({
+      params: { slug: o.id },
+      props: { org: o },
+    }));
+}
+
+const { org } = Astro.props;
+const d = org.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const name = d.name || d.title || org.id;
+const bodyHtml = renderBody(d.body || '', BASE);
+
+function orgKindLabel(k: string | undefined): string {
+  if (!k) return 'organization';
+  return k.replace(/_/g, ' ');
+}
+---
+<Base title={`${name} — CRFW`}>
+  <article class="org-page">
+    <nav class="org-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/orgs`}>All organizations</a>
+    </nav>
+
+    <header class="org-header">
+      <div class="org-kind">{orgKindLabel(d.org_kind)}</div>
+      <h1>{name}</h1>
+
+      {d.address && (
+        <div class="org-address">{d.address}</div>
+      )}
+
+      {d.status && (
+        <div class="org-status-wrap">
+          <span class={`org-status org-status--${d.status}`}>{d.status}</span>
+        </div>
+      )}
+    </header>
+
+    {d.website && (
+      <section class="org-section">
+        <h2>Links</h2>
+        <ul class="org-links">
+          <li><a href={d.website} target="_blank" rel="noopener">{d.website.replace(/^https?:\/\//, '')}</a></li>
+        </ul>
+      </section>
+    )}
+
+    {bodyHtml && (
+      <section class="org-body" set:html={bodyHtml} />
+    )}
+  </article>
+</Base>
+
+<style>
+  .org-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .org-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .org-nav a { color: var(--ink-dim); text-decoration: none; }
+  .org-nav a:hover { color: var(--accent-2); }
+  .org-nav .sep { color: var(--rule); margin: 0 8px; }
+
+  .org-header {
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+  }
+  .org-kind {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .org-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .org-address {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .org-status-wrap { margin-top: 4px; }
+  .org-status {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .org-status--closed { background: rgba(255,100,80,0.12); color: #e05040; }
+  .org-status--active { background: rgba(100,200,100,0.12); color: #60b060; }
+  .org-status--dormant,
+  .org-status--defunct { background: rgba(200,160,80,0.12); color: #c89840; }
+
+  .org-section { margin-bottom: 40px; }
+  .org-section h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .org-links { list-style: none; padding: 0; margin: 0; }
+  .org-links li { padding: 4px 0; font-family: var(--mono); font-size: 13px; }
+  .org-links a { color: var(--accent-2); text-decoration: none; }
+  .org-links a:hover { text-decoration: underline; }
+
+  /* Body prose */
+  .org-body {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .org-body :global(p) { margin: 0 0 1em; }
+  .org-body :global(h4),
+  .org-body :global(h5) {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 2em 0 0.6em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .org-body :global(blockquote) {
+    border-left: 3px solid var(--accent-2);
+    margin: 1em 0;
+    padding: 0 0 0 16px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .org-body :global(ul) { padding-left: 1.4em; margin: 0 0 1em; }
+  .org-body :global(li) { margin-bottom: 0.3em; }
+  .org-body :global(.wiki-link) { color: var(--accent-2); text-decoration: none; }
+  .org-body :global(.wiki-link:hover) { text-decoration: underline; }
+  .org-body :global(.wiki-chip) {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--ink-dim);
+    background: var(--surface-2, rgba(255,255,255,0.05));
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .org-body :global(a) { color: var(--accent-2); text-decoration: none; }
+  .org-body :global(a:hover) { text-decoration: underline; }
+  .org-body :global(strong) { font-weight: 700; }
+</style>

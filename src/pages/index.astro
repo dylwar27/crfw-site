@@ -326,7 +326,15 @@ const totals = {
     <div class="foot-nav">
       <a href={`${BASE}/about`}>About</a>
       <span class="foot-sep">·</span>
-      <a href={`${BASE}/projects`}>Associated projects</a>
+      <a href={`${BASE}/projects`}>Projects</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/people`}>People</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/venues`}>Venues</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/orgs`}>Orgs</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/press`}>Press</a>
       <span class="foot-sep">·</span>
       <a href={`${BASE}/tags`}>Tags</a>
     </div>
@@ -596,7 +604,7 @@ const totals = {
           '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
         }[c]));
       }
-      const WIKI_ROUTES = { people: '/person', projects: '/project', press: '/press', venues: '/venue' };
+      const WIKI_ROUTES = { people: '/person', projects: '/project', press: '/press', venues: '/venue', organizations: '/org' };
       const BASE_URL = (JSON.parse(document.getElementById('site-config').textContent || '{}').base || '');
       function resolveWikilink(ref, label) {
         const parts = ref.trim().split('/');

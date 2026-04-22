@@ -1,0 +1,168 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const venues = (await getCollection('vault_venues'))
+  .filter(v => v.data.public_display !== false)
+  .sort((a, b) => {
+    const nameA = (a.data.name || a.data.title || a.id).toLowerCase();
+    const nameB = (b.data.name || b.data.title || b.id).toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+function venueKindLabel(k: string | undefined): string {
+  if (!k) return 'other';
+  return k.replace(/_/g, ' ');
+}
+
+// Group by venue_kind
+const ORDER = ['diy_space', 'gallery', 'music_venue', 'other'];
+const groups: Record<string, typeof venues> = {};
+for (const v of venues) {
+  const g = v.data.venue_kind || 'other';
+  (groups[g] ??= []).push(v);
+}
+// Collect any kinds not in ORDER
+const extraKinds = Object.keys(groups).filter(k => !ORDER.includes(k));
+const allKinds = [...ORDER, ...extraKinds].filter(k => groups[k]?.length);
+---
+<Base title="Venues — CRFW">
+  <div class="venues-page">
+    <nav class="venues-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+    </nav>
+
+    <header class="venues-header">
+      <div class="venues-eyebrow">Archive</div>
+      <h1>Venues</h1>
+      <p class="venues-sub">{venues.length} spaces connected to Colin's work</p>
+    </header>
+
+    {allKinds.map(kindKey => (
+      <section class="venues-group">
+        <h2>{venueKindLabel(kindKey)}</h2>
+        <ul class="venues-list">
+          {groups[kindKey].map(v => (
+            <li>
+              <a href={`${BASE}/venue/${v.id}`} class="venue-row">
+                <span class="venue-name">
+                  {v.data.name || v.data.title || v.id}
+                </span>
+                <span class="venue-loc">
+                  {[v.data.city, v.data.region].filter(Boolean).join(', ')}
+                </span>
+                <span class="venue-years">
+                  {v.data.opened_year && String(v.data.opened_year)}
+                  {v.data.opened_year && v.data.closed_year ? '–' : ''}
+                  {v.data.closed_year && String(v.data.closed_year)}
+                  {v.data.status === 'active' && !v.data.closed_year ? '– present' : ''}
+                  {v.data.status === 'closed' && !v.data.closed_year ? ' (closed)' : ''}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .venues-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .venues-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .venues-nav a { color: var(--ink-dim); text-decoration: none; }
+  .venues-nav a:hover { color: var(--accent-2); }
+
+  .venues-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .venues-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .venues-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .venues-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin: 0;
+  }
+
+  .venues-group { margin-bottom: 48px; }
+  .venues-group h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .venues-list { list-style: none; padding: 0; margin: 0; }
+  .venues-list li { border-bottom: 1px solid var(--rule); }
+
+  .venue-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 120px;
+    gap: 12px;
+    padding: 10px 4px;
+    text-decoration: none;
+    color: inherit;
+    align-items: baseline;
+    transition: background 0.1s;
+  }
+  .venue-row:hover { background: rgba(255,255,255,0.03); }
+  .venue-row:hover .venue-name { color: var(--accent-2); }
+
+  .venue-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .venue-loc {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+  }
+  .venue-years {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    text-align: right;
+  }
+
+  @media (max-width: 600px) {
+    .venue-row {
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 2px 8px;
+    }
+    .venue-loc { grid-column: 1; }
+    .venue-years { grid-row: 1; grid-column: 2; }
+  }
+</style>

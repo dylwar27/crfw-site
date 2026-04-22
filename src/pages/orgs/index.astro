@@ -1,0 +1,176 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const orgs = (await getCollection('vault_organizations'))
+  .filter(o => o.data.public_display !== false)
+  .sort((a, b) => {
+    const nameA = (a.data.name || a.data.title || a.id).toLowerCase();
+    const nameB = (b.data.name || b.data.title || b.id).toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+function orgKindLabel(k: string | undefined): string {
+  if (!k) return 'other';
+  return k.replace(/_/g, ' ');
+}
+
+// Group by org_kind
+const ORDER = ['record_label', 'venue', 'media_publisher', 'platform', 'collective', 'nonprofit', 'other'];
+const groups: Record<string, typeof orgs> = {};
+for (const o of orgs) {
+  const g = o.data.org_kind || 'other';
+  (groups[g] ??= []).push(o);
+}
+// Collect any kinds not in ORDER
+const extraKinds = Object.keys(groups).filter(k => !ORDER.includes(k));
+const allKinds = [...ORDER, ...extraKinds].filter(k => groups[k]?.length);
+---
+<Base title="Organizations — CRFW">
+  <div class="orgs-page">
+    <nav class="orgs-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+    </nav>
+
+    <header class="orgs-header">
+      <div class="orgs-eyebrow">Archive</div>
+      <h1>Organizations</h1>
+      <p class="orgs-sub">{orgs.length} labels, platforms, and institutions in the archive</p>
+    </header>
+
+    {allKinds.map(kindKey => (
+      <section class="orgs-group">
+        <h2>{orgKindLabel(kindKey)}</h2>
+        <ul class="orgs-list">
+          {groups[kindKey].map(o => (
+            <li>
+              <a href={`${BASE}/org/${o.id}`} class="org-row">
+                <span class="org-name">
+                  {o.data.name || o.data.title || o.id}
+                </span>
+                {o.data.website && (
+                  <span class="org-website">
+                    {o.data.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                  </span>
+                )}
+                {o.data.status && (
+                  <span class={`org-status-badge org-status-badge--${o.data.status}`}>
+                    {o.data.status}
+                  </span>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .orgs-page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+    font-family: var(--sans);
+  }
+  .orgs-nav {
+    margin-bottom: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .orgs-nav a { color: var(--ink-dim); text-decoration: none; }
+  .orgs-nav a:hover { color: var(--accent-2); }
+
+  .orgs-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .orgs-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .orgs-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 7vw, 84px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .orgs-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin: 0;
+  }
+
+  .orgs-group { margin-bottom: 48px; }
+  .orgs-group h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+  }
+
+  .orgs-list { list-style: none; padding: 0; margin: 0; }
+  .orgs-list li { border-bottom: 1px solid var(--rule); }
+
+  .org-row {
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    gap: 12px;
+    padding: 10px 4px;
+    text-decoration: none;
+    color: inherit;
+    align-items: baseline;
+    transition: background 0.1s;
+  }
+  .org-row:hover { background: rgba(255,255,255,0.03); }
+  .org-row:hover .org-name { color: var(--accent-2); }
+
+  .org-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .org-website {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .org-status-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .org-status-badge--active { background: rgba(100,200,100,0.12); color: #60b060; }
+  .org-status-badge--closed,
+  .org-status-badge--defunct { background: rgba(255,100,80,0.12); color: #e05040; }
+  .org-status-badge--dormant { background: rgba(200,160,80,0.12); color: #c89840; }
+
+  @media (max-width: 600px) {
+    .org-row {
+      grid-template-columns: 1fr auto;
+      gap: 4px 8px;
+    }
+    .org-website { display: none; }
+  }
+</style>
