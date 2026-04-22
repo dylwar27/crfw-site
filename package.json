@@ -7,10 +7,10 @@
     "dev": "astro dev",
     "start": "astro dev",
     "db:sync": "node scripts/db-sync.mjs",
-    "vault:sync": "node scripts/sync-vault.mjs --write",
+    "vault:sync": "node scripts/sync-vault.mjs --write && node scripts/reconcile-vault-releases.mjs",
     "cms": "node scripts/curators-kit/server.mjs",
     "cms:lan": "node scripts/curators-kit/server.mjs --lan",
-    "build": "node scripts/sync-vault.mjs --write && astro build && pagefind --site dist --exclude-selectors \"[data-pagefind-ignore]\" && node scripts/db-sync.mjs --dist --quiet",
+    "build": "node scripts/sync-vault.mjs --write && node scripts/reconcile-vault-releases.mjs && astro build && pagefind --site dist --exclude-selectors \"[data-pagefind-ignore]\" && node scripts/db-sync.mjs --dist --quiet",
     "preview": "astro preview"
   },
   "dependencies": {

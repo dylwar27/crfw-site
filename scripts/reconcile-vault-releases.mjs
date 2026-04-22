@@ -631,3 +631,9 @@ console.log(`  Unmatched: ${report.unmatched.length}${report.unmatched.length ? 
 console.log(`  BIN items: ${allBin.length}`);
 if (!WRITE && report.matched.length > 0)
   console.log(`\n  Run with --write to apply.`);
+if (report.unmatched.length > 0) {
+  console.error(`\nWARNING: ${report.unmatched.length} vault release(s) have no SLUG_MAP entry.`);
+  console.error(`  Add to SLUG_MAP in scripts/reconcile-vault-releases.mjs:`);
+  report.unmatched.forEach(s => console.error(`    '${s}': null,  // → create new site stub`));
+  console.error(`  Then run: node scripts/reconcile-vault-releases.mjs --write`);
+}
