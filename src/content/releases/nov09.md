@@ -14,6 +14,7 @@ tags:
   - "2009"
   - fantasia-reference
   - bliss-body-reference
+  - "2009"
 summary: "The most historically significant of the monthly albums. NOV09 contains two track titles that would become defining names in Colin's legacy:"
 ---
 # NOV09

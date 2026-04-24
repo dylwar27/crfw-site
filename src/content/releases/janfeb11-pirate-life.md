@@ -13,6 +13,7 @@ tags:
   - album-a-month
   - "2011"
   - themed-album
+  - "2011"
 summary: "A two-month album (January–February, echoing JANFEB09 from two years prior) with a pirate theme announced in the title. Pirate Life — the most directly themed of the 2011 albums. 14 tracks, filed March 2, indicating a late-month/early-next-month completion."
 ---
 # JANFEB11 PIRATE LIFE

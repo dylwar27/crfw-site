@@ -12,6 +12,7 @@ tags:
   - archive-only
   - album-a-month
   - "2009"
+  - "2009"
 summary: "The first of two December 2009 releases — the month Colin released the most music in the album-a-month project. DEC09SCIFI is a sci-fi concept album: robots, hover jets, science fiction cinema, space-age technology. The naming convention is closer to the monster-themed June album than the free-associative earlier months."
 ---
 # DEC09SCIFI

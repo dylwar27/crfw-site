@@ -13,6 +13,7 @@ tags:
   - album-a-month
   - "2011"
   - dedication
+  - "2011"
 summary: "A single track made *for* someone: the folder name reads \"for janie chant dance\" — a dedication, an instruction, a gift. The track is titled *genie roberts*."
 ---
 # forjaniechantdance

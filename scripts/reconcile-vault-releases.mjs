@@ -64,7 +64,7 @@ const SLUG_MAP = {
   'killd-by-ddr3-loaner-phone': 'ddr3-loaner-phone',
   'killd-by-djpoolside-vol-1':  'djpoolside-vol-1',
   'killd-by-uya-050':           'uya-050',
-  'killd-by-neotropical':       null, // → create neotropical.md
+  'killd-by-neotropical':       'neotropical',
   // alphabets
   'alphabets-400yen':                         '400yen',
   'alphabets-611':                            '611',
@@ -118,12 +118,31 @@ const SLUG_MAP = {
   'alphabets-sftwr-synths-dec09':             'sftwrsynthzdec09',
   // New releases discovered in vault session 5
   'alphabets-crab-lab-split-tape':            'alphabets-crab-lab-split-tape',
-  'killd-by-b-sides-2017':                    null, // → create kb-b-sides-2017.md
+  'killd-by-b-sides-2017':                    'b-sides-2017',
   'killd-by-court-clothes-vol-1':             'court-clothes-vol-1',
   'killd-by-familie-mix':                     'familie-mix-ripcashaskew',
   'killd-by-outcasts':                        'outcasts-b-sides-2014-2016',
   'killd-by-timewave686':                     'timewave686',
   'killd-by-trappist-1':                      'trappist-1',
+  // Early alphabets archival folders — triaged in Session 19 (see SLUG_MAP_TRIAGE.md).
+  // Session 19 --write run created 3 new stubs (07_08, may09, unreleased-loose);
+  // the other 12 already existed from a prior bulk-stub pass. All now map to their
+  // existing site slugs so vault-data changes reconcile on future runs.
+  'alphabets-07_08':                              '07_08',
+  'alphabets-cat-mouths-spring-08':               'cat-mouths-spring-08',
+  'alphabets-freak-medicine-winter-07':           'freak-medicine-winter-07',
+  'alphabets-jul-aug-09':                         'jul-aug-09',
+  'alphabets-may09':                              'may09',
+  'alphabets-mid08-dumb-gull-ep':                 'mid08-dumb-gull-ep',
+  'alphabets-naturenature-spring-summer-08':      'naturenature-spring-summer-08',
+  'alphabets-new-year-08-09':                     'new-year-08-09',
+  'alphabets-nw-wierd-summer-08':                 'nw-wierd-summer-08',
+  'alphabets-pulse-stuff-fall-08':                'pulse-stuff-fall-08',
+  'alphabets-spooky-sports':                      'spooky-sports',
+  'alphabets-timesmileniceface-spring-summer-08': 'timesmileniceface-spring-summer-08',
+  'alphabets-unreleased-fall-08':                 'unreleased-fall-08',
+  'alphabets-unreleased-loose':                   'unreleased-loose',
+  'alphabets-young-tribes-spring-08':             'young-tribes-spring-08',
 };
 
 // Map vault release_kind → site format enum

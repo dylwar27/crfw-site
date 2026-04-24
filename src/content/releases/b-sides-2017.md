@@ -9,6 +9,7 @@ tags:
   - unreleased
   - "2017"
   - b-sides
+  - "2017"
 archivePath: CRFW Archive/_Documentation/Music/KB/killd by/B-SIDES2017
 published: false
 tracklist:

@@ -12,6 +12,7 @@ tags:
   - archive-only
   - album-a-month
   - "2009"
+  - "2009"
 summary: "The title is an abbreviation: *Software Synths December 2009*. An album explicitly named for its tools — the software synthesizers Colin was using. This is the most self-referential release in the album-a-month catalog: the name is not a concept or a feeling but a production method."
 ---
 # SFTWRSYNTHZdec09

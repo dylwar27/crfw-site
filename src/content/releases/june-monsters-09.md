@@ -14,6 +14,7 @@ tags:
   - "2009"
   - m4a-era
   - themed-album
+  - "2009"
 summary: "The first fully themed album in the alphabets catalog. Every track follows the format: **[adjective/type] monster(s) [action/description]**. No exceptions. June 2009 was when Colin locked into theme as an organizing principle — a practice he'd develop through the underwaters series, the POWER family, and ultimately through JANFEB11 PIRATE LIFE."
 ---
 # JUNE_MONSTERS_09

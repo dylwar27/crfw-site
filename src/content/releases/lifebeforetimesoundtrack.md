@@ -13,6 +13,7 @@ tags:
   - album-a-month
   - "2010"
   - soundtrack
+  - "2010"
 summary: "A soundtrack for an unknown project called *Life Before Time*. This is a significant outlier in the album-a-month series: it's explicitly a soundtrack (the word is in the title), suggesting it was composed for a specific visual or theatrical work rather than as a standalone music release."
 ---
 # LIFEBEFORETIMESOUNDTRACK

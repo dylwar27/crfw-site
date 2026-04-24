@@ -12,6 +12,7 @@ tags:
   - archive-only
   - album-a-month
   - "2010"
+  - "2010"
 summary: "May 2010 — the same month that moonpower (May 7) and SUNPOWER (May 30) were released. This was Colin's single most prolific calendar month, with at least three releases (may10, moonpower, SUNPOWER) and possibly more. The album-a-month project and the [___]POWER family were running simultaneously."
 ---
 # may10

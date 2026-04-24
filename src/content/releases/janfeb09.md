@@ -13,6 +13,7 @@ tags:
   - album-a-month
   - "2009"
   - m4a-era
+  - "2009"
 summary: "The earliest surviving alphabets recordings. JANFEB09 is where the catalog begins — 21 tracks in M4A format, the native output of GarageBand on Mac (or iPhone voice memos). The file dates (May 7, 2009) likely reflect when these were archived to the computer, not when they were created; the folder name places the music in January–February 2009."
 tracklist:
   - n: 1

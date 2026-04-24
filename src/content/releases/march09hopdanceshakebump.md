@@ -13,6 +13,7 @@ tags:
   - album-a-month
   - "2009"
   - m4a-era
+  - "2009"
 summary: "The full album title embedded in the folder name — *hop dance shake bump* — is a four-verb instruction, a movement sequence, the album as choreography. 22 tracks in March 2009, still in M4A format."
 ---
 # MARCH09hopdanceshakebump

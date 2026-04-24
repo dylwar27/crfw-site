@@ -12,6 +12,7 @@ tags:
   - archive-only
   - album-a-month
   - "2009"
+  - "2009"
 summary: "The moment the format changes. sep09 is the first alphabets album in MP3, signaling a production shift from GarageBand/iPhone M4A output to dedicated audio software. The gap between June and September 2009 (no July or August album in the archive) may reflect the transition period."
 ---
 # sep09
