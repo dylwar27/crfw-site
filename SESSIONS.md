@@ -4,6 +4,53 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Session 19 — 2026-04-24 — Infra reset + context-files rebuild + SLUG_MAP triage
+
+**Goal:** Fix the environment (off iCloud), rebuild the doc set from scratch, and clean the reconciler backlog before any further content work.
+
+**Done — Phase B (infrastructure):**
+- Repo moved off iCloud to `~/crfw-site` (destructive git operations no longer race with Desktop sync).
+- `~/.claude/settings.json` — global env vars: `CI=1`, `ASTRO_TELEMETRY_DISABLED=1`, `NO_UPDATE_NOTIFIER=1`, `FORCE_COLOR=0`, `NO_COLOR=1`, `GIT_TERMINAL_PROMPT=0`. Eliminates the hang vectors that produced Session 18's 5-dupe push cascade.
+- `~/crfw-site/.claude/settings.local.json` mirrored from the iCloud copy.
+- Pre-existing vault-sync projections (Sessions 18→19 curator work in Obsidian) committed as `523e6e3` — Eriko Tsogo, Ania Urbanski, Isabel Barnes, Sam Goldner, Hideous Men, Hollagramz, Married In Berdichev, Mike On Monday, Pollination Population, Snakefeathers, Swimming With Seaturtles, Fantasia 2010, + updates to Colin Ward, Ryan McRyhew, Thug Entrancer, Noumenal Loom, Fantasia 2011, bandcampdaily-colin-ward-feature, alphabets-remix09/10.
+
+**Done — Phase C (doc set rebuild):**
+- `scripts/status.mjs` — read-only counts emitter. Output is the new source of truth for all "as of Session N" metrics.
+- `CLAUDE.md` — slimmed. Golden rules + pointer map + auto-generated STATUS block. No more hardcoded counts or outstanding-work list (link to SESSIONS.md).
+- New protocol docs: `ARCHITECTURE.md`, `CONVENTIONS.md`, `VAULT.md`, `CURATOR_GUIDE.md`, `SESSION_WORKFLOW.md`, `SCRIPT_PIPELINE.md`, `SLUG_MAP_TRIAGE.md`, `CSV_ROUNDTRIP.md`. Each is terse, single-topic, and links to the others.
+- Deleted: `CONTENT.md`, `DATA_MODEL.md`, `HANDOFF_PROMPT.md`. (`PLAN_SESSION19.md` never existed.)
+- `README.md` trimmed — overview + live URL + coding-agent pointer.
+- `_Vault/README.md` (inside the Dropbox archive, not git-tracked) rewritten as a terse curator-facing overview pointing at the site repo's `VAULT.md` for authority rules.
+
+**Done — Phase D (triage):**
+- SLUG_MAP triage: all 15 previously-unmatched vault releases resolved. 3 new site stubs created (`07_08`, `may09`, `unreleased-loose`); 12 mapped to pre-existing bulk-stubbed files; 2 pre-existing `null` mappings (`killd-by-neotropical`, `killd-by-b-sides-2017`) tightened to their real site slugs. Build green. Reconciler dry-run: **0 updated, 82 no-change, 0 created, 0 unmatched** (fully idempotent).
+- Site release count: 240 → 243. Build: 686 HTML pages, 19,501 words indexed.
+
+**Open questions / next up:**
+- Push hang policy now documented in `SESSION_WORKFLOW.md` — a future push hang should stop and diagnose, not retry.
+- Automated STATUS-block regeneration (build-chain integration) deferred — still manual `node scripts/status.mjs`.
+- BIN-recovery tool still manual (reconcile-bin/YYYY-MM-DD.md files are human-readable but there's no `--rollback` script).
+- Content backlog explicitly deferred to Session 20: photo curation (866 photos, 31 published = 3.6%), vault-release standalone pages, cover-art sweeps, custom domain / drop `/crfw-site/` base, /admin auth.
+
+---
+
+## Session 18 — 2026-04-22 — Timeline bucket system + venue/org pages + photo sample
+
+**Goal:** Collapse the flat ~1,960-entry timeline into grouped "bucket" cards; add venue/org pages; publish a photo sample.
+
+**Done:**
+- Bucket timeline overhaul. `src/pages/index.astro` (~1,262 lines) now groups the flood into 8 bucket kinds per year: release, press, life event, photo carousel preview strip, voice memo month group, DIMCP video chunks, YouTube embed, IG carousel. DIMCP 2018 (94 files) now renders as ~19 chunk cards.
+- YouTube CDN thumbnails (`img.youtube.com/vi/<id>/hqdefault.jpg`) on video bucket cards.
+- 31 captioned photos published across 2013–2018 via `scripts/publish-photo-sample.mjs` (up to 6/year).
+- Venue + organization pages shipped alongside.
+
+**Anomalies (resolved in Session 19):**
+- 5 duplicate commits on main from a push-hang retry loop. The iCloud-synced `.git/` directory was evicting loose objects, so git pushes hung; cancelling and retrying created fresh commits each time. Left in history (rewriting main was worse). Root cause fixed in Session 19 by moving the repo off iCloud to `~/crfw-site`.
+
+**Open questions / next up:** Triggered Session 19 infra reset. See Session 19 entry.
+
+---
+
 ## Session 17 — 2026-04-21 — SLUG_MAP auto-check
 
 **Goal:** Maintenance — ensure new vault releases are caught automatically after each sync.
