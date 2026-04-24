@@ -105,6 +105,9 @@ for (const v of videos) {
   const transcriptPreview = v.data.transcript
     ? v.data.transcript.slice(0, 200).replace(/\s+/g, ' ').trim() + (v.data.transcript.length > 200 ? '…' : '')
     : undefined;
+  const ytThumb = v.data.youtubeId
+    ? `https://img.youtube.com/vi/${v.data.youtubeId}/hqdefault.jpg`
+    : undefined;
   entries.push({
     id: `video--${v.id}`,
     kind: 'video',
@@ -112,7 +115,7 @@ for (const v of videos) {
     date: v.data.date!,
     year,
     project: v.data.project,
-    cover: withBase(v.data.poster),
+    cover: withBase(v.data.poster) || ytThumb,
     size: 'md',
     tags: v.data.tags ?? [],
     data: {
@@ -175,6 +178,131 @@ for (const e of publishedEntries) {
   byYear.get(e.year)!.push(e);
 }
 const years = [...byYear.keys()].sort((a, b) => b - a);
+
+// ── Bucket system ────────────────────────────────────────────────────────────
+type BucketKind =
+  | 'release_block' | 'dimcp_chunk' | 'youtube_strip' | 'photo_carousel'
+  | 'voice_memo_group' | 'press_strip' | 'unreleased_group' | 'misc';
+type TLBucket = { id: string; kind: BucketKind; entries: TLEntry[]; year: number; label?: string; };
+
+function parseEpNum(title: string): number {
+  const m = String(title).match(/EP_?(\d+)/i);
+  return m ? parseInt(m[1], 10) : 0;
+}
+function parseSeason(title: string): number {
+  const m = String(title).match(/season\s*(\d+)/i);
+  return m ? parseInt(m[1], 10) : 1;
+}
+function isUnreleased(e: TLEntry): boolean {
+  return e.tags.includes('unreleased') || e.data.format === 'demo';
+}
+
+function bucketYear(entries: TLEntry[], year: number): TLBucket[] {
+  const buckets: TLBucket[] = [];
+  const relEntries = entries.filter(e => e.kind === 'release' && !isUnreleased(e));
+  if (relEntries.length) buckets.push({ id: `rel-block--${year}`, kind: 'release_block', entries: relEntries, year });
+
+  const dimcp = entries
+    .filter(e => e.kind === 'video' && (e.project || '').toLowerCase() === 'dimcp')
+    .sort((a, b) => parseEpNum(a.title) - parseEpNum(b.title));
+  for (let i = 0; i < dimcp.length; i += 5) {
+    const chunk = dimcp.slice(i, i + 5);
+    const first = parseEpNum(chunk[0].title);
+    const last  = parseEpNum(chunk[chunk.length - 1].title);
+    const s     = parseSeason(chunk[0].title);
+    buckets.push({ id: `dimcp-chunk--${year}--${i}`, kind: 'dimcp_chunk', entries: chunk, year, label: `S${s} · Eps ${first}–${last}` });
+  }
+
+  const yt = entries.filter(e => e.kind === 'video' && e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp');
+  if (yt.length) buckets.push({ id: `yt-strip--${year}`, kind: 'youtube_strip', entries: yt, year });
+
+  const media = entries.filter(e =>
+    e.kind === 'photo' ||
+    (e.kind === 'video' && !e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp')
+  );
+  if (media.length) buckets.push({ id: `photo-carousel--${year}`, kind: 'photo_carousel', entries: media, year });
+
+  const memos = entries.filter(e => e.kind === 'voice_memo');
+  const memosByMonth = new Map<string, TLEntry[]>();
+  for (const m of memos) {
+    const key = (m.date || String(year)).slice(0, 7);
+    if (!memosByMonth.has(key)) memosByMonth.set(key, []);
+    memosByMonth.get(key)!.push(m);
+  }
+  for (const [key, ms] of [...memosByMonth.entries()].sort()) {
+    const [y, mo] = key.split('-');
+    const monthName = new Date(+y, +mo - 1, 1).toLocaleString('en-US', { month: 'long' });
+    buckets.push({ id: `vmemo-group--${key}`, kind: 'voice_memo_group', entries: ms, year, label: `${monthName} ${y}` });
+  }
+
+  const press = entries.filter(e => e.kind === 'event' && e.tags.includes('press'));
+  if (press.length) buckets.push({ id: `press-strip--${year}`, kind: 'press_strip', entries: press, year });
+
+  const unrel = entries.filter(isUnreleased);
+  if (unrel.length) buckets.push({ id: `unreleased--${year}`, kind: 'unreleased_group', entries: unrel, year });
+
+  const handled = new Set<string>([...relEntries, ...dimcp, ...yt, ...media, ...memos, ...press, ...unrel].map(e => e.id));
+  const misc = entries.filter(e => !handled.has(e.id));
+  for (const m of misc) buckets.push({ id: m.id, kind: 'misc', entries: [m], year });
+
+  return buckets;
+}
+
+const bucketsByYear = new Map<number, TLBucket[]>();
+for (const [year, yEntries] of byYear) bucketsByYear.set(year, bucketYear(yEntries, year));
+
+// Synthetic entry objects for bucket popup data (DIMCP chunks, voice memo groups, photo carousels)
+const syntheticEntries: Record<string, any> = {};
+for (const [, buckets] of bucketsByYear) {
+  for (const b of buckets) {
+    if (b.kind === 'dimcp_chunk') {
+      syntheticEntries[b.id] = {
+        id: b.id, kind: 'dimcp_chunk',
+        title: `Dog is My Copilot · ${b.label}`,
+        date: String(b.year), year: b.year, project: 'DIMCP',
+        size: 'xl', tags: ['dimcp', 'video'],
+        data: {
+          label: b.label,
+          episodes: b.entries.map(e => ({
+            id: e.id, title: e.title,
+            transcript: (e.data.transcript || '').slice(0, 80),
+            slug: e.id.replace(/^video--/, '').replace(/\.json$/, ''),
+            permalink: e.data.permalink,
+          })),
+        },
+      };
+    } else if (b.kind === 'voice_memo_group') {
+      syntheticEntries[b.id] = {
+        id: b.id, kind: 'voice_memo_group',
+        title: `Voice memos · ${b.label}`,
+        date: b.entries[0]?.date || String(b.year), year: b.year,
+        size: 'md', tags: ['voice-memo'],
+        data: {
+          label: b.label,
+          memos: b.entries.map(e => ({
+            id: e.id, title: e.title,
+            transcript: (e.data.transcript || '').slice(0, 80),
+            slug: e.id.replace(/^voice--/, '').replace(/\.json$/, ''),
+            permalink: e.data.permalink,
+          })),
+        },
+      };
+    } else if (b.kind === 'photo_carousel') {
+      syntheticEntries[b.id] = {
+        id: b.id, kind: 'photo_carousel',
+        title: `${b.year} · ${b.entries.length} photo${b.entries.length === 1 ? '' : 's'}`,
+        date: String(b.year), year: b.year,
+        size: 'lg', tags: ['photo'],
+        data: {
+          count: b.entries.length,
+          photos: b.entries.slice(0, 24).map(e => ({
+            id: e.id, src: e.cover, caption: e.data.caption || '',
+          })),
+        },
+      };
+    }
+  }
+}
 
 // Project + medium + format lists for filter dropdowns with counts
 function countBy<K extends string>(entries: TLEntry[], key: (e: TLEntry) => K | undefined): Record<string, number> {
@@ -297,26 +425,205 @@ const totals = {
           <span class="after">{byYear.get(year)!.length === 1 ? '1 entry' : `${byYear.get(year)!.length} entries`}</span>
         </div>
         <div class="entries">
-          {byYear.get(year)!.map(e => (
-            <article
-              class={`entry size-${e.size}`}
-              data-project={e.project}
-              data-kind={e.kind}
-              data-format={e.format || ''}
-              data-tags={e.tags.join('|')}
-              data-entry-id={e.id}
-            >
-              {e.project && <span class="project-tag">{e.project}</span>}
-              {e.cover && <img class="cover" src={e.cover} alt="" loading="lazy" />}
-              <div>
+          {bucketsByYear.get(year)!.map(bucket =>
+            // ── Release block ────────────────────────────────────────────────
+            bucket.kind === 'release_block' ? bucket.entries.map(e => (
+              <article
+                class={`entry release-card size-${e.size}`}
+                data-project={e.project}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-entry-id={e.id}
+              >
+                {e.project && <span class="project-tag">{e.project}</span>}
+                {e.format && <span class="rel-format-badge">{e.format}</span>}
+                {e.cover
+                  ? <img class="cover" src={e.cover} alt="" loading="lazy" />
+                  : <div class="release-placeholder">
+                      <span class="rel-ph-format">{e.format || 'release'}</span>
+                      <span class="rel-ph-title">{e.preservedTitle || e.title}</span>
+                    </div>
+                }
+                <div>
+                  <div class="title">{e.title}</div>
+                  {e.preservedTitle && e.preservedTitle !== e.title && (
+                    <div class="preserved">{e.preservedTitle}</div>
+                  )}
+                </div>
+                <div class="medium-tag">{e.format || 'release'} · {e.date.slice(0, 4)}</div>
+              </article>
+            ))
+
+            // ── DIMCP chunk ──────────────────────────────────────────────────
+            : bucket.kind === 'dimcp_chunk' ? (
+              <article
+                class="entry size-xl dimcp-chunk"
+                data-project="DIMCP"
+                data-kind="video"
+                data-format=""
+                data-tags="dimcp|video"
+                data-entry-id={bucket.id}
+              >
+                <span class="project-tag" style="color:#64b5f6;border-color:#64b5f6">DIMCP</span>
+                <div class="dimcp-header">
+                  Dog is My Copilot
+                  <span class="dimcp-label">{bucket.label}</span>
+                </div>
+                <ol class="dimcp-ep-list">
+                  {bucket.entries.map(e => (
+                    <li class="dimcp-ep-row">
+                      <span class="ep-num">EP {String(parseEpNum(e.title)).padStart(2, '0')}</span>
+                      <span class="ep-excerpt">{(e.data.transcript || '').slice(0, 70) || e.title}</span>
+                    </li>
+                  ))}
+                </ol>
+                <div class="medium-tag">DIMCP · {bucket.entries.length} episodes · {bucket.year}</div>
+              </article>
+            )
+
+            // ── YouTube strip ────────────────────────────────────────────────
+            : bucket.kind === 'youtube_strip' ? bucket.entries.map(e => (
+              <article
+                class="entry size-md yt-card"
+                data-project={e.project || ''}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-entry-id={e.id}
+              >
+                {e.project && <span class="project-tag">{e.project}</span>}
+                <div class="yt-thumb-wrap">
+                  {e.cover
+                    ? <img class="cover" src={e.cover} alt="" loading="lazy" />
+                    : <div class="cover yt-thumb-placeholder"></div>
+                  }
+                  <span class="yt-play-btn" aria-hidden="true">▶</span>
+                </div>
+                <div>
+                  <div class="title">{e.title}</div>
+                </div>
+                <div class="medium-tag">youtube · {e.date.slice(0, 4)}</div>
+              </article>
+            ))
+
+            // ── Photo carousel ───────────────────────────────────────────────
+            : bucket.kind === 'photo_carousel' ? (
+              <article
+                class="entry size-lg photo-carousel-card"
+                data-project=""
+                data-kind="photo"
+                data-format=""
+                data-tags="photo"
+                data-entry-id={bucket.id}
+              >
+                <div class="photo-preview-strip">
+                  {bucket.entries.slice(0, 4).map(p => p.cover && (
+                    <img src={p.cover} alt="" loading="lazy" class="photo-thumb-sm" />
+                  ))}
+                </div>
+                <div>
+                  <div class="title">{bucket.entries.length} photo{bucket.entries.length === 1 ? '' : 's'}</div>
+                </div>
+                <div class="medium-tag">photos · {bucket.year}</div>
+              </article>
+            )
+
+            // ── Voice memo group ─────────────────────────────────────────────
+            : bucket.kind === 'voice_memo_group' ? (
+              <article
+                class="entry size-md voice-memo-group"
+                data-project=""
+                data-kind="voice_memo"
+                data-format=""
+                data-tags="voice-memo"
+                data-entry-id={bucket.id}
+              >
+                <div class="vmemo-header">
+                  <span class="vmemo-month">{bucket.label}</span>
+                  <span class="vmemo-count">{bucket.entries.length} memo{bucket.entries.length === 1 ? '' : 's'}</span>
+                </div>
+                <ul class="vmemo-preview">
+                  {bucket.entries.slice(0, 3).map(e => (
+                    <li class="vmemo-row">
+                      {(e.data.transcript || e.title || '').slice(0, 65)}
+                    </li>
+                  ))}
+                  {bucket.entries.length > 3 && (
+                    <li class="vmemo-more">+{bucket.entries.length - 3} more</li>
+                  )}
+                </ul>
+                <div class="medium-tag">voice memos · {bucket.year}</div>
+              </article>
+            )
+
+            // ── Press strip ──────────────────────────────────────────────────
+            : bucket.kind === 'press_strip' ? bucket.entries.map(e => (
+              <article
+                class="entry size-sm press-card"
+                data-project={e.project || ''}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-entry-id={e.id}
+              >
+                <div class="press-eyebrow">press</div>
                 <div class="title">{e.title}</div>
-                {e.preservedTitle && e.preservedTitle !== e.title && (
-                  <div class="preserved">{e.preservedTitle}</div>
-                )}
-              </div>
-              <div class="medium-tag">{e.kind.replace('_', ' ')} · {e.date}</div>
-            </article>
-          ))}
+                <div class="medium-tag">{e.date.slice(0, 10)}</div>
+              </article>
+            ))
+
+            // ── Unreleased group ─────────────────────────────────────────────
+            : bucket.kind === 'unreleased_group' ? (
+              <article
+                class="entry size-md unreleased-group"
+                data-project=""
+                data-kind="release"
+                data-format="unreleased"
+                data-tags="unreleased"
+                data-entry-id={`unreleased--${bucket.year}`}
+              >
+                <div class="unrel-header">
+                  <span class="unrel-label">Unreleased</span>
+                  <span class="unrel-year">{bucket.year}</span>
+                </div>
+                <ul class="unrel-list">
+                  {bucket.entries.slice(0, 5).map(e => (
+                    <li class="unrel-row">
+                      <span class="unrel-title">{e.title}</span>
+                      {e.format && <span class="unrel-fmt">{e.format}</span>}
+                    </li>
+                  ))}
+                  {bucket.entries.length > 5 && (
+                    <li class="unrel-more">+{bucket.entries.length - 5} more</li>
+                  )}
+                </ul>
+                <div class="medium-tag">{bucket.entries.length} track{bucket.entries.length === 1 ? '' : 's'} · {bucket.year}</div>
+              </article>
+            )
+
+            // ── Misc (events, anything else) ─────────────────────────────────
+            : bucket.entries.map(e => (
+              <article
+                class={`entry size-${e.size}`}
+                data-project={e.project || ''}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-entry-id={e.id}
+              >
+                {e.project && <span class="project-tag">{e.project}</span>}
+                {e.cover && <img class="cover" src={e.cover} alt="" loading="lazy" />}
+                <div>
+                  <div class="title">{e.title}</div>
+                  {e.preservedTitle && e.preservedTitle !== e.title && (
+                    <div class="preserved">{e.preservedTitle}</div>
+                  )}
+                </div>
+                <div class="medium-tag">{e.kind.replace('_', ' ')} · {e.date}</div>
+              </article>
+            ))
+          )}
         </div>
       </section>
     ))}
@@ -355,7 +662,7 @@ const totals = {
     id="entry-data"
     type="application/json"
     data-pagefind-ignore
-    set:html={JSON.stringify(Object.fromEntries(publishedEntries.map(e => [e.id, e])))}
+    set:html={JSON.stringify({ ...Object.fromEntries(publishedEntries.map(e => [e.id, e])), ...syntheticEntries })}
   ></script>
 
   <script is:inline>
@@ -444,6 +751,97 @@ const totals = {
 
       function renderPopup(e) {
         const d = e.data || {};
+
+        // ── DIMCP chunk popup ──────────────────────────────────────────────
+        if (e.kind === 'dimcp_chunk') {
+          const epRows = (d.episodes || []).map(ep => {
+            const vidUrl = ep.permalink || `${BASE_URL}/video/${escapeHtml(ep.slug)}`;
+            return `<li class="popup-ep-row">
+              <a href="${vidUrl}" class="popup-ep-link">
+                <span class="popup-ep-num">${escapeHtml(ep.title.match(/EP_?(\d+)/i)?.[0] ?? ep.title)}</span>
+                <span class="popup-ep-excerpt">${escapeHtml(ep.transcript || ep.title)}</span>
+                <span class="popup-ep-arrow">→</span>
+              </a>
+            </li>`;
+          }).join('');
+          popup.innerHTML = `
+            <button class="popup-close" aria-label="Close" id="popup-close">×</button>
+            <div class="popup-header">
+              <div class="dimcp-popup-icon">🎬</div>
+              <div>
+                <h2 class="popup-title" id="popup-title">${escapeHtml(e.title)}</h2>
+                <div class="popup-meta"><span>Dog is My Copilot</span><span>${escapeHtml(d.label || '')}</span><span>${(d.episodes||[]).length} episodes</span></div>
+              </div>
+            </div>
+            <ol class="popup-ep-list">${epRows}</ol>
+          `;
+          popup.querySelector('#popup-close').addEventListener('click', close);
+          return;
+        }
+
+        // ── Voice memo group popup ─────────────────────────────────────────
+        if (e.kind === 'voice_memo_group') {
+          const memoRows = (d.memos || []).map(m => {
+            const href = m.permalink || `${BASE_URL}/voice-memo/${escapeHtml(m.slug)}`;
+            return `<li class="popup-ep-row">
+              <a href="${href}" class="popup-ep-link">
+                <span class="popup-ep-excerpt">${escapeHtml(m.transcript || m.title)}</span>
+                <span class="popup-ep-arrow">→</span>
+              </a>
+            </li>`;
+          }).join('');
+          popup.innerHTML = `
+            <button class="popup-close" aria-label="Close" id="popup-close">×</button>
+            <div class="popup-header">
+              <div class="dimcp-popup-icon">🎙</div>
+              <div>
+                <h2 class="popup-title" id="popup-title">${escapeHtml(d.label || e.title)}</h2>
+                <div class="popup-meta"><span>voice memos</span><span>${(d.memos||[]).length} recordings</span></div>
+              </div>
+            </div>
+            <ol class="popup-ep-list">${memoRows}</ol>
+          `;
+          popup.querySelector('#popup-close').addEventListener('click', close);
+          return;
+        }
+
+        // ── Photo carousel popup ──────────────────────────────────────────
+        if (e.kind === 'photo_carousel') {
+          const photos = d.photos || [];
+          const thumbs = photos.map((p, i) =>
+            `<button class="carousel-grid-thumb${i === 0 ? ' active' : ''}" data-idx="${i}" style="background-image:url('${escapeHtml(p.src || '')}')"></button>`
+          ).join('');
+          const firstSrc = photos[0]?.src || '';
+          popup.innerHTML = `
+            <button class="popup-close" aria-label="Close" id="popup-close">×</button>
+            <div class="popup-header">
+              <div><h2 class="popup-title" id="popup-title">${escapeHtml(e.title)}</h2>
+                <div class="popup-meta"><span>${photos.length} photo${photos.length===1?'':'s'}</span><span>${e.year}</span></div>
+              </div>
+            </div>
+            <div class="popup-photo-main">
+              <img id="carousel-main-img" src="${escapeHtml(firstSrc)}" alt="" />
+              <p id="carousel-main-cap" class="carousel-main-cap">${escapeHtml(photos[0]?.caption || '')}</p>
+            </div>
+            <div class="carousel-grid-strip">${thumbs}</div>
+          `;
+          popup.querySelector('#popup-close').addEventListener('click', close);
+          const mainImg = popup.querySelector('#carousel-main-img');
+          const mainCap = popup.querySelector('#carousel-main-cap');
+          popup.querySelectorAll('.carousel-grid-thumb').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const idx = +btn.dataset.idx;
+              const p = photos[idx];
+              if (!p) return;
+              mainImg.src = p.src || '';
+              mainCap.textContent = p.caption || '';
+              popup.querySelectorAll('.carousel-grid-thumb').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+            });
+          });
+          return;
+        }
+
         const cover = e.cover || d.coverArt;
 
         // --- Left-column media (carousel / video / static cover) ---
