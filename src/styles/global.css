@@ -763,3 +763,182 @@ body {
   padding-top: max(24px, env(safe-area-inset-top));
   padding-bottom: max(48px, env(safe-area-inset-bottom));
 }
+
+/* ========================================================
+   Bucket system card styles (Session 18)
+   ======================================================== */
+
+/* ── Release card — text-art placeholder ──────────────────── */
+.release-card { position: relative; }
+.rel-format-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent-2);
+  background: rgba(255,209,102,0.1); border: 1px solid rgba(255,209,102,0.25);
+  padding: 2px 6px; border-radius: 3px;
+}
+.release-placeholder {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 16px; background: var(--bg-soft);
+  border-bottom: 1px solid var(--rule);
+  min-height: 140px;
+}
+.release-card.size-xl .release-placeholder { min-height: 260px; }
+.release-card.size-lg .release-placeholder { min-height: 200px; }
+.rel-ph-format {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent-2); margin-bottom: 10px;
+}
+.rel-ph-title {
+  font-family: var(--serif); font-weight: 900; line-height: 1;
+  color: var(--ink); letter-spacing: -0.02em;
+  font-size: clamp(20px, 3vw, 42px);
+  word-break: break-word;
+}
+
+/* ── DIMCP chunk card ─────────────────────────────────────── */
+.dimcp-chunk {
+  display: flex; flex-direction: column; gap: 10px;
+  border-left: 3px solid #64b5f6 !important;
+}
+.dimcp-header {
+  font-family: var(--serif); font-size: 18px; font-weight: 700;
+  line-height: 1.2; color: var(--ink); display: flex; flex-direction: column; gap: 4px;
+}
+.dimcp-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: #64b5f6;
+}
+.dimcp-ep-list {
+  list-style: none; padding: 0; margin: 0; flex: 1;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.dimcp-ep-row {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 6px; align-items: baseline;
+  padding: 4px 0; border-bottom: 1px solid var(--rule);
+}
+.ep-num {
+  font-family: var(--mono); font-size: 10px; color: #64b5f6;
+  letter-spacing: 0.05em; white-space: nowrap;
+}
+.ep-excerpt {
+  font-family: var(--sans); font-size: 11px; color: var(--ink-dim);
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+/* ── YouTube card ─────────────────────────────────────────── */
+.yt-card { position: relative; }
+.yt-thumb-wrap { position: relative; display: block; }
+.yt-card .cover { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.yt-thumb-placeholder { width: 100%; aspect-ratio: 16/9; background: #1a1a24; }
+.yt-play-btn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-size: 28px; color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.55); border-radius: 50%;
+  width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+  pointer-events: none; padding-left: 3px;
+  transition: background 0.15s;
+}
+.yt-card:hover .yt-play-btn { background: rgba(255,0,0,0.7); }
+
+/* ── Photo carousel card ──────────────────────────────────── */
+.photo-carousel-card { overflow: hidden; }
+.photo-preview-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px;
+  margin-bottom: 8px;
+}
+.photo-thumb-sm {
+  display: block; width: 100%; aspect-ratio: 1; object-fit: cover;
+  border-radius: 2px;
+}
+
+/* ── Voice memo group card ────────────────────────────────── */
+.voice-memo-group { display: flex; flex-direction: column; gap: 8px; }
+.vmemo-header {
+  display: flex; align-items: baseline; gap: 10px;
+  border-bottom: 1px solid var(--rule); padding-bottom: 6px;
+}
+.vmemo-month {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink);
+}
+.vmemo-count {
+  font-family: var(--mono); font-size: 10px; color: var(--accent-2);
+  letter-spacing: 0.05em;
+}
+.vmemo-preview { list-style: none; padding: 0; margin: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.vmemo-row {
+  font-family: var(--sans); font-size: 11px; color: var(--ink-dim);
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  padding: 2px 0;
+}
+.vmemo-more { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); padding-top: 4px; }
+
+/* ── Press card ───────────────────────────────────────────── */
+.press-card {
+  border-left: 3px solid var(--accent) !important;
+}
+.press-eyebrow {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+}
+
+/* ── Unreleased group card ────────────────────────────────── */
+.unreleased-group {
+  border: 1px dashed var(--rule) !important;
+  border-left: 3px dashed var(--ink-dim) !important;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.unrel-header {
+  display: flex; align-items: baseline; gap: 10px;
+  border-bottom: 1px solid var(--rule); padding-bottom: 6px;
+}
+.unrel-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--ink-dim);
+}
+.unrel-year { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+.unrel-list { list-style: none; padding: 0; margin: 0; }
+.unrel-row {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 3px 0; border-bottom: 1px solid var(--rule);
+}
+.unrel-title { font-family: var(--serif); font-size: 13px; color: var(--ink); flex: 1; }
+.unrel-fmt {
+  font-family: var(--mono); font-size: 9px; color: var(--ink-dim);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.unrel-more { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); padding-top: 4px; }
+
+/* ── DIMCP + voice memo popup episode list ────────────────── */
+.popup-ep-list { list-style: none; padding: 0; margin: 16px 0 0; }
+.popup-ep-row { border-bottom: 1px solid var(--rule); }
+.popup-ep-link {
+  display: grid; grid-template-columns: 80px 1fr 24px;
+  gap: 10px; padding: 10px 4px; text-decoration: none; color: inherit;
+  align-items: baseline;
+  transition: background 0.1s;
+}
+.popup-ep-link:hover { background: rgba(255,255,255,0.03); }
+.popup-ep-link:hover .popup-ep-num { color: var(--accent-2); }
+.popup-ep-num { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); letter-spacing: 0.05em; }
+.popup-ep-excerpt { font-family: var(--sans); font-size: 13px; color: var(--ink); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.popup-ep-arrow { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+.dimcp-popup-icon { font-size: 48px; line-height: 1; }
+
+/* ── Photo carousel popup grid ────────────────────────────── */
+.popup-photo-main { margin-bottom: 12px; }
+.popup-photo-main img { width: 100%; max-height: 400px; object-fit: contain; display: block; }
+.carousel-main-cap { font-family: var(--sans); font-size: 13px; color: var(--ink-dim); margin: 6px 0 0; min-height: 1em; }
+.carousel-grid-strip {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 4px;
+  max-height: 200px; overflow-y: auto;
+}
+.carousel-grid-thumb {
+  aspect-ratio: 1; background-size: cover; background-position: center;
+  border: 2px solid transparent; border-radius: 3px; cursor: pointer;
+  transition: border-color 0.1s;
+}
+.carousel-grid-thumb.active { border-color: var(--accent-2); }
+.carousel-grid-thumb:hover { border-color: var(--ink-dim); }
