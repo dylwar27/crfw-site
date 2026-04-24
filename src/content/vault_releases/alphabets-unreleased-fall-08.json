@@ -1,0 +1,30 @@
+{
+  "id": "alphabets-unreleased-fall-08",
+  "kind": "release",
+  "title": "unreleased fall 08",
+  "preservedTitle": "unreleased fall 08",
+  "artist": "projects/alphabets",
+  "release_date_approx": "fall 2008",
+  "label": "self-released",
+  "format": [
+    "m4a"
+  ],
+  "notes": "Closes the 2008 archive batch. Folder contains a single track — \"04 vital signs.m4a\" (2.65 MB, file mtime 2013-02-19) — with no track 01–03 or 05+ present. The \"04\" prefix and singleton state suggest this was fragmentary / leftover material from a larger lost or deleted session, preserved as a representative slice rather than as a complete release. Distinct from the adjacent `pulse stuff fall 08` folder (which is dated to the same period but holds 10 tracks across both M4A and MP3).",
+  "created": "2026-04-23",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "archivePath": [
+    "_Documentation/Music/alphabets/unreleased fall 08"
+  ],
+  "tags": [
+    "alphabets-era",
+    "earliest-recordings",
+    "fragmentary"
+  ],
+  "related": [
+    "projects/alphabets",
+    "releases/alphabets-pulse-stuff-fall-08"
+  ],
+  "body": "Single-file remnant of a fall 2008 session. With Session 9's\n`alphabets-timesmileniceface-spring-summer-08` and this entry, every named\n2008 archive folder is now vaulted; the next archeology surface is 2007\n(only `freak medicine winter 07` is currently documented from that year).\n\n## Confirmed tracks (from archive filenames)\n\n- 04 vital signs.m4a\n\n## Notes\n\nThe standalone `04` numbering is unusual in this period. Comparable singleton\nremnants in adjacent years should be checked — they may form a pattern of\n\"only the take Colin liked from a multi-track session was kept under its own\nfolder.\" If a `_Documentation/Music/alphabets/` sweep surfaces other\nsingle-file folders with a high track number, they likely belong to the same\nclass."
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "event",
+  "id": "fantasia-2010",
+  "title": "Fantazia 2010",
+  "date": "2010",
+  "date_precision": "year",
+  "location": "Denver, CO",
+  "confidence": "medium",
+  "sensitivity": "public",
+  "public_display": true,
+  "created": "2026-04-22",
+  "tags": [
+    "fantasia-series",
+    "denver-diy",
+    "alphabets-era"
+  ],
+  "body": "# Fantazia 2010\n\nOne of Colin Ward's recurring Fantazia events, confirmed by the archive folder `_Documentation/Music/alphabets/fantazia2010/` which contains 18 original tracks and a dedicated `fantazia2010soundtrack/` subfolder.\n\n## Archive evidence\n\nThe `fantazia2010` folder holds 18 MP3 tracks specifically labeled for the event:\n\n1. beginner birds\n2. pogo rabbits hop games\n3. amphibians dance teams\n4. dewey grassbugs flying teams\n5. buzzd ostrich boxing fight\n6. centaur parties\n7. griffin parties\n8. beep beep computers\n9. talk talk machines\n10. invisipears\n11. tiny mollusk\n12. shields\n13. crackd munky tree jumps\n14. moving bear octopus\n15. robo goats howl and bang\n16. pond fish swim teams\n17. style finder bile mouse\n18. fawn kids woodblocks\n\nThe `fantazia2010soundtrack/` folder contains two additional tracks: `N[ext]L[evel] MUSICVIDEO1.mp3` and `invincible 3.mp3` — likely soundtrack material for a video or multimedia component of the event.\n\n## Context\n\nFantazia is Colin Ward's recurring large-scale interdisciplinary event in Denver, blending live music, visual art, video projection, and interactive installation. The first textual reference to \"fantasia\" in the archive is the track \"run it run it fantasia mixx\" on the NOV09 album (November 2009), suggesting Fantazia began as a concept in late 2009 and was first staged in 2010.\n\nThe Fantazia series ran from at least 2010 through 2016:\n- 2010 (this entry)\n- 2011 (confirmed by \"fantasia2011.mp3\" on APRIL CO-EDS 2011)\n- 2012 (confirmed, co-curated with Stephan Herrera)\n- 2014 (June 6–7; co-curators Colin + Stephan Herrera; full press coverage in Westword)\n- 2016 (confirmed; timing uncertain given Ghost Ship fire in December 2016)\n\n## Archival note\n\nThe animal/creature-themed tracklist (beginner birds, pogo rabbits, centaur parties, griffin parties, etc.) is consistent with the broader alphabets aesthetic of that period (2009–2010) — the June Monsters 09 album and the July-August 2009 archive use similar zoological naming conventions.\n\n## Sources\n\n- Archive folder: `_Documentation/Music/alphabets/fantazia2010/` (18 tracks)\n- Archive folder: `_Documentation/Music/alphabets/fantazia2010soundtrack/` (2 tracks)\n- Upstream reference: track \"run it run it fantasia mixx\" in `_Documentation/Music/alphabets/NOV09/` (Nov 2009)"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "alphabets-unreleased-loose",
+  "kind": "release",
+  "title": "unreleased (loose container)",
+  "preservedTitle": "unreleased",
+  "artist": "projects/alphabets",
+  "release_date_approx": "2010–2013 (mixed)",
+  "label": "self-released",
+  "format": [
+    "mp3"
+  ],
+  "notes": "Container folder at `_Documentation/Music/alphabets/unreleased/` holding two mixed-period MP3s that don't fit any dated session folder: `bip bop.mp3` (5.09 MB, mtime 2010-10-30) and `lust howls.mp3` (8.10 MB, mtime 2013-02-19, with an Ableton .asd sidecar from 2015-09-15). The folder's own mtime is 2015-09-15, consistent with Colin having swept loose MP3s into it during a late cleanup rather than recording them together. Distinct from the separate `unreleased fall 08/` folder (see [[releases/alphabets-unreleased-fall-08]]), which is period-specific.",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "archivePath": [
+    "_Documentation/Music/alphabets/unreleased"
+  ],
+  "tags": [
+    "alphabets-era",
+    "fragmentary",
+    "container"
+  ],
+  "related": [
+    "projects/alphabets",
+    "releases/alphabets-unreleased-fall-08"
+  ],
+  "body": "Loose \"unreleased\" container — not a coherent release, but a late-career\nfolder-of-loose-ends that Colin himself appears to have curated. The two\ntracks span October 2010 (peak BIEBER JERBOA / CAVE RAVE-adjacent era) and\nFebruary 2013 (near the tail of the Alphabets cadence), so this is not a\nsession remnant — it's a bin of keep-worthy orphans from across the\nAlphabets run.\n\n## Confirmed tracks (from archive filenames)\n\n- bip bop.mp3 _(mtime 2010-10-30, 5.09 MB)_\n- lust howls.mp3 _(mtime 2013-02-19, 8.10 MB; .asd sidecar 2015-09-15)_\n\n## Notes\n\nThe .asd sidecar on `lust howls.mp3` means Colin had that track loaded in\nAbleton as late as September 2015 — possibly reworking it, possibly just\nauditioning it. Worth looking at whether any 2015-era release (or the later\nKilld By material) draws on `lust howls` thematically.\n\nThe container naming (plain `unreleased`) distinguishes this from all the\nperiod-specific \"unreleased X\" folders — `unreleased fall 08`,\n`unreleased_dec08` patterns, etc. Those are per-session; this is a curated\noverflow."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "mike-on-monday",
+  "kind": "organization",
+  "org_kind": "band",
+  "title": "Mike on Monday",
+  "display_name": "Mike on Monday",
+  "location": "Denver, CO (presumed)",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "tags": [
+    "denver-diy",
+    "alphabets-era"
+  ],
+  "related": [
+    "releases/alphabets-remix09"
+  ],
+  "body": "# Mike on Monday\n\nDenver-area band/artist remixed by alphabets (Colin Ward) on **REMIX09** (December 30, 2009). Track: \"BOXOFBOOGERS [MIKE ON MONDAY].\" This is track 1 — the opener of the REMIX09 collection.\n\n## Research Gaps\n\n- Unclear if \"Mike on Monday\" is a solo project or a band\n- Members unknown\n- No Bandcamp / SoundCloud presence confirmed yet\n\n## Sources\n\n- [alphabets REMIX09 — Bandcamp](https://alphabets.bandcamp.com/album/remix09)"
+}

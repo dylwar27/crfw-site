@@ -2,17 +2,19 @@
   "kind": "press",
   "id": "2020-04-10-bandcampdaily-colin-ward-feature",
   "slug": "2020-04-10-bandcampdaily-colin-ward-feature",
-  "title": "Colin Ward feature (Bandcamp Daily)",
+  "title": "A New Compilation Celebrates the Futuristic Rave Music of the Late Colin Ward",
   "created": "2026-04-20",
+  "updated": "2026-04-22",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
   "press_kind": "article",
   "publication": "organizations/bandcamp",
   "publication_name": "Bandcamp Daily",
-  "author_name": "(Bandcamp Daily staff)",
+  "author": "people/sam-goldner",
+  "author_name": "Sam Goldner",
   "published_date": "2020-04-10",
-  "canonical_url": "https://daily.bandcamp.com/",
+  "canonical_url": "https://daily.bandcamp.com/features/colin-ward-interview",
   "local_md_path": "_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.md",
   "local_pdf_path": "_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.pdf",
   "colin_specific": true,
@@ -31,5 +33,5 @@
     "projects/killd-by",
     "projects/alphabets"
   ],
-  "body": "# Colin Ward feature (Bandcamp Daily)\n\nPosthumous Bandcamp Daily feature on Colin's body of work.\n\n**Publication:** Bandcamp Daily  \n**Author:** (Bandcamp Daily staff)  \n**Date:** 2020-04-10  \n**URL:** https://daily.bandcamp.com/  \n\nFull scraped text is at `_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.md`."
+  "body": "# A New Compilation Celebrates the Futuristic Rave Music of the Late Colin Ward\n\nPosthumous Bandcamp Daily feature on Colin's body of work, timed to the release of *Neotropical* (Noumenal Loom, April 3, 2020).\n\n**Publication:** Bandcamp Daily  \n**Author:** Sam Goldner  \n**Date:** 2020-04-10  \n**URL:** https://daily.bandcamp.com/features/colin-ward-interview  \n\nFull scraped text is at `_Documentation/articles/2020-04-10_bandcampdaily_colin-ward-feature.md`.\n\n## Key details (confirmed 2026-04-22)\n\n- **Isabel Barnes** of Noumenal Loom assembled the compilation; quoted in the piece. See [[people/isabel-barnes]].\n- Colin released music under: Killd By, alphabets, DJ POoLsiDe, Bangplay, phonebooks.\n- \"More than forty albums between 2008 and 2013, releasing a new piece of work every three or four months\" — corroborates the album-a-month project's documented scope.\n- This is the longest-form posthumous Colin Ward profile with national-scale readership.\n\n## Related\n\n- [[releases/killd-by-neotropical]] — the release the article covered\n- [[organizations/noumenal-loom]] — the label\n- [[people/isabel-barnes]] — quoted source"
 }

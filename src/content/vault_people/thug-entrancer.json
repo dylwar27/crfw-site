@@ -6,15 +6,20 @@
   "aliases": [
     "Ryan McRyhew"
   ],
-  "role_summary": "Alias redirecting to Ryan McRyhew's artist name.",
+  "role_summary": "Alias / stage name of Ryan McRyhew. Canonical entry is [[people/ryan-mcryhew]].",
+  "canonical_person": "people/ryan-mcryhew",
   "created": "2026-04-20",
+  "updated": "2026-04-22",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
   "tags": [
-    "living-collaborator"
+    "living-collaborator",
+    "alias-redirect"
   ],
   "related": [
-    "people/colin-ward"
-  ]
+    "people/colin-ward",
+    "people/ryan-mcryhew"
+  ],
+  "body": "Redirect entry. **Thug Entrancer** is the current stage name of **Ryan McRyhew**. See [[people/ryan-mcryhew]] for full biography, discography, and relationship to Colin. Retained as its own file so references to \"Thug Entrancer\" resolve unambiguously in wikilinks."
 }

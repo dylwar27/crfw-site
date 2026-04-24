@@ -5,10 +5,12 @@
   "display_name": "Ryan McRyhew",
   "aliases": [
     "Entrancer",
-    "Thug Entrancer"
+    "Thug Entrancer",
+    "Hideous Men (earlier band, with Kristi Schaefer)"
   ],
-  "role_summary": "Denver producer; peer; co-released on Noumenal Loom. Tribute SoundCloud track 'Dedication — For Colin Ward.'",
+  "role_summary": "Denver producer; peer; co-released on Noumenal Loom. Tribute SoundCloud track 'Dedication — For Colin Ward.' Earlier band Hideous Men remixed by alphabets on REMIX09 (2009).",
   "created": "2026-04-20",
+  "updated": "2026-04-22",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
@@ -16,6 +18,10 @@
     "living-collaborator"
   ],
   "related": [
-    "people/colin-ward"
-  ]
+    "people/colin-ward",
+    "people/thug-entrancer",
+    "organizations/hideous-men",
+    "releases/alphabets-remix09"
+  ],
+  "body": "Ryan McRyhew is a Denver-based electronic producer. He performed as Hideous Men (with Kristi Schaefer, 2009–2010), then Entrancer, then Thug Entrancer. He was a scene peer of Colin's from at least 2009 — Colin remixed Hideous Men on REMIX09, just three months after the band formed. He later appeared on the Noumenal Loom label (*Process 2016–2018*, 2019) and posted a tribute track \"Dedication — For Colin Ward\" on SoundCloud following Colin's death."
 }

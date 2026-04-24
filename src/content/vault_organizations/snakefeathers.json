@@ -1,0 +1,28 @@
+{
+  "id": "snakefeathers",
+  "kind": "organization",
+  "org_kind": "project",
+  "title": "Snake Feathers",
+  "display_name": "Snake Feathers",
+  "aliases": [
+    "SNAKEFEATHERS"
+  ],
+  "members": [
+    "people/colin-ward"
+  ],
+  "location": "Denver, CO",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "colin-project",
+    "denver-diy",
+    "alphabets-era"
+  ],
+  "related": [
+    "people/colin-ward",
+    "releases/alphabets-remix09"
+  ],
+  "body": "# Snake Feathers\n\nEarly Colin Ward project, listed among his projects in EverybodyWiki alongside Phonebooks, Chamber Joy, and Bodymeat. Active period unknown — likely early alphabets era (pre-2010 or early 2010s).\n\n## Evidence\n\nOn **REMIX09** (December 30, 2009), track 10 is titled \"MERCABA [SNAKEFEATHERS]\" — Colin remixing his own Snake Feathers project. This is unusual: nearly every other REMIX09 track is a remix of a *different* Denver band's material. The self-remix confirms Snake Feathers had recorded original material by late 2009.\n\n## Research Gaps\n\n- No Snake Feathers Bandcamp, SoundCloud, or other online presence confirmed\n- Lineup is unknown — sole Colin Ward project or collaborative?\n- Original Snake Feathers recordings not yet located in the archive (no matching folder name found)\n- Active years unknown\n\n## Sources\n\n- [EverybodyWiki — Colin Ward (musician and artist)](https://en.everybodywiki.com/Colin_Ward_(musician_and_artist))\n- [alphabets REMIX09 — Bandcamp](https://alphabets.bandcamp.com/album/remix09)"
+}

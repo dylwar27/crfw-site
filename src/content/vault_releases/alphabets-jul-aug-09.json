@@ -1,0 +1,26 @@
+{
+  "kind": "release",
+  "id": "alphabets-jul-aug-09",
+  "slug": "alphabets-jul-aug-09",
+  "title": "jul_aug_09",
+  "preservedTitle": "jul_aug_09",
+  "created": "2026-04-22",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "release_year": 2009,
+  "release_month_range": "July–August 2009",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/jul_aug_09"
+  ],
+  "format": "M4A",
+  "tags": [
+    "album-a-month",
+    "archive-only",
+    "m4a-era"
+  ],
+  "body": "# jul_aug_09\n\n**Project:** [[projects/alphabets]]  \n**Period:** July–August 2009  \n**Format:** M4A (GarageBand/iPhone era)  \n**Status:** Archive-only (not a Bandcamp release)  \n\n## Tracklist (from archive filenames)\n\n1. (track 01 missing or unnumbered)\n2. some kind of armor\n3. dreamy mountain giraffe voice\n4. lemur toes sneak attack battle outs\n5. cuz claws gnaw gnaw\n6. pow sound thaw out\n7. grandfather zeb rah heart speak\n8. run tough\n9. cyborg emo wish face wash out\n10. noise bust scare pranks\n11. luvpunch\n\n10 confirmed tracks. Track 01 is absent from the archive file listing (may be missing or the numbering begins at 02).\n\n## Context\n\nThis release fills the July–August 2009 gap in the album-a-month series. Prior to this find, the archive documented:\n- June Monsters 09 (June 2009)\n- sep09 (September 2009)\n\njul_aug_09 is the bridge. The M4A format places it in the pre-September 2009 period (before the format shift to MP3). Track names (\"dreamy mountain giraffe voice,\" \"lemur toes sneak attack battle outs,\" \"cyborg emo wish face wash out\") are consistent with the whimsical creature/nature naming of the June–September 2009 period.\n\n\"pow sound thaw out\" is interesting: \"pow sound\" appears as a standalone folder name in the archive (`alphabets/POW SOUND/`) and may be a recurring production concept or sound palette Colin named.\n\n## Sources\n\n- Archive folder: `_Documentation/Music/alphabets/jul_aug_09/` (10 M4A files)"
+}

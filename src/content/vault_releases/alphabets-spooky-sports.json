@@ -1,0 +1,22 @@
+{
+  "kind": "release",
+  "id": "alphabets-spooky-sports",
+  "slug": "alphabets-spooky-sports",
+  "title": "spooky sports",
+  "preservedTitle": "spooky sports",
+  "created": "2026-04-22",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "project": "projects/alphabets",
+  "release_kind": "album",
+  "is_posthumous": false,
+  "archivePath": [
+    "_Documentation/Music/alphabets/spooky sports"
+  ],
+  "tags": [
+    "archive-only",
+    "sports-theme"
+  ],
+  "body": "# spooky sports\n\n**Project:** [[projects/alphabets]]  \n**Status:** Archive-only (not confirmed as a Bandcamp release)  \n**Theme:** Sports-meets-monster naming convention  \n\n## Tracklist (from archive filenames)\n\n1. caspers\n2. fuck den\n3. hockey monster\n4. hoop troll\n5. roller ghoul\n6. rugby witch\n7. skate vamp\n8. soccer bats\n9. tennis ghost\n10. tennis witch\n11. wiffle ball bats\n\nAll tracks end in `.mp3`. ASD (Ableton session) files exist for: caspers, fuck den, rugby witch, skate vamp, tennis ghost, tennis witch, wiffle ball bats — indicating active project work in Ableton Live.\n\n## Related\n\nThe `spooky sports mixtape/` folder (adjacent in archive) contains a single file: `spooky sports mixtape.mp3` — likely a compiled single-track mix of the album's material, possibly distributed or shared as a DJ set.\n\n## Context\n\nThe sports-monster naming convention is a playful, recurring motif in Colin's work. Track names like \"roller ghoul,\" \"skate vamp,\" and \"tennis witch\" pair athletic activities with supernatural figures — consistent with the whimsical zoological/creature naming seen across the alphabets catalog (e.g., June Monsters 09, spooky sports). Date unknown; MP3 format suggests post-September 2009.\n\n## Sources\n\n- Archive folder: `_Documentation/Music/alphabets/spooky sports/` (11 MP3s + .asd files)\n- Archive folder: `_Documentation/Music/alphabets/spooky sports mixtape/` (1 MP3)"
+}

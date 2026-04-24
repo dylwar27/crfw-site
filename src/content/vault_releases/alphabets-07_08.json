@@ -1,0 +1,30 @@
+{
+  "id": "alphabets-07_08",
+  "kind": "release",
+  "title": "[07_08]",
+  "preservedTitle": "07_08 [_]",
+  "artist": "projects/alphabets",
+  "release_date_approx": "2007–2008",
+  "label": "self-released",
+  "format": [
+    "m4a",
+    "mp3"
+  ],
+  "notes": "Archival folder of mixed 2007–2008 recordings. Contains both M4A (GarageBand/iPhone era) and some MP3 files. One of the earliest confirmed archive folders.",
+  "created": "2026-04-22",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "archivePath": [
+    "_Documentation/Music/alphabets/07_08 [_]"
+  ],
+  "tags": [
+    "alphabets-era",
+    "earliest-recordings"
+  ],
+  "related": [
+    "projects/alphabets",
+    "series/album-a-month"
+  ],
+  "body": "Mixed archival folder spanning 2007–2008. Contains both M4A (early GarageBand/iPhone format) and MP3 files, suggesting recordings from multiple sessions across the transition period. Likely predates or is contemporaneous with `freak medicine winter 07` as one of the earliest known recordings.\n\n## Confirmed tracks (from archive filenames)\n\n- ---------aviation.m4a\n- 01 Techniques and Materials.mp3\n- 01 They Must Be Invisible.m4a\n- 01 baby mountain you need time.m4a\n- 01 blam (lorazapam).m4a\n- 01 maybe seahorse.m4a\n- 01 totems totems.mp3\n- 02 J.J. Salamander.m4a\n- 02 O.M.G. Stress.m4a\n- _(additional tracks; full count not yet confirmed)_\n\n## Notes\n\nTrack titles suggest the characteristic Colin Ward style already present in 2007–2008: animals, body experiences, and abstract imagery (\"baby mountain,\" \"J.J. Salamander,\" \"Techniques and Materials\"). The `.mp3` files in this folder are unusual for this period — most early recordings are M4A."
+}

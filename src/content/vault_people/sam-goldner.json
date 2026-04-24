@@ -1,0 +1,23 @@
+{
+  "id": "sam-goldner",
+  "kind": "person",
+  "title": "Sam Goldner",
+  "display_name": "Sam Goldner",
+  "role_summary": "Music journalist; author of the 2020 Bandcamp Daily feature on Colin Ward and the posthumous Neotropical compilation.",
+  "organizations": [
+    "Bandcamp Daily"
+  ],
+  "created": "2026-04-22",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "journalist",
+    "posthumous"
+  ],
+  "related": [
+    "press/2020-04-10-bandcampdaily-colin-ward-feature",
+    "releases/killd-by-neotropical"
+  ],
+  "body": "# Sam Goldner\n\nMusic journalist. Wrote the April 2020 Bandcamp Daily feature on Colin Ward and the posthumous compilation *Neotropical* (Noumenal Loom, 2020). The article is one of the most substantial posthumous critical pieces on Colin's work with national reach. Goldner interviewed Isabel Barnes (Noumenal Loom) and others for the piece.\n\n## Sources\n- [Bandcamp Daily — \"A New Compilation Celebrates the Futuristic Rave Music of the Late Colin Ward\"](https://daily.bandcamp.com/features/colin-ward-interview)"
+}

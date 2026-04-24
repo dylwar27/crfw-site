@@ -1,0 +1,20 @@
+{
+  "id": "hollagramz",
+  "kind": "organization",
+  "org_kind": "band",
+  "title": "Hollagramz",
+  "display_name": "Hollagramz",
+  "location": "Denver, CO (presumed)",
+  "created": "2026-04-21",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "tags": [
+    "denver-diy",
+    "alphabets-era"
+  ],
+  "related": [
+    "releases/alphabets-remix09"
+  ],
+  "body": "# Hollagramz\n\nDenver-area band remixed by alphabets (Colin Ward) on **REMIX09** (December 30, 2009). Track: \"TROMPERZ CYLCLE [HOLLAGRAMZ].\"\n\nThe name \"Hollagramz\" reflects the same playful/experimental capitalization style common in the Denver DIY scene of this period. No further online presence confirmed yet.\n\n## Research Gaps\n\n- Band members unknown\n- Bandcamp / SoundCloud presence not confirmed\n- Only known via REMIX09 track title\n\n## Sources\n\n- [alphabets REMIX09 — Bandcamp](https://alphabets.bandcamp.com/album/remix09)"
+}

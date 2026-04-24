@@ -1,0 +1,22 @@
+{
+  "kind": "person",
+  "id": "isabel-barnes",
+  "title": "Isabel Barnes",
+  "name": "Isabel Barnes",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "created": "2026-04-22",
+  "roles": [
+    "record_label_operator",
+    "collaborator"
+  ],
+  "organizations": [
+    "organizations/noumenal-loom"
+  ],
+  "tags": [
+    "posthumous",
+    "noumenal-loom"
+  ],
+  "body": "# Isabel Barnes\n\nOperator of **Noumenal Loom**, a Rhode Island-based experimental electronic label. Isabel assembled (with other friends and collaborators of Colin's) the posthumous Killd By compilation *Neotropical* (Noumenal Loom, April 3, 2020), all proceeds directed to the CRFW Fund at RedLine Contemporary Art Center.\n\nIsabel was interviewed for the Bandcamp Daily feature \"A New Compilation Celebrates the Futuristic Rave Music of the Late Colin Ward\" (Sam Goldner, April 10, 2020). In that piece she described the difficulty of discussing Colin's work without thinking about the future of music — a reflection of the broader sense of creative loss felt by the Denver DIY scene after his death.\n\n## Role in the archive\n\nIsabel is the posthumous steward of Colin's Killd By catalog through Noumenal Loom. She helped bring Neotropical together, presumably curating the 17-track selection from the broader recorded output and coordinating with Colin's network of collaborators in Denver. Noumenal Loom has since dissolved.\n\n## Sources\n\n- Bandcamp Daily: [A New Compilation Celebrates the Futuristic Rave Music of the Late Colin Ward](https://daily.bandcamp.com/features/colin-ward-interview) (Sam Goldner, 2020-04-10)\n- Noumenal Loom Bandcamp: https://noumenalloom.bandcamp.com/album/killd-by-neotropical"
+}
