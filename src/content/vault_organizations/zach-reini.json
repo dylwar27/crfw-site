@@ -1,0 +1,26 @@
+{
+  "id": "zach-reini",
+  "kind": "organization",
+  "org_kind": "solo project",
+  "title": "Zach Reini",
+  "display_name": "Zach Reini",
+  "location": "Denver, CO",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer",
+    "leisure-cofounder"
+  ],
+  "related": [
+    "releases/alphabets-remix10",
+    "venues/leisure-gallery"
+  ],
+  "contact_public": {
+    "website": "zachreini.com",
+    "discogs": "discogs.com/artist/4116100-Zach-Reini"
+  },
+  "body": "# Zach Reini\n\nDenver visual artist and multi-band musician — performs in Civilized, Cinderblock, Data Rainbow, Cadaver Dog, and Ukko's Hammer. RedLine resident; 2012 graduate of Rocky Mountain College of Art + Design. Co-founded **Leisure**, a multidisciplinary art/music/DIY space at 555 Santa Fe Drive in Denver. Solo work spans grind/hardcore to ambient techno and dungeon synth.\n\n## Connection to Colin\n\nTrack 21 of REMIX10: **\"ZACH REINI-VEIL (D flat major mix)\"** — Colin's \"D flat major mix\" of \"Veil.\" Note the unusual mix-name format (a key signature, rather than Colin's usual absurdist coinage) — possibly tied to the source track's actual key.\n\nThe Leisure space connects with Colin's broader scene — Westword called it \"a blank slate for live music\" — and Reini's RedLine residency aligns with the post-2018 CRFW Fund's home at RedLine Contemporary Art Center.\n\n## Note for `kind` field\n\nThis stub is filed as `org_kind: solo project` because Reini's REMIX10 contribution is under his own name, but he has multiple band projects that could each merit org stubs if they ever appear in Colin's orbit. If a `kind: person` move makes more sense at vault scale, this entry should be reconsidered."
+}

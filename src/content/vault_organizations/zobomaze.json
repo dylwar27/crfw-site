@@ -1,0 +1,28 @@
+{
+  "id": "zobomaze",
+  "kind": "organization",
+  "org_kind": "solo project",
+  "title": "Zobomaze",
+  "display_name": "Zobomazé",
+  "aliases": [
+    "Zobomaze",
+    "Zobomazé"
+  ],
+  "location": "Denver, CO",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer"
+  ],
+  "related": [
+    "releases/alphabets-remix10"
+  ],
+  "contact_public": {
+    "bandcamp": "zobomaze.bandcamp.com",
+    "jambase": "jambase.com/band/zobomaze"
+  },
+  "body": "# Zobomaze (Zobomazé)\n\nDenver experimental project; releases on own Bandcamp. Active across the Rhinoceropolis-era scene.\n\n## Connection to Colin\n\nTrack 15 of REMIX10: **\"ZOBOMAZE-DIRK GRUNWALD (special computer diamond science groove mix)\"** — Colin's \"special computer diamond science groove mix\" of \"Dirk Grunwald.\""
+}

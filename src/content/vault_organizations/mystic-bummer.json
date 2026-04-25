@@ -1,0 +1,25 @@
+{
+  "id": "mystic-bummer",
+  "kind": "organization",
+  "org_kind": "solo project",
+  "title": "Mystic Bummer",
+  "display_name": "Mystic Bummer",
+  "location": "Colorado (mountains/forests origin per own bio)",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "colorado-experimental",
+    "remix10-peer"
+  ],
+  "related": [
+    "releases/alphabets-remix10"
+  ],
+  "contact_public": {
+    "bandcamp": "mrmysticbummer.bandcamp.com",
+    "soundcloud": "soundcloud.com/mystic-bummer",
+    "discogs": "discogs.com/artist/11491526-Mystic-Bummer"
+  },
+  "body": "# Mystic Bummer\n\nColorado experimental project; self-described \"manifestation of the abyss\" that \"crept out of the forgotten mountains and forests of Colorado.\" Sound built around 808 beats, Amen Breaks, and samples. Releases on Wet Pizza (and own Bandcamp).\n\n## Connection to Colin\n\nTrack 5 of REMIX10: **\"MYSTIC BUMMER-CRYSTAL ZODIAK BLISS OUT RITUAL (cryptic cummer mix)\"** — Colin remixed Mystic Bummer's \"Crystal Zodiak Bliss Out Ritual.\" Also separately: there's a folder `_Documentation/Music/alphabets/methylene blue remix/` containing `mystic bummer remix_ methylene blue.m4a`, suggesting at least one additional Mystic Bummer remix outside the REMIX10 compilation."
+}

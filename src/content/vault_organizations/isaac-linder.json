@@ -1,0 +1,29 @@
+{
+  "id": "isaac-linder",
+  "kind": "organization",
+  "org_kind": "solo project",
+  "title": "Isaac Linder",
+  "display_name": "Isaac Linder (ilind)",
+  "aliases": [
+    "ilind",
+    "i.lind"
+  ],
+  "location": "Denver, CO",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer"
+  ],
+  "related": [
+    "releases/alphabets-remix10"
+  ],
+  "contact_public": {
+    "bandcamp": "awoa.bandcamp.com",
+    "soundcloud": "soundcloud.com/ilind",
+    "blog": "AW/OA — Abstract without Abstraction"
+  },
+  "body": "# Isaac Linder\n\nDenver experimental sound-art musician and writer; performs as **ilind**. Featured by 303 Magazine and Westword's \"56 Reasons Why\" Denver experimental scene roundup. Operates the AW/OA (Abstract without Abstraction) blog/Bandcamp documenting boundary-bending soundscapes from \"harshest gabber to recordings of reverberating healing stones.\" Recorded live solo XDJ-RX CDJ sets with no input/edits/overdubbing.\n\n## Connection to Colin\n\nTrack 1 of REMIX10: **\"ISAAC LINDER-1x1x1 (1/26 mix)\"** — Colin remixed Linder's \"1x1x1\" with the mix-name \"1/26 mix\" (likely a date reference)."
+}

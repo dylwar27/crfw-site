@@ -1,0 +1,24 @@
+{
+  "id": "iuengliss",
+  "kind": "organization",
+  "org_kind": "solo project",
+  "title": "Iuengliss",
+  "display_name": "Iuengliss",
+  "location": "Denver, CO",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer"
+  ],
+  "related": [
+    "releases/alphabets-remix10",
+    "organizations/hollagramz"
+  ],
+  "contact_public": {
+    "jambase": "jambase.com/band/iuengliss"
+  },
+  "body": "# Iuengliss\n\nDenver experimental project. Listed among Denver notables whose tracks were used in remix projects. Released a split cassette with **Hollagramz** (also a REMIX09 peer in the vault) — \"Malaysian Caning\" appears on that split.\n\n## Connection to Colin\n\nTrack 10 of REMIX10: **\"IUENGLISS-MALAYSIAN CANING (daymare mix)\"** — the source track is the same one that appeared on the Hollagramz/Iuengliss split. Confirms Colin was pulling remix material from contemporary Denver-scene cassette releases."
+}

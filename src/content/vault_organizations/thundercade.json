@@ -1,0 +1,22 @@
+{
+  "id": "thundercade",
+  "kind": "organization",
+  "org_kind": "band",
+  "title": "Thundercade",
+  "display_name": "Thundercade",
+  "location": "Denver, CO",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer",
+    "mcryhew-orbit"
+  ],
+  "related": [
+    "releases/alphabets-remix10",
+    "people/ryan-mcryhew"
+  ],
+  "body": "# Thundercade\n\nDenver experimental project; a Ryan McRyhew band/project (alongside his other work in Hideous Men, Thug Entrancer, etc.).\n\n## Connection to Colin\n\nTrack 14 of REMIX10: **\"THUNDERCADE-PERIOD OF THE FUNCTION (deep tattoo smooches mix)\"** — Colin's \"deep tattoo smooches mix.\" Reinforces the McRyhew–Colin remix dialogue (Hideous Men also appeared on REMIX09 + REMIX10)."
+}

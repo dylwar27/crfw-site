@@ -1,0 +1,20 @@
+{
+  "id": "psychic-handbook",
+  "kind": "organization",
+  "org_kind": "band",
+  "title": "Psychic Handbook",
+  "display_name": "Psychic Handbook",
+  "location": "Denver, CO (per remix-context coverage)",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer"
+  ],
+  "related": [
+    "releases/alphabets-remix10"
+  ],
+  "body": "# Psychic Handbook\n\nDenver-area band/project mentioned in remix-project coverage as one of the \"alumni bands\" who donated raw tracks for remix compilations. Confidence is medium — concrete bio details (members, releases) remain thin.\n\n## Connection to Colin\n\nTrack 9 of REMIX10: **\"PSYCHIC HANDBOOK-CRYSTAL DRIP (isle of the tiger mix)\"** — Colin's remix of \"Crystal Drip.\""
+}

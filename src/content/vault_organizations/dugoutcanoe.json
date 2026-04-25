@@ -1,0 +1,20 @@
+{
+  "id": "dugoutcanoe",
+  "kind": "organization",
+  "org_kind": "solo project",
+  "title": "Dugoutcanoe",
+  "display_name": "Dugoutcanoe",
+  "location": "Denver, CO (former)",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer"
+  ],
+  "related": [
+    "releases/alphabets-remix10"
+  ],
+  "body": "# Dugoutcanoe\n\nProject of former Denver musician **Jacob Isaacs**. Sound described as \"grimy rock bursts with electronic loops\"; appeared on at least one Denver-scene compilation (the \"ARPN\" track).\n\n## Connection to Colin\n\nTrack 4 of REMIX10: **\"DUGOUTCANOE-TWOMPER (druggy bunny mix)\"** — Colin's \"druggy bunny mix\" of \"Twomper.\""
+}

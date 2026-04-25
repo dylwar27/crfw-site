@@ -1,0 +1,22 @@
+{
+  "id": "night-of-joy",
+  "kind": "organization",
+  "org_kind": "band",
+  "title": "Night of Joy",
+  "display_name": "Night of Joy",
+  "location": "Denver, CO",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "denver-experimental",
+    "remix10-peer",
+    "rhinoceropolis-era"
+  ],
+  "related": [
+    "releases/alphabets-remix10",
+    "venues/rhinoceropolis"
+  ],
+  "body": "# Night of Joy\n\nDenver-area band; played Rhinoceropolis on April 16, 2010, alongside Fissure Mystic. Acknowledged in credits for a 2012 album release, indicating ongoing scene connection.\n\n## Connection to Colin\n\nTrack 16 of REMIX10: **\"NIGHT OF JOY-TAKEME2URDEALER (bong spit mix)\"** — Colin's \"bong spit mix\" of \"TakeMe2URDealer.\" The April 2010 Rhinoceropolis bill puts Night of Joy at Colin's home venue eight months before REMIX10's December 2010 release."
+}
