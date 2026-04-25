@@ -57,7 +57,10 @@ function applyVideos() {
       !!(data.youtubeId && String(data.youtubeId).trim() !== '') ||
       !!(data.youtubeEmbed && String(data.youtubeEmbed).trim() !== '') ||
       !!(data.vimeoEmbed && String(data.vimeoEmbed).trim() !== '') ||
-      !!(data.sourceUrl && String(data.sourceUrl).trim() !== '');
+      !!(data.sourceUrl && String(data.sourceUrl).trim() !== '') ||
+      // DIMCP videos are archive-only by design (Colin's video diary series);
+      // they publish as-is regardless of external URL. Same spirit as voice memos.
+      String(data.project || '').toLowerCase() === 'dimcp';
     const want = hasExternal;
     const have = data.published !== false;
     if (want === have) { flips.unchanged++; continue; }
