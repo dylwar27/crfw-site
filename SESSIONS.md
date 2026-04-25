@@ -4,6 +4,24 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Daily pass — 2026-04-25 (evening polish)
+
+After early reviewers saw the live site, curator-directed polish pass:
+
+- **DIMCP back from the dead.** Publish-policy regression hid 130 DIMCP videos earlier today; added `project === 'dimcp'` exemption to `apply-publish-policy.mjs`. DIMCP is now permanently archive-only-published (parallels voice memos). Videos published 79 → 209.
+- **Visual art ingest from Cargo Collective portfolio export.** New script `scripts/import-visual-art.mjs` reads paired sources: `.md` catalog at `_Documentation/portfolio/cargocollective_killdby/` (six per-project files with title + description) plus on-disk image files at `_Documentation/artwork/cargo_collective/<subproject>/`. Filters out Cargo cross-listing thumbnails (`prt_*` pattern), dedupes resolution variants, picks largest. **65 visual art pieces ingested**, all published. Year extraction is multi-source (filename `F2014` token → `Screen-Shot-YYYY` → Cargo Unix timestamp → era default per subfolder). Photos collection now 866 → 931.
+- **Visual art bucket rendering.** New `visual_art_card` bucket kind in `src/pages/index.astro`. Each piece renders as one card on the timeline (not folded into the photo carousel) with cover, title, year, and project chip. New CSS `.visual-art-card` / `.va-cover` / `.va-title` in `global.css`.
+- **Series filter axis (5th).** Reads `vault_series` collection's `members` arrays at build time, builds an entry-id → series-slugs reverse map, attaches `data-series` to every entry card, and adds a Series dropdown to the nav. DIMCP bucket card hardcodes `data-series="dimcp"` since vault_series.dimcp.members is empty (data-modeling artifact). State, URL params, reset button all updated.
+- **Album cover sweep from Bandcamp.** New script `scripts/import-bandcamp-covers.mjs` matches release `bandcampUrl` → `_Documentation/bandcamp/<artist>__<slug>/cover.jpg` and copies into `public/media/releases/<release-slug>/cover.jpg` + sets the `coverArt:` frontmatter field. **16 covers ingested** (3 → 19 total). Doesn't overwrite existing curator covers.
+- **Build:** 700 pages, 19,516 words indexed.
+
+**Followup flagged for curator:**
+- alphabets videos (117 entries, 1 with youtubeId): same archival pattern as DIMCP. Currently hidden by publish-policy. Curator decision needed: re-publish like DIMCP, or keep hidden.
+- 4 of the 65 visual art entries have ugly auto-generated titles like "Screen Shot 2015 08 16 at 7 25 23 AM" — they're project-page screenshots, not artworks. Curator can hide via /admin if not wanted.
+- 11 bandcamp releases had a folder but no `cover.jpg` inside. Could be retried later if curator pulls covers manually.
+
+---
+
 ## Daily pass — 2026-04-25 (auto, late)
 
 Automated late-day pass picking up curator vault edits made after the earlier daily pass.
