@@ -853,6 +853,17 @@ body {
   border-radius: 2px;
 }
 
+/* ── Visual art card (one per piece) ──────────────────────── */
+.visual-art-card { overflow: hidden; }
+.va-cover {
+  display: block; width: 100%; aspect-ratio: 1;
+  object-fit: cover; border-radius: 2px; margin-bottom: 8px;
+}
+.va-title {
+  font-family: var(--display, var(--serif)); font-weight: 600;
+  letter-spacing: 0.02em; line-height: 1.15;
+}
+
 /* ── Voice memo group card ────────────────────────────────── */
 .voice-memo-group { display: flex; flex-direction: column; gap: 8px; }
 .vmemo-header {

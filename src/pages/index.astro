@@ -8,6 +8,34 @@ const events = await getCollection('events');
 const photos = await getCollection('photos');
 const videos = await getCollection('videos');
 const voice_memos = await getCollection('voice_memos');
+const vault_series = await getCollection('vault_series');
+
+// Build a reverse index: timeline-entry-id → series slugs[]. vault_series
+// entries store forward-only `members` arrays like `releases/<slug>` /
+// `videos/<slug>` / `tracks/<slug>`. We map those back to the entry id
+// shape we use elsewhere (`release--<slug>`, `video--<slug>.json`, etc.)
+// so cards can be tagged with `data-series=...`.
+const seriesByEntry = new Map<string, string[]>();
+function attachSeries(entryId: string, seriesSlug: string) {
+  if (!seriesByEntry.has(entryId)) seriesByEntry.set(entryId, []);
+  seriesByEntry.get(entryId)!.push(seriesSlug);
+}
+for (const s of vault_series) {
+  const slug = s.id.replace(/\.json$/, '');
+  const members: string[] = (s.data as any).members ?? [];
+  for (const m of members) {
+    // m looks like "releases/killd-by-court-clothes" or "videos/foo"
+    const [coll, ...rest] = m.split('/');
+    const memberSlug = rest.join('/');
+    if (coll === 'releases') {
+      attachSeries(`release--${memberSlug}`, slug);
+    } else if (coll === 'videos') {
+      attachSeries(`video--${memberSlug}.json`, slug);
+    } else if (coll === 'tracks') {
+      // tracks aren't first-class timeline entries; skip
+    }
+  }
+}
 
 // Prefix root-relative asset paths with Astro's configured base (e.g.
 // "/crfw-site") so cover art / photo / video posters resolve correctly
@@ -34,6 +62,7 @@ type TLEntry = {
   cover?: string;
   size: 'sm' | 'md' | 'lg' | 'xl';
   tags: string[];
+  series?: string[];
   data: any;
 };
 
@@ -165,6 +194,11 @@ for (const m of voice_memos) {
   });
 }
 
+// Attach series memberships from vault_series.members (built above).
+for (const e of entries) {
+  e.series = seriesByEntry.get(e.id) ?? [];
+}
+
 // Filter out unpublished entries (they still appear on /admin)
 const publishedEntries = entries.filter(e => e.data.published !== false);
 
@@ -182,7 +216,8 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
 // ── Bucket system ────────────────────────────────────────────────────────────
 type BucketKind =
   | 'release_block' | 'dimcp_chunk' | 'youtube_strip' | 'photo_carousel'
-  | 'voice_memo_group' | 'press_strip' | 'unreleased_group' | 'misc';
+  | 'voice_memo_group' | 'press_strip' | 'unreleased_group'
+  | 'visual_art_card' | 'misc';
 type TLBucket = { id: string; kind: BucketKind; entries: TLEntry[]; year: number; label?: string; };
 
 function parseEpNum(title: string): number {
@@ -220,8 +255,14 @@ function bucketYear(entries: TLEntry[], year: number): TLBucket[] {
   const yt = entries.filter(e => e.kind === 'video' && e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp');
   if (yt.length) buckets.push({ id: `yt-strip--${year}`, kind: 'youtube_strip', entries: yt, year });
 
+  // Visual art — one card per piece, NOT in the photo carousel.
+  const visualArt = entries.filter(e => e.kind === 'photo' && e.tags.includes('visual-art'));
+  for (const a of visualArt) {
+    buckets.push({ id: `va--${a.id}`, kind: 'visual_art_card', entries: [a], year });
+  }
+
   const media = entries.filter(e =>
-    e.kind === 'photo' ||
+    (e.kind === 'photo' && !e.tags.includes('visual-art')) ||
     (e.kind === 'video' && !e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp')
   );
   if (media.length) buckets.push({ id: `photo-carousel--${year}`, kind: 'photo_carousel', entries: media, year });
@@ -245,7 +286,7 @@ function bucketYear(entries: TLEntry[], year: number): TLBucket[] {
   const unrel = entries.filter(isUnreleased);
   if (unrel.length) buckets.push({ id: `unreleased--${year}`, kind: 'unreleased_group', entries: unrel, year });
 
-  const handled = new Set<string>([...relEntries, ...dimcp, ...yt, ...media, ...memos, ...press, ...unrel].map(e => e.id));
+  const handled = new Set<string>([...relEntries, ...dimcp, ...yt, ...visualArt, ...media, ...memos, ...press, ...unrel].map(e => e.id));
   const misc = entries.filter(e => !handled.has(e.id));
   for (const m of misc) buckets.push({ id: m.id, kind: 'misc', entries: [m], year });
 
@@ -348,6 +389,23 @@ const tags = [...tagCounts.entries()]
   .slice(0, 20)
   .map(([t]) => t);
 
+// Series list — count entries per series, show only series that have ≥1
+// published timeline entry. Series labels are the vault slug (e.g. "underwaters",
+// "ddr"); we present them lightly title-cased.
+const seriesCounts = new Map<string, number>();
+for (const e of publishedEntries) {
+  for (const s of (e.series ?? [])) {
+    seriesCounts.set(s, (seriesCounts.get(s) ?? 0) + 1);
+  }
+}
+const seriesOptions = [...seriesCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .map(([slug, count]) => ({
+    slug,
+    label: slug.replace(/-/g, ' '),
+    count,
+  }));
+
 // Totals for the sub-line
 const totals = {
   releases: publishedEntries.filter(e => e.kind === 'release').length,
@@ -417,6 +475,18 @@ const totals = {
       </label>
     )}
 
+    {seriesOptions.length > 0 && (
+      <label class="filter-select">
+        <span class="filter-label-text">Series</span>
+        <select data-axis="series">
+          <option value="all">All</option>
+          {seriesOptions.map(s => (
+            <option value={s.slug}>{s.label} ({s.count})</option>
+          ))}
+        </select>
+      </label>
+    )}
+
     <button class="filter-reset" id="filter-reset" title="Clear all filters" aria-label="Clear filters">×</button>
     <span class="filter-count" id="filter-count"></span>
   </nav>
@@ -438,6 +508,7 @@ const totals = {
                 data-kind={e.kind}
                 data-format={e.format || ''}
                 data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
                 data-entry-id={e.id}
               >
                 {e.project && <span class="project-tag">{e.project}</span>}
@@ -467,6 +538,7 @@ const totals = {
                 data-kind="video"
                 data-format=""
                 data-tags="dimcp|video"
+                data-series="dimcp"
                 data-entry-id={bucket.id}
               >
                 <span class="project-tag" style="color:#64b5f6;border-color:#64b5f6">DIMCP</span>
@@ -500,6 +572,7 @@ const totals = {
                 data-kind={e.kind}
                 data-format={e.format || ''}
                 data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
                 data-entry-id={e.id}
               >
                 {e.project && <span class="project-tag">{e.project}</span>}
@@ -525,6 +598,7 @@ const totals = {
                 data-kind="photo"
                 data-format=""
                 data-tags="photo"
+                data-series=""
                 data-entry-id={bucket.id}
               >
                 <div class="photo-preview-strip">
@@ -539,6 +613,29 @@ const totals = {
               </article>
             )
 
+            // ── Visual art card (single piece) ───────────────────────────────
+            : bucket.kind === 'visual_art_card' ? (() => {
+              const e = bucket.entries[0];
+              return (
+                <article
+                  class="entry size-md visual-art-card"
+                  data-project={e.project || ''}
+                  data-kind="photo"
+                  data-format=""
+                  data-tags={e.tags.join('|')}
+                  data-series={(e.series ?? []).join('|')}
+                  data-entry-id={e.id}
+                >
+                  {e.project && <span class="project-tag">{e.project}</span>}
+                  {e.cover && <img class="cover va-cover" src={e.cover} alt={e.title || ''} loading="lazy" />}
+                  <div>
+                    <div class="title va-title">{e.title}</div>
+                  </div>
+                  <div class="medium-tag">visual art · {e.date.slice(0, 4)}</div>
+                </article>
+              );
+            })()
+
             // ── Voice memo group ─────────────────────────────────────────────
             : bucket.kind === 'voice_memo_group' ? (
               <article
@@ -547,6 +644,7 @@ const totals = {
                 data-kind="voice_memo"
                 data-format=""
                 data-tags="voice-memo"
+                data-series=""
                 data-entry-id={bucket.id}
               >
                 <div class="vmemo-header">
@@ -575,6 +673,7 @@ const totals = {
                 data-kind={e.kind}
                 data-format={e.format || ''}
                 data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
                 data-entry-id={e.id}
               >
                 <div class="press-eyebrow">press</div>
@@ -591,6 +690,7 @@ const totals = {
                 data-kind="release"
                 data-format="unreleased"
                 data-tags="unreleased"
+                data-series=""
                 data-entry-id={`unreleased--${bucket.year}`}
               >
                 <div class="unrel-header">
@@ -620,6 +720,7 @@ const totals = {
                 data-kind={e.kind}
                 data-format={e.format || ''}
                 data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
                 data-entry-id={e.id}
               >
                 {e.project && <span class="project-tag">{e.project}</span>}
@@ -1070,7 +1171,7 @@ const totals = {
       });
 
       // Filter tabs — four independent axes (project + kind + format + tag). AND semantics.
-      const state = { project: 'all', kind: 'all', format: 'all', tag: 'all' };
+      const state = { project: 'all', kind: 'all', format: 'all', tag: 'all', series: 'all' };
       const totalEntries = document.querySelectorAll('.entry').length;
       const filterCount = document.getElementById('filter-count');
       const resetBtn = document.getElementById('filter-reset');
@@ -1128,7 +1229,9 @@ const totals = {
           const okFmt = state.format === 'all' || el.dataset.format === state.format;
           const tagList = (el.dataset.tags || '').split('|').filter(Boolean);
           const okTag = state.tag === 'all' || tagList.includes(state.tag);
-          const show = okProj && okKind && okFmt && okTag;
+          const seriesList = (el.dataset.series || '').split('|').filter(Boolean);
+          const okSeries = state.series === 'all' || seriesList.includes(state.series);
+          const show = okProj && okKind && okFmt && okTag && okSeries;
           el.hidden = !show;
           if (show) visible++;
         });
@@ -1140,7 +1243,7 @@ const totals = {
           if (after) after.textContent = count + (count === 1 ? ' entry' : ' entries');
         });
         // Show filter count when filtering is active
-        const isFiltered = state.project !== 'all' || state.kind !== 'all' || state.format !== 'all' || state.tag !== 'all';
+        const isFiltered = state.project !== 'all' || state.kind !== 'all' || state.format !== 'all' || state.tag !== 'all' || state.series !== 'all';
         if (filterCount) {
           filterCount.textContent = isFiltered
             ? `showing ${visible} of ${totalEntries}`
@@ -1165,9 +1268,9 @@ const totals = {
         });
       });
 
-      // URL param pre-selection: /?project=X&tag=Y etc.
+      // URL param pre-selection: /?project=X&tag=Y&series=Z etc.
       const qs = new URLSearchParams(window.location.search);
-      for (const axis of ['project', 'kind', 'format', 'tag']) {
+      for (const axis of ['project', 'kind', 'format', 'tag', 'series']) {
         const v = qs.get(axis);
         if (!v) continue;
         const sel = document.querySelector(`.filter-select select[data-axis="${axis}"]`);
@@ -1260,6 +1363,7 @@ const totals = {
           state.kind = 'all';
           state.format = 'all';
           state.tag = 'all';
+          state.series = 'all';
           document.querySelectorAll('.filter-select select').forEach(sel => {
             sel.value = 'all';
             sel.closest('.filter-select').classList.remove('active');
