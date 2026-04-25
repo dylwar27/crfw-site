@@ -6,12 +6,38 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ## Daily pass — 2026-04-25
 
-Manual validation run of the new `crfw-daily-pass` scheduled routine (created Session 19; first scheduled fire at 07:04 the next morning).
+Routine validation + publish-policy + DIMCP regrouping. Curator-directed pass, broader than a typical daily pass.
 
+**Routine validation (the "daily pass" portion):**
 - Curator added 1 new vault release in Obsidian (`alphabets-remix08`); projected to `vault_releases/`.
 - Reconciler emitted 1 unmatched warning. Triaged per `SLUG_MAP_TRIAGE.md`: site stub already existed, mapped `alphabets-remix08 → remix08`. Vault data merged in (summary, tags, archivePath).
 - Vault projection ↔ source parity restored: releases now 83/83.
-- Build green, 685 pages indexed.
+- Sync-vault projected 10 new vault organizations (curator-added in Obsidian since Session 19): constellations, dugoutcanoe, isaac-linder, iuengliss, mystic-bummer, night-of-joy, psychic-handbook, thundercade, zach-reini, zobomaze. Organizations now 43/43.
+
+**Publish policy (curator-directed):**
+Applied a publish-vs-hide rule across photos, videos, releases per the "surface what's already public; hide raw archive files" direction. New script: `scripts/apply-publish-policy.mjs` — dry-run by default, `--write` to apply.
+
+Rules:
+- **Photos:** publish if `sourceUrl` present (all 866 IG photos qualify) → 31 → 866 published.
+- **Videos:** publish only if has `youtubeId` / `youtubeEmbed` / `vimeoEmbed` / `sourceUrl` → 465 → 79 published. 459 raw-file video stubs hidden; 73 with YouTube IDs surfaced.
+- **Releases:** publish if has `bandcampUrl` / `coverArt` / non-empty `summary`; hide otherwise → 234 → 64 published. 177 bulk-stub-only releases hidden; 7 previously-hidden curated releases surfaced.
+
+Voice memos / events / sets unchanged — voice memos all have transcripts (already curated by Whisper); events all hand-curated.
+
+**DIMCP regrouping (`src/pages/index.astro`):**
+- Was: chunks of 5 episodes by episode number → 26 cards per year
+- Now: one DIMCP bucket per year (matches voice-memo / photo-carousel pattern) → 1 card per year
+- Card preview shows first 6 episodes with "+N more — open to view all"; popup gets full list
+
+**Verification:**
+- `npm run build` green: 695 HTML pages, 19,331 words indexed
+- Reconciler dry-run idempotent
+- DB-sync clean
+
+**Flagged for curator review (not actioned):**
+- The 459 hidden videos all point at archive `.mp4` / `.mov` files. If/when YouTube IDs are sourced for these, they'll surface again automatically (publish-policy script can be re-run).
+- The 177 hidden releases are mostly alphabets-era bulk stubs without curator content. Adding a `summary` (via CMS or CSV) or a `bandcampUrl` will resurface them next pass.
+- 114 dead wikilinks (tracks/* references) remain — that's per-track vault entry backlog, not in scope for daily pass.
 
 ---
 
