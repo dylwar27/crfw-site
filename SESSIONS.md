@@ -4,6 +4,18 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Daily pass — 2026-04-25 (auto, late)
+
+Automated late-day pass picking up curator vault edits made after the earlier daily pass.
+
+- Sync-vault projected 5 new people (adreanna-escalante, arlo-white, noble-hamilton, raphael-jacobs) plus expanded marcos-garibay; 1 new organization (rare-bird-band). All from CRFW Fund email-thread research.
+- crfw-fund + cast bodies updated to reflect Louise Martorano's RedLine→CAST move and the in-progress custodianship transition; 2023 nominee pool and 2026 Raphael Jacobs grant added to grantee list.
+- Reconciler clean (0 unmatched, 83 no-change, idempotent). Build green: 696 HTML pages, 19,457 words indexed.
+- STATUS block refreshed in CLAUDE.md (people 41→45, organizations 43→44, pages 686→696, scripts 16→17).
+- CI green on prior push (607d512). 114 dead wikilinks remain (track-level vault backlog, unchanged).
+
+---
+
 ## Daily pass — 2026-04-25
 
 Routine validation + publish-policy + DIMCP regrouping. Curator-directed pass, broader than a typical daily pass.
