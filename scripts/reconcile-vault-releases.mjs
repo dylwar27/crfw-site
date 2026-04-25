@@ -143,6 +143,8 @@ const SLUG_MAP = {
   'alphabets-unreleased-fall-08':                 'unreleased-fall-08',
   'alphabets-unreleased-loose':                   'unreleased-loose',
   'alphabets-young-tribes-spring-08':             'young-tribes-spring-08',
+  // Daily-pass triage 2026-04-25
+  'alphabets-remix08':                            'remix08',
 };
 
 // Map vault release_kind → site format enum

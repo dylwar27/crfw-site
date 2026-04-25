@@ -4,6 +4,17 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Daily pass — 2026-04-25
+
+Manual validation run of the new `crfw-daily-pass` scheduled routine (created Session 19; first scheduled fire at 07:04 the next morning).
+
+- Curator added 1 new vault release in Obsidian (`alphabets-remix08`); projected to `vault_releases/`.
+- Reconciler emitted 1 unmatched warning. Triaged per `SLUG_MAP_TRIAGE.md`: site stub already existed, mapped `alphabets-remix08 → remix08`. Vault data merged in (summary, tags, archivePath).
+- Vault projection ↔ source parity restored: releases now 83/83.
+- Build green, 685 pages indexed.
+
+---
+
 ## Session 19 — 2026-04-24 — Infra reset + context-files rebuild + SLUG_MAP triage
 
 **Goal:** Fix the environment (off iCloud), rebuild the doc set from scratch, and clean the reconciler backlog before any further content work.

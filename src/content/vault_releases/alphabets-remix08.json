@@ -1,0 +1,36 @@
+{
+  "id": "alphabets-remix08",
+  "kind": "release",
+  "title": "REMIX08",
+  "preservedTitle": "REMIX08",
+  "artist": "projects/alphabets",
+  "release_date_approx": "2008 (inferred from series pattern)",
+  "label": "self-released",
+  "format": [
+    "m4a"
+  ],
+  "track_count_archive": 1,
+  "track_count_confirmed": 1,
+  "notes": "Completes the REMIX08/09/10 series stubs. The archive folder `_Documentation/Music/alphabets/REMIX08/` contains exactly ONE track — `14 L3GOMUSEUM 3D.m4a` (3.64 MB, mtime 2008-11-07) — with no sibling tracks present. The \"14\" prefix strongly implies this was track 14 of a larger compilation that did not survive into the archive, consistent with the fragmentary-remnant pattern Session 10 first identified on `unreleased fall 08`. No Bandcamp page was found for REMIX08 (unlike REMIX09 at alphabets.bandcamp.com/album/remix09 and REMIX10) — either the Bandcamp release is missing/private, or REMIX08 was a purely local compilation Colin never uploaded. The folder mtime (2010-11-07) is suspicious — three years after the 2008 naming would suggest — and implies the track was placed here during a later reorganization.",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "low",
+  "archivePath": [
+    "_Documentation/Music/alphabets/REMIX08"
+  ],
+  "tags": [
+    "alphabets-era",
+    "remix",
+    "fragmentary",
+    "earliest-recordings"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward",
+    "releases/alphabets-remix09",
+    "releases/alphabets-remix10",
+    "series/remix"
+  ],
+  "body": "# REMIX08\n\nThe earliest entry in the REMIX series. Archive-fragmentary — only one of\nwhat was almost certainly a larger tracklist survives locally.\n\n## Confirmed tracks (from archive filenames)\n\n- `14 L3GOMUSEUM 3D.m4a` _(file mtime 2008-11-07; track position 14)_\n\n## Notes\n\nThe `L3GOMUSEUM 3D` title follows the REMIX-series convention Colin's other\ncompilations use: `[ORIGINAL ARTIST]-[ORIGINAL TRACK] ([colin's mix name] mix)`\n— but here the \"(mix)\" suffix is missing and the original-artist prefix is\nunclear, so the filename may be a shorthand or a work-in-progress title\nrather than the compilation's finalized track name. \"L3GO MUSEUM 3D\" reads\nlike a Colin coinage (LEGO + MUSEUM + 3D, in his usual absurdist-collision\nstyle), which would mean this is a *self*-remix rather than a remix of\nanother artist — possible given that later REMIX releases include self-remix\nentries (Snake Feathers on REMIX09, per `series/remix.md`).\n\n## Research gaps\n\n- Original artist (if any) unidentified.\n- Bandcamp page not located — either non-existent or not public.\n- Tracks 1–13 and 15+ are not in the archive. They may exist in other\n  alphabets session folders from 2008 under different names (per Colin's\n  pattern of pre-compilation session staging), or they may be lost.\n- Release date inferred from the \"08\" in the title; no confirmation.\n\n## Relationship to fragmentary class\n\nWith this entry, the known fragmentary-remnant folders in the Alphabets\narchive are:\n\n- `unreleased fall 08` — track 04 only (Session 10)\n- `pears092010` — track 04 only (Sept 2010)\n- `DDR2_HAUNTED` — track 02 only (May 2012; also has a stray .asd sidecar for track 06)\n- **REMIX08 — track 14 only (Nov 2008)**\n\nThe pattern appears validated: across 2008–2012, several alphabets session\nfolders survive as the singular \"keep\" take from a larger multi-track\nsession. A systematic `fragmentary` tag across all four would let future\npasses treat them as a class."
+}
