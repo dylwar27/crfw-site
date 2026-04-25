@@ -1,0 +1,20 @@
+{
+  "id": "adreanna-escalante",
+  "kind": "person",
+  "title": "Adreanna Escalante",
+  "display_name": "Adreanna Escalante",
+  "role_summary": "Nominator of [[people/marcos-garibay]] for the 2023 CRFW Fund cycle.",
+  "created": "2026-04-24",
+  "updated": "2026-04-25",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "crfw-fund-nominator"
+  ],
+  "related": [
+    "funds/crfw-fund",
+    "people/marcos-garibay"
+  ],
+  "body": "# Adreanna Escalante\n\nNominated **Marcos Garibay** for the 2023 CRFW Fund grant cycle. Per the August 2023 email summary, RedLine was \"getting a link from her that was missing in the application regarding Marcos's work and some more info on the school/community center, etc that he might work with\" — implying she has a community-arts-program connection in the Denver area, plausibly tied to the **Adams 14 / Commerce City school district** where Garibay worked at Dupont Elementary.\n\n## Research gaps\n\n- Own role/practice/affiliation not yet identified.\n- Whether she has a continuing relationship with the fund (other nominations, jury work) is unknown.\n\n## Web-search status (2026-04-25, Session 13)\n\nPublic-web sweep on `\"Adreanna Escalante\" Denver arts` returned no match. Spelling variants (Adriana, Adrianna) not yet tried; could be worth a small follow-up sweep. Most likely path forward is Gmail — the thread metadata may include her email-domain and/or signature with affiliation, and a name-and-domain search across other CRFW threads could surface other interactions she's had with the fund.\n\n## Source\n\n- Gmail thread `189f5e407e08005a` — \"Fwd: CRFW Fund - Grant Cycle\" (August 2023)"
+}

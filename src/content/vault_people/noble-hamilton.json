@@ -1,0 +1,21 @@
+{
+  "id": "noble-hamilton",
+  "kind": "person",
+  "title": "Noble Hamilton",
+  "display_name": "Noble Hamilton",
+  "role_summary": "2023 CRFW Fund nominee (outcome unconfirmed); photographer at nobleonephotos.com.",
+  "contact_public": {
+    "website": "https://www.nobleonephotos.com"
+  },
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "crfw-fund-nominee"
+  ],
+  "related": [
+    "funds/crfw-fund"
+  ],
+  "body": "# Noble Hamilton\n\nPhotographer; runs `nobleonephotos.com`. Nominated for the 2023 CRFW Fund cycle. Per the email summary: \"evidently his dad was an influential Black DPS principal and ran for state Senate at one time, a mover and shaker; his mom struggles with untreated bi-polar. Noble lives with her.\" Was one of four 2023-cycle candidates discussed; outcome (granted vs. not) not yet recorded.\n\n## Source\n\n- Gmail thread `189f5e407e08005a` — \"Fwd: CRFW Fund - Grant Cycle\" (August 2023)"
+}

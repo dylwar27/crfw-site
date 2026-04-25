@@ -3,15 +3,27 @@
   "kind": "person",
   "title": "Marcos Garibay",
   "display_name": "Marcos Garibay",
-  "role_summary": "2023 CRFW Fund grantee.",
+  "role_summary": "2023 CRFW Fund grantee. Filmmaker; founder/director of Tomorrow Maker Films. Former RiNo recording-studio operator.",
   "created": "2026-04-20",
+  "updated": "2026-04-25",
   "sensitivity": "public",
   "public_display": true,
   "confidence": "high",
+  "hometown": "Denver / Commerce City, CO",
   "tags": [
-    "crfw-fund-grantee"
+    "crfw-fund-grantee",
+    "filmmaker",
+    "rino",
+    "denver-scene"
   ],
   "related": [
-    "funds/crfw-fund"
-  ]
+    "funds/crfw-fund",
+    "people/adreanna-escalante"
+  ],
+  "contact_public": {
+    "website": "tomorrowmakers.wordpress.com",
+    "facebook": null,
+    "youtube": "youtube.com/@TomorrowMakerFilms"
+  },
+  "body": "# Marcos Garibay\n\nDenver-area filmmaker; **2023 CRFW Fund grantee** (nominated by [[people/adreanna-escalante]]). Before Tomorrow Maker Films, Garibay operated a recording studio in Denver's **RiNo district** — the same Denver micro-scene where many of the alphabets/Killd-By-era musicians worked. After closing the studio he took a paraprofessional position at **Dupont Elementary** in **Commerce City** (Adams 14 district), where he started an after-school film club for students who shared his interest in comic books and superheroes.\n\nOver nine months he scaled the film club into a production crew of three dozen-plus Dupont students — fifth graders in leading roles, kindergarteners as extras — and wrote, shot, and edited an **87-minute feature called *The Tomorrow Makers*** about a future in which adults have vanished and the kids have to unite tribes to avert apocalypse. The film premiered at Adams City High School. He has since pursued building **Tomorrow Maker Films** into a nonprofit providing a creative after-school environment in Adams County, with additional short and animated film work coming through that umbrella.\n\nThe RiNo-studio history is the through-line that makes the 2023 CRFW grant coherent: he is a peer of Colin's scene who pivoted from music production to filmmaking-with-kids. The CRFW grant supported the pivot.\n\n## Sources\n\n- [Westword — \"The Tomorrow Makers: A Colorado After-School Project Becomes an Epic Adventure\"](https://www.westword.com/arts/the-tomorrow-makers-an-after-school-project-becomes-an-epic-adventure-8148925)\n- [Tomorrow Maker Films blog](https://tomorrowmakers.wordpress.com/)\n- [Cafe Crash w/ Marcos Garibay (Facebook video — Daniel Crosier)](https://www.facebook.com/DanielRCrosier/videos/cafe-crash-w-marcos-garibay/296577688708339/)\n- [Tomorrow Maker Films — YouTube](https://www.youtube.com/watch?v=VidUMAoyXy8)"
 }

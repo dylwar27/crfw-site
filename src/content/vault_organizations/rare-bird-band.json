@@ -1,0 +1,21 @@
+{
+  "id": "rare-bird-band",
+  "kind": "organization",
+  "org_kind": "band",
+  "title": "Rare Bird Band",
+  "display_name": "Rare Bird Band",
+  "location": "Denver, CO area (presumed — CRFW grantee)",
+  "crfw_grant_year": 2022,
+  "created": "2026-04-24",
+  "updated": "2026-04-25",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "crfw-grantee"
+  ],
+  "related": [
+    "funds/crfw-fund"
+  ],
+  "body": "# Rare Bird Band\n\n**2022 CRFW Fund grantee.** Identified from an August 2023 grant-cycle email in which Jane Anne Ferguson refers to \"the Rare Bird Band that we funded last year\" — meaning their 2022 award. The plan in the same email contemplated having Rare Bird play at the proposed 2024 CRFW celebration event at the Evans School auditorium.\n\n## Research gaps\n\n- Members and full project details not yet located.\n- Confirm whether they performed at the August 2024 CRFW celebration event.\n- Bandcamp / Soundcloud presence not yet confirmed.\n\n## Web-search status (2026-04-25, Session 13)\n\nPublic-web sweeps for `\"Rare Bird Band\" Denver Colorado music`, `\"Rare Bird Band\" Denver CRFW Fund grant`, `\"Rare Birds\" Denver Colorado band 2022`, and `\"rare bird band\" bandcamp soundcloud` returned **no Denver-specific match**. Bandcamp surfaces unrelated bands in Orcas Island WA, Richmond VA, Atlanta GA, Columbus OH, and Toronto. Wikipedia surfaces the 1969 English progressive-rock band of the same name. **No public web evidence** of the Denver-area band that received the 2022 CRFW grant.\n\nThis is consistent with the broader pattern Session 12b flagged: small Denver-scene bands often have no public footprint and have to be sourced from Gmail / family correspondence. A future Gmail sweep restricted to August 2022 (the grant-announcement window) is the most likely path to members and confirmation.\n\n## Source\n\n- Gmail thread `189f5e407e08005a` — \"Fwd: CRFW Fund - Grant Cycle\" (August 2023)"
+}

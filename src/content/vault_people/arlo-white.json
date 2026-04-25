@@ -1,0 +1,21 @@
+{
+  "id": "arlo-white",
+  "kind": "person",
+  "title": "Arlo White (Hypnotic Turtle)",
+  "display_name": "Arlo White",
+  "aliases": [
+    "Hypnotic Turtle"
+  ],
+  "role_summary": "2023 CRFW Fund nominee — described as \"in 4th place or so\" with \"more support — a bit — than the others\"; outcome unconfirmed.",
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "crfw-fund-nominee"
+  ],
+  "related": [
+    "funds/crfw-fund"
+  ],
+  "body": "# Arlo White (Hypnotic Turtle)\n\nPerforms/operates as **Hypnotic Turtle**. One of the four 2023-cycle CRFW Fund candidates. Email summary placed him \"in '4th' place or so\" with marginally more outside support than the other three nominees. Whether he was awarded a grant is not recorded in the August 2023 email — likely no, given Marcos Garibay was the cycle's primary recommendation.\n\n## Source\n\n- Gmail thread `189f5e407e08005a` — \"Fwd: CRFW Fund - Grant Cycle\" (August 2023)"
+}
