@@ -202,15 +202,19 @@ function bucketYear(entries: TLEntry[], year: number): TLBucket[] {
   const relEntries = entries.filter(e => e.kind === 'release' && !isUnreleased(e));
   if (relEntries.length) buckets.push({ id: `rel-block--${year}`, kind: 'release_block', entries: relEntries, year });
 
+  // DIMCP — one bucket per year (broadest grouping, matches voice memo / photo
+  // carousel pattern). Earlier per-5-episode chunks produced too many cards.
   const dimcp = entries
     .filter(e => e.kind === 'video' && (e.project || '').toLowerCase() === 'dimcp')
     .sort((a, b) => parseEpNum(a.title) - parseEpNum(b.title));
-  for (let i = 0; i < dimcp.length; i += 5) {
-    const chunk = dimcp.slice(i, i + 5);
-    const first = parseEpNum(chunk[0].title);
-    const last  = parseEpNum(chunk[chunk.length - 1].title);
-    const s     = parseSeason(chunk[0].title);
-    buckets.push({ id: `dimcp-chunk--${year}--${i}`, kind: 'dimcp_chunk', entries: chunk, year, label: `S${s} · Eps ${first}–${last}` });
+  if (dimcp.length) {
+    buckets.push({
+      id: `dimcp--${year}`,
+      kind: 'dimcp_chunk',
+      entries: dimcp,
+      year,
+      label: `${dimcp.length} episode${dimcp.length === 1 ? '' : 's'}`,
+    });
   }
 
   const yt = entries.filter(e => e.kind === 'video' && e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp');
@@ -471,12 +475,18 @@ const totals = {
                   <span class="dimcp-label">{bucket.label}</span>
                 </div>
                 <ol class="dimcp-ep-list">
-                  {bucket.entries.map(e => (
+                  {bucket.entries.slice(0, 6).map(e => (
                     <li class="dimcp-ep-row">
                       <span class="ep-num">EP {String(parseEpNum(e.title)).padStart(2, '0')}</span>
                       <span class="ep-excerpt">{(e.data.transcript || '').slice(0, 70) || e.title}</span>
                     </li>
                   ))}
+                  {bucket.entries.length > 6 && (
+                    <li class="dimcp-ep-row dimcp-ep-more">
+                      <span class="ep-num">+{bucket.entries.length - 6}</span>
+                      <span class="ep-excerpt">more — open to view all</span>
+                    </li>
+                  )}
                 </ol>
                 <div class="medium-tag">DIMCP · {bucket.entries.length} episodes · {bucket.year}</div>
               </article>
