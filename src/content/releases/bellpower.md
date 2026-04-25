@@ -16,6 +16,7 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/BELLPOWER/
   - CRFW Archive/_Documentation/Music/alphabets/BELLPOWER
+published: false
 ---
 # BELLPOWER
 

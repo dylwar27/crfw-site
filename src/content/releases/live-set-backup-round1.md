@@ -9,6 +9,7 @@ tags:
   - alphabets
   - live
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

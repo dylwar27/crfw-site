@@ -10,6 +10,7 @@ tags:
   - loose-files
   - curator-flag
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Folder name is itself a

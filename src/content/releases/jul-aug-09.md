@@ -13,6 +13,7 @@ tags:
   - archive-only
   - m4a-era
 summary: 1. (track 01 missing or unnumbered) 2. some kind of armor 3. dreamy mountain giraffe voice 4. lemur toes sneak attack battle outs 5. cuz claws gnaw gnaw 6. pow sound thaw out 7. grandfather zeb rah heart speak 8. run tough 9. cyborg emo wish face wash out 10. noise bust scare pranks 11. luvpunch
+published: false
 ---
 # jul_aug_09
 

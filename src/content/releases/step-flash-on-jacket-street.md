@@ -8,6 +8,7 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/_step flash on jacket 
 tags:
   - alphabets
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

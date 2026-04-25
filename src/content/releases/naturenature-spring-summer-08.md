@@ -12,6 +12,7 @@ tags:
   - alphabets-era
   - earliest-recordings
 summary: "Spring–summer 2008 folder with a nature-themed title. Notably contains a track named \"freak medicine.m4a\" which suggests a thematic or literal continuation from the \"freak medicine winter 07\" folder. Mixed format (M4A and MP3) indicating this spans the transition period."
+published: false
 ---
 Spring–summer 2008 folder with a nature-themed title. Notably contains a track named "freak medicine.m4a" which suggests a thematic or literal continuation from the "freak medicine winter 07" folder. Mixed format (M4A and MP3) indicating this spans the transition period.
 

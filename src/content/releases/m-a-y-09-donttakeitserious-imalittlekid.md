@@ -8,6 +8,7 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/M_A_Y_09[DONTTAKEITSER
 tags:
   - alphabets
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

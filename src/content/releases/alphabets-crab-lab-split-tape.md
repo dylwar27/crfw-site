@@ -17,6 +17,7 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/alphabets_ Crab Lab split tape/
   - CRFW Archive/_Documentation/Music/alphabets/alphabets_ Crab Lab split tape
+published: false
 ---
 # alphabets / Crab Lab split tape
 

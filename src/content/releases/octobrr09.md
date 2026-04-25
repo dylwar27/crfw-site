@@ -14,6 +14,7 @@ tags:
   - "2009"
   - "2009"
 summary: "The first \"octobrr\" — the spelling with double R that Colin would repeat in OCTOBRR2010, marking October as a recurring touchstone. The extra R in \"brr\" makes it cold, onomatopoetic, seasonal. October with a shiver built into its name."
+published: false
 ---
 # octobrr09
 

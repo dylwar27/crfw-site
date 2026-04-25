@@ -25,6 +25,7 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/SUNPOWER2/
   - CRFW Archive/_Documentation/Music/alphabets/SUNPOWER2
+published: false
 ---
 # SUNPOWER2
 

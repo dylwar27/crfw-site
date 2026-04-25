@@ -8,6 +8,7 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/Loose Working Files (2
 tags:
   - alphabets
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

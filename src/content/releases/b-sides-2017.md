@@ -11,7 +11,7 @@ tags:
   - b-sides
   - "2017"
 archivePath: CRFW Archive/_Documentation/Music/KB/killd by/B-SIDES2017
-published: false
+published: true
 tracklist:
   - n: 1
     title: nonimo

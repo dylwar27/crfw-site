@@ -14,6 +14,7 @@ tags:
   - "2010"
   - "2010"
 summary: "The second \"octobrr\" — Colin's returning to the misspelling a year on. The largest album in the album-a-month series by track count (21 tracks), OCTOBRR2010 is the October that went biggest. Released October 29, two days before Halloween."
+published: false
 ---
 # OCTOBRR2010
 

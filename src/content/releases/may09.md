@@ -10,7 +10,7 @@ tags:
   - archive-only
   - m4a-era
 archivePath: "CRFW Archive/_Documentation/Music/alphabets/M_A_Y_09[DONTTAKEITSERIOUS,IMALITTLEKID]"
-published: false
+published: true
 ---
 # M_A_Y_09 [DONTTAKEITSERIOUS,IMALITTLEKID]
 

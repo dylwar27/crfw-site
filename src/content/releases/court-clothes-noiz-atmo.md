@@ -9,6 +9,7 @@ tags:
   - killd-by
   - noiz-atmo
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

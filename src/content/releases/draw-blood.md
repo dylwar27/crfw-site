@@ -12,7 +12,7 @@ tags:
   - bandcamp
   - needs-review
 summary: ""
-published: false
+published: true
 tracklist:
   - n: 1
     title: draw blood

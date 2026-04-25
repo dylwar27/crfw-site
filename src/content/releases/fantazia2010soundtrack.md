@@ -8,6 +8,7 @@ archivePath: "CRFW Archive/_Documentation/Music/alphabets/fantazia2010soundtrack
 tags:
   - alphabets
 summary: ""
+published: false
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

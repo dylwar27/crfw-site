@@ -12,6 +12,7 @@ tags:
   - alphabets-era
   - earliest-recordings
 summary: "Fall 2008 recording folder. Notably contains a track \"gel pens.mp3\" — the same title later appears as \"gel pens 2010\" (track 1) on BIEBER JERBOA. This suggests Colin revisited this title/track at least twice over a two-year period, a pattern of self-quotation seen elsewhere in the catalog."
+published: false
 ---
 Fall 2008 recording folder. Notably contains a track "gel pens.mp3" — the same title later appears as "gel pens 2010" (track 1) on BIEBER JERBOA. This suggests Colin revisited this title/track at least twice over a two-year period, a pattern of self-quotation seen elsewhere in the catalog.
 

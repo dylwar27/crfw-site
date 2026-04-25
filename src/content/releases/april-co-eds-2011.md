@@ -15,6 +15,7 @@ tags:
   - fantasia-reference
   - "2011"
 summary: "Six tracks for April 2011. The title \"CO-EDS\" carries collegiate or communal associations — co-educational, people learning together, a group. Spring 2011, a compact album after the bigger JANFEB11 PIRATE LIFE."
+published: false
 ---
 # APRIL CO-EDS 2011
 

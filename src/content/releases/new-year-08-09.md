@@ -12,6 +12,7 @@ tags:
   - alphabets-era
   - earliest-recordings
 summary: "New Year's 2008–2009 recording folder. Five tracks, all M4A. Marks the transition point between the 2008 archive batch and the 2009 album-a-month series (which begins with JANFEB09). The track \"new year.m4a\" is likely the title piece."
+published: false
 ---
 New Year's 2008–2009 recording folder. Five tracks, all M4A. Marks the transition point between the 2008 archive batch and the 2009 album-a-month series (which begins with JANFEB09). The track "new year.m4a" is likely the title piece.
 

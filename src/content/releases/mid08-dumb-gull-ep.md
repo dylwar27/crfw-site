@@ -12,6 +12,7 @@ tags:
   - alphabets-era
   - earliest-recordings
 summary: "Mid-2008, 5 tracks. Notable as one of the earliest folders explicitly labeled as an \"EP,\" showing Colin already applying EP-format thinking by mid-2008. Mixed M4A/MP3 format."
+published: false
 ---
 Mid-2008, 5 tracks. Notable as one of the earliest folders explicitly labeled as an "EP," showing Colin already applying EP-format thinking by mid-2008. Mixed M4A/MP3 format.
 

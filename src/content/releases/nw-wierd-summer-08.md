@@ -12,6 +12,7 @@ tags:
   - alphabets-era
   - earliest-recordings
 summary: "Summer 2008 recording folder. The \"NW\" prefix may indicate a Pacific Northwest location (Colin traveled in this period) or be a tagging convention. Primarily MP3 format, which is slightly later than the pure M4A era of early 2008."
+published: false
 ---
 Summer 2008 recording folder. The "NW" prefix may indicate a Pacific Northwest location (Colin traveled in this period) or be a tagging convention. Primarily MP3 format, which is slightly later than the pure M4A era of early 2008.
 

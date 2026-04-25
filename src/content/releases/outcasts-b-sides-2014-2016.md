@@ -20,6 +20,7 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/KB/killd by/OUTCASTS (b-sides 2014-2016)/
   - CRFW Archive/_Documentation/Music/KB/killd by/OUTCASTS (b-sides 2014-2016)
+published: false
 ---
 # OUTCASTS (b-sides 2014-2016)
 
