@@ -27,6 +27,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/DDR2_HAUNTED/
   - CRFW Archive/_Documentation/bandcamp/alphabets__ddr2-haunted
+coverArt: "/media/releases/ddr2-haunted/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

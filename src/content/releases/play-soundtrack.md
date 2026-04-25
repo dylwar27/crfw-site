@@ -37,6 +37,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/play soundtrack/
   - CRFW Archive/_Documentation/bandcamp/alphabets__play-soundtrack
+coverArt: "/media/releases/play-soundtrack/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

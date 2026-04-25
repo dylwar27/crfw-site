@@ -33,6 +33,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/BIEBER JERBOA/
   - CRFW Archive/_Documentation/bandcamp/alphabets__bieber-jerboa
+coverArt: "/media/releases/bieber-jerboa/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

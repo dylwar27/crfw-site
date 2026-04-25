@@ -17,6 +17,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/angry birds chains/
   - CRFW Archive/_Documentation/bandcamp/alphabets__angry-birds-chains
+coverArt: "/media/releases/angry-birds-chains/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

@@ -33,6 +33,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/CAVE RAVE/
   - CRFW Archive/_Documentation/bandcamp/alphabets__cave-rave
+coverArt: "/media/releases/cave-rave/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

@@ -30,6 +30,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/trapped in tha back of a jeep/
   - CRFW Archive/_Documentation/bandcamp/alphabets__trapped-in-tha-back-of-a-jeep
+coverArt: "/media/releases/trapped-in-tha-back-of-a-jeep/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

@@ -29,6 +29,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/on champagne and greyhounds/
   - CRFW Archive/_Documentation/bandcamp/alphabets__on-champagne-and-greyhounds-2
+coverArt: "/media/releases/on-champagne-and-greyhounds/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

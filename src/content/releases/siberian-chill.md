@@ -33,6 +33,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/SIBERIAN CHILL/
   - CRFW Archive/_Documentation/bandcamp/alphabets__siberian-chill
+coverArt: "/media/releases/siberian-chill/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

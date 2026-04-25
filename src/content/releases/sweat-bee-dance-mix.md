@@ -26,6 +26,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/SWEAT BEE_ DANCE MIX/
   - CRFW Archive/_Documentation/bandcamp/alphabets__sweat-bee-dance-mix
+coverArt: "/media/releases/sweat-bee-dance-mix/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

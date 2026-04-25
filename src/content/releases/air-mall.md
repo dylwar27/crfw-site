@@ -17,6 +17,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/air mall/
   - CRFW Archive/_Documentation/bandcamp/alphabets__air-mall-3
+coverArt: "/media/releases/air-mall/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

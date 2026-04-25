@@ -29,6 +29,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/antPAD/
   - CRFW Archive/_Documentation/bandcamp/alphabets__antpad
+coverArt: "/media/releases/antpad/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

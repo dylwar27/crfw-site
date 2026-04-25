@@ -27,6 +27,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/DDR/
   - CRFW Archive/_Documentation/bandcamp/alphabets__ddr
+coverArt: "/media/releases/ddr/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty

@@ -27,6 +27,8 @@ tracklist:
 archivePath:
   - CRFW Archive/_Documentation/Music/alphabets/JEANJETS/
   - CRFW Archive/_Documentation/bandcamp/alphabets__jeanjets
+coverArt: "/media/releases/jeanjets/cover.jpg"
+
 ---
 
 Stub entry — folder preserved from the archive. Summary intentionally empty
