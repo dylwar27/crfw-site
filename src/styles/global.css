@@ -381,6 +381,41 @@ a:hover { color: var(--accent-2); }
 @media (max-width: 700px) { .popup-header { grid-template-columns: 1fr; } }
 .popup-cover { width: 100%; aspect-ratio: 1; object-fit: cover; background: #000; }
 .popup-video { aspect-ratio: auto; max-height: 60vh; object-fit: contain; }
+
+/* Visual art popup — natural aspect, bigger column, click-through to original */
+.popup-header-art { grid-template-columns: minmax(360px, 60%) 1fr; }
+@media (max-width: 700px) { .popup-header-art { grid-template-columns: 1fr; } }
+.popup-cover-art {
+  aspect-ratio: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  background: #000;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.popup-art-link {
+  display: block;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+.popup-art-link:hover .popup-cover-art {
+  outline: 1px solid var(--ink-dim);
+}
+
+/* Voice memo audio popup */
+.popup-audio-wrap {
+  display: flex; flex-direction: column; gap: 16px;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  aspect-ratio: 1; padding: 24px;
+}
+.popup-audio-mono {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+  color: var(--accent-2); text-transform: uppercase; text-align: center;
+}
+.popup-audio { width: 100%; }
+.popup-audio::-webkit-media-controls-panel { background: #1a1a1a; }
 .popup-carousel-wrap { display: flex; flex-direction: column; gap: 8px; }
 .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .carousel-btn {

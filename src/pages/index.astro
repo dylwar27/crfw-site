@@ -960,11 +960,17 @@ const totals = {
           ? [d.src, ...(d.carouselExtras || [])]
           : [];
         const isPhotoCarousel = photoSrcs.length > 1;
+        // Visual art (posters/paintings) needs natural aspect ratio + larger
+        // column. Tag-detected via the 'visual-art' tag we add at ingest.
+        const isVisualArt = e.kind === 'photo' && (e.tags || []).includes('visual-art');
 
         let leftColHtml;
         if (photoSrcs.length > 0) {
-          leftColHtml = `<div class="popup-carousel-wrap">
-            <img class="popup-cover" id="carousel-img" src="${escapeHtml(photoSrcs[0])}" alt="" />
+          const imgClass = isVisualArt ? 'popup-cover popup-cover-art' : 'popup-cover';
+          leftColHtml = `<div class="popup-carousel-wrap${isVisualArt ? ' popup-art-wrap' : ''}">
+            <a href="${escapeHtml(photoSrcs[0])}" target="_blank" rel="noopener" class="popup-art-link" title="Open at original size in new tab">
+              <img class="${imgClass}" id="carousel-img" src="${escapeHtml(photoSrcs[0])}" alt="" />
+            </a>
             ${isPhotoCarousel ? `<div class="carousel-nav">
               <button class="carousel-btn" id="carousel-prev" aria-label="Previous" disabled>‹</button>
               <span class="carousel-counter" id="carousel-counter">1 / ${photoSrcs.length}</span>
@@ -975,6 +981,19 @@ const totals = {
           leftColHtml = `<video class="popup-cover popup-video" controls preload="none"${d.poster ? ` poster="${escapeHtml(d.poster)}"` : ''}>
             <source src="${escapeHtml(d.localSrc)}" type="video/mp4" />
           </video>`;
+        } else if (e.kind === 'voice_memo') {
+          // Voice memo audio at /media/voice-memos/<slug>.m4a; falls back gracefully
+          // if the file isn't on disk (e.g. unpublished or pre-Cloudflare migration).
+          const memoSlug = String(e.id).replace(/^voice--/, '').replace(/\.json$/, '');
+          const audioSrc = `${BASE_URL}/media/voice-memos/${memoSlug}.m4a`;
+          leftColHtml = `<div class="popup-cover popup-audio-wrap">
+            <div class="popup-audio-mono">VOICE MEMO · ${escapeHtml(e.date.slice(0, 10))}</div>
+            <audio class="popup-audio" controls preload="none">
+              <source src="${escapeHtml(audioSrc)}" type="audio/mp4" />
+              <source src="${escapeHtml(audioSrc)}" type="audio/m4a" />
+              Audio not available.
+            </audio>
+          </div>`;
         } else {
           leftColHtml = cover ? `<img class="popup-cover" src="${escapeHtml(cover)}" alt="" />` : `<div class="popup-cover"></div>`;
         }
@@ -1055,7 +1074,7 @@ const totals = {
 
         popup.innerHTML = `
           <button class="popup-close" aria-label="Close" id="popup-close">×</button>
-          <div class="popup-header">
+          <div class="popup-header${isVisualArt ? ' popup-header-art' : ''}">
             ${leftColHtml}
             <div>
               <h2 class="popup-title" id="popup-title">${escapeHtml(e.title)}</h2>
