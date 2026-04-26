@@ -4,6 +4,15 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Daily pass — 2026-04-26
+
+- Sync-vault projected 1 new organization (`cvlts`, the REMIX10 track 17 collaborator) plus body refreshes on `adreanna-escalante` (Session 14 web-search note — spelling variants exhausted, Gmail next), `alphabets-remix10`, and `remix` series (CVLTS now wikilinked).
+- Reconciler dry-run idempotent (0 updated, 83 no-change, 0 unmatched). Build green: 702 pages, 19,562 words indexed.
+- STATUS block refreshed in CLAUDE.md (organizations 44→45; also caught up scripts 17→19 from `import-bandcamp-covers` + `import-visual-art` added in the prior evening polish; pages 696→702).
+- CI green on prior push (Daily pass evening: STATUS + SESSIONS log). 114 dead wikilinks remain (track-level vault backlog, unchanged).
+
+---
+
 ## Daily pass — 2026-04-25 (evening polish)
 
 After early reviewers saw the live site, curator-directed polish pass:
