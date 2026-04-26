@@ -1,0 +1,128 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const funds = await getCollection('vault_funds');
+  return funds
+    .filter(f => f.data.public_display !== false)
+    .map(f => ({
+      params: { slug: f.id },
+      props: { fund: f },
+    }));
+}
+
+const { fund } = Astro.props;
+const d = fund.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+// Pull all grants that point at this fund. The grant.fund field is "funds/<slug>".
+const allGrants = await getCollection('vault_grants');
+const grants = allGrants
+  .filter(g => {
+    const ref = g.data.fund as string | undefined;
+    return ref && ref.split('/').at(-1) === fund.id && g.data.public_display !== false;
+  })
+  .sort((a, b) => (a.data.year ?? 0) - (b.data.year ?? 0));
+
+// Strip curator-only sections from the public body. The vault often holds
+// "Email-trail references" or similar private notes alongside the public
+// prose; we drop everything from any heading whose label hits the deny-list.
+function publicBody(raw: string): string {
+  const PRIVATE_HEADINGS = /^##+\s+(email[- ]trail|email correspondence|private notes?|curator notes?|gmail|sources \(private\))/i;
+  const lines = raw.split('\n');
+  const out: string[] = [];
+  let drop = false;
+  for (const line of lines) {
+    if (/^##+\s+/.test(line)) {
+      drop = PRIVATE_HEADINGS.test(line);
+    }
+    if (!drop) out.push(line);
+  }
+  return out.join('\n');
+}
+
+const bodyHtml = renderBody(publicBody(d.body || ''), BASE);
+const name = d.name || d.title || fund.id;
+---
+<Base title={`${name} — CRFW`}>
+  <article class="fund-page">
+    <nav class="fund-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/about`}>About Colin</a>
+    </nav>
+
+    <header class="fund-header">
+      <div class="fund-kind">fund</div>
+      <h1>{name}</h1>
+      {d.founded_year && (
+        <div class="fund-dates">
+          Founded {d.founded_year}
+          {d.dissolved_year ? ` – ${d.dissolved_year}` : ''}
+        </div>
+      )}
+    </header>
+
+    {bodyHtml && (
+      <section class="fund-section fund-body">
+        <div set:html={bodyHtml} />
+      </section>
+    )}
+
+    {grants.length > 0 && (
+      <section class="fund-section">
+        <h2>Grantees</h2>
+        <ul class="grant-list">
+          {grants.map(g => (
+            <li>
+              <a href={`${BASE}/grant/${g.id}`}>
+                <span class="grant-year">{g.data.year}</span>
+                <span class="grant-title">{(g.data.title || g.id).replace(/^CRFW Fund \d+ — /, '')}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</Base>
+
+<style>
+  .fund-page { max-width: 780px; margin: 0 auto; padding: 48px 32px 96px; font-family: var(--sans); }
+  .fund-nav { margin-bottom: 32px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .fund-nav a { color: var(--ink-dim); text-decoration: none; }
+  .fund-nav a:hover { color: var(--accent-2); }
+  .fund-nav .sep { margin: 0 8px; color: var(--ink-dim); }
+
+  .fund-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .fund-kind { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+  .fund-header h1 { font-family: var(--serif); font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .fund-dates { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); }
+
+  .fund-section { margin-bottom: 40px; }
+  .fund-section h2 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 16px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+
+  .fund-body { font-family: var(--serif); font-size: 17px; line-height: 1.65; }
+  .fund-body :global(h1) { display: none; }
+  .fund-body :global(h2) { font-family: var(--serif); font-size: 22px; font-weight: 700; margin: 32px 0 12px; color: var(--ink); border: 0; padding: 0; text-transform: none; letter-spacing: 0; }
+  .fund-body :global(h3) { font-family: var(--serif); font-size: 17px; font-weight: 700; margin: 24px 0 10px; }
+  .fund-body :global(p)  { margin: 0 0 14px; }
+  .fund-body :global(ul) { padding-left: 20px; margin: 0 0 16px; }
+  .fund-body :global(blockquote) { border-left: 2px solid var(--accent-2); margin: 20px 0; padding: 4px 0 4px 14px; color: var(--ink-dim); font-style: italic; }
+  .fund-body :global(.wiki-link) { color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted var(--accent-2); }
+  .fund-body :global(.wiki-chip) { display: inline-block; padding: 1px 6px; border: 1px solid var(--rule); border-radius: 3px; color: var(--ink-dim); font-size: 13px; margin: 0 2px; }
+
+  .grant-list { list-style: none; padding: 0; margin: 0; }
+  .grant-list li { border-bottom: 1px solid var(--rule); }
+  .grant-list a {
+    display: grid; grid-template-columns: 80px 1fr; gap: 16px;
+    padding: 14px 0; text-decoration: none; color: var(--ink);
+    align-items: baseline;
+  }
+  .grant-list a:hover { background: rgba(255,255,255,0.02); }
+  .grant-year { font-family: var(--mono); font-size: 14px; color: var(--accent-2); }
+  .grant-title { font-family: var(--serif); font-size: 17px; }
+</style>

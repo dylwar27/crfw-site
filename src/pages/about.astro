@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../lib/renderBody';
 import articlesData from '../../data/articles-snapshot.json';
 
 const bio = articlesData.sheets['Biographical Summary'] as Array<{ Field: string; Value: string; Source?: string }>;
@@ -17,6 +19,21 @@ const sections = [
 const fieldMap = Object.fromEntries(bio.map(b => [b.Field, b]));
 
 const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+// Pull Colin's vault entry for the rich biographical body. The vault has
+// curator-authored prose (era overview, family, collaborators, quotes) that
+// shouldn't be agent-rewritten — render it as-is via the wikilink renderer.
+const people = await getCollection('vault_people');
+const colin = people.find(p => p.id === 'colin-ward');
+const colinBodyHtml = colin ? renderBody(colin.data.body || '', BASE) : '';
+const aliases = (colin?.data.aliases as string[] | undefined) || [];
+const contactPublic = (colin?.data.contact_public as Record<string, string | null>) || {};
+const externalLinks = Object.entries(contactPublic)
+  .filter(([, v]) => v && String(v).match(/^https?:\/\/|^[\w.-]+\.[a-z]{2,}/i))
+  .map(([k, v]) => ({
+    label: k.replace(/_/g, ' '),
+    url: String(v).startsWith('http') ? String(v) : `https://${v}`,
+  }));
 ---
 <Base title="About Colin Ward — CRFW">
   <article class="about-page">
@@ -28,7 +45,31 @@ const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
       <h1>Colin Richard Ferguson Ward</h1>
       <p class="about-lede">August 29, 1990 — February 1, 2018.</p>
       <p class="about-sub">Musician, producer, percussionist, visual artist. Denver DIY. Known as alphabets (2008–2013) and killd by (2015–2017).</p>
+      {aliases.length > 0 && (
+        <p class="about-aliases">Also: {aliases.join(' · ')}</p>
+      )}
     </header>
+
+    {colinBodyHtml && (
+      <section class="about-section about-bio">
+        <h2>Biography</h2>
+        <div class="about-bio-body" set:html={colinBodyHtml} />
+      </section>
+    )}
+
+    {externalLinks.length > 0 && (
+      <section class="about-section">
+        <h2>Online</h2>
+        <ul class="about-links">
+          {externalLinks.map(l => (
+            <li>
+              <span class="about-link-label">{l.label}</span>
+              <a href={l.url} target="_blank" rel="noopener">{l.url.replace(/^https?:\/\//, '')}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     {sections.map(s => {
       const rows = s.fields.map(f => fieldMap[f]).filter(Boolean);
@@ -103,6 +144,61 @@ const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
     line-height: 1.55;
     margin: 0;
   }
+  .about-aliases {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin: 16px 0 0;
+    letter-spacing: 0.04em;
+  }
+
+  .about-bio-body {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  .about-bio-body :global(h1),
+  .about-bio-body :global(h2),
+  .about-bio-body :global(h3) {
+    font-family: var(--serif);
+    font-weight: 700;
+    margin: 32px 0 12px;
+    line-height: 1.2;
+  }
+  .about-bio-body :global(h1) { display: none; }      /* page already has h1 */
+  .about-bio-body :global(h2) { font-size: 22px; color: var(--ink); }
+  .about-bio-body :global(h3) { font-size: 17px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  .about-bio-body :global(p) { margin: 0 0 16px; }
+  .about-bio-body :global(ul) { padding-left: 20px; margin: 0 0 16px; }
+  .about-bio-body :global(blockquote) {
+    border-left: 2px solid var(--accent-2);
+    margin: 24px 0;
+    padding: 6px 0 6px 16px;
+    color: var(--ink-dim);
+    font-style: italic;
+  }
+  .about-bio-body :global(.wiki-link) {
+    color: var(--accent-2);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent-2);
+  }
+  .about-bio-body :global(.wiki-chip) {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-dim);
+    font-size: 14px;
+    margin: 0 2px;
+  }
+
+  .about-links { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .about-links li {
+    display: grid; grid-template-columns: 120px 1fr; gap: 16px;
+    font-family: var(--mono); font-size: 13px;
+  }
+  .about-link-label { color: var(--ink-dim); text-transform: capitalize; }
+  .about-links a { color: var(--accent-2); }
 
   .about-section {
     margin-bottom: 48px;

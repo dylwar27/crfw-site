@@ -1,0 +1,136 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const grants = await getCollection('vault_grants');
+  return grants
+    .filter(g => g.data.public_display !== false)
+    .map(g => ({
+      params: { slug: g.id },
+      props: { grant: g },
+    }));
+}
+
+const { grant } = Astro.props;
+const d = grant.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const allFunds = await getCollection('vault_funds');
+const allPeople = await getCollection('vault_people');
+const allOrgs = await getCollection('vault_organizations');
+
+function refSlug(ref: unknown): string {
+  return ref ? String(ref).split('/').at(-1) ?? '' : '';
+}
+function refColl(ref: unknown): string {
+  return ref ? String(ref).split('/')[0] ?? '' : '';
+}
+
+const fundSlug = refSlug(d.fund);
+const fund = allFunds.find(f => f.id === fundSlug);
+
+const granteeRef = (d.grantee as string | undefined) || '';
+const granteeSlug = refSlug(granteeRef);
+const granteeColl = refColl(granteeRef);
+const granteePerson = granteeColl === 'people' ? allPeople.find(p => p.id === granteeSlug) : null;
+const granteeOrg    = granteeColl === 'organizations' ? allOrgs.find(o => o.id === granteeSlug) : null;
+const granteeName = granteePerson?.data.display_name || granteePerson?.data.title
+                  || granteeOrg?.data.title || granteeOrg?.data.name
+                  || granteeSlug.replace(/-/g, ' ');
+const granteeHref = granteeColl === 'people' && granteePerson
+  ? `${BASE}/person/${granteePerson.id}`
+  : granteeColl === 'organizations' && granteeOrg
+  ? `${BASE}/org/${granteeOrg.id}`
+  : null;
+
+const bodyHtml = renderBody(d.body || '', BASE);
+const titleClean = (d.title || `CRFW Fund ${d.year} — ${granteeName}`).replace(/\[\[[^\]]+\]\]/g, granteeName);
+---
+<Base title={`${titleClean} — CRFW`}>
+  <article class="grant-page">
+    <nav class="grant-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      {fund && (
+        <>
+          <span class="sep">·</span>
+          <a href={`${BASE}/fund/${fund.id}`}>{fund.data.name || fund.data.title}</a>
+        </>
+      )}
+    </nav>
+
+    <header class="grant-header">
+      <div class="grant-kind">grant</div>
+      <h1>{titleClean}</h1>
+      <div class="grant-meta">
+        {d.year && <span>{d.year}</span>}
+        {d.year && d.announcement_date && <span class="sep">·</span>}
+        {d.announcement_date && <span>announced {d.announcement_date}</span>}
+        {d.amount && <><span class="sep">·</span><span>${d.amount}</span></>}
+      </div>
+    </header>
+
+    <dl class="grant-fields">
+      {fund && (
+        <>
+          <dt>Fund</dt>
+          <dd><a href={`${BASE}/fund/${fund.id}`}>{fund.data.name || fund.data.title}</a></dd>
+        </>
+      )}
+      {granteeHref && (
+        <>
+          <dt>Grantee</dt>
+          <dd><a href={granteeHref}>{granteeName}</a></dd>
+        </>
+      )}
+      {!granteeHref && granteeName && (
+        <>
+          <dt>Grantee</dt>
+          <dd>{granteeName}</dd>
+        </>
+      )}
+      {d.purpose && d.purpose !== 'unspecified' && (
+        <>
+          <dt>Purpose</dt>
+          <dd>{d.purpose}</dd>
+        </>
+      )}
+      {d.source_note && (
+        <>
+          <dt>Source</dt>
+          <dd class="grant-source">{d.source_note}</dd>
+        </>
+      )}
+    </dl>
+
+    {bodyHtml && (
+      <section class="grant-body" set:html={bodyHtml} />
+    )}
+  </article>
+</Base>
+
+<style>
+  .grant-page { max-width: 720px; margin: 0 auto; padding: 48px 32px 96px; font-family: var(--sans); }
+  .grant-nav { margin-bottom: 32px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .grant-nav a { color: var(--ink-dim); text-decoration: none; }
+  .grant-nav a:hover { color: var(--accent-2); }
+  .grant-nav .sep { margin: 0 8px; color: var(--ink-dim); }
+
+  .grant-header { margin-bottom: 32px; border-bottom: 1px solid var(--rule); padding-bottom: 24px; }
+  .grant-kind { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+  .grant-header h1 { font-family: var(--serif); font-size: clamp(28px, 4.5vw, 44px); font-weight: 800; line-height: 1.15; margin: 0 0 12px; }
+  .grant-meta { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); }
+  .grant-meta .sep { margin: 0 8px; }
+
+  .grant-fields { display: grid; grid-template-columns: 120px 1fr; gap: 12px 24px; margin: 0 0 32px; }
+  @media (max-width: 600px) { .grant-fields { grid-template-columns: 1fr; gap: 4px 0; } }
+  .grant-fields dt { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); letter-spacing: 0.05em; }
+  .grant-fields dd { margin: 0; font-family: var(--serif); font-size: 16px; }
+  .grant-fields a { color: var(--accent-2); }
+  .grant-source { font-size: 13px; color: var(--ink-dim); }
+
+  .grant-body { font-family: var(--serif); font-size: 16px; line-height: 1.6; }
+  .grant-body :global(.wiki-link) { color: var(--accent-2); }
+</style>
