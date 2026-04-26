@@ -4,7 +4,32 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
-## Daily pass — 2026-04-26
+## Daily pass — 2026-04-26 (evening — audio + entity pages + visual art popup)
+
+Curator-directed polish pass after early reviewers, ahead of Cloudflare migration:
+
+- **Visual art popup full-size.** The 65 cargo_collective pieces had been displaying as 280×280 square crops because `.popup-cover` enforced `aspect-ratio: 1; object-fit: cover`. Added `.popup-cover-art` modifier (natural aspect, `object-fit: contain`, max-height 80vh) and `.popup-header-art` (60% column for the image). Click-through wrapper to original full-size in new tab.
+
+- **Colin's bio on /about.** `about.astro` now pulls `_Vault/people/colin-ward.md` body via `renderBody()` and shows it as the lead biography section, with the existing structured field list below. Aliases line + external links pulled from vault `contact_public` block.
+
+- **/fund and /grant routes.** New `src/pages/fund/[slug].astro` (1 page: CRFW Fund) and `src/pages/grant/[slug].astro` (6 pages). Fund page strips `## Email-trail references` and other curator-private headings before publishing. `WIKILINK_ROUTES` in `renderBody.ts` updated so `[[funds/X]]` and `[[grants/X]]` chips become real links.
+
+- **Voice memo content scan.** New `scripts/scan-voice-memos.mjs` runs a conservative red-flag scan over the 305 transcripts: slurs, violence/self-harm, sexual-explicit, scatological, hard drugs, profanity-heavy (≥3 instances). 121 memos flagged (mostly profanity-heavy, with 27 sexual-explicit, 13 hard-drug, 8 violence, 7 slurs, 6 scatological). All flagged memos flipped to `published: false`. **184 clean memos remain published.**
+
+- **Voice memo audio playback.** New `scripts/copy-voice-memo-audio.mjs` copied the 184 published memos' .m4a files from the Dropbox archive into `public/media/voice-memos/<slug>.m4a` (709 MB total). The popup now renders an `<audio controls>` element for `kind === 'voice_memo'` with a "VOICE MEMO · YYYY-MM-DD" header. Skips unpublished memos.
+
+- **Build:** 708 pages, 19,595 words indexed, dist size 1.3 GB.
+
+**Note on dist size:** GH Pages soft limit is 1 GB; we're now over. Cloudflare Pages migration (planned next) lifts this to 25 GB. CI may warn but should still deploy.
+
+**Followup queued:**
+- Cloudflare Pages setup via browser MCP — next priority. Custom domain pending purchase.
+- Curator review of the 184 published voice memos (script is conservative; some decisions may differ).
+- alphabets archival videos still hidden by publish-policy (parallel case to DIMCP, awaiting curator call).
+
+---
+
+## Daily pass — 2026-04-26 (morning — auto routine)
 
 - Sync-vault projected 1 new organization (`cvlts`, the REMIX10 track 17 collaborator) plus body refreshes on `adreanna-escalante` (Session 14 web-search note — spelling variants exhausted, Gmail next), `alphabets-remix10`, and `remix` series (CVLTS now wikilinked).
 - Reconciler dry-run idempotent (0 updated, 83 no-change, 0 unmatched). Build green: 702 pages, 19,562 words indexed.
