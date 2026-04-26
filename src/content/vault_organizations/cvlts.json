@@ -1,0 +1,36 @@
+{
+  "id": "cvlts",
+  "kind": "organization",
+  "title": "CVLTS",
+  "preservedTitle": "CVLTS",
+  "display_name": "CVLTS",
+  "aliases": [
+    "C V L T S"
+  ],
+  "organization_kind": "band",
+  "hometown": "Lawrence, Kansas",
+  "canonical_urls": {
+    "bandcamp": null,
+    "discogs": "https://www.discogs.com/master/443363-C-V-L-T-S-Realiser"
+  },
+  "created": "2026-04-26",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "tags": [
+    "remix-collaborator",
+    "non-denver",
+    "lawrence-kansas",
+    "experimental",
+    "clavinova"
+  ],
+  "related": [
+    "releases/alphabets-remix10",
+    "series/remix",
+    "people/colin-ward"
+  ],
+  "archivePath": [
+    "_Documentation/Music/alphabets/Cvlts remix/RADDPITTcvltsremix.mp3"
+  ],
+  "body": "# CVLTS\n\nExperimental duo from **Lawrence, Kansas**. Their work uses an old\nClavinova, guitar pedals, and other effects, with improvisation, keyboards,\nloops, and field recordings as primary materials. The European label\n**AMDISCS** released a 100-copy limited-edition cassette of theirs titled\n*LVST*; a later LP, *Realiser*, has a Discogs entry.\n\nCVLTS is the **track 17 artist on Colin's REMIX10**:\n*CVLTS-RADD PITT (clavinova_mic2 mix)*. The mix-name \"clavinova_mic2\"\nmatches CVLTS's signature Clavinova-and-pedals working method exactly,\nwhich is what closes the geography question — the connection is real\nbut **not Denver**. Colin's archive folder\n`_Documentation/Music/alphabets/Cvlts remix/RADDPITTcvltsremix.mp3` is the\nlocal copy of that track.\n\n**Remix direction:** the canonical reading per\n[[series/remix|the REMIX series]] track-naming convention\n(`[ORIGINAL ARTIST] – [ORIGINAL TRACK TITLE] (mix name)`) is that **Colin\nremixed CVLTS's track \"RADD PITT\"** as the \"clavinova_mic2 mix\" — the same\nshape as the other identified REMIX10 tracks (Modern Witch, Thundercade,\nConstellations). The mix-name \"clavinova_mic2\" is unusual for Colin\n(typically he picks playful coinages like *scary dipper* or *nine inch\nwitch*) — the more functional label may reflect that the source material\nwas already Clavinova-driven, so Colin tagged the mix by the mic / take\nthat produced it. The archive folder name `Cvlts remix` and file name\n`RADDPITTcvltsremix.mp3` are consistent with the convention.\n\n## Web-search status (2026-04-26, Session 14)\n\nThis entry resolves the long-standing CVLTS carry-forward (Sessions 12,\n12b, 13). Prior public-web sweeps surfaced only a Bandcamp / Discogs\npresence with no Denver provenance; today's targeted sweep on `CVLTS noise\nColorado experimental music` and `\"CVLTS\" Denver Rhinoceropolis noise`\nreturned The Pitch (Kansas City) coverage establishing the Lawrence\norigin, plus the alphabets Bandcamp track page and AMDISCS / Soundohm\nrelease pages. **CVLTS is not Denver.** Colin's connection is one of his\nout-of-scene remix relationships — analogous to Stephen Steinbrink (SF /\nPhoenix) on REMIX09.\n\n## Sources\n\n- The Pitch (KC): \"Experimental Lawrence duo CVLTS find a European\n  audience\" — establishes the Lawrence, Kansas origin and the\n  Clavinova / pedals / loops / field-recordings working method.\n- alphabets Bandcamp: track page for *CVLTS-RADD PITT (clavinova_mic2\n  mix)* — Colin's catalog hosts the remix.\n- Discogs: *C V L T S – Realiser* — confirms the project's release\n  history beyond the AMDISCS cassette.\n- Soundohm: artist page for CVLTS — additional release stockists."
+}
