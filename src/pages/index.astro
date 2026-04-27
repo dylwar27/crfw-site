@@ -513,13 +513,22 @@ const totals = {
               >
                 {e.project && <span class="project-tag">{e.project}</span>}
                 {e.format && <span class="rel-format-badge">{e.format}</span>}
-                {e.cover
-                  ? <img class="cover" src={e.cover} alt="" loading="lazy" />
-                  : <div class="release-placeholder">
-                      <span class="rel-ph-format">{e.format || 'release'}</span>
-                      <span class="rel-ph-title">{e.preservedTitle || e.title}</span>
-                    </div>
-                }
+                {e.data.bandcampItemId && e.cover ? (
+                  <div
+                    class="cover bc-inline-play"
+                    data-bc-item-id={e.data.bandcampItemId}
+                    data-bc-item-type={e.data.bandcampItemType || 'album'}
+                    data-bc-title={e.title}
+                    style={`background-image:url('${e.cover}'); background-size: cover; background-position: center; aspect-ratio: 1;`}
+                  ></div>
+                ) : e.cover ? (
+                  <img class="cover" src={e.cover} alt="" loading="lazy" />
+                ) : (
+                  <div class="release-placeholder">
+                    <span class="rel-ph-format">{e.format || 'release'}</span>
+                    <span class="rel-ph-title">{e.preservedTitle || e.title}</span>
+                  </div>
+                )}
                 <div>
                   <div class="title">{e.title}</div>
                   {e.preservedTitle && e.preservedTitle !== e.title && (
@@ -576,12 +585,16 @@ const totals = {
                 data-entry-id={e.id}
               >
                 {e.project && <span class="project-tag">{e.project}</span>}
-                <div class="yt-thumb-wrap">
+                <div
+                  class="yt-thumb-wrap yt-inline-play"
+                  data-yt-id={e.data.youtubeId}
+                  data-yt-title={e.title}
+                >
                   {e.cover
                     ? <img class="cover" src={e.cover} alt="" loading="lazy" />
                     : <div class="cover yt-thumb-placeholder"></div>
                   }
-                  <span class="yt-play-btn" aria-hidden="true">▶</span>
+                  <button class="yt-play-btn" aria-label="Play video" type="button">▶</button>
                 </div>
                 <div>
                   <div class="title">{e.title}</div>
@@ -892,27 +905,63 @@ const totals = {
 
         // ── Voice memo group popup ─────────────────────────────────────────
         if (e.kind === 'voice_memo_group') {
-          const memoRows = (d.memos || []).map(m => {
+          // Voice memos: render an inline <audio> player on the FIRST memo,
+          // then a list of the others. Clicking another memo swaps the audio
+          // src + the highlighted transcript without leaving the popup.
+          const memos = d.memos || [];
+          const firstSlug = memos[0]?.slug || '';
+          const firstAudio = `${BASE_URL}/media/voice-memos/${escapeHtml(firstSlug)}.m4a`;
+          const memoRows = memos.map((m, i) => {
+            const audioSrc = `${BASE_URL}/media/voice-memos/${escapeHtml(m.slug)}.m4a`;
             const href = m.permalink || `${BASE_URL}/voice-memo/${escapeHtml(m.slug)}`;
-            return `<li class="popup-ep-row">
-              <a href="${href}" class="popup-ep-link">
+            return `<li class="popup-ep-row vmemo-row${i === 0 ? ' active' : ''}" data-audio-src="${audioSrc}" data-permalink="${href}" data-transcript="${escapeHtml(m.transcript || m.title)}">
+              <button class="popup-ep-link vmemo-pick" type="button">
                 <span class="popup-ep-excerpt">${escapeHtml(m.transcript || m.title)}</span>
-                <span class="popup-ep-arrow">→</span>
-              </a>
+                <span class="popup-ep-arrow" aria-hidden="true">▶</span>
+              </button>
+              <a href="${href}" class="vmemo-permalink" title="Open full transcript page">↗</a>
             </li>`;
           }).join('');
           popup.innerHTML = `
             <button class="popup-close" aria-label="Close" id="popup-close">×</button>
-            <div class="popup-header">
-              <div class="dimcp-popup-icon">🎙</div>
-              <div>
+            <div class="popup-header popup-header-vmemo">
+              <div class="popup-vmemo-player">
+                <div class="popup-vmemo-mono">VOICE MEMO · ${escapeHtml((memos[0]?.slug || '').slice(0, 8).replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3'))}</div>
+                <audio class="popup-audio" id="vmemo-audio" controls preload="metadata">
+                  <source src="${firstAudio}" type="audio/mp4" />
+                  <source src="${firstAudio}" type="audio/m4a" />
+                  Audio not available.
+                </audio>
+                <div class="popup-vmemo-current" id="vmemo-transcript">${escapeHtml(memos[0]?.transcript || '')}</div>
+              </div>
+              <div class="popup-vmemo-meta">
                 <h2 class="popup-title" id="popup-title">${escapeHtml(d.label || e.title)}</h2>
-                <div class="popup-meta"><span>voice memos</span><span>${(d.memos||[]).length} recordings</span></div>
+                <div class="popup-meta"><span>voice memos</span><span>${memos.length} recording${memos.length === 1 ? '' : 's'}</span></div>
               </div>
             </div>
-            <ol class="popup-ep-list">${memoRows}</ol>
+            <ol class="popup-ep-list popup-vmemo-list">${memoRows}</ol>
           `;
           popup.querySelector('#popup-close').addEventListener('click', close);
+          // Wire memo selection — clicking a row swaps the audio src + transcript
+          const audioEl = popup.querySelector('#vmemo-audio');
+          const transcriptEl = popup.querySelector('#vmemo-transcript');
+          popup.querySelectorAll('.vmemo-row').forEach(row => {
+            const pick = row.querySelector('.vmemo-pick');
+            if (!pick) return;
+            pick.addEventListener('click', () => {
+              const src = row.dataset.audioSrc;
+              const text = row.dataset.transcript || '';
+              if (audioEl) {
+                const sources = audioEl.querySelectorAll('source');
+                sources.forEach(s => { s.setAttribute('src', src); });
+                audioEl.load();
+                audioEl.play().catch(() => { /* user-gesture policy variations */ });
+              }
+              if (transcriptEl) transcriptEl.textContent = text;
+              popup.querySelectorAll('.vmemo-row').forEach(r => r.classList.remove('active'));
+              row.classList.add('active');
+            });
+          });
           return;
         }
 
@@ -1187,6 +1236,44 @@ const totals = {
       });
       document.querySelectorAll('.entry').forEach(el => {
         el.addEventListener('click', () => open(el.dataset.entryId));
+      });
+
+      // Inline play: clicking a YT thumb on a timeline card swaps the
+      // thumbnail for the YouTube embed in-place. The click does NOT bubble
+      // up to open the popup — fans want to play it, not read more about
+      // it. Title clicks still open the popup via the .entry handler since
+      // the thumbnail is a sibling of the title region.
+      document.querySelectorAll('.yt-inline-play').forEach(wrap => {
+        wrap.addEventListener('click', ev => {
+          ev.stopPropagation();
+          const ytId = wrap.dataset.ytId;
+          if (!ytId || wrap.dataset.activated === 'true') return;
+          const title = wrap.dataset.ytTitle || '';
+          wrap.dataset.activated = 'true';
+          wrap.innerHTML = `<iframe class="yt-inline-iframe"
+            src="https://www.youtube.com/embed/${escapeHtml(ytId)}?autoplay=1&rel=0"
+            title="${escapeHtml(title)}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>`;
+        });
+      });
+
+      // Inline play: Bandcamp release card with bandcampUrl. Clicking the
+      // cover swaps it for a small inline Bandcamp embed. Like YT,
+      // doesn't open the popup; clicking elsewhere on the card still does.
+      document.querySelectorAll('.bc-inline-play').forEach(wrap => {
+        wrap.addEventListener('click', ev => {
+          ev.stopPropagation();
+          const itemId = wrap.dataset.bcItemId;
+          const itemType = wrap.dataset.bcItemType || 'album';
+          const title = wrap.dataset.bcTitle || '';
+          if (!itemId || wrap.dataset.activated === 'true') return;
+          wrap.dataset.activated = 'true';
+          // Bandcamp's embed iframe — the "small" variant fits a release card.
+          wrap.innerHTML = `<iframe class="bc-inline-iframe"
+            src="https://bandcamp.com/EmbeddedPlayer/${itemType}=${escapeHtml(itemId)}/size=large/bgcol=181a1b/linkcol=64b5f6/transparent=true/"
+            seamless title="${escapeHtml(title)}"></iframe>`;
+        });
       });
 
       // Filter tabs — four independent axes (project + kind + format + tag). AND semantics.

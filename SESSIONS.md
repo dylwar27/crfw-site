@@ -4,6 +4,41 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Sprint 1 — 2026-04-27 — Cards play things (functional cards)
+
+First of 4 planned sprints toward making every timeline card persona-functional. After early reviewers, the curator's feedback was "still looking for audio to play, all youtube, series to be there, motifs. Trying to get the cards all functional." Plan written + approved at `/Users/dward/.claude/plans/snappy-bubbling-planet.md`.
+
+**What landed (Sprint 1A — audio):**
+- **voice_memo_group popup gets an inline `<audio controls>` player.** Was: text list of memos linking to permalink pages (audio buried two clicks deep). Now: large player on first memo + clickable list — click a memo row, audio src + transcript swap inline, plays immediately. Ditched the click-through-to-permalink interaction model.
+- **/voice-memo/[slug] permalink pages get `<audio controls>`** above the transcript. So search/share lands on a playable page.
+- **/about gets a "Colin's voice" strip** of the 3 earliest published voice memos with inline players + transcript previews + permalinks. Family lands here, hears Colin's voice in two clicks. Selection is structural (chronological) not editorial — golden rule #6 holds; curator can later add a `featured` tag pattern to bias selection.
+
+**What landed (Sprint 1B — embed inline):**
+- **YT strip cards: inline play.** Click the thumbnail → swaps for the YouTube iframe in-place (lazy-load, no popup). One click to play. Title click still opens the popup for full details.
+- **Release cards with `bandcampItemId`: inline play.** Click the cover art → swaps for an inline Bandcamp embed at album-art aspect ratio. Title click still opens the popup. ~28 releases get this treatment automatically.
+- DIMCP video sample deferred — full DIMCP video ingest is ~1.5 GB and warrants its own pass. The popup still lists episodes; the video player upgrade comes later.
+
+**Files touched:**
+- `src/pages/index.astro`: voice_memo_group popup rebuild; YT thumb gets `.yt-inline-play`; release cover gets `.bc-inline-play`; new delegated click handlers below the entry click handler.
+- `src/pages/voice-memo/[slug].astro`: `<audio controls>` above transcript.
+- `src/pages/about.astro`: voice memo strip section.
+- `src/styles/global.css`: `.popup-vmemo-*` for group popup, `.yt-inline-iframe` + `.bc-inline-iframe`, `.memo-strip-*` for /about.
+
+**Build:** 708 pages, 19,601 words indexed. Auto-deploy via GH Actions to Cloudflare Pages.
+
+**Verification (post-deploy):** spot-check on https://crfw-site.pages.dev/ — clicking a voice memo group card on the timeline should immediately render an inline player; YT strips should play in-place on click.
+
+**Next sprints (in order):**
+- Sprint 2 — YouTube ID recovery: pull YT channel data, match to existing video stubs by title/year, patch `youtubeId` on hits, surface ~300+ more functional video cards.
+- Sprint 3 — Series pages + timeline series row.
+- Sprint 4 — Motifs vault collection.
+
+**Followup flagged:**
+- Curator may want `featured` tag on voice memos to override the chronological default on /about.
+- DIMCP video sample (5-10 episode pilot) when DIMCP becomes a focus.
+
+---
+
 ## Daily pass — 2026-04-26 (late evening — Cloudflare Pages migration)
 
 Migrated from GitHub Pages to Cloudflare Pages. Forcing function: dist/ hit 1.3 GB after the voice memo audio import, exceeding GH Pages's 1 GB soft limit. Cloudflare Pages's 25 GB site cap fits comfortably and adds per-branch preview URLs.

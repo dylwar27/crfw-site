@@ -34,6 +34,27 @@ const externalLinks = Object.entries(contactPublic)
     label: k.replace(/_/g, ' '),
     url: String(v).startsWith('http') ? String(v) : `https://${v}`,
   }));
+
+// Voice memos: pull the 3 earliest published memos as the "Colin's voice"
+// landing strip. Family / first-time visitors should hear him within a
+// click. Ordering by date (chronological) is structural, not editorial —
+// no curatorial picking. A curator can later add a `featured` tag to bias
+// the selection (deferred).
+const memos = await getCollection('voice_memos');
+const featuredMemos = memos
+  .filter(m => m.data.published !== false)
+  .sort((a, b) => (a.data.date || '').localeCompare(b.data.date || ''))
+  .slice(0, 3)
+  .map(m => {
+    const slug = m.id.replace(/\.json$/, '');
+    return {
+      slug,
+      date: m.data.date,
+      transcript: (m.data.transcript || '').slice(0, 240).trim() + ((m.data.transcript || '').length > 240 ? '…' : ''),
+      audioSrc: `${BASE}/media/voice-memos/${slug}.m4a`,
+      permalink: `${BASE}/voice-memo/${slug}`,
+    };
+  });
 ---
 <Base title="About Colin Ward — CRFW">
   <article class="about-page">
@@ -49,6 +70,30 @@ const externalLinks = Object.entries(contactPublic)
         <p class="about-aliases">Also: {aliases.join(' · ')}</p>
       )}
     </header>
+
+    {featuredMemos.length > 0 && (
+      <section class="about-section about-voice">
+        <h2>Colin's voice</h2>
+        <p class="about-voice-lede">
+          Three of the earliest preserved voice memos from Colin's iPhone — sketches, freestyles, recorded ideas. <a href={`${BASE}/?kind=voice_memo`}>Hear all {memos.filter(m => m.data.published !== false).length} on the timeline →</a>
+        </p>
+        <ul class="memo-strip">
+          {featuredMemos.map(m => (
+            <li class="memo-strip-item">
+              <div class="memo-strip-meta">
+                <span class="memo-strip-date">{m.date}</span>
+                <a class="memo-strip-permalink" href={m.permalink}>permalink ↗</a>
+              </div>
+              <audio class="memo-strip-audio" controls preload="metadata">
+                <source src={m.audioSrc} type="audio/mp4" />
+                <source src={m.audioSrc} type="audio/m4a" />
+              </audio>
+              <div class="memo-strip-transcript">{m.transcript}</div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     {colinBodyHtml && (
       <section class="about-section about-bio">
@@ -199,6 +244,37 @@ const externalLinks = Object.entries(contactPublic)
   }
   .about-link-label { color: var(--ink-dim); text-transform: capitalize; }
   .about-links a { color: var(--accent-2); }
+
+  .about-voice-lede {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    margin: 0 0 24px;
+  }
+  .about-voice-lede a { color: var(--accent-2); }
+  .memo-strip {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: 1fr; gap: 24px;
+  }
+  .memo-strip-item {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 16px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border-radius: 4px;
+  }
+  .memo-strip-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent-2);
+  }
+  .memo-strip-permalink { color: var(--ink-dim); text-decoration: none; }
+  .memo-strip-permalink:hover { color: var(--accent-2); }
+  .memo-strip-audio { width: 100%; margin: 4px 0; }
+  .memo-strip-transcript {
+    font-family: var(--serif); font-size: 14px; line-height: 1.5;
+    color: var(--ink-dim); font-style: italic;
+  }
 
   .about-section {
     margin-bottom: 48px;

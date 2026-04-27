@@ -12,9 +12,12 @@ export async function getStaticPaths() {
 
 const { memo } = Astro.props;
 const d = memo.data;
+const slug = memo.id.replace(/\.json$/, '');
 
 const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 const timelineHref = `${BASE}/`;
+const audioSrc = `${BASE}/media/voice-memos/${slug}.m4a`;
+const isPublished = d.published !== false;
 ---
 
 <Base title={`Voice memo — ${d.date} — CRFW`}>
@@ -31,6 +34,16 @@ const timelineHref = `${BASE}/`;
       </div>
       <h1 class="memo-title">{d.title ?? 'Voice memo'}</h1>
     </header>
+
+    {isPublished && (
+      <section class="memo-player">
+        <audio class="memo-audio" controls preload="metadata">
+          <source src={audioSrc} type="audio/mp4" />
+          <source src={audioSrc} type="audio/m4a" />
+          Audio not available in this browser.
+        </audio>
+      </section>
+    )}
 
     {d.transcript ? (
       <section class="memo-transcript">
@@ -97,6 +110,17 @@ const timelineHref = `${BASE}/`;
     line-height: 1.05;
     letter-spacing: -0.02em;
     margin: 0;
+  }
+
+  .memo-player {
+    margin-bottom: 32px;
+    padding: 16px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border-radius: 4px;
+  }
+  .memo-audio {
+    width: 100%;
+    display: block;
   }
 
   .memo-transcript h2 {
