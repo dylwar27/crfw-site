@@ -59,6 +59,7 @@ const KIND_MAP = {
   funds:         'vault_funds',
   grants:        'vault_grants',
   series:        'vault_series',
+  motifs:        'vault_motifs',
   // Placeholders in the vault — skip until populated:
   // works, sources, tags
 };
@@ -292,7 +293,12 @@ for (const [folder, collName] of Object.entries(KIND_MAP)) {
   const dstDir = join(contentDir, collName);
   if (!existsSync(srcDir)) continue;
 
-  const files = readdirSync(srcDir).filter(f => f.endsWith('.md') && !f.includes(' 2.'));
+  // Filter out vault-level docs (README, SCHEMA, INDEX) from per-kind
+  // folders — they have no `kind:` frontmatter and would fail schema.
+  const META_DOCS = new Set(['README.md', 'SCHEMA.md', 'INDEX.md', 'NOTES.md']);
+  const files = readdirSync(srcDir).filter(f =>
+    f.endsWith('.md') && !f.includes(' 2.') && !META_DOCS.has(f),
+  );
   stats[collName] = { count: 0, files: [] };
 
   if (write) {

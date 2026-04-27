@@ -4,6 +4,39 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Sprint 4 — 2026-04-27 — Motifs vault collection + pages
+
+Fourth and final of the 4 planned sprints. Motifs are recurring themes / phrases / images Colin returned to across the catalog. Curator-driven entity (golden rule #6 — agent never invents motifs).
+
+**A. Schema + projection.**
+- New `vault_motifs` content collection in `src/content/config.ts` mirroring vault_series's `members[]` pattern.
+- `scripts/sync-vault.mjs` `KIND_MAP` adds `motifs: 'vault_motifs'` so vault `_Vault/motifs/*.md` files project into `src/content/vault_motifs/*.json`.
+- Bonus fix: sync-vault now filters out per-kind `README.md` / `SCHEMA.md` / `INDEX.md` / `NOTES.md` files (they have no `kind:` frontmatter and were failing schema validation).
+
+**B. Seeded the first motif from Dyl's existing notes.**
+- Wrote `_Vault/motifs/lust-howls.md` capturing the recurrence Dyl had already documented in body prose of `alphabets-unreleased-loose.md`. Members: `releases/07_08`, `releases/unreleased-loose`. Era 2007–2013.
+- **Discovered:** the vault already had 7 other motif stubs Dyl had drafted (`animal-coinage`, `body`, `cosmic-ghost`, `howl`, `sun`, `sweat`, `water`). Sync-vault picked them up automatically once the projection wiring landed. Most have empty members[]; they're scaffolds for future curator population.
+
+**C. Permalinked pages.**
+- New `src/pages/motif/[slug].astro` per motif. Renders title, era, description, "Where it appears" member list (with kind + year), related motifs as chips, full body prose.
+- New `src/pages/motifs/index.astro` lists all 8 motifs with title, description, era, member count, "curator stub" annotation when members[] is empty.
+- `WIKILINK_ROUTES` adds `motifs: '/motif'` so `[[motifs/X]]` chips become links.
+- Footer nav adds /motifs.
+
+**D. Persona payoff.**
+- Curator: interpretive lens (recurring threads) becomes navigable rather than buried in body prose.
+- Researcher: a unique-to-this-archive surface — no other CRFW resource maps the throughline.
+- Fan: "if you liked this song, here's the thread it belongs to" pull (once members[] populates).
+
+**Build:** 714 → 723 pages (+8 motif pages + /motifs index).
+
+**Followup:**
+- The 7 stub motifs need member curation. Dyl can add via Obsidian (or future /admin enhancement).
+- Reverse index: each release/track/photo page should show "Appears in motifs: X, Y, Z" — out of scope this sprint, queued for follow-up.
+- Sync-vault hardening: the README/INDEX/SCHEMA filter caught a real schema-validation crash; consider documenting the convention in `_Vault/SCHEMA.md`.
+
+---
+
 ## Sprint 3 — 2026-04-27 — Series pages + timeline series row
 
 Third of 4 planned sprints. Series existed as a 5th filter dropdown but were invisible everywhere else. Now they're a navigable surface.

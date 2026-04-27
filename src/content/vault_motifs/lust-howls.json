@@ -1,0 +1,30 @@
+{
+  "id": "lust-howls",
+  "kind": "motif",
+  "title": "Lust howls",
+  "description": "A 5-year arc of 'lust howls' / 'howl' / 'calls' phrases recurring across alphabets-era track titles, 2007–2013.",
+  "era": "2007–2013",
+  "created": "2026-04-27",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "medium",
+  "related_motifs": [
+    "howls",
+    "calls",
+    "animal-body"
+  ],
+  "members": [
+    "releases/07_08",
+    "releases/unreleased-loose"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "tags": [
+    "motif",
+    "alphabets-era",
+    "recurring-phrase"
+  ],
+  "body": "# Lust howls\n\nThe phrase \"lust howls\" — and its sibling \"lust calls\" — appears across a five-year arc of alphabets-era recordings. First spotted in a curator filename sweep on 2026-04-24.\n\n## Confirmed appearances\n\n- `07_08 [_]/lust howls in the afternoon.mp3` (2007–2008)\n- `07_08 [_]/lust howls and calls for mating like locusts do.m4a` (2007–2008)\n- `09 [_]/lust calls and sex dance.m4a` (related \"lust calls\" variant, 2009)\n- `unreleased/lust howls.mp3` (2013, [[releases/unreleased-loose]])\n\nThe 2013 track is the latest in the arc. The `.asd` Ableton sidecar on the 2013 file means Colin had it loaded as late as September 2015 — possibly reworking it, possibly auditioning.\n\n## Related motif: \"howl\"\n\nThe broader \"howl\" theme runs through the catalog independently:\n\n- \"robo goats howl and bang\" (fantazia2010)\n- \"plesiosaur howl outs and swim bump\" (BESTUV09 + sep09)\n- \"robodogs nighttime cage howls\" (DEC09SCIFI)\n\nWhether these belong to the same motif as \"lust howls\" or constitute a separate \"howl\" motif is a curator call.\n\n## Context\n\nThe recurrence isn't a one-off; it's a thread Colin returned to. Like the underwaters series's aquatic-creature naming, the howl/lust phrasing is one of his stylistic signatures. Worth treating as a motif/series rather than letting it sit buried in track titles."
+}

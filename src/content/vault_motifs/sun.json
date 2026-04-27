@@ -1,0 +1,21 @@
+{
+  "id": "sun",
+  "kind": "motif",
+  "title": "sun / sunpower / sunkissed",
+  "motif_kind": "word",
+  "date_range": "2009 → 2011 (peak); scattered earlier and later",
+  "count": 8,
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "motif",
+    "alphabets-era"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# sun / sunpower / sunkissed\n\nThe \"sun\" register in Colin's alphabets-era output is wide enough to have\ngenerated its own release group — **SUNPOWER**, **SUNPOWER2**, **SUNPOWER3**\n— alongside scattered sun-titled tracks elsewhere in the archive. This\nmotif sits in his catalog the way \"rain\" sits in many singer-songwriter\ncatalogs: a touchstone he kept returning to.\n\n## Releases that explicitly carry the motif as title\n\n- **SUNPOWER** _(release in archive — _Documentation/Music/alphabets/SUNPOWER/_)_\n- **SUNPOWER2** _(release — _Documentation/Music/alphabets/SUNPOWER2/_)_\n- **SUNPOWER3** _(release — _Documentation/Music/alphabets/SUNPOWER3/_)_\n\nTogether these form an internal mini-series; see the `series/` folder if\nthat hasn't been formalized yet.\n\n## Track-title appearances\n\n- `SUNPOWER3/04 sunkissed goose.mp3`\n- `SUNPOWER3/02 thunder bus.mp3` _(adjacent register — weather/charge)_\n- `2011 [_]/sunkissed.mp3`\n- `BESTUV09/14 sun mountain champions.m4a`\n- `BESTUV09/02 sunlight monsters summer hello.m4a`\n- `MAY2011DTE/...` _(May 2011 release — high overlap with sun-light register)_\n- `09 [_]/sun likes stars field day 3 leg race.m4a` _(sun + stars overlap)_\n\n## Reading\n\nWhere the **howl** motif sits in late-night/dream territory, the **sun**\nmotif is daytime, social, summer-coded — \"summer hello\", \"field day\", \"sun\nmountain champions\". The SUNPOWER series specifically reads as Colin's\n*celebratory* register: bright, playful, group-energy. Distinct from the\nnocturnal \"rave\" or \"ghost\" registers elsewhere in his catalog.\n\n## Notes for future passes\n\n- \"Sunkissed\" appears multiple times — possibly a sub-motif worth its own\n  trace.\n- The relationship between SUNPOWER (the release group) and other \"sunny\"\n  releases (e.g. CAVE RAVE's daytime moments, BIEBER JERBOA's \"let go of\n  stress\") is worth mapping."
+}

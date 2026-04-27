@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const motifs = (await getCollection('vault_motifs'))
+  .filter(m => m.data.public_display !== false && m.data.kind === 'motif')
+  .sort((a, b) => (a.data.title || '').localeCompare(b.data.title || ''));
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+---
+<Base title="Motifs — CRFW">
+  <article class="motifs-index-page">
+    <nav class="motifs-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+    </nav>
+
+    <header class="motifs-header">
+      <h1>Motifs</h1>
+      <p class="motifs-lede">
+        Recurring themes, phrases, and images Colin returned to across the catalog. Curator-authored;
+        the threads are visible if you look across years rather than within a single release.
+      </p>
+    </header>
+
+    <ul class="motifs-list">
+      {motifs.map(m => {
+        const slug = m.id.replace(/\.json$/, '');
+        const memberCount = (m.data.members || []).length;
+        return (
+          <li>
+            <a class="motif-link" href={`${BASE}/motif/${slug}`}>
+              <div class="motif-link-title">{m.data.title || slug}</div>
+              {m.data.description && (
+                <div class="motif-link-desc">{m.data.description}</div>
+              )}
+              <div class="motif-link-meta">
+                {m.data.era && <span>{m.data.era}</span>}
+                {m.data.era && memberCount > 0 && <span class="dot">·</span>}
+                {memberCount > 0 && <span>{memberCount} {memberCount === 1 ? 'reference' : 'references'}</span>}
+                {memberCount === 0 && <span class="motif-link-stub">curator stub</span>}
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </article>
+</Base>
+
+<style>
+  .motifs-index-page { max-width: 780px; margin: 0 auto; padding: 48px 32px 96px; font-family: var(--sans); }
+  .motifs-nav { margin-bottom: 32px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .motifs-nav a { color: var(--ink-dim); text-decoration: none; }
+  .motifs-nav a:hover { color: var(--accent-2); }
+
+  .motifs-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .motifs-header h1 { font-family: var(--serif); font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .motifs-lede { font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink-dim); max-width: 600px; margin: 0; }
+
+  .motifs-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 4px; }
+  .motif-link {
+    display: block; padding: 16px 20px; border-radius: 4px;
+    text-decoration: none; color: var(--ink);
+    border: 1px solid var(--rule);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .motif-link:hover { border-color: var(--accent-2); background: rgba(255,255,255,0.02); }
+  .motif-link-title { font-family: var(--serif); font-size: 21px; font-weight: 700; line-height: 1.2; margin-bottom: 4px; }
+  .motif-link-desc { font-family: var(--serif); font-size: 14px; color: var(--ink-dim); line-height: 1.4; margin-bottom: 8px; }
+  .motif-link-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); letter-spacing: 0.05em; text-transform: uppercase; }
+  .motif-link-meta .dot { margin: 0 6px; }
+  .motif-link-stub { color: var(--ink-dim); font-style: italic; }
+</style>

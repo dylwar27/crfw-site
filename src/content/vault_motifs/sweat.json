@@ -1,0 +1,21 @@
+{
+  "id": "sweat",
+  "kind": "motif",
+  "title": "sweat / sweatbee",
+  "motif_kind": "word",
+  "date_range": "2010 → 2012",
+  "count": 7,
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "motif",
+    "alphabets-era"
+  ],
+  "related": [
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# sweat / sweatbee\n\nBodily-heat register that gets its own release name (**SWEATBEE**, plus\nthe **SWEAT BEE: DANCE MIX** variant) and a few scattered track-level\nappearances.\n\n## Releases\n\n- **SWEATBEE** (2012) — five tracks numbered i–v in roman numerals (a\n  rare formal-numbering choice in Colin's catalog; most releases use\n  word-titles).\n- **SWEAT BEE: DANCE MIX** (vault: `[[releases/alphabets-sweat-bee-dance-mix]]`)\n- The SWEATBEE folder also exists under `18 alphabets/SWEATBEE/` —\n  duplicate or alternative-mix copy.\n\n## Track-title appearances elsewhere\n\n- `may10/sweat.mp3`\n- \"Cave Rave\" → \"sets a sweaty stage on the path to Fantasia\" _(per Westword\n  preview headline; the word also appears in adjacent press)_\n\n## Reading\n\nWhere the **sun** motif is bright/social and the **howl** motif is\nnocturnal/dream-coded, **sweat** is the rave/dance register made bodily —\nheat from movement and crowd. The \"BEE\" coinage adds a buzz/swarm\ncharacter; the \"SWEAT BEE: DANCE MIX\" framing makes the dance-floor\ncontext explicit. Closely related to Colin's broader rave/dance-floor\nvocabulary, which connects to **Fantasia** (the Rhinoceropolis festival\nhe co-curated) and **CAVE RAVE** (the 2014 album).\n\nThe roman-numeraled SWEATBEE tracks (i–v) suggest Colin sometimes treated\nthe motif formally — these aren't \"sweatbee 1, 2, 3\" but a discrete\nfive-piece work.\n\n## Notes for future passes\n\n- Cross-check the duplicate SWEATBEE folders to determine if the `18\n  alphabets/SWEATBEE/` instance differs from the canonical 2012 version.\n- The SWEAT BEE: DANCE MIX is in the vault but its relationship to\n  SWEATBEE 2012 is worth clarifying — remix vs. live mix vs. alt edit."
+}

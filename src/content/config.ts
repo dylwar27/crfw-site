@@ -405,9 +405,26 @@ const vault_series = defineCollection({
   }).passthrough(),
 });
 
+const vault_motifs = defineCollection({
+  // Motifs are recurring themes / phrases / images across Colin's catalog.
+  // Introduced Sprint 4 (2026-04-27). Curator-driven; agent never invents
+  // motifs (golden rule #6). Members[] points at releases/tracks/videos/
+  // photos via "coll/slug" refs — same pattern as vault_series.
+  type: 'data',
+  schema: z.object({
+    ...vaultCommon,
+    name: z.string().optional(),
+    description: z.string().optional(),
+    members: z.array(z.string()).default([]),
+    related_motifs: z.array(z.string()).default([]),
+    era: z.string().optional(),
+    summary: z.string().optional(),
+  }).passthrough(),
+});
+
 export const collections = {
   releases, photos, videos, voice_memos, lyrics, people, events, sets,
   vault_people, vault_projects, vault_venues, vault_organizations,
   vault_tracks, vault_releases, vault_events, vault_press,
-  vault_funds, vault_grants, vault_series,
+  vault_funds, vault_grants, vault_series, vault_motifs,
 };

@@ -1,0 +1,22 @@
+{
+  "id": "howl",
+  "kind": "motif",
+  "title": "howl / lust howls",
+  "motif_kind": "word",
+  "date_range": "2007/2008 → 2013",
+  "count": 7,
+  "created": "2026-04-24",
+  "sensitivity": "public",
+  "public_display": true,
+  "confidence": "high",
+  "tags": [
+    "motif",
+    "alphabets-era"
+  ],
+  "related": [
+    "releases/alphabets-unreleased-loose",
+    "projects/alphabets",
+    "people/colin-ward"
+  ],
+  "body": "# howl / lust howls\n\nA recurring word in Colin's track titles across the alphabets era. Two\noverlapping uses: the specific phrase **\"lust howls\"** (a near-direct\nrestatement that surfaces three times across six years), and a broader\n**\"howl\"** vocabulary attached to animals, dreams, and calls.\n\nThis is the first motif documented in the vault and serves as the worked\nexample for the `motif` kind.\n\n## Tracks (chronological)\n\n### \"lust\" + \"howl\" cluster\n\n- `_Documentation/Music/alphabets/07_08 [_]/lust howls in the afternoon.mp3` _(2007–2008)_\n- `_Documentation/Music/alphabets/07_08 [_]/lust howls and calls for mating like locusts do.m4a` _(2007–2008)_\n- `_Documentation/Music/alphabets/09 [_]/lust calls and sex dance.m4a` _(2009; \"lust calls\" variant — same conceptual register)_\n- `_Documentation/Music/alphabets/unreleased/lust howls.mp3` _(2013; Ableton .asd sidecar from 2015 indicates Colin returned to the file)_\n\n### Broader \"howl\" vocabulary\n\n- `_Documentation/Music/alphabets/BESTUV09/11 plesiosaur howl outs and swim bump.mp3` _(2009)_\n- `_Documentation/Music/alphabets/sep09/04 plesiosaur howl outs and swim bump.mp3` _(2009 — likely same source)_\n- `_Documentation/Music/alphabets/fantazia2010/15 robo goats howl and bang.mp3` _(2010)_\n- `_Documentation/Music/alphabets/DEC09SCIFI/04 robodogs nighttime cage howls.mp3` _(2009)_\n- `_Documentation/Music/alphabets/M_A_Y_09[DONTTAKEITSERIOUS,IMALITTLEKID]/12 maywolves hum and talk w_ shooting stars in the background.m4a` _(May 2009 — \"maywolves\" implies the same animal-howling register)_\n\n## Reading\n\nAcross six years, \"lust howls\" / \"howl\" sits at the intersection of three\nregisters Colin used: **animal calls** (locusts, plesiosaurs, robo goats,\nrobodogs, maywolves), **erotic/bodily language** (\"lust\", \"calls for\nmating\", \"sex dance\"), and **late-night dream/ritual energy** (the\n`unreleased/` 2013 track sits next to \"DEC09 SCIFI\" 2009 framing).\n\nThe phrase isn't loud — it appears in titles, not band names or release\nnames — but it's persistent. For a website, this is the kind of motif page\nthat lets a reader follow a thread through Colin's vocabulary that the\nproject/release structure doesn't expose.\n\n## Notes for future passes\n\n- The 2015 Ableton `.asd` sidecar on `unreleased/lust howls.mp3` suggests\n  Colin returned to the track that year. Worth checking adjacent 2015-era\n  Killd By session files for any \"howl\" references; the motif may have\n  carried into Killd By that the alphabets-only sweep missed.\n- \"calls\" as a word might be a sister-motif (lust calls, plesiosaur howl outs\n  and... swim bump) — possibly worth its own entry if a sweep finds 5+ tracks."
+}

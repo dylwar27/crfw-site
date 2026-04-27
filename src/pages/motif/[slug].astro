@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const motifs = await getCollection('vault_motifs');
+  return motifs
+    // Filter out README + non-public entries
+    .filter(m => m.data.public_display !== false && (m.data.kind === 'motif'))
+    .map(m => ({
+      params: { slug: m.id.replace(/\.json$/, '') },
+      props: { motif: m },
+    }));
+}
+
+const { motif } = Astro.props;
+const d = motif.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const slug = motif.id.replace(/\.json$/, '');
+
+const allReleases = await getCollection('releases');
+const allTracks = await getCollection('vault_tracks');
+const allMotifs = await getCollection('vault_motifs');
+
+function resolveMember(ref: string) {
+  const [coll, ...rest] = ref.split('/');
+  const memberSlug = rest.join('/');
+  if (coll === 'releases') {
+    const m = allReleases.find(r => r.id.replace(/\.(md|mdx)$/, '') === memberSlug);
+    if (m) return {
+      slug: memberSlug, title: m.data.title, date: m.data.date,
+      cover: m.data.coverArt, kind: 'release',
+      href: `${BASE}/?id=release--${memberSlug}`,
+    };
+  }
+  if (coll === 'tracks') {
+    const m = allTracks.find(t => t.id.replace(/\.json$/, '') === memberSlug);
+    if (m) return { slug: memberSlug, title: m.data.title, kind: 'track', href: null };
+  }
+  return { slug: memberSlug, title: memberSlug.replace(/-/g, ' '), kind: coll, href: null };
+}
+const members = (d.members || []).map(resolveMember);
+
+const relatedMotifs = (d.related_motifs || [])
+  .map(rid => allMotifs.find(m => m.id.replace(/\.json$/, '') === rid))
+  .filter(Boolean);
+
+const bodyHtml = renderBody(d.body || '', BASE);
+const name = d.title || slug;
+---
+<Base title={`${name} — motif — CRFW`}>
+  <article class="motif-page">
+    <nav class="motif-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/motifs`}>All motifs</a>
+    </nav>
+
+    <header class="motif-header">
+      <div class="motif-kind">motif</div>
+      <h1>{name}</h1>
+      {d.era && <div class="motif-era">{d.era}</div>}
+      {d.description && <p class="motif-description">{d.description}</p>}
+    </header>
+
+    {members.length > 0 && (
+      <section class="motif-section">
+        <h2>Where it appears</h2>
+        <ul class="motif-members">
+          {members.map(m => (
+            <li>
+              {m.href ? <a href={m.href}>{m.title}</a> : <span class="motif-member-plain">{m.title}</span>}
+              {m.date && <span class="motif-member-date">{m.date.slice(0, 4)}</span>}
+              <span class="motif-member-kind">{m.kind}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {relatedMotifs.length > 0 && (
+      <section class="motif-section">
+        <h2>Related motifs</h2>
+        <ul class="motif-related">
+          {relatedMotifs.map(rm => (
+            <li>
+              <a href={`${BASE}/motif/${rm!.id.replace(/\.json$/, '')}`}>
+                {rm!.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {bodyHtml && (
+      <section class="motif-section motif-body">
+        <h2>About this motif</h2>
+        <div class="motif-body-prose" set:html={bodyHtml} />
+      </section>
+    )}
+  </article>
+</Base>
+
+<style>
+  .motif-page { max-width: 780px; margin: 0 auto; padding: 48px 32px 96px; font-family: var(--sans); }
+  .motif-nav { margin-bottom: 32px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .motif-nav a { color: var(--ink-dim); text-decoration: none; }
+  .motif-nav a:hover { color: var(--accent-2); }
+  .motif-nav .sep { margin: 0 8px; color: var(--ink-dim); }
+
+  .motif-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .motif-kind { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+  .motif-header h1 { font-family: var(--serif); font-size: clamp(36px, 6vw, 64px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .motif-era { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); margin-bottom: 16px; }
+  .motif-description { font-family: var(--serif); font-size: 19px; line-height: 1.55; color: var(--ink-dim); margin: 12px 0 0; }
+
+  .motif-section { margin-bottom: 40px; }
+  .motif-section h2 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 16px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+
+  .motif-members { list-style: none; padding: 0; margin: 0; }
+  .motif-members li {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline;
+    padding: 12px 0; border-bottom: 1px solid var(--rule);
+    font-family: var(--serif); font-size: 16px;
+  }
+  .motif-members a { color: var(--ink); text-decoration: none; }
+  .motif-members a:hover { color: var(--accent-2); }
+  .motif-member-plain { color: var(--ink-dim); }
+  .motif-member-date, .motif-member-kind {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .motif-related { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .motif-related li a {
+    display: inline-block; padding: 4px 10px;
+    border: 1px solid var(--rule); border-radius: 3px;
+    color: var(--ink-dim); text-decoration: none;
+    font-family: var(--mono); font-size: 13px;
+  }
+  .motif-related li a:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+  .motif-body-prose { font-family: var(--serif); font-size: 17px; line-height: 1.65; }
+  .motif-body-prose :global(h1) { display: none; }
+  .motif-body-prose :global(h2) { font-family: var(--serif); font-size: 22px; font-weight: 700; margin: 32px 0 12px; color: var(--ink); border: 0; padding: 0; text-transform: none; letter-spacing: 0; }
+  .motif-body-prose :global(h3) { font-family: var(--serif); font-size: 17px; font-weight: 700; margin: 24px 0 10px; }
+  .motif-body-prose :global(p) { margin: 0 0 14px; }
+  .motif-body-prose :global(ul) { padding-left: 22px; margin: 0 0 16px; }
+  .motif-body-prose :global(.wiki-link) { color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted var(--accent-2); }
+  .motif-body-prose :global(.wiki-chip) { display: inline-block; padding: 1px 6px; border: 1px solid var(--rule); border-radius: 3px; color: var(--ink-dim); font-size: 13px; margin: 0 2px; }
+</style>
