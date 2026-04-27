@@ -4,6 +4,36 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Sprint 2 — 2026-04-27 — YouTube ID recovery
+
+Second of 4 planned sprints. After Sprint 1 made cards playable, Sprint 2 makes more cards exist as playable-by-default by reattaching missing YouTube IDs.
+
+**Approach:**
+- Used `yt-dlp --flat-playlist` (already installed) to scrape Colin's two YouTube channels: `@colinrfw` (53 videos) and `@tudaloos` (20 videos). 73 total.
+- New `scripts/match-youtube-ids.mjs` does title+token matching with normalization (strips `.mov`/`.mp4` extensions, archive prefixes like `CRFW_2008_`, `[www.tubegrip.com]` tags). Scores from 0 (no match) to 100 (exact normalized equality).
+- Score ≥80 → patch `youtubeId` automatically. Score 60–79 → write to `youtube-match-report.md` for curator review.
+
+**Results:**
+- 32 videos already had `youtubeId` (from earlier sessions)
+- **26 NEW high-confidence matches** (all score 100; exact normalized title match), patched automatically
+- 2 lower-confidence matches surfaced for curator review in `youtube-match-report.md`
+- 45 YT videos remain unmatched — these need NEW video entries (DIY shorts, live snippets, etc. that weren't in the existing archive folders Colin had organized)
+
+**Auto-publish cascade:** the 26 newly-matched videos satisfy the publish-policy ("video with external URL → publish"), so they flipped to `published: true` automatically. Videos published went 209 → 235.
+
+**Files touched:**
+- `scripts/match-youtube-ids.mjs` (NEW)
+- `youtube-match-report.md` (NEW — curator-facing report; gitignored optional)
+- 26 video JSONs (`youtubeId` field added)
+- `CLAUDE.md` STATUS block (videos published bumped)
+
+**Followup queued:**
+- 45 unmatched YT videos → curator decides whether to create new entries (most are likely valuable; may match unscoped keywords). Listed in the report.
+- 2 medium-confidence matches → curator triage.
+- Re-run yt-dlp periodically (or on `wrangler login` cadence) to catch new uploads or removed videos.
+
+---
+
 ## Sprint 1 — 2026-04-27 — Cards play things (functional cards)
 
 First of 4 planned sprints toward making every timeline card persona-functional. After early reviewers, the curator's feedback was "still looking for audio to play, all youtube, series to be there, motifs. Trying to get the cards all functional." Plan written + approved at `/Users/dward/.claude/plans/snappy-bubbling-planet.md`.
