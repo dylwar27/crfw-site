@@ -16,6 +16,7 @@ const WIKILINK_ROUTES: Record<string, string> = {
   organizations: '/org',
   funds:         '/fund',
   grants:        '/grant',
+  series:        '/series',
 };
 
 function escHtml(s: string): string {

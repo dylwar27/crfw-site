@@ -4,6 +4,39 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Sprint 3 — 2026-04-27 — Series pages + timeline series row
+
+Third of 4 planned sprints. Series existed as a 5th filter dropdown but were invisible everywhere else. Now they're a navigable surface.
+
+**A. Permalinked `/series/[slug]` pages × 6.**
+- New `src/pages/series/[slug].astro`. Routes: `/series/underwaters`, `/series/ddr`, `/series/album-a-month`, `/series/power`, `/series/remix`, `/series/dimcp`.
+- Each page: header (title, year range, member count, summary), members grid (cover thumbnail + title + year + link to popup/permalink), full body prose (renderBody on the vault `.md` body which uses wikilinks).
+- DIMCP series gets special treatment — vault `.members[]` is empty (data-modeling artifact) so the page auto-derives members from `videos` where `project === 'dimcp'`, sorted by episode number.
+
+**B. Timeline series row.**
+- New `<section class="series-row">` rendered above `<main class="timeline">`. Each series gets a horizontal arc spanning its earliest → latest member year, scaled to the timeline's full year span (~2007–2018).
+- 6 colored arcs stacked vertically; hover lifts; click → /series/<slug>.
+- The Underwaters arc spans 2010–2014, REMIX is 2008–2010, [___]POWER is a 2010–2011 sprint, etc. — visible at a glance now.
+- Mobile collapses gracefully (smaller font on labels).
+
+**C. Wikilink chip resolution.**
+- `WIKILINK_ROUTES` in `src/lib/renderBody.ts` adds `series: '/series'`. So `[[series/underwaters]]` chips throughout vault prose now become real links to the new pages.
+
+**Files touched:**
+- `src/pages/series/[slug].astro` (NEW, ~100 lines)
+- `src/pages/index.astro` (series-arc data computation + new `<section class="series-row">` markup)
+- `src/styles/global.css` (`.series-row`, `.series-arc` styles)
+- `src/lib/renderBody.ts` (+1 route)
+
+**Build:** 708 → 714 pages (+6 series).
+
+**Followup:**
+- Hover on filter dropdown could highlight matching arcs (defer; not blocking).
+- Album-a-Month is annual — a sub-arc visualization (12 monthly slots per year) is interesting but overkill for now.
+- Series colors are a hardcoded palette; curator can override later.
+
+---
+
 ## Sprint 2 — 2026-04-27 — YouTube ID recovery
 
 Second of 4 planned sprints. After Sprint 1 made cards playable, Sprint 2 makes more cards exist as playable-by-default by reattaching missing YouTube IDs.

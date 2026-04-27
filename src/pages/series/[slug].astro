@@ -1,0 +1,175 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const series = await getCollection('vault_series');
+  return series
+    .filter(s => s.data.public_display !== false)
+    .map(s => ({
+      params: { slug: s.id.replace(/\.json$/, '') },
+      props: { series: s },
+    }));
+}
+
+const { series } = Astro.props;
+const d = series.data;
+
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const slug = series.id.replace(/\.json$/, '');
+
+// Resolve members[] (forward references) into renderable cards.
+const allReleases = await getCollection('releases');
+const allVideos = await getCollection('videos');
+const allTracks = await getCollection('vault_tracks');
+
+function resolveMember(ref: string) {
+  const [coll, ...rest] = ref.split('/');
+  const memberSlug = rest.join('/');
+  if (coll === 'releases') {
+    const m = allReleases.find(r => r.id.replace(/\.(md|mdx)$/, '') === memberSlug);
+    if (m) return {
+      kind: 'release', slug: memberSlug, title: m.data.title, preservedTitle: m.data.preservedTitle,
+      date: m.data.date, cover: m.data.coverArt,
+      href: `${BASE}/?id=release--${memberSlug}`,
+    };
+  }
+  if (coll === 'videos') {
+    const m = allVideos.find(v => v.id.replace(/\.json$/, '') === memberSlug);
+    if (m) return {
+      kind: 'video', slug: memberSlug, title: m.data.title, date: m.data.date,
+      cover: m.data.youtubeId ? `https://img.youtube.com/vi/${m.data.youtubeId}/hqdefault.jpg` : null,
+      href: m.data.youtubeId ? `${BASE}/video/${memberSlug}` : `${BASE}/`,
+    };
+  }
+  if (coll === 'tracks') {
+    const m = allTracks.find(t => t.id.replace(/\.json$/, '') === memberSlug);
+    if (m) return {
+      kind: 'track', slug: memberSlug, title: m.data.title, date: '',
+      href: null,
+    };
+  }
+  // Unresolved
+  return { kind: 'unknown', slug: memberSlug, title: memberSlug.replace(/-/g, ' '), date: '', href: null };
+}
+
+const members = (d.members || []).map(resolveMember);
+
+// Special case: dimcp series has 0 members in vault data; auto-derive from
+// videos where project === 'dimcp'.
+let derivedDimcpMembers: any[] = [];
+if (slug === 'dimcp' && members.length === 0) {
+  derivedDimcpMembers = allVideos
+    .filter(v => String(v.data.project || '').toLowerCase() === 'dimcp')
+    .sort((a, b) => {
+      const epA = parseInt((a.data.title || '').match(/EP_?(\d+)/i)?.[1] || '0', 10);
+      const epB = parseInt((b.data.title || '').match(/EP_?(\d+)/i)?.[1] || '0', 10);
+      return epA - epB;
+    })
+    .map(v => ({
+      kind: 'video',
+      slug: v.id.replace(/\.json$/, ''),
+      title: v.data.title,
+      date: v.data.date,
+      cover: v.data.youtubeId ? `https://img.youtube.com/vi/${v.data.youtubeId}/hqdefault.jpg` : null,
+      href: v.data.youtubeId ? `${BASE}/video/${v.id.replace(/\.json$/, '')}` : null,
+    }));
+}
+
+const renderedMembers = members.length > 0 ? members : derivedDimcpMembers;
+const bodyHtml = renderBody(d.body || '', BASE);
+const name = d.name || d.title || slug;
+---
+<Base title={`${name} — series — CRFW`}>
+  <article class="series-page">
+    <nav class="series-nav">
+      <a href={`${BASE}/`}>← Timeline</a>
+      <span class="sep">·</span>
+      <a href={`${BASE}/?series=${slug}`}>Filter timeline by this series</a>
+    </nav>
+
+    <header class="series-header">
+      <div class="series-kind">series</div>
+      <h1>{name}</h1>
+      <div class="series-dates">
+        {d.date_start && <span>{d.date_start}</span>}
+        {d.date_start && d.date_end && d.date_start !== d.date_end && <span class="sep"> – </span>}
+        {d.date_end && d.date_start !== d.date_end && <span>{d.date_end}</span>}
+        {renderedMembers.length > 0 && (
+          <>
+            <span class="dot">·</span>
+            <span>{renderedMembers.length} {renderedMembers.length === 1 ? 'member' : 'members'}</span>
+          </>
+        )}
+      </div>
+      {d.summary && <p class="series-summary">{d.summary}</p>}
+    </header>
+
+    {renderedMembers.length > 0 && (
+      <section class="series-section">
+        <h2>Members</h2>
+        <ul class="series-members">
+          {renderedMembers.map(m => (
+            <li class="series-member">
+              {m.cover && <img class="series-member-cover" src={m.cover} alt="" loading="lazy" />}
+              {!m.cover && <div class="series-member-cover series-member-placeholder">{m.kind}</div>}
+              <div class="series-member-meta">
+                <div class="series-member-title">
+                  {m.href ? <a href={m.href}>{m.title}</a> : <span>{m.title}</span>}
+                </div>
+                {m.date && <div class="series-member-date">{m.date}</div>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {bodyHtml && (
+      <section class="series-section series-body">
+        <h2>About this series</h2>
+        <div class="series-body-prose" set:html={bodyHtml} />
+      </section>
+    )}
+  </article>
+</Base>
+
+<style>
+  .series-page { max-width: 880px; margin: 0 auto; padding: 48px 32px 96px; font-family: var(--sans); }
+  .series-nav { margin-bottom: 32px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .series-nav a { color: var(--ink-dim); text-decoration: none; }
+  .series-nav a:hover { color: var(--accent-2); }
+  .series-nav .sep { margin: 0 8px; color: var(--ink-dim); }
+
+  .series-header { margin-bottom: 48px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .series-kind { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+  .series-header h1 { font-family: var(--serif); font-size: clamp(36px, 6vw, 72px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .series-dates { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); margin-bottom: 16px; }
+  .series-dates .dot { margin: 0 8px; }
+  .series-summary { font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--ink-dim); margin: 16px 0 0; max-width: 640px; }
+
+  .series-section { margin-bottom: 48px; }
+  .series-section h2 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin: 0 0 16px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+
+  .series-members { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+  .series-member { display: flex; flex-direction: column; gap: 8px; }
+  .series-member-cover { width: 100%; aspect-ratio: 1; object-fit: cover; background: #1a1a1a; border-radius: 2px; }
+  .series-member-placeholder { display: flex; align-items: center; justify-content: center; color: var(--ink-dim); font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .series-member-meta { display: flex; flex-direction: column; gap: 2px; }
+  .series-member-title { font-family: var(--serif); font-size: 17px; line-height: 1.25; }
+  .series-member-title a { color: var(--ink); text-decoration: none; }
+  .series-member-title a:hover { color: var(--accent-2); }
+  .series-member-date { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+
+  .series-body-prose { font-family: var(--serif); font-size: 17px; line-height: 1.65; }
+  .series-body-prose :global(h1) { display: none; }
+  .series-body-prose :global(h2) { font-family: var(--serif); font-size: 22px; font-weight: 700; margin: 32px 0 12px; color: var(--ink); border: 0; padding: 0; text-transform: none; letter-spacing: 0; }
+  .series-body-prose :global(h3) { font-family: var(--serif); font-size: 18px; font-weight: 700; margin: 24px 0 10px; }
+  .series-body-prose :global(p)  { margin: 0 0 14px; }
+  .series-body-prose :global(ul),
+  .series-body-prose :global(ol) { padding-left: 22px; margin: 0 0 16px; }
+  .series-body-prose :global(li) { margin-bottom: 6px; }
+  .series-body-prose :global(.wiki-link) { color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted var(--accent-2); }
+  .series-body-prose :global(.wiki-chip) { display: inline-block; padding: 1px 6px; border: 1px solid var(--rule); border-radius: 3px; color: var(--ink-dim); font-size: 13px; margin: 0 2px; }
+</style>

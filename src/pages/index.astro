@@ -413,6 +413,45 @@ const totals = {
   years: years.length,
   total: publishedEntries.length,
 };
+
+// Series row data: for each series, derive the year range from its
+// member entries. Renders as horizontal arcs above the timeline.
+// Color palette mirrors the project chips for visual continuity.
+const seriesPalette: Record<string, string> = {
+  'underwaters': '#64b5f6',     // blue (water)
+  'remix':       '#f48fb1',     // pink
+  'ddr':         '#aed581',     // green
+  'power':       '#ffb74d',     // orange
+  'album-a-month': '#ce93d8',   // purple
+  'dimcp':       '#90a4ae',     // grey-blue
+};
+const seriesArcs = seriesOptions.map(s => {
+  const memberYears = publishedEntries
+    .filter(e => (e.series ?? []).includes(s.slug))
+    .map(e => e.year)
+    .sort((a, b) => a - b);
+  if (memberYears.length === 0) return null;
+  return {
+    slug: s.slug,
+    label: s.label,
+    count: s.count,
+    startYear: memberYears[0],
+    endYear: memberYears[memberYears.length - 1],
+    color: seriesPalette[s.slug] || '#888',
+  };
+}).filter(Boolean) as Array<{slug: string; label: string; count: number; startYear: number; endYear: number; color: string}>;
+
+// Year span for the arc layout (oldest → newest).
+const arcMinYear = years.length ? years[years.length - 1] : 0;
+const arcMaxYear = years.length ? years[0] : 0;
+const arcSpan = Math.max(1, arcMaxYear - arcMinYear);
+
+// Each arc gets a left offset (% from start) and width (% of total span).
+const arcsLaid = seriesArcs.map(a => ({
+  ...a,
+  leftPct: ((a.startYear - arcMinYear) / arcSpan) * 100,
+  widthPct: Math.max(2, ((a.endYear - a.startYear) / arcSpan) * 100),
+}));
 ---
 
 <Base title="Colin Ward — CRFW Archive">
@@ -490,6 +529,31 @@ const totals = {
     <button class="filter-reset" id="filter-reset" title="Clear all filters" aria-label="Clear filters">×</button>
     <span class="filter-count" id="filter-count"></span>
   </nav>
+
+  {arcsLaid.length > 0 && (
+    <section class="series-row" aria-label="Series across years">
+      <div class="series-row-label">Series</div>
+      <div class="series-row-track">
+        <div class="series-row-years">
+          {[arcMinYear, Math.round((arcMinYear + arcMaxYear) / 2), arcMaxYear].map(y => (
+            <span class="series-row-year">{y}</span>
+          ))}
+        </div>
+        <div class="series-row-arcs">
+          {arcsLaid.map(arc => (
+            <a
+              class="series-arc"
+              href={`${BASE}/series/${arc.slug}`}
+              style={`left: ${arc.leftPct}%; width: ${arc.widthPct}%; background: ${arc.color};`}
+              title={`${arc.label} — ${arc.startYear === arc.endYear ? arc.startYear : `${arc.startYear}–${arc.endYear}`} · ${arc.count} ${arc.count === 1 ? 'entry' : 'entries'}`}
+            >
+              <span class="series-arc-label">{arc.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <main class="timeline">
     {years.map(year => (

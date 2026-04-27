@@ -963,6 +963,52 @@ body {
   border-radius: 2px;
 }
 
+/* ── Series row — horizontal arcs above the timeline ────────── */
+.series-row {
+  margin: 24px 0 32px;
+  padding: 16px 20px;
+  background: var(--bg-soft, rgba(255,255,255,0.02));
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.series-row-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ink-dim);
+  margin-bottom: 12px;
+}
+.series-row-track { position: relative; }
+.series-row-years {
+  display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+  margin-bottom: 6px; opacity: 0.6;
+}
+.series-row-arcs {
+  position: relative;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.series-arc {
+  position: relative; display: block;
+  height: 22px;
+  border-radius: 11px;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+.series-arc:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.series-arc-label {
+  display: block; padding: 0 12px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em;
+  line-height: 22px;
+  color: rgba(0,0,0,0.85); font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+@media (max-width: 700px) {
+  .series-arc-label { font-size: 10px; }
+}
+
 /* ── Visual art card (one per piece) ──────────────────────── */
 .visual-art-card { overflow: hidden; }
 .va-cover {
