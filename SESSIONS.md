@@ -4,6 +4,15 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Daily pass — 2026-04-27
+
+- Tree clean on entry; build green (724 pages); CI on Sprint 4 commit succeeded.
+- sync-vault dry-run: no new vault entries since Sprint 4 (counts unchanged from STATUS).
+- reconcile-vault-releases dry-run: 0 unmatched, 0 created, 83 no-change.
+- Fixed `scripts/status.mjs`: added `motifs` to vaultCollections and applied the README/INDEX/SCHEMA/NOTES filter to `vaultStats` so source counts match what sync-vault projects. Regenerated STATUS block (22 scripts, 724 pages, motifs 8/8).
+
+---
+
 ## Sprint 4 — 2026-04-27 — Motifs vault collection + pages
 
 Fourth and final of the 4 planned sprints. Motifs are recurring themes / phrases / images Colin returned to across the catalog. Curator-driven entity (golden rule #6 — agent never invents motifs).
