@@ -240,10 +240,13 @@ const totalCount = walkFeed.length;
       const sentinel = document.getElementById('walk-sentinel');
       if (!FEED.length || !stream || !sentinel) return;
 
-      const BATCH_FIRST = 6;
-      const BATCH_MORE = 6;
+      const BATCH_FIRST = 9;
+      const BATCH_MORE = 9;
       const seen = new Set();
       let current = null;
+      // Sliding window of the last 6 kinds shown, used to penalise same-kind
+      // repetition and force type cycling (photo/video/voice_memo/release).
+      const recentKinds = [];
 
       function escapeHtml(s) {
         return String(s).replace(/[&<>"']/g, c => ({
@@ -270,22 +273,23 @@ const totalCount = walkFeed.length;
       }
 
       function pickNext() {
-        if (seen.size >= FEED.length) seen.clear();
-        let best = null, bestScore = -2;
+        if (seen.size >= FEED.length) { seen.clear(); recentKinds.length = 0; }
+        // Count how often each kind appears in the recent window.
+        const kindFreq = {};
+        for (const k of recentKinds) kindFreq[k] = (kindFreq[k] || 0) + 1;
+        let best = null, bestScore = -999;
         for (const cand of FEED) {
           if (seen.has(cand.id)) continue;
-          const s = score(current, cand);
-          if (s > bestScore) {
-            bestScore = s;
-            best = cand;
-          }
+          // Base relatedness score + tie-break jitter.
+          let s = score(current, cand);
+          // Penalise kinds seen recently to force type cycling across
+          // release / video / voice_memo / photo. 2.5 pts per recent
+          // occurrence means a kind shown 3× in the last 6 cards needs
+          // a +7.5 signal (nearly a motif match) to re-appear.
+          s -= (kindFreq[cand.kind] || 0) * 2.5;
+          if (s > bestScore) { bestScore = s; best = cand; }
         }
-        // If no scoring relation surfaced, pick a random unseen entry.
-        if (!best) {
-          const remaining = FEED.filter(c => !seen.has(c.id));
-          best = remaining[Math.floor(Math.random() * remaining.length)] || FEED[Math.floor(Math.random() * FEED.length)];
-        }
-        return best;
+        return best || FEED[Math.floor(Math.random() * FEED.length)];
       }
 
       function pickInitial() {
@@ -387,6 +391,8 @@ const totalCount = walkFeed.length;
       function renderOne(entry) {
         if (!entry || seen.has(entry.id)) return;
         seen.add(entry.id);
+        recentKinds.push(entry.kind);
+        if (recentKinds.length > 6) recentKinds.shift();
         current = entry;
         stream.appendChild(renderCard(entry));
       }
@@ -431,7 +437,7 @@ const totalCount = walkFeed.length;
     body { background: var(--bg, #0e0e12); color: var(--ink, #e8e6e1); }
 
     .walk-hero {
-      max-width: 640px; margin: 0 auto;
+      max-width: 1120px; margin: 0 auto;
       padding: 64px 24px 32px;
       text-align: left;
     }
@@ -456,14 +462,17 @@ const totalCount = walkFeed.length;
     }
 
     .walk-stream {
-      max-width: 640px; margin: 0 auto;
+      max-width: 1120px; margin: 0 auto;
       padding: 24px 16px 96px;
-      display: flex; flex-direction: column; gap: 56px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 48px 28px;
+      align-items: start;
     }
     .walk-card {
-      display: flex; flex-direction: column; gap: 14px;
+      display: flex; flex-direction: column; gap: 12px;
       cursor: pointer;
-      animation: walk-fade-in 0.5s ease-out;
+      animation: walk-fade-in 0.4s ease-out;
     }
     .walk-card .walk-media { position: relative; line-height: 0; }
     .walk-card .walk-cover, .walk-card .walk-photo {
@@ -528,12 +537,19 @@ const totalCount = walkFeed.length;
     }
 
     .walk-foot {
-      max-width: 640px; margin: 0 auto;
+      max-width: 1120px; margin: 0 auto;
       padding: 32px 16px 48px;
       text-align: left;
       border-top: 1px solid var(--rule);
     }
 
+    /* Photos can be very tall — cap them so one photo doesn't dominate a grid row */
+    .walk-card .walk-photo { max-height: 60vh; object-fit: cover; width: 100%; }
+    .walk-card .walk-photo-art { max-height: 70vh; object-fit: contain; }
+
+    @media (max-width: 620px) {
+      .walk-stream { grid-template-columns: 1fr; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .walk-card { animation: none; }
     }
