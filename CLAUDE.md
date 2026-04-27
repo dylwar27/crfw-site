@@ -12,7 +12,7 @@ A static timeline site, dense and maximalist by default, with filter tabs that c
 
 The archive lives at `~/Library/CloudStorage/Dropbox/CRFW/CRFW Archive/` — ~45,000 files across ~125 GB of Colin's work, reference library, and documentation. This site is the presentation layer. The archive is the truth. `archivePath` fields store archive-relative paths starting `CRFW Archive/...`.
 
-Live at **https://dylwar27.github.io/crfw-site/**.
+Live at **https://crfw-site.pages.dev/** (Cloudflare Pages, since 2026-04-26). The GitHub Pages site at `dylwar27.github.io/crfw-site/` is the prior URL — see `DEPLOYMENT.md` for the migration.
 
 ---
 
@@ -31,7 +31,7 @@ Full rules with examples in `CONVENTIONS.md#golden-rules`.
 
 ## Stack
 
-Astro 4 static site · content collections (Zod-validated .md/.json) · plain CSS · vanilla JS in `index.astro` · Pagefind search · SQLite projection (`data/crfw.db`, ships to `dist/`) · GitHub Pages deploy with `base: '/crfw-site'`.
+Astro 4 static site · content collections (Zod-validated .md/.json) · plain CSS · vanilla JS in `index.astro` · Pagefind search · SQLite projection (`data/crfw.db`, ships to `dist/`) · Cloudflare Pages deploy at root (`base: '/'`) via `wrangler` in GH Actions.
 
 No backend, no runtime dependencies. Output is static HTML/CSS/JS.
 
@@ -63,6 +63,7 @@ See `SCRIPT_PIPELINE.md` for the full script inventory.
 | Work with the vault | `VAULT.md` |
 | Triage a reconciler warning | `SLUG_MAP_TRIAGE.md` |
 | Bulk-edit via spreadsheet | `CSV_ROUNDTRIP.md` |
+| Deploy / rollback / domain swap | `DEPLOYMENT.md` |
 | See recent session history / what's next | `SESSIONS.md` |
 
 ---

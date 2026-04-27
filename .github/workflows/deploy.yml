@@ -1,36 +1,50 @@
-name: Deploy Astro site to Pages
+name: Deploy to Cloudflare Pages
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment; don't cancel in-flight runs.
+# One concurrent deploy per branch; don't cancel in-flight runs.
 concurrency:
-  group: pages
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write   # so wrangler can comment preview URL on PRs
     steps:
       - uses: actions/checkout@v4
-      - uses: withastro/action@v3
-        with:
-          node-version: 20
-          package-manager: npm
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build site
+        env:
+          CI: '1'
+          ASTRO_TELEMETRY_DISABLED: '1'
+          NO_UPDATE_NOTIFIER: '1'
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        # main branch → production at crfw-site.pages.dev
+        # any other branch / PR → preview at <hash>.crfw-site.pages.dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          npx wrangler pages deploy dist \
+            --project-name crfw-site \
+            --branch "$BRANCH" \
+            --commit-hash "${{ github.sha }}" \
+            --commit-message "$(git log -1 --format=%s)"

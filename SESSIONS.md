@@ -4,6 +4,37 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Daily pass — 2026-04-26 (late evening — Cloudflare Pages migration)
+
+Migrated from GitHub Pages to Cloudflare Pages. Forcing function: dist/ hit 1.3 GB after the voice memo audio import, exceeding GH Pages's 1 GB soft limit. Cloudflare Pages's 25 GB site cap fits comfortably and adds per-branch preview URLs.
+
+**Site is now live at https://crfw-site.pages.dev/.**
+
+**Setup attempts:**
+- Cloudflare's web dashboard "Connect to Git" flow was buggy (OAuth callback bounced back to GitHub install page repeatedly across 4 attempts; suspected stale state). Pivoted to wrangler CLI.
+
+**What landed:**
+- Installed `wrangler` as a devDep (v4.85.0). `npm i -D wrangler`.
+- `wrangler login` (OAuth) → curator authorized account `Dylanrfw@gmail.com` (`7012c01c1ca2556c80f9b1a1d0dfba4c`).
+- `wrangler pages project create crfw-site --production-branch main` → project at `crfw-site.pages.dev`.
+- Re-encoded 4 oversized voice memos to mono / 48 kbps AAC (Cloudflare Pages enforces 25 MB per file): 20151009-234944, 20160209-195336, 20160228-132720, 20160228-144442. Combined size dropped from ~132 MB to ~43 MB. Audio still recognizable as Colin's voice — speech doesn't suffer at 48k mono.
+- First direct deploy via `wrangler pages deploy dist --project-name crfw-site --branch main` succeeded (2671 files, 340 sec).
+- `astro.config.mjs` updated: `site` → `https://crfw-site.pages.dev`, `base: '/crfw-site'` → `'/'`. The `withBase()` helper handles `'/'` as a no-op so all `${BASE}/path` strings produce clean root-relative URLs. Verified `dist/index.html` has zero `/crfw-site/` references.
+- Redeployed with the path fix.
+- Replaced `.github/workflows/deploy.yml` with a Cloudflare-deploy workflow that runs on push to main + on PR (with preview URLs). Uses `wrangler pages deploy` with the curator's `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` GH secrets. PR deploys post the preview URL as a comment automatically.
+- Added `DEPLOYMENT.md` documenting the new infra: how deploys work, secret rotation, manual deploy via wrangler, custom domain swap procedure (when domain is purchased), rollback steps.
+- `CLAUDE.md` stack section + live URL updated.
+
+**Followup queued for future sessions:**
+- Custom domain (pending purchase): 1-line `astro.config.mjs` swap + DNS CNAME + redirect from old GH Pages URL.
+- Old GH Pages still serves a stale snapshot at `dylwar27.github.io/crfw-site/`. Harmless. Can be formally torn down with `gh api -X DELETE /repos/dylwar27/crfw-site/pages` or via dashboard.
+- Cloudflare Pages Functions for the suggestion-capture form (deferred, depends on this migration).
+- /browse and /unpublished pages.
+- alphabets archival videos: re-publish like DIMCP or keep hidden (curator call).
+- Lyrics collection (currently empty).
+
+---
+
 ## Daily pass — 2026-04-26 (evening — audio + entity pages + visual art popup)
 
 Curator-directed polish pass after early reviewers, ahead of Cloudflare migration:
