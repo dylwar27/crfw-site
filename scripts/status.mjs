@@ -81,7 +81,8 @@ function collectionStats(name) {
 
 function vaultStats(kind) {
   const dir = path.join(VAULT, kind);
-  return listFiles(dir, [".md"]).length;
+  const aux = new Set(["README.md", "INDEX.md", "SCHEMA.md", "NOTES.md"]);
+  return listFiles(dir, [".md"]).filter((p) => !aux.has(path.basename(p))).length;
 }
 
 function countHtmlPages(dir) {
@@ -117,6 +118,7 @@ const vaultCollections = [
   "tracks",
   "events",
   "series",
+  "motifs",
 ];
 
 const siteRows = siteCollections.map((c) => [c, collectionStats(c)]);
