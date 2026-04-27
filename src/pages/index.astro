@@ -10,6 +10,7 @@
  */
 import Base from '../layouts/Base.astro';
 import PopupShell from '../components/PopupShell.astro';
+import TopNav from '../components/TopNav.astro';
 import { getCollection } from 'astro:content';
 import {
   buildMotifIndex,
@@ -188,17 +189,7 @@ for (const m of voice_memos) {
 const totalCount = walkFeed.length;
 ---
 <Base title="Colin Ward / CRFW">
-  <nav class="top-nav" aria-label="Primary">
-    <a class="top-nav-brand" href={`${BASE}/`}>CRFW</a>
-    <div class="top-nav-links">
-      <a href={`${BASE}/`} class="top-nav-link active">Walk</a>
-      <a href={`${BASE}/timeline`} class="top-nav-link">Timeline</a>
-      <a href={`${BASE}/motifs`} class="top-nav-link">Motifs</a>
-      <a href={`${BASE}/people`} class="top-nav-link">People</a>
-      <a href={`${BASE}/press`} class="top-nav-link">Press</a>
-      <a href={`${BASE}/about`} class="top-nav-link">About</a>
-    </div>
-  </nav>
+  <TopNav current="walk" />
 
   <header class="walk-hero">
     <h1>Colin Ward</h1>
@@ -435,36 +426,9 @@ const totalCount = walkFeed.length;
 
   <style>
     /* Walk-only styles. The .entry / popup styles are inherited from
-       global.css so cards open the same popups as the timeline. */
+       global.css so cards open the same popups as the timeline.
+       Top-nav styles live in TopNav.astro. */
     body { background: var(--bg, #0e0e12); color: var(--ink, #e8e6e1); }
-
-    .top-nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 24px; padding: 10px 20px;
-      background: rgba(14, 14, 18, 0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--rule);
-      font-family: var(--mono, ui-monospace, monospace);
-    }
-    .top-nav-brand {
-      font-weight: 900; letter-spacing: 0.18em; font-size: 13px;
-      color: var(--ink); text-decoration: none;
-    }
-    .top-nav-links {
-      display: flex; flex-wrap: wrap; gap: 18px;
-    }
-    .top-nav-link {
-      color: var(--ink-dim); text-decoration: none;
-      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
-    }
-    .top-nav-link:hover { color: var(--accent-2, #ffd166); }
-    .top-nav-link.active { color: var(--ink); }
-    @media (max-width: 480px) {
-      .top-nav { padding: 8px 12px; gap: 12px; }
-      .top-nav-links { gap: 12px; }
-      .top-nav-link { font-size: 11px; letter-spacing: 0.12em; }
-    }
 
     .walk-hero {
       max-width: 640px; margin: 0 auto;

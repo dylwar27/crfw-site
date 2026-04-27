@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import TopNav from '../../components/TopNav.astro';
 import { getCollection } from 'astro:content';
 
 const motifs = (await getCollection('vault_motifs'))
@@ -9,6 +10,7 @@ const motifs = (await getCollection('vault_motifs'))
 const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 ---
 <Base title="Motifs — CRFW">
+  <TopNav current="motifs" />
   <article class="motifs-index-page">
     <nav class="motifs-nav">
       <a href={`${BASE}/`}>← Timeline</a>

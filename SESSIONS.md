@@ -4,6 +4,46 @@ Running log of Claude Code sessions on this repo. Newest first. Each entry is a 
 
 ---
 
+## Walk landing page — 2026-04-27 (post Sprint-4)
+
+Curator's evolved framing: *"loading a page with very simple text at the top and an infinite scroll of his material; things that are individual (individual episodes, voice memos, art, albums) that have to do with 'motifs' that are loaded randomly. As you scroll, the next 'related' thing is shown (or a random seed if needed). It takes from across all periods. … you can go to the landing page and just scroll to remember him through motifs, or go up top to find other pages that are more organized with information."*
+
+`/` is now the **motif walk**. The dense year-bucketed view moved to `/timeline`. Everything from Sprints 1–4 remains reachable.
+
+**Phase A — popup extraction + walk feed lib.**
+- `src/components/PopupShell.astro` (NEW): lifts the popup HTML, JSON payloads (`#site-config`, `#entry-data`), the popup script, and the `.yt-inline-play` / `.bc-inline-play` handlers out of `index.astro` into one component. Click handlers switched from per-element bindings to **document-delegated** so dynamically-appended cards (the walk page) work without re-wiring. Exposes `window.__crfwOpenPopup(id)` for direct invocation.
+- `src/lib/walkFeed.ts` (NEW): `buildMotifIndex` (entry id → motif slugs[]), `buildSeriesIndex` (sibling), `buildWalkFeed` (flatten published entries to lightweight feed JSON), `scoreRelatedness` (motif +10 / series +5 / project +3 / decade +1 / kind +0.5). Track-level motif members resolve up to parent release via `vault_tracks.release` link.
+- `src/pages/index.astro` (refactor): drop `<PopupShell entries={...} />`, keep filter+search inline. Behavior unchanged on the timeline.
+
+**Phase B — the walk page.**
+- `src/pages/timeline.astro` (renamed from `index.astro`): the full dense view, now at `/timeline`.
+- `src/pages/index.astro` (NEW, replaces): hero (title + dedication + scroll hint), `<TopNav />`, single-column `walk-stream`, sentinel for IntersectionObserver-based infinite scroll, `<PopupShell />` for clicks.
+- Walk feed: 1414 entries (931 photos + 235 videos + 184 voice memos + 64 releases). Inlined as `<script id="walk-feed">` JSON (~280 KB).
+- Walk algorithm (client-side): random initial seed; for each next slot, score every unseen candidate and pick highest. Tie-broken with random jitter. Random fallback when nothing scores. Resets `seen` when full. Batches of 6 cards; sentinel rootMargin 600px.
+- Cards reuse `.entry` markup pattern, so PopupShell's delegated handlers fire identically. YT thumbs and BC covers play inline via the same classes from Sprint 1B.
+
+**Phase C — top nav + cross-page wiring.**
+- `src/components/TopNav.astro` (NEW): sticky thin bar — `CRFW · Walk · Timeline · Motifs · People · Press · About`. On localhost (`hostname === 'localhost'`/`127.0.0.1`/`*.local`), reveals a `Curator ▾` dropdown with quickref commands (`sync-vault`, `reconcile`, `apply-publish-policy`, `cms`, `dev`, `status.mjs`) as user-selectable `<code>` blocks plus links to `/admin` and to the live site. Hidden in production for non-localhost visitors.
+- `<TopNav />` mounted on: `index.astro`, `timeline.astro`, `about.astro`, `motifs/index.astro`, `motif/[slug].astro`, `series/[slug].astro`, `people/index.astro`, `press/index.astro`. Footer nav stays on the timeline; the top nav is supplemental.
+- `CLAUDE.md` updated: "What this site is" describes both surfaces; STATUS block bumped to 725 pages.
+
+**Build:** 724 → 725 pages (one new `/timeline/index.html`; `/index.html` repurposed). CI auto-deploys to Cloudflare Pages.
+
+**Persona payoff.**
+- Family / casual visitors: land on `/`, scroll, hear/see things drift past — no learning curve.
+- Curators / researchers: jump to `/timeline` from the top nav for the dense filterable view.
+- Curator: localhost-only `Curator ▾` keeps the daily commands one click away.
+- Future-archive visitors: deep URLs (`/release/<slug>`, `/voice-memo/<slug>`, `/motif/<slug>`) unchanged; the top nav now makes the entity indices reachable from anywhere.
+
+**Followup queued.**
+- "Appears in motifs" reverse-index on individual release/track pages — now trivial since `buildMotifIndex` exists in `src/lib/walkFeed.ts`.
+- Curator weighting (`walk_priority` per entry) — only if 931 photos in the stream feel overwhelming.
+- More motif members[] populated by Dyl in Obsidian — increases motif-edge density in the walk's relatedness scoring.
+- Suggestion-capture form (Cloudflare Pages Function) — separate sprint.
+- `/browse` and `/unpublished` admin views.
+
+---
+
 ## Daily pass — 2026-04-27
 
 - Tree clean on entry; build green (724 pages); CI on Sprint 4 commit succeeded.

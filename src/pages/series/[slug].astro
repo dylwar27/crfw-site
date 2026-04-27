@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import TopNav from '../../components/TopNav.astro';
 import { getCollection } from 'astro:content';
 import { renderBody } from '../../lib/renderBody';
 
@@ -82,6 +83,7 @@ const bodyHtml = renderBody(d.body || '', BASE);
 const name = d.name || d.title || slug;
 ---
 <Base title={`${name} — series — CRFW`}>
+  <TopNav />
   <article class="series-page">
     <nav class="series-nav">
       <a href={`${BASE}/`}>← Timeline</a>

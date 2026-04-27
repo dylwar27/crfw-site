@@ -1,0 +1,171 @@
+---
+/**
+ * TopNav.astro — sticky thin nav rendered at the top of the walk, the
+ * timeline, and the major entity pages. Fast-switches between the two
+ * default views and the entity indices.
+ *
+ * Curator dropdown ("Curator ▾") is rendered for everyone but hidden
+ * via inline JS unless the page is loaded on localhost — it's a
+ * memory-aid surface for the daily commands (the underlying scripts
+ * run locally; the dropdown just shows them).
+ *
+ * Pass `current` to highlight the active link:
+ *   <TopNav current="walk" />     — / (motif walk)
+ *   <TopNav current="timeline" /> — /timeline
+ *   <TopNav current="motifs" />   — /motifs and /motif/<slug>
+ *   <TopNav current="people" />   — /people and /person/<slug>
+ *   etc.
+ */
+type CurrentKey =
+  | 'walk' | 'timeline' | 'motifs' | 'series' | 'people' | 'press' | 'about';
+
+interface Props {
+  current?: CurrentKey;
+}
+
+const { current } = Astro.props as Props;
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+
+const links: Array<{ key: CurrentKey; href: string; label: string }> = [
+  { key: 'walk',     href: `${BASE}/`,         label: 'Walk' },
+  { key: 'timeline', href: `${BASE}/timeline`, label: 'Timeline' },
+  { key: 'motifs',   href: `${BASE}/motifs`,   label: 'Motifs' },
+  { key: 'people',   href: `${BASE}/people`,   label: 'People' },
+  { key: 'press',    href: `${BASE}/press`,    label: 'Press' },
+  { key: 'about',    href: `${BASE}/about`,    label: 'About' },
+];
+---
+
+<nav class="top-nav" aria-label="Primary">
+  <a class="top-nav-brand" href={`${BASE}/`}>CRFW</a>
+  <div class="top-nav-links">
+    {links.map(l => (
+      <a
+        href={l.href}
+        class={`top-nav-link${current === l.key ? ' active' : ''}`}
+      >{l.label}</a>
+    ))}
+    <div class="top-nav-curator" id="top-nav-curator" hidden>
+      <button
+        type="button"
+        class="top-nav-link top-nav-curator-toggle"
+        aria-expanded="false"
+        aria-controls="top-nav-curator-menu"
+      >Curator ▾</button>
+      <div class="top-nav-curator-menu" id="top-nav-curator-menu" hidden>
+        <div class="top-nav-curator-section">
+          <div class="top-nav-curator-label">Sync from vault</div>
+          <code>node scripts/sync-vault.mjs --write</code>
+          <code>node scripts/reconcile-vault-releases.mjs --write</code>
+          <code>node scripts/apply-publish-policy.mjs --write</code>
+        </div>
+        <div class="top-nav-curator-section">
+          <div class="top-nav-curator-label">CMS / preview</div>
+          <code>npm run cms</code>
+          <a href="http://localhost:3030" target="_blank" rel="noopener">Open CMS ↗</a>
+          <code>npm run dev</code>
+          <a href={`${BASE}/admin`}>Open /admin</a>
+        </div>
+        <div class="top-nav-curator-section">
+          <div class="top-nav-curator-label">Status</div>
+          <code>node scripts/status.mjs</code>
+          <a href="https://crfw-site.pages.dev/" target="_blank" rel="noopener">Live site ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  // Show the Curator dropdown only on localhost. The underlying scripts
+  // are local-only; the dropdown is a memory-aid for the curator's
+  // daily commands. Off-localhost visitors never see it.
+  (function () {
+    const host = window.location.hostname;
+    const isLocal = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local');
+    if (!isLocal) return;
+    const wrap = document.getElementById('top-nav-curator');
+    if (!wrap) return;
+    wrap.hidden = false;
+    const toggle = wrap.querySelector('.top-nav-curator-toggle');
+    const menu = document.getElementById('top-nav-curator-menu');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', () => {
+      const open = menu.hidden;
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', ev => {
+      if (!wrap.contains(ev.target)) {
+        menu.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+</script>
+
+<style>
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 10px 20px;
+    background: rgba(14, 14, 18, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono, ui-monospace, monospace);
+  }
+  .top-nav-brand {
+    font-weight: 900; letter-spacing: 0.18em; font-size: 13px;
+    color: var(--ink); text-decoration: none;
+  }
+  .top-nav-links {
+    display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
+  }
+  .top-nav-link {
+    color: var(--ink-dim, #a8a39d); text-decoration: none;
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .top-nav-link:hover { color: var(--accent-2, #ffd166); }
+  .top-nav-link.active { color: var(--ink, #e8e6e1); }
+
+  .top-nav-curator { position: relative; }
+  .top-nav-curator-toggle { color: var(--accent-2, #ffd166); }
+  .top-nav-curator-menu {
+    position: absolute; right: 0; top: calc(100% + 8px);
+    min-width: 320px;
+    background: #0e0e12; border: 1px solid var(--rule);
+    padding: 12px;
+    display: flex; flex-direction: column; gap: 12px;
+    text-transform: none; letter-spacing: normal;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  }
+  .top-nav-curator-section {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .top-nav-curator-label {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-dim, #a8a39d);
+    margin-bottom: 2px;
+  }
+  .top-nav-curator-menu code {
+    display: block; padding: 4px 8px;
+    background: #16161c; border: 1px solid var(--rule);
+    font-size: 11px; line-height: 1.4;
+    color: var(--ink, #e8e6e1);
+    user-select: all;
+  }
+  .top-nav-curator-menu a {
+    color: var(--accent-2, #ffd166); text-decoration: none;
+    font-size: 11px;
+  }
+  .top-nav-curator-menu a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    .top-nav { padding: 8px 12px; gap: 12px; }
+    .top-nav-links { gap: 12px; }
+    .top-nav-link { font-size: 11px; letter-spacing: 0.12em; }
+    .top-nav-curator-menu { right: -8px; min-width: 280px; }
+  }
+</style>

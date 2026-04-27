@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import TopNav from '../../components/TopNav.astro';
 import { getCollection } from 'astro:content';
 import { renderBody } from '../../lib/renderBody';
 
@@ -51,6 +52,7 @@ const bodyHtml = renderBody(d.body || '', BASE);
 const name = d.title || slug;
 ---
 <Base title={`${name} — motif — CRFW`}>
+  <TopNav current="motifs" />
   <article class="motif-page">
     <nav class="motif-nav">
       <a href={`${BASE}/`}>← Timeline</a>

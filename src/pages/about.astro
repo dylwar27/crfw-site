@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import TopNav from '../components/TopNav.astro';
 import { getCollection } from 'astro:content';
 import { renderBody } from '../lib/renderBody';
 import articlesData from '../../data/articles-snapshot.json';
@@ -57,6 +58,7 @@ const featuredMemos = memos
   });
 ---
 <Base title="About Colin Ward — CRFW">
+  <TopNav current="about" />
   <article class="about-page">
     <nav class="about-nav">
       <a href={`${BASE}/`}>← Back to timeline</a>

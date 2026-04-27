@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PopupShell from '../components/PopupShell.astro';
+import TopNav from '../components/TopNav.astro';
 import { getCollection } from 'astro:content';
 
 // Load all the collections
@@ -456,6 +457,7 @@ const arcsLaid = seriesArcs.map(a => ({
 ---
 
 <Base title="Colin Ward — CRFW Archive">
+  <TopNav current="timeline" />
   <header class="masthead">
     <h1>COLIN <span class="dim">/</span> WARD <span class="dim">/</span> CRFW</h1>
     <div class="sub">
