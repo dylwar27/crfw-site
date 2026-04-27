@@ -1,0 +1,1057 @@
+---
+import Base from '../layouts/Base.astro';
+import PopupShell from '../components/PopupShell.astro';
+import { getCollection } from 'astro:content';
+
+// Load all the collections
+const releases = await getCollection('releases');
+const events = await getCollection('events');
+const photos = await getCollection('photos');
+const videos = await getCollection('videos');
+const voice_memos = await getCollection('voice_memos');
+const vault_series = await getCollection('vault_series');
+
+// Build a reverse index: timeline-entry-id → series slugs[]. vault_series
+// entries store forward-only `members` arrays like `releases/<slug>` /
+// `videos/<slug>` / `tracks/<slug>`. We map those back to the entry id
+// shape we use elsewhere (`release--<slug>`, `video--<slug>.json`, etc.)
+// so cards can be tagged with `data-series=...`.
+const seriesByEntry = new Map<string, string[]>();
+function attachSeries(entryId: string, seriesSlug: string) {
+  if (!seriesByEntry.has(entryId)) seriesByEntry.set(entryId, []);
+  seriesByEntry.get(entryId)!.push(seriesSlug);
+}
+for (const s of vault_series) {
+  const slug = s.id.replace(/\.json$/, '');
+  const members: string[] = (s.data as any).members ?? [];
+  for (const m of members) {
+    // m looks like "releases/killd-by-court-clothes" or "videos/foo"
+    const [coll, ...rest] = m.split('/');
+    const memberSlug = rest.join('/');
+    if (coll === 'releases') {
+      attachSeries(`release--${memberSlug}`, slug);
+    } else if (coll === 'videos') {
+      attachSeries(`video--${memberSlug}.json`, slug);
+    } else if (coll === 'tracks') {
+      // tracks aren't first-class timeline entries; skip
+    }
+  }
+}
+
+// Prefix root-relative asset paths with Astro's configured base (e.g.
+// "/crfw-site") so cover art / photo / video posters resolve correctly
+// when the site is hosted at a sub-path. When a custom domain lands and
+// `base` is set back to '/', this becomes a no-op automatically.
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+function withBase(p: unknown): string | undefined {
+  if (typeof p !== 'string' || !p) return undefined;
+  if (p.startsWith('//') || /^[a-z]+:\/\//i.test(p)) return p; // external
+  if (!p.startsWith('/')) return p; // relative
+  return BASE + p;
+}
+
+// Normalize everything into one shape for the timeline
+type TLEntry = {
+  id: string;
+  kind: 'release' | 'event' | 'photo' | 'video' | 'voice_memo';
+  title: string;
+  preservedTitle?: string;
+  date: string;
+  year: number;
+  project?: string;
+  format?: string;
+  cover?: string;
+  size: 'sm' | 'md' | 'lg' | 'xl';
+  tags: string[];
+  series?: string[];
+  data: any;
+};
+
+const entries: TLEntry[] = [];
+
+for (const r of releases) {
+  const year = parseInt(r.data.date.slice(0, 4), 10);
+  entries.push({
+    id: `release--${r.id.replace(/\.(md|mdx)$/, '')}`,
+    kind: 'release',
+    title: r.data.title,
+    preservedTitle: r.data.preservedTitle,
+    date: r.data.date,
+    year,
+    project: r.data.project,
+    format: r.data.format,
+    cover: withBase(r.data.coverArt),
+    // LPs are big cards; everything else smaller
+    size: r.data.format === 'LP' ? 'xl' : r.data.format === 'EP' ? 'lg' : 'md',
+    tags: r.data.tags ?? [],
+    data: { ...r.data, coverArt: withBase(r.data.coverArt), body: r.body },
+  });
+}
+
+for (const e of events) {
+  const year = parseInt(e.data.date.slice(0, 4), 10);
+  entries.push({
+    id: `event--${e.id.replace(/\.(md|mdx)$/, '')}`,
+    kind: 'event',
+    title: e.data.title,
+    date: e.data.date,
+    year,
+    project: e.data.project ?? 'life',
+    size: 'sm',
+    tags: e.data.tags ?? [],
+    data: { ...e.data, body: e.body },
+  });
+}
+
+for (const p of photos) {
+  const year = parseInt((p.data.date ?? '0000').slice(0, 4), 10);
+  if (!year) continue;
+  entries.push({
+    id: `photo--${p.id}`,
+    kind: 'photo',
+    title: p.data.title ?? 'Untitled photo',
+    date: p.data.date!,
+    year,
+    project: p.data.project,
+    cover: withBase(p.data.src),
+    size: 'sm',
+    tags: p.data.tags ?? [],
+    data: {
+      ...p.data,
+      src: withBase(p.data.src),
+      carouselExtras: (p.data.carouselExtras ?? []).map(withBase),
+    },
+  });
+}
+
+for (const v of videos) {
+  const year = parseInt((v.data.date ?? '0000').slice(0, 4), 10);
+  if (!year) continue;
+  const videoSlug = v.id.replace(/\.json$/, '');
+  // Preview first ~200 chars of transcript for the popup. Full text
+  // on the /video/<slug> reader page (only generated if transcript
+  // >30 chars).
+  const hasFullTranscript = !!(v.data.transcript && v.data.transcript.length > 30);
+  const transcriptPreview = v.data.transcript
+    ? v.data.transcript.slice(0, 200).replace(/\s+/g, ' ').trim() + (v.data.transcript.length > 200 ? '…' : '')
+    : undefined;
+  const ytThumb = v.data.youtubeId
+    ? `https://img.youtube.com/vi/${v.data.youtubeId}/hqdefault.jpg`
+    : undefined;
+  entries.push({
+    id: `video--${v.id}`,
+    kind: 'video',
+    title: v.data.title,
+    date: v.data.date!,
+    year,
+    project: v.data.project,
+    cover: withBase(v.data.poster) || ytThumb,
+    size: 'md',
+    tags: v.data.tags ?? [],
+    data: {
+      ...v.data,
+      poster: withBase(v.data.poster),
+      localSrc: withBase(v.data.localSrc),
+      carouselExtras: (v.data.carouselExtras ?? []).map(withBase),
+      // Strip full transcript from the inline DATA — keep only the
+      // preview (same pattern as voice memos).
+      transcript: transcriptPreview,
+      transcriptFull: hasFullTranscript,
+      permalink: hasFullTranscript ? `${BASE}/video/${videoSlug}` : undefined,
+    },
+  });
+}
+
+for (const m of voice_memos) {
+  const year = parseInt(m.data.date.slice(0, 4), 10);
+  const memoSlug = m.id.replace(/\.json$/, '');
+  // Use first ~200 chars of transcript as in-popup preview.
+  // Full transcript lives at /voice-memo/<slug> (a permalinked page).
+  const transcriptPreview = m.data.transcript
+    ? m.data.transcript.slice(0, 200).replace(/\s+/g, ' ').trim() + (m.data.transcript.length > 200 ? '…' : '')
+    : undefined;
+  const cardSubtitle = m.data.transcript
+    ? m.data.transcript.slice(0, 80).replace(/\s+/g, ' ').trim() + (m.data.transcript.length > 80 ? '…' : '')
+    : undefined;
+  entries.push({
+    id: `voice--${m.id}`,
+    kind: 'voice_memo',
+    title: m.data.title ?? 'Voice memo',
+    preservedTitle: cardSubtitle,
+    date: m.data.date,
+    year,
+    project: m.data.project,
+    size: 'sm',
+    tags: m.data.tags ?? [],
+    // Strip full transcript from inline data — only include preview.
+    // Full transcript lives at /voice-memo/<slug>.
+    data: {
+      ...m.data,
+      src: withBase(m.data.src),
+      transcript: transcriptPreview,
+      transcriptFull: m.data.transcript ? true : false,
+      permalink: `${BASE}/voice-memo/${memoSlug}`,
+    },
+  });
+}
+
+// Attach series memberships from vault_series.members (built above).
+for (const e of entries) {
+  e.series = seriesByEntry.get(e.id) ?? [];
+}
+
+// Filter out unpublished entries (they still appear on /admin)
+const publishedEntries = entries.filter(e => e.data.published !== false);
+
+// Sort newest first
+publishedEntries.sort((a, b) => (b.date.localeCompare(a.date)));
+
+// Group by year (published entries only for the public timeline)
+const byYear = new Map<number, TLEntry[]>();
+for (const e of publishedEntries) {
+  if (!byYear.has(e.year)) byYear.set(e.year, []);
+  byYear.get(e.year)!.push(e);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+
+// ── Bucket system ────────────────────────────────────────────────────────────
+type BucketKind =
+  | 'release_block' | 'dimcp_chunk' | 'youtube_strip' | 'photo_carousel'
+  | 'voice_memo_group' | 'press_strip' | 'unreleased_group'
+  | 'visual_art_card' | 'misc';
+type TLBucket = { id: string; kind: BucketKind; entries: TLEntry[]; year: number; label?: string; };
+
+function parseEpNum(title: string): number {
+  const m = String(title).match(/EP_?(\d+)/i);
+  return m ? parseInt(m[1], 10) : 0;
+}
+function parseSeason(title: string): number {
+  const m = String(title).match(/season\s*(\d+)/i);
+  return m ? parseInt(m[1], 10) : 1;
+}
+function isUnreleased(e: TLEntry): boolean {
+  return e.tags.includes('unreleased') || e.data.format === 'demo';
+}
+
+function bucketYear(entries: TLEntry[], year: number): TLBucket[] {
+  const buckets: TLBucket[] = [];
+  const relEntries = entries.filter(e => e.kind === 'release' && !isUnreleased(e));
+  if (relEntries.length) buckets.push({ id: `rel-block--${year}`, kind: 'release_block', entries: relEntries, year });
+
+  // DIMCP — one bucket per year (broadest grouping, matches voice memo / photo
+  // carousel pattern). Earlier per-5-episode chunks produced too many cards.
+  const dimcp = entries
+    .filter(e => e.kind === 'video' && (e.project || '').toLowerCase() === 'dimcp')
+    .sort((a, b) => parseEpNum(a.title) - parseEpNum(b.title));
+  if (dimcp.length) {
+    buckets.push({
+      id: `dimcp--${year}`,
+      kind: 'dimcp_chunk',
+      entries: dimcp,
+      year,
+      label: `${dimcp.length} episode${dimcp.length === 1 ? '' : 's'}`,
+    });
+  }
+
+  const yt = entries.filter(e => e.kind === 'video' && e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp');
+  if (yt.length) buckets.push({ id: `yt-strip--${year}`, kind: 'youtube_strip', entries: yt, year });
+
+  // Visual art — one card per piece, NOT in the photo carousel.
+  const visualArt = entries.filter(e => e.kind === 'photo' && e.tags.includes('visual-art'));
+  for (const a of visualArt) {
+    buckets.push({ id: `va--${a.id}`, kind: 'visual_art_card', entries: [a], year });
+  }
+
+  const media = entries.filter(e =>
+    (e.kind === 'photo' && !e.tags.includes('visual-art')) ||
+    (e.kind === 'video' && !e.data.youtubeId && (e.project || '').toLowerCase() !== 'dimcp')
+  );
+  if (media.length) buckets.push({ id: `photo-carousel--${year}`, kind: 'photo_carousel', entries: media, year });
+
+  const memos = entries.filter(e => e.kind === 'voice_memo');
+  const memosByMonth = new Map<string, TLEntry[]>();
+  for (const m of memos) {
+    const key = (m.date || String(year)).slice(0, 7);
+    if (!memosByMonth.has(key)) memosByMonth.set(key, []);
+    memosByMonth.get(key)!.push(m);
+  }
+  for (const [key, ms] of [...memosByMonth.entries()].sort()) {
+    const [y, mo] = key.split('-');
+    const monthName = new Date(+y, +mo - 1, 1).toLocaleString('en-US', { month: 'long' });
+    buckets.push({ id: `vmemo-group--${key}`, kind: 'voice_memo_group', entries: ms, year, label: `${monthName} ${y}` });
+  }
+
+  const press = entries.filter(e => e.kind === 'event' && e.tags.includes('press'));
+  if (press.length) buckets.push({ id: `press-strip--${year}`, kind: 'press_strip', entries: press, year });
+
+  const unrel = entries.filter(isUnreleased);
+  if (unrel.length) buckets.push({ id: `unreleased--${year}`, kind: 'unreleased_group', entries: unrel, year });
+
+  const handled = new Set<string>([...relEntries, ...dimcp, ...yt, ...visualArt, ...media, ...memos, ...press, ...unrel].map(e => e.id));
+  const misc = entries.filter(e => !handled.has(e.id));
+  for (const m of misc) buckets.push({ id: m.id, kind: 'misc', entries: [m], year });
+
+  return buckets;
+}
+
+const bucketsByYear = new Map<number, TLBucket[]>();
+for (const [year, yEntries] of byYear) bucketsByYear.set(year, bucketYear(yEntries, year));
+
+// Synthetic entry objects for bucket popup data (DIMCP chunks, voice memo groups, photo carousels)
+const syntheticEntries: Record<string, any> = {};
+for (const [, buckets] of bucketsByYear) {
+  for (const b of buckets) {
+    if (b.kind === 'dimcp_chunk') {
+      syntheticEntries[b.id] = {
+        id: b.id, kind: 'dimcp_chunk',
+        title: `Dog is My Copilot · ${b.label}`,
+        date: String(b.year), year: b.year, project: 'DIMCP',
+        size: 'xl', tags: ['dimcp', 'video'],
+        data: {
+          label: b.label,
+          episodes: b.entries.map(e => ({
+            id: e.id, title: e.title,
+            transcript: (e.data.transcript || '').slice(0, 80),
+            slug: e.id.replace(/^video--/, '').replace(/\.json$/, ''),
+            permalink: e.data.permalink,
+          })),
+        },
+      };
+    } else if (b.kind === 'voice_memo_group') {
+      syntheticEntries[b.id] = {
+        id: b.id, kind: 'voice_memo_group',
+        title: `Voice memos · ${b.label}`,
+        date: b.entries[0]?.date || String(b.year), year: b.year,
+        size: 'md', tags: ['voice-memo'],
+        data: {
+          label: b.label,
+          memos: b.entries.map(e => ({
+            id: e.id, title: e.title,
+            transcript: (e.data.transcript || '').slice(0, 80),
+            slug: e.id.replace(/^voice--/, '').replace(/\.json$/, ''),
+            permalink: e.data.permalink,
+          })),
+        },
+      };
+    } else if (b.kind === 'photo_carousel') {
+      syntheticEntries[b.id] = {
+        id: b.id, kind: 'photo_carousel',
+        title: `${b.year} · ${b.entries.length} photo${b.entries.length === 1 ? '' : 's'}`,
+        date: String(b.year), year: b.year,
+        size: 'lg', tags: ['photo'],
+        data: {
+          count: b.entries.length,
+          photos: b.entries.slice(0, 24).map(e => ({
+            id: e.id, src: e.cover, caption: e.data.caption || '',
+          })),
+        },
+      };
+    }
+  }
+}
+
+// Project + medium + format lists for filter dropdowns with counts
+function countBy<K extends string>(entries: TLEntry[], key: (e: TLEntry) => K | undefined): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const e of entries) {
+    const v = key(e);
+    if (v == null) continue;
+    out[v] = (out[v] ?? 0) + 1;
+  }
+  return out;
+}
+const projectCounts = countBy(publishedEntries, e => e.project);
+const kindCounts    = countBy(publishedEntries, e => e.kind);
+const formatCounts  = countBy(publishedEntries, e => e.format);
+
+const projects = Object.keys(projectCounts).sort((a, b) => projectCounts[b] - projectCounts[a]);
+const kinds    = Object.keys(kindCounts);
+const formatOrder = ['LP', 'EP', 'single', 'mix', 'compilation', 'b-sides', 'demo', 'other'];
+const formats = Object.keys(formatCounts).sort(
+  (a, b) => (formatOrder.indexOf(a) === -1 ? 99 : formatOrder.indexOf(a)) - (formatOrder.indexOf(b) === -1 ? 99 : formatOrder.indexOf(b))
+);
+
+// Tag list — exclude tags that are redundant with project/kind/format filters
+// (e.g. "alphabets", "killd-by", "dimcp", "voice-memo", "video" just echo other axes)
+const projectNormalized = new Set(projects.map(p => p.toLowerCase().replace(/\s+/g, '-')));
+const kindNormalized = new Set(kinds.map(k => k.replace(/_/g, '-')));
+const formatNormalized = new Set(formats.map(f => f.toLowerCase()));
+const tagCounts = new Map<string, number>();
+for (const e of publishedEntries) {
+  for (const t of e.tags) {
+    const tl = t.toLowerCase();
+    if (projectNormalized.has(tl) || kindNormalized.has(tl) || formatNormalized.has(tl)) continue;
+    tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+  }
+}
+// Sort tags by frequency (most common first), cap at top 20 for UI sanity
+const tags = [...tagCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 20)
+  .map(([t]) => t);
+
+// Series list — count entries per series, show only series that have ≥1
+// published timeline entry. Series labels are the vault slug (e.g. "underwaters",
+// "ddr"); we present them lightly title-cased.
+const seriesCounts = new Map<string, number>();
+for (const e of publishedEntries) {
+  for (const s of (e.series ?? [])) {
+    seriesCounts.set(s, (seriesCounts.get(s) ?? 0) + 1);
+  }
+}
+const seriesOptions = [...seriesCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .map(([slug, count]) => ({
+    slug,
+    label: slug.replace(/-/g, ' '),
+    count,
+  }));
+
+// Totals for the sub-line
+const totals = {
+  releases: publishedEntries.filter(e => e.kind === 'release').length,
+  events: publishedEntries.filter(e => e.kind === 'event').length,
+  years: years.length,
+  total: publishedEntries.length,
+};
+
+// Series row data: for each series, derive the year range from its
+// member entries. Renders as horizontal arcs above the timeline.
+// Color palette mirrors the project chips for visual continuity.
+const seriesPalette: Record<string, string> = {
+  'underwaters': '#64b5f6',     // blue (water)
+  'remix':       '#f48fb1',     // pink
+  'ddr':         '#aed581',     // green
+  'power':       '#ffb74d',     // orange
+  'album-a-month': '#ce93d8',   // purple
+  'dimcp':       '#90a4ae',     // grey-blue
+};
+const seriesArcs = seriesOptions.map(s => {
+  const memberYears = publishedEntries
+    .filter(e => (e.series ?? []).includes(s.slug))
+    .map(e => e.year)
+    .sort((a, b) => a - b);
+  if (memberYears.length === 0) return null;
+  return {
+    slug: s.slug,
+    label: s.label,
+    count: s.count,
+    startYear: memberYears[0],
+    endYear: memberYears[memberYears.length - 1],
+    color: seriesPalette[s.slug] || '#888',
+  };
+}).filter(Boolean) as Array<{slug: string; label: string; count: number; startYear: number; endYear: number; color: string}>;
+
+// Year span for the arc layout (oldest → newest).
+const arcMinYear = years.length ? years[years.length - 1] : 0;
+const arcMaxYear = years.length ? years[0] : 0;
+const arcSpan = Math.max(1, arcMaxYear - arcMinYear);
+
+// Each arc gets a left offset (% from start) and width (% of total span).
+const arcsLaid = seriesArcs.map(a => ({
+  ...a,
+  leftPct: ((a.startYear - arcMinYear) / arcSpan) * 100,
+  widthPct: Math.max(2, ((a.endYear - a.startYear) / arcSpan) * 100),
+}));
+---
+
+<Base title="Colin Ward — CRFW Archive">
+  <header class="masthead">
+    <h1>COLIN <span class="dim">/</span> WARD <span class="dim">/</span> CRFW</h1>
+    <div class="sub">
+      {totals.total} entries · {totals.releases} releases · {years.length > 0 ? `${years[years.length-1]}–${years[0]}` : ''} · archive in motion
+    </div>
+  </header>
+
+  <div class="search-bar">
+    <input type="search" id="search-input" placeholder="Search the archive…" autocomplete="off" />
+    <div id="search-results" class="search-results" hidden></div>
+  </div>
+
+  <nav class="filters" id="filters">
+    <label class="filter-select">
+      <span class="filter-label-text">Project</span>
+      <select data-axis="project">
+        <option value="all">All ({publishedEntries.length})</option>
+        {projects.map(p => (
+          <option value={p}>{p} ({projectCounts[p]})</option>
+        ))}
+      </select>
+    </label>
+
+    {formats.length > 0 && (
+      <label class="filter-select">
+        <span class="filter-label-text">Format</span>
+        <select data-axis="format">
+          <option value="all">All</option>
+          {formats.map(f => (
+            <option value={f}>{f} ({formatCounts[f]})</option>
+          ))}
+        </select>
+      </label>
+    )}
+
+    {kinds.length >= 2 && (
+      <label class="filter-select">
+        <span class="filter-label-text">Medium</span>
+        <select data-axis="kind">
+          <option value="all">All</option>
+          {kinds.map(k => (
+            <option value={k}>{k.replace('_', ' ')} ({kindCounts[k]})</option>
+          ))}
+        </select>
+      </label>
+    )}
+
+    {tags.length > 0 && (
+      <label class="filter-select">
+        <span class="filter-label-text">Tag</span>
+        <select data-axis="tag">
+          <option value="all">All</option>
+          {tags.map(t => (
+            <option value={t}>{t}</option>
+          ))}
+        </select>
+      </label>
+    )}
+
+    {seriesOptions.length > 0 && (
+      <label class="filter-select">
+        <span class="filter-label-text">Series</span>
+        <select data-axis="series">
+          <option value="all">All</option>
+          {seriesOptions.map(s => (
+            <option value={s.slug}>{s.label} ({s.count})</option>
+          ))}
+        </select>
+      </label>
+    )}
+
+    <button class="filter-reset" id="filter-reset" title="Clear all filters" aria-label="Clear filters">×</button>
+    <span class="filter-count" id="filter-count"></span>
+  </nav>
+
+  {arcsLaid.length > 0 && (
+    <section class="series-row" aria-label="Series across years">
+      <div class="series-row-label">Series</div>
+      <div class="series-row-track">
+        <div class="series-row-years">
+          {[arcMinYear, Math.round((arcMinYear + arcMaxYear) / 2), arcMaxYear].map(y => (
+            <span class="series-row-year">{y}</span>
+          ))}
+        </div>
+        <div class="series-row-arcs">
+          {arcsLaid.map(arc => (
+            <a
+              class="series-arc"
+              href={`${BASE}/series/${arc.slug}`}
+              style={`left: ${arc.leftPct}%; width: ${arc.widthPct}%; background: ${arc.color};`}
+              title={`${arc.label} — ${arc.startYear === arc.endYear ? arc.startYear : `${arc.startYear}–${arc.endYear}`} · ${arc.count} ${arc.count === 1 ? 'entry' : 'entries'}`}
+            >
+              <span class="series-arc-label">{arc.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <main class="timeline">
+    {years.map(year => (
+      <section class="year-row" data-year={year}>
+        <div class="year-label">
+          {year}
+          <span class="after">{byYear.get(year)!.length === 1 ? '1 entry' : `${byYear.get(year)!.length} entries`}</span>
+        </div>
+        <div class="entries">
+          {bucketsByYear.get(year)!.map(bucket =>
+            // ── Release block ────────────────────────────────────────────────
+            bucket.kind === 'release_block' ? bucket.entries.map(e => (
+              <article
+                class={`entry release-card size-${e.size}`}
+                data-project={e.project}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
+                data-entry-id={e.id}
+              >
+                {e.project && <span class="project-tag">{e.project}</span>}
+                {e.format && <span class="rel-format-badge">{e.format}</span>}
+                {e.data.bandcampItemId && e.cover ? (
+                  <div
+                    class="cover bc-inline-play"
+                    data-bc-item-id={e.data.bandcampItemId}
+                    data-bc-item-type={e.data.bandcampItemType || 'album'}
+                    data-bc-title={e.title}
+                    style={`background-image:url('${e.cover}'); background-size: cover; background-position: center; aspect-ratio: 1;`}
+                  ></div>
+                ) : e.cover ? (
+                  <img class="cover" src={e.cover} alt="" loading="lazy" />
+                ) : (
+                  <div class="release-placeholder">
+                    <span class="rel-ph-format">{e.format || 'release'}</span>
+                    <span class="rel-ph-title">{e.preservedTitle || e.title}</span>
+                  </div>
+                )}
+                <div>
+                  <div class="title">{e.title}</div>
+                  {e.preservedTitle && e.preservedTitle !== e.title && (
+                    <div class="preserved">{e.preservedTitle}</div>
+                  )}
+                </div>
+                <div class="medium-tag">{e.format || 'release'} · {e.date.slice(0, 4)}</div>
+              </article>
+            ))
+
+            // ── DIMCP chunk ──────────────────────────────────────────────────
+            : bucket.kind === 'dimcp_chunk' ? (
+              <article
+                class="entry size-xl dimcp-chunk"
+                data-project="DIMCP"
+                data-kind="video"
+                data-format=""
+                data-tags="dimcp|video"
+                data-series="dimcp"
+                data-entry-id={bucket.id}
+              >
+                <span class="project-tag" style="color:#64b5f6;border-color:#64b5f6">DIMCP</span>
+                <div class="dimcp-header">
+                  Dog is My Copilot
+                  <span class="dimcp-label">{bucket.label}</span>
+                </div>
+                <ol class="dimcp-ep-list">
+                  {bucket.entries.slice(0, 6).map(e => (
+                    <li class="dimcp-ep-row">
+                      <span class="ep-num">EP {String(parseEpNum(e.title)).padStart(2, '0')}</span>
+                      <span class="ep-excerpt">{(e.data.transcript || '').slice(0, 70) || e.title}</span>
+                    </li>
+                  ))}
+                  {bucket.entries.length > 6 && (
+                    <li class="dimcp-ep-row dimcp-ep-more">
+                      <span class="ep-num">+{bucket.entries.length - 6}</span>
+                      <span class="ep-excerpt">more — open to view all</span>
+                    </li>
+                  )}
+                </ol>
+                <div class="medium-tag">DIMCP · {bucket.entries.length} episodes · {bucket.year}</div>
+              </article>
+            )
+
+            // ── YouTube strip ────────────────────────────────────────────────
+            : bucket.kind === 'youtube_strip' ? bucket.entries.map(e => (
+              <article
+                class="entry size-md yt-card"
+                data-project={e.project || ''}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
+                data-entry-id={e.id}
+              >
+                {e.project && <span class="project-tag">{e.project}</span>}
+                <div
+                  class="yt-thumb-wrap yt-inline-play"
+                  data-yt-id={e.data.youtubeId}
+                  data-yt-title={e.title}
+                >
+                  {e.cover
+                    ? <img class="cover" src={e.cover} alt="" loading="lazy" />
+                    : <div class="cover yt-thumb-placeholder"></div>
+                  }
+                  <button class="yt-play-btn" aria-label="Play video" type="button">▶</button>
+                </div>
+                <div>
+                  <div class="title">{e.title}</div>
+                </div>
+                <div class="medium-tag">youtube · {e.date.slice(0, 4)}</div>
+              </article>
+            ))
+
+            // ── Photo carousel ───────────────────────────────────────────────
+            : bucket.kind === 'photo_carousel' ? (
+              <article
+                class="entry size-lg photo-carousel-card"
+                data-project=""
+                data-kind="photo"
+                data-format=""
+                data-tags="photo"
+                data-series=""
+                data-entry-id={bucket.id}
+              >
+                <div class="photo-preview-strip">
+                  {bucket.entries.slice(0, 4).map(p => p.cover && (
+                    <img src={p.cover} alt="" loading="lazy" class="photo-thumb-sm" />
+                  ))}
+                </div>
+                <div>
+                  <div class="title">{bucket.entries.length} photo{bucket.entries.length === 1 ? '' : 's'}</div>
+                </div>
+                <div class="medium-tag">photos · {bucket.year}</div>
+              </article>
+            )
+
+            // ── Visual art card (single piece) ───────────────────────────────
+            : bucket.kind === 'visual_art_card' ? (() => {
+              const e = bucket.entries[0];
+              return (
+                <article
+                  class="entry size-md visual-art-card"
+                  data-project={e.project || ''}
+                  data-kind="photo"
+                  data-format=""
+                  data-tags={e.tags.join('|')}
+                  data-series={(e.series ?? []).join('|')}
+                  data-entry-id={e.id}
+                >
+                  {e.project && <span class="project-tag">{e.project}</span>}
+                  {e.cover && <img class="cover va-cover" src={e.cover} alt={e.title || ''} loading="lazy" />}
+                  <div>
+                    <div class="title va-title">{e.title}</div>
+                  </div>
+                  <div class="medium-tag">visual art · {e.date.slice(0, 4)}</div>
+                </article>
+              );
+            })()
+
+            // ── Voice memo group ─────────────────────────────────────────────
+            : bucket.kind === 'voice_memo_group' ? (
+              <article
+                class="entry size-md voice-memo-group"
+                data-project=""
+                data-kind="voice_memo"
+                data-format=""
+                data-tags="voice-memo"
+                data-series=""
+                data-entry-id={bucket.id}
+              >
+                <div class="vmemo-header">
+                  <span class="vmemo-month">{bucket.label}</span>
+                  <span class="vmemo-count">{bucket.entries.length} memo{bucket.entries.length === 1 ? '' : 's'}</span>
+                </div>
+                <ul class="vmemo-preview">
+                  {bucket.entries.slice(0, 3).map(e => (
+                    <li class="vmemo-row">
+                      {(e.data.transcript || e.title || '').slice(0, 65)}
+                    </li>
+                  ))}
+                  {bucket.entries.length > 3 && (
+                    <li class="vmemo-more">+{bucket.entries.length - 3} more</li>
+                  )}
+                </ul>
+                <div class="medium-tag">voice memos · {bucket.year}</div>
+              </article>
+            )
+
+            // ── Press strip ──────────────────────────────────────────────────
+            : bucket.kind === 'press_strip' ? bucket.entries.map(e => (
+              <article
+                class="entry size-sm press-card"
+                data-project={e.project || ''}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
+                data-entry-id={e.id}
+              >
+                <div class="press-eyebrow">press</div>
+                <div class="title">{e.title}</div>
+                <div class="medium-tag">{e.date.slice(0, 10)}</div>
+              </article>
+            ))
+
+            // ── Unreleased group ─────────────────────────────────────────────
+            : bucket.kind === 'unreleased_group' ? (
+              <article
+                class="entry size-md unreleased-group"
+                data-project=""
+                data-kind="release"
+                data-format="unreleased"
+                data-tags="unreleased"
+                data-series=""
+                data-entry-id={`unreleased--${bucket.year}`}
+              >
+                <div class="unrel-header">
+                  <span class="unrel-label">Unreleased</span>
+                  <span class="unrel-year">{bucket.year}</span>
+                </div>
+                <ul class="unrel-list">
+                  {bucket.entries.slice(0, 5).map(e => (
+                    <li class="unrel-row">
+                      <span class="unrel-title">{e.title}</span>
+                      {e.format && <span class="unrel-fmt">{e.format}</span>}
+                    </li>
+                  ))}
+                  {bucket.entries.length > 5 && (
+                    <li class="unrel-more">+{bucket.entries.length - 5} more</li>
+                  )}
+                </ul>
+                <div class="medium-tag">{bucket.entries.length} track{bucket.entries.length === 1 ? '' : 's'} · {bucket.year}</div>
+              </article>
+            )
+
+            // ── Misc (events, anything else) ─────────────────────────────────
+            : bucket.entries.map(e => (
+              <article
+                class={`entry size-${e.size}`}
+                data-project={e.project || ''}
+                data-kind={e.kind}
+                data-format={e.format || ''}
+                data-tags={e.tags.join('|')}
+                data-series={(e.series ?? []).join('|')}
+                data-entry-id={e.id}
+              >
+                {e.project && <span class="project-tag">{e.project}</span>}
+                {e.cover && <img class="cover" src={e.cover} alt="" loading="lazy" />}
+                <div>
+                  <div class="title">{e.title}</div>
+                  {e.preservedTitle && e.preservedTitle !== e.title && (
+                    <div class="preserved">{e.preservedTitle}</div>
+                  )}
+                </div>
+                <div class="medium-tag">{e.kind.replace('_', ' ')} · {e.date}</div>
+              </article>
+            ))
+          )}
+        </div>
+      </section>
+    ))}
+  </main>
+
+  <footer class="foot">
+    <div class="foot-nav">
+      <a href={`${BASE}/about`}>About</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/projects`}>Projects</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/people`}>People</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/venues`}>Venues</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/orgs`}>Orgs</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/press`}>Press</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/motifs`}>Motifs</a>
+      <span class="foot-sep">·</span>
+      <a href={`${BASE}/tags`}>Tags</a>
+    </div>
+    <div class="foot-line">
+      CRFW timeline · proof of concept · {totals.total} entries indexed
+    </div>
+  </footer>
+
+  <PopupShell entries={{ ...Object.fromEntries(publishedEntries.map(e => [e.id, e])), ...syntheticEntries }} />
+
+  <script is:inline>
+    (function () {
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+      }
+
+      // Filter tabs — four independent axes (project + kind + format + tag). AND semantics.
+      const state = { project: 'all', kind: 'all', format: 'all', tag: 'all', series: 'all' };
+      const totalEntries = document.querySelectorAll('.entry').length;
+      const filterCount = document.getElementById('filter-count');
+      const resetBtn = document.getElementById('filter-reset');
+
+      // Tag dropdown recomputation (Session 11 PR C)
+      // Tag options re-scope to entries matching the OTHER axes each
+      // time a non-tag filter changes. Prevents the Tag dropdown from
+      // listing tags that can't match anything in the current view.
+      const tagSelect = document.querySelector('.filter-select select[data-axis="tag"]');
+      function recomputeTagOptions() {
+        if (!tagSelect) return;
+        const previousValue = tagSelect.value;
+        const tagCounts = new Map();
+        document.querySelectorAll('.entry').forEach(el => {
+          const okProj = state.project === 'all' || el.dataset.project === state.project;
+          const okKind = state.kind === 'all' || el.dataset.kind === state.kind;
+          const okFmt = state.format === 'all' || el.dataset.format === state.format;
+          if (!(okProj && okKind && okFmt)) return;
+          const tagList = (el.dataset.tags || '').split('|').filter(Boolean);
+          for (const t of tagList) tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+        });
+        // Drop tags redundant with other axes (matching normalization)
+        const projVal = state.project === 'all' ? '' : state.project.toLowerCase().replace(/\s+/g, '-');
+        const kindVal = state.kind === 'all' ? '' : state.kind.replace(/_/g, '-');
+        const formatVal = state.format === 'all' ? '' : state.format.toLowerCase();
+        // Sort by frequency, cap at top 30 (5 more than before, because
+        // the scoping keeps results relevant)
+        const sorted = [...tagCounts.entries()]
+          .filter(([t]) => t.toLowerCase() !== projVal && t.toLowerCase() !== kindVal && t.toLowerCase() !== formatVal)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 30);
+        // Rebuild options
+        const lines = ['<option value="all">All</option>'];
+        for (const [tag, count] of sorted) {
+          const escTag = tag.replace(/"/g, '&quot;');
+          lines.push(`<option value="${escTag}">${escTag} (${count})</option>`);
+        }
+        tagSelect.innerHTML = lines.join('');
+        // Restore previous value if still valid, else reset
+        if ([...tagSelect.options].some(o => o.value === previousValue)) {
+          tagSelect.value = previousValue;
+        } else {
+          tagSelect.value = 'all';
+          state.tag = 'all';
+          tagSelect.closest('.filter-select').classList.remove('active');
+        }
+      }
+
+      function applyFilters(opts) {
+        opts = opts || {};
+        let visible = 0;
+        document.querySelectorAll('.entry').forEach(el => {
+          const okProj = state.project === 'all' || el.dataset.project === state.project;
+          const okKind = state.kind === 'all' || el.dataset.kind === state.kind;
+          const okFmt = state.format === 'all' || el.dataset.format === state.format;
+          const tagList = (el.dataset.tags || '').split('|').filter(Boolean);
+          const okTag = state.tag === 'all' || tagList.includes(state.tag);
+          const seriesList = (el.dataset.series || '').split('|').filter(Boolean);
+          const okSeries = state.series === 'all' || seriesList.includes(state.series);
+          const show = okProj && okKind && okFmt && okTag && okSeries;
+          el.hidden = !show;
+          if (show) visible++;
+        });
+        // Update year row visibility and entry counts
+        document.querySelectorAll('.year-row').forEach(row => {
+          const count = row.querySelectorAll('.entry:not([hidden])').length;
+          row.style.display = count ? '' : 'none';
+          const after = row.querySelector('.year-label .after');
+          if (after) after.textContent = count + (count === 1 ? ' entry' : ' entries');
+        });
+        // Show filter count when filtering is active
+        const isFiltered = state.project !== 'all' || state.kind !== 'all' || state.format !== 'all' || state.tag !== 'all' || state.series !== 'all';
+        if (filterCount) {
+          filterCount.textContent = isFiltered
+            ? `showing ${visible} of ${totalEntries}`
+            : '';
+        }
+        if (resetBtn) {
+          resetBtn.style.display = isFiltered ? '' : 'none';
+        }
+        // Recompute tag scope after other filters change
+        if (!opts.skipTagRecompute) recomputeTagOptions();
+      }
+
+      // Dropdowns (Session 11) — replaced chip buttons with <select>s
+      document.querySelectorAll('.filter-select select').forEach(sel => {
+        sel.addEventListener('change', () => {
+          const axis = sel.dataset.axis;
+          state[axis] = sel.value;
+          // Highlight dropdown when non-"all"
+          sel.closest('.filter-select').classList.toggle('active', sel.value !== 'all');
+          // Skip tag recompute when the tag dropdown itself changed
+          applyFilters({ skipTagRecompute: axis === 'tag' });
+        });
+      });
+
+      // URL param pre-selection: /?project=X&tag=Y&series=Z etc.
+      const qs = new URLSearchParams(window.location.search);
+      for (const axis of ['project', 'kind', 'format', 'tag', 'series']) {
+        const v = qs.get(axis);
+        if (!v) continue;
+        const sel = document.querySelector(`.filter-select select[data-axis="${axis}"]`);
+        if (!sel) continue;
+        // Tag axis may need its option to exist — rebuild first then set
+        if (axis === 'tag') {
+          recomputeTagOptions();
+          if (![...sel.options].some(o => o.value === v)) {
+            // Tag not in top 30 after other filters applied — add it
+            const opt = document.createElement('option');
+            opt.value = v; opt.textContent = v;
+            sel.appendChild(opt);
+          }
+        }
+        if ([...sel.options].some(o => o.value === v)) {
+          sel.value = v;
+          state[axis] = v;
+          sel.closest('.filter-select').classList.add('active');
+        }
+      }
+      applyFilters();
+
+      // --- Pagefind search ---
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+      let pagefind = null;
+      let searchDebounce;
+
+      async function ensurePagefind() {
+        if (pagefind) return pagefind;
+        try {
+          // Pagefind generates /pagefind/pagefind.js at build time
+          const base = (window.location.pathname.match(/^\/[^/]+\//) || ['/'])[0];
+          pagefind = await import(/* @vite-ignore */ `${base}pagefind/pagefind.js`);
+          await pagefind.options({ baseUrl: base });
+          return pagefind;
+        } catch (err) {
+          console.warn('Pagefind not available yet (run npm run build first):', err);
+          return null;
+        }
+      }
+
+      async function runSearch(query) {
+        if (!query || query.length < 2) {
+          searchResults.hidden = true;
+          searchResults.innerHTML = '';
+          return;
+        }
+        const pf = await ensurePagefind();
+        if (!pf) {
+          searchResults.hidden = false;
+          searchResults.innerHTML = '<div class="search-empty">Search unavailable (dev mode — rebuild to enable)</div>';
+          return;
+        }
+        const search = await pf.search(query);
+        const firstTen = await Promise.all(search.results.slice(0, 10).map(r => r.data()));
+        searchResults.hidden = false;
+        if (!firstTen.length) {
+          searchResults.innerHTML = `<div class="search-empty">No results for “${escapeHtml(query)}”</div>`;
+          return;
+        }
+        searchResults.innerHTML = firstTen.map(r => `
+          <a class="search-hit" href="${r.url}">
+            <div class="search-hit-title">${r.meta?.title || r.url}</div>
+            <div class="search-hit-excerpt">${r.excerpt}</div>
+          </a>
+        `).join('');
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          clearTimeout(searchDebounce);
+          const q = searchInput.value.trim();
+          searchDebounce = setTimeout(() => runSearch(q), 200);
+        });
+        searchInput.addEventListener('blur', () => {
+          // Hide results after a moment to allow clicks through
+          setTimeout(() => { searchResults.hidden = true; }, 200);
+        });
+        searchInput.addEventListener('focus', () => {
+          if (searchInput.value.trim().length >= 2) searchResults.hidden = false;
+        });
+      }
+
+      // Reset all filters
+      if (resetBtn) {
+        resetBtn.style.display = 'none'; // hidden on load
+        resetBtn.addEventListener('click', () => {
+          state.project = 'all';
+          state.kind = 'all';
+          state.format = 'all';
+          state.tag = 'all';
+          state.series = 'all';
+          document.querySelectorAll('.filter-select select').forEach(sel => {
+            sel.value = 'all';
+            sel.closest('.filter-select').classList.remove('active');
+          });
+          applyFilters();
+        });
+      }
+    })();
+  </script>
+</Base>
